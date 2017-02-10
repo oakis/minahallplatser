@@ -128,7 +128,7 @@ const loginUserSuccess = (dispatch, user) => {
 			'Content-Type': 'application/x-www-form-urlencoded',
 			Authorization: `Basic ${encoded}`
 		},
-		body: 'grant_type=client_credentials'
+		body: `grant_type=client_credentials&scope=device_${user.uid}`
 	}).then((res) => res.json()
 	.then((token) => {
 		AsyncStorage.setItem('minahallplatser-user', JSON.stringify(user), () => {
