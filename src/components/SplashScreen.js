@@ -17,6 +17,8 @@ class SplashScreen extends Component {
 				const user = JSON.parse(dataJson);
 				if (user.uid === fbUser.uid) {
 					this.props.autoLogin(fbUser);
+				} else {
+					Actions.auth();
 				}
 			}).catch(() => {
 				Actions.auth();
