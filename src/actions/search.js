@@ -52,8 +52,8 @@ export const getNearbyStops = ({ access_token }) => {
 		},
 		{
 			enableHighAccuracy: false,
-			timeout: 5000,
-			maximumAge: 0
+			timeout: 7500,
+			maximumAge: 20000
 		});
 	};
 };

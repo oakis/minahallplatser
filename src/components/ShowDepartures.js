@@ -4,12 +4,12 @@ import React, { Component } from 'react';
 import { Spinner, Container, Content, Text, List, ListItem, Grid, Row, Col } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { getDepartures, clearDepartures } from '../actions';
+import minahallplatser from '../themes/minahallplatser';
 
 class ShowDepartures extends Component {
 	
 	componentWillMount() {
 		Actions.refresh({ title: this.props.busStop });
-		console.log(this.props.busStop);
 		this.props.getDepartures({
 			id: this.props.id,
 			access_token: this.props.access_token,
@@ -45,7 +45,6 @@ class ShowDepartures extends Component {
 			date: moment().format('YYYY-MM-DD'),
 			time: moment().format('HH:mm')
 		});
-		// this.createDataSource(this.props);
 	}
 
 	createDataSource({ departures }) {
@@ -54,7 +53,22 @@ class ShowDepartures extends Component {
 	}
 
 	renderDepartures(stop) {
-		const timeLeft = (stop.timeLeft === 0) ? 'Nu' : stop.timeLeft;
+		let timeLeft = '';
+		if (stop.timeLeft === 0) {
+			timeLeft = 'Nu';
+		} else {
+			timeLeft = stop.timeLeft;
+		}
+		const getFontColor = () => {
+			if (!stop.rtTime) {
+				console.log(stop.direction, '*** ordinarie ***')
+				return minahallplatser.brandWarning;
+			} else if (isNaN(timeLeft)) {
+				console.log('--- går nu ---')
+				return minahallplatser.brandDanger;
+			}
+			return '#000';
+		}
 		const styles = {
 			rowStyle: {
 				height: 50
@@ -64,6 +78,8 @@ class ShowDepartures extends Component {
 			},
 			col1Style: {
 				backgroundColor: stop.fgColor,
+				borderWidth: 2,
+				borderRadius: 3,
 				width: 50,
 				alignItems: 'center',
 				justifyContent: 'center'
@@ -80,7 +96,7 @@ class ShowDepartures extends Component {
 			},
 			departureStyle: {
 				fontSize: 24,
-				color: (isNaN(timeLeft)) ? '#d9534f' : '#000'
+				color: getFontColor()
 			},
 			nextDepStyle: {
 				fontSize: 12
@@ -92,7 +108,7 @@ class ShowDepartures extends Component {
 		const { rowStyle, iconStyle, col1Style, col2Style, col3Style,
 				departureStyle, nextDepStyle, directionStyle } = styles;
 		return (
-			<ListItem>
+			<ListItem style={{ backgroundColor: (stop.index % 2) ? '#fff' : '#efefef', marginLeft: 0, paddingLeft: 17 }}>
 					<Row style={rowStyle}>
 						<Col style={col1Style}>
 							<Text style={iconStyle}>{stop.sname}</Text>
@@ -124,7 +140,6 @@ class ShowDepartures extends Component {
 		if (this.props.loading) {
 			return (
 				<Spinner
-					color="blue"
 					style={{
 						flex: 1,
 						flexDirection: 'column',
@@ -147,7 +162,7 @@ class ShowDepartures extends Component {
 
 	render() {
 		return (
-			<Container>
+			<Container theme={minahallplatser}>
 				<Content>
 					<Grid>
 						{this.renderSpinner()}

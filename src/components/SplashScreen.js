@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import { Container, Content, Spinner } from 'native-base';
 import { connect } from 'react-redux';
 import { autoLogin } from '../actions';
+import minahallplatser from '../themes/minahallplatser';
 
 
 class SplashScreen extends Component {
@@ -26,7 +27,7 @@ class SplashScreen extends Component {
 
 	render() {
 		return (
-			<Container>
+			<Container theme={minahallplatser}>
 				<Content
 					contentContainerStyle={{
 						flex: 1,
@@ -39,7 +40,7 @@ class SplashScreen extends Component {
 				>
 					{/* Mina hållplatser logo, custom 'spinner' under logo (brummande buss t.ex) */} 
 					<Text>Mina Hållplatser</Text>
-					<Spinner color="blue" />
+					<Spinner />
 				</Content>
 			</Container>
 		);

@@ -12,7 +12,7 @@ import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
 
 const NavbarColor = () => {
-	return (Platform.OS === 'ios') ? '#F8F8F8' : '#039BE5';
+	return (Platform.OS === 'ios') ? '#F8F8F8' : '#779ECB';
 };
 
 const NavbarTextColor = () => {
@@ -22,7 +22,7 @@ const NavbarTextColor = () => {
 const RouterComponent = () => {
 	return (
 		<Router
-			sceneStyle={{ paddingTop: 60 }}
+			sceneStyle={{ paddingTop: 54 }}
 			titleStyle={{ color: NavbarTextColor() }}
 			navigationBarStyle={{ backgroundColor: NavbarColor() }}
 			rightButtonTextStyle={{ color: NavbarTextColor() }}

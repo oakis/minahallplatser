@@ -9,6 +9,7 @@ import {
 	registerUser,
 	resetRoute
 } from '../actions';
+import minahallplatser from '../themes/minahallplatser';
 
 class RegisterForm extends Component {
 	
@@ -40,7 +41,7 @@ class RegisterForm extends Component {
 
 	renderSpinner() {
 		if (this.props.loading) {
-			return <Spinner color="blue" />;
+			return <Spinner color="#fff" />;
 		}
 
 		return 'Registrera';
@@ -57,7 +58,7 @@ class RegisterForm extends Component {
 			}
 		};
 		return (
-			<Container>
+			<Container theme={minahallplatser}>
 				<Content
 					contentContainerStyle={{
 						flex: 1,
@@ -101,6 +102,7 @@ class RegisterForm extends Component {
 					</InputGroup>
 
 					<Button
+						primary
 						block
 						capitalize
 						onPress={this.onButtonPress.bind(this)}

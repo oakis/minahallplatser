@@ -7,17 +7,15 @@ import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import Router from './Router';
 
+firebase.initializeApp({
+  apiKey: 'AIzaSyDIOpswAOjBWwBMsViR6L0tNmliBrmMxTM',
+  authDomain: 'minahallplatser.firebaseapp.com',
+  databaseURL: 'https://minahallplatser.firebaseio.com',
+  storageBucket: 'minahallplatser.appspot.com',
+  messagingSenderId: '814413367686'
+});
+
 class App extends Component {
-  
-  componentWillMount() {
-    firebase.initializeApp({
-      apiKey: 'AIzaSyDIOpswAOjBWwBMsViR6L0tNmliBrmMxTM',
-      authDomain: 'minahallplatser.firebaseapp.com',
-      databaseURL: 'https://minahallplatser.firebaseio.com',
-      storageBucket: 'minahallplatser.appspot.com',
-      messagingSenderId: '814413367686'
-    });
-  }
 
   render() {
     return (

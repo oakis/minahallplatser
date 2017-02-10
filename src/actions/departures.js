@@ -8,7 +8,7 @@ import {
 
 export const getDepartures = ({ id, access_token, time, date }) => {
 	const checkStart = moment();
-	const url = `https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=${id}&date=${date}&time=${time}&format=json&timeSpan=60&maxDeparturesPerLine?=2&needJourneyDetail=0`;
+	const url = `https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=${id}&date=${date}&time=${time}&format=json&timeSpan=90&maxDeparturesPerLine=2&needJourneyDetail=0`;
 	return (dispatch) => {
 		fetch(url, { headers: { Authorization: `Bearer ${access_token}` } })
 			.then((data) => data.json())
@@ -20,7 +20,7 @@ export const getDepartures = ({ id, access_token, time, date }) => {
 				});
 			})
 			.then((departures) => {
-				console.log('Fetch took ', moment().diff(checkStart), ' milliseconds.');
+				// console.log('Fetch took ', moment().diff(checkStart), ' milliseconds.');
 				if (departures.DepartureBoard.Departure) {
 					const serverdate = departures.DepartureBoard.serverdate || moment().format('YYYY-MM-DD');
 					const servertime = departures.DepartureBoard.servertime || moment().format('HH:mm');
@@ -35,17 +35,23 @@ export const getDepartures = ({ id, access_token, time, date }) => {
 						const timeDeparture = moment(
 							`${serverdate} ${item.rtTime || item.time}`
 						);
-						const timeLeft = timeDeparture.diff(now, 'minutes') - 1;
-						if (findIndex !== -1 && !mapdDepartures[findIndex].nextStop && timeLeft >= 0) {
+						const timeLeft = timeDeparture.diff(now, 'minutes');
+						if (findIndex !== -1 && !mapdDepartures[findIndex].nextStop) {
 							mapdDepartures[findIndex].nextStop = timeLeft;
-						} else if (timeLeft >= 0 && findIndex === -1) {
-							mapdDepartures.push({ ...item, nextStop: null, timeLeft });
+						} else if (findIndex === -1) {
+							mapdDepartures.push({ ...item, nextStop: null, timeLeft: (timeLeft <= 0) ? 0 : timeLeft });
+						} else {
+							console.log('wtf?: ', item);
 						}
 					});
 
 					mapdDepartures = _.orderBy(mapdDepartures, ['timeLeft', 'nextStop']);
-
-					console.log('Full request took ', moment().diff(checkStart), ' milliseconds.');
+					let listIndex = 0;
+					mapdDepartures.forEach((dep) => {
+						dep.index = listIndex;
+						listIndex++;
+					});
+					// console.log('Full request took ', moment().diff(checkStart), ' milliseconds.');
 
 					dispatch({
 						type: GET_DEPARTURES,
@@ -61,7 +67,6 @@ export const getDepartures = ({ id, access_token, time, date }) => {
 						payload: 'Inga avgångar hittades på denna hållplats.'
 					});
 				}
-				
 			}, (error) => {
 				console.log('Could not get departures: ', error);
 				dispatch({

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { Container, Content, List, ListItem, Text, Spinner, Icon } from 'native-base';
 import { favoriteGet, favoriteDelete } from '../actions';
+import minahallplatser from '../themes/minahallplatser';
 
 class FavoriteList extends Component {
 
@@ -47,7 +48,7 @@ class FavoriteList extends Component {
 				</Text>
 				<Icon
 					name='ios-remove-circle-outline'
-					style={{ color: '#f00' }}
+					style={{ color: minahallplatser.brandDanger }}
 					onPress={() => {
 						Alert.alert(
 							favorite.busStop,
@@ -67,7 +68,7 @@ class FavoriteList extends Component {
 		if (this.props.loading) {
 			return (
 				<Content contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}>
-					<Spinner color="blue" />
+					<Spinner />
 				</Content>
 			);
 		} else if (this.props.error) {
@@ -76,28 +77,28 @@ class FavoriteList extends Component {
 					<Text style={{ textAlign: 'center' }}>{this.props.error}</Text>
 				</Content>
 			);
-		} else if (this.props.favorites.length === 0) {
+		} else if (this.props.favorites.length > 0) {
 			return (
 				<Content>
-					<Text style={{ textAlign: 'center' }}>Du har inte sparat några favoriter än.</Text>;
+					<List
+						dataArray={this.props.favorites}
+						renderRow={this.renderRow}
+						favoriteDelete={this.props.favoriteDelete}
+					/>
 				</Content>
 			);
 		}
 
-		return ( 
+		return (
 			<Content>
-				<List
-					dataArray={this.props.favorites}
-					renderRow={this.renderRow}
-					favoriteDelete={this.props.favoriteDelete}
-				/>
+				<Text style={{ textAlign: 'center' }}>Du har inte sparat några favoriter än.</Text>
 			</Content>
 		);
 	}
 
 	render() {
 		return (
-			<Container>
+			<Container theme={minahallplatser}>
 				{this.renderList()}
 			</Container>
 		);

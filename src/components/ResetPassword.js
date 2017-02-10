@@ -3,7 +3,7 @@ import { Text, Dimensions } from 'react-native';
 import { Container, Content, Button, Input, InputGroup, Spinner } from 'native-base';
 import { connect } from 'react-redux';
 import { emailChanged, resetUserPassword, resetRoute } from '../actions';
-
+import minahallplatser from '../themes/minahallplatser';
 
 class ResetPassword extends Component {
 
@@ -23,7 +23,7 @@ class ResetPassword extends Component {
 
 	renderSpinner() {
 		if (this.props.loading) {
-			return <Spinner color="blue" />;
+			return <Spinner color="#fff" />;
 		}
 
 		return 'Återställ lösenord';
@@ -32,7 +32,7 @@ class ResetPassword extends Component {
 	render() {
 		const width = Dimensions.get('window').width * 0.8;
 		return (
-			<Container>
+			<Container theme={minahallplatser}>
 				<Content
 					contentContainerStyle={{
 						flex: 1,
@@ -56,6 +56,7 @@ class ResetPassword extends Component {
 					</InputGroup>
 
 					<Button
+						primary
 						block
 						capitalize
 						onPress={this.onButtonPress.bind(this)}

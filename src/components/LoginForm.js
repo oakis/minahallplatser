@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import { Container, Content, Button, Input, InputGroup, Spinner } from 'native-base';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin } from '../actions';
-
+import minahallplatser from '../themes/minahallplatser';
 
 class LoginForm extends Component {
 
@@ -29,7 +29,7 @@ class LoginForm extends Component {
 
 	renderSpinner() {
 		if (this.props.loading) {
-			return <Spinner color="blue" />;
+			return <Spinner color="#fff" />;
 		}
 
 		return 'Logga in';
@@ -38,7 +38,7 @@ class LoginForm extends Component {
 	render() {
 		const width = Dimensions.get('window').width * 0.8;
 		return (
-			<Container>
+			<Container theme={minahallplatser}>
 				<Content
 					contentContainerStyle={{
 						flex: 1,
@@ -72,6 +72,7 @@ class LoginForm extends Component {
 					</InputGroup>
 
 					<Button
+						primary
 						block
 						capitalize
 						onPress={this.onButtonPress.bind(this)}

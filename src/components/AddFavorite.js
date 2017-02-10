@@ -3,6 +3,7 @@ import { ToastAndroid } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content, InputGroup, Input, Text, ListItem, List, Icon } from 'native-base';
 import { searchDepartures, searchChanged, favoriteCreate } from '../actions';
+import minahallplatser from '../themes/minahallplatser';
 
 class AddFavorite extends Component {
 
@@ -50,7 +51,7 @@ class AddFavorite extends Component {
 
 	render() {
 		return (
-			<Container>
+			<Container theme={minahallplatser}>
 				<Content
 					keyboardShouldPersistTaps="always"
 					keyboardDismissMode="on-drag"
@@ -66,6 +67,7 @@ class AddFavorite extends Component {
 						/>
 					</InputGroup>
 					<List
+						keyboardShouldPersistTaps="always"
 						dataArray={this.props.departureList}
 						renderRow={this.renderDepartures.bind(this)}
 					/>

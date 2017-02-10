@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Spinner, Container, Content, Text, List, ListItem, Icon } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { getNearbyStops, favoriteCreate } from '../actions';
+import minahallplatser from '../themes/minahallplatser';
 
 class ShowNearbyStops extends Component {
 	
@@ -47,7 +48,6 @@ class ShowNearbyStops extends Component {
 		if (this.props.loading) {
 			return (
 				<Spinner
-					color="blue"
 					style={{
 						flex: 1,
 						flexDirection: 'column',
@@ -70,7 +70,7 @@ class ShowNearbyStops extends Component {
 
 	render() {
 		return (
-			<Container>
+			<Container theme={minahallplatser}>
 				<Content>
 						{this.renderList()}
 				</Content>
