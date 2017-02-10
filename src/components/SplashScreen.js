@@ -18,8 +18,7 @@ class SplashScreen extends Component {
 				if (user.uid === fbUser.uid) {
 					this.props.autoLogin(fbUser);
 				}
-			}).catch((err) => {
-				console.log('SplashScreen auto login error: ', err);
+			}).catch(() => {
 				Actions.auth();
 			});
 		});
