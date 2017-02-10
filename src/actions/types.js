@@ -9,6 +9,7 @@ export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_USER_FAIL = 'REGISTER_USER_FAIL';
 export const CHANGE_ROUTE = 'CHANGE_ROUTE';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const GET_TOKEN = 'GET_TOKEN';
 
 // Favorite
 export const FAVORITE_CREATE = 'FAVORITE_CREATE';

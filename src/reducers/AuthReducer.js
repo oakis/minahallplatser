@@ -8,7 +8,8 @@ import {
 	REGISTER_USER,
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
-	RESET_PASSWORD
+	RESET_PASSWORD,
+	GET_TOKEN
 } from '../actions/types';
 
 const INIT_STATE = {
@@ -51,6 +52,8 @@ export default (state = INIT_STATE, action) => {
 			return { ...INIT_STATE };
 		case RESET_PASSWORD:
 			return { ...INIT_STATE };
+		case GET_TOKEN:
+			return { ...state, token: action.payload };
 		default:
 			return state;
 	}

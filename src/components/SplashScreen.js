@@ -13,15 +13,17 @@ class SplashScreen extends Component {
 	componentDidMount() {
 		// Try to automaticly login
 		firebase.auth().onAuthStateChanged((fbUser) => {
-			AsyncStorage.getItem('minahallplatser-user').then((dataJson) => {
+			AsyncStorage.getItem('minahallplatser-user')
+			.then((dataJson) => {
 				const user = JSON.parse(dataJson);
 				if (user.uid === fbUser.uid) {
 					this.props.autoLogin(fbUser);
 				}
-			}).catch(() => {
+			})
+			.catch(() => {
 				Actions.auth();
 			});
-		});
+		}, (err) => console.log(err));
 	}
 
 	render() {

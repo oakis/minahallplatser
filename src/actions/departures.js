@@ -21,50 +21,57 @@ export const getDepartures = ({ id, access_token, time, date }) => {
 			})
 			.then((departures) => {
 				// console.log('Fetch took ', moment().diff(checkStart), ' milliseconds.');
-				if (departures.DepartureBoard.Departure) {
-					const serverdate = departures.DepartureBoard.serverdate || moment().format('YYYY-MM-DD');
-					const servertime = departures.DepartureBoard.servertime || moment().format('HH:mm');
-					const now = moment(
-						`${serverdate} ${servertime}`
-					);
-					let mapdDepartures = [];
-					departures.DepartureBoard.Departure.forEach((item) => {
-						const findIndex = _.findIndex(mapdDepartures,
-							{ name: item.name, direction: item.direction }
+				if (departures.DepartureBoard) {
+					if (departures.DepartureBoard.Departure) {
+						const serverdate = departures.DepartureBoard.serverdate || moment().format('YYYY-MM-DD');
+						const servertime = departures.DepartureBoard.servertime || moment().format('HH:mm');
+						const now = moment(
+							`${serverdate} ${servertime}`
 						);
-						const timeDeparture = moment(
-							`${serverdate} ${item.rtTime || item.time}`
-						);
-						const timeLeft = timeDeparture.diff(now, 'minutes');
-						if (findIndex !== -1 && !mapdDepartures[findIndex].nextStop) {
-							mapdDepartures[findIndex].nextStop = timeLeft;
-						} else if (findIndex === -1) {
-							mapdDepartures.push({ ...item, nextStop: null, timeLeft: (timeLeft <= 0) ? 0 : timeLeft });
-						} else {
-							console.log('wtf?: ', item);
-						}
-					});
+						let mapdDepartures = [];
+						departures.DepartureBoard.Departure.forEach((item) => {
+							const findIndex = _.findIndex(mapdDepartures,
+								{ name: item.name, direction: item.direction }
+							);
+							const timeDeparture = moment(
+								`${serverdate} ${item.rtTime || item.time}`
+							);
+							const timeLeft = timeDeparture.diff(now, 'minutes');
+							if (findIndex !== -1 && !mapdDepartures[findIndex].nextStop) {
+								mapdDepartures[findIndex].nextStop = timeLeft;
+							} else if (findIndex === -1) {
+								mapdDepartures.push({ ...item, nextStop: null, timeLeft: (timeLeft <= 0) ? 0 : timeLeft });
+							} else {
+								console.log('wtf?: ', item);
+							}
+						});
 
-					mapdDepartures = _.orderBy(mapdDepartures, ['timeLeft', 'nextStop']);
-					let listIndex = 0;
-					mapdDepartures.forEach((dep) => {
-						dep.index = listIndex;
-						listIndex++;
-					});
-					// console.log('Full request took ', moment().diff(checkStart), ' milliseconds.');
+						mapdDepartures = _.orderBy(mapdDepartures, ['timeLeft', 'nextStop']);
+						let listIndex = 0;
+						mapdDepartures.forEach((dep) => {
+							dep.index = listIndex;
+							listIndex++;
+						});
+						// console.log('Full request took ', moment().diff(checkStart), ' milliseconds.');
 
-					dispatch({
-						type: GET_DEPARTURES,
-						payload: {
-							departures: mapdDepartures,
-							time: servertime,
-							date: serverdate
-						}
-					});
+						dispatch({
+							type: GET_DEPARTURES,
+							payload: {
+								departures: mapdDepartures,
+								time: servertime,
+								date: serverdate
+							}
+						});
+					} else {
+						dispatch({
+							type: GET_DEPARTURES_FAIL,
+							payload: 'Inga avgångar hittades på denna hållplats.'
+						});
+					}
 				} else {
 					dispatch({
 						type: GET_DEPARTURES_FAIL,
-						payload: 'Inga avgångar hittades på denna hållplats.'
+						payload: 'Något gick snett. Försök igen om en stund.'
 					});
 				}
 			}, (error) => {

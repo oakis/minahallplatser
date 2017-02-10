@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
 	FAVORITE_CREATE,
@@ -33,16 +34,38 @@ const favoriteCreateFail = (dispatch) => {
 export const favoriteGet = (currentUser) => {
 	if (currentUser) {
 		return (dispatch) => {
-			firebase.database().ref(`/users/${currentUser.uid}/favorites`)
-				.on('value', snapshot => {
-					dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: snapshot.val() });
-				}, (error) => {
-					console.log('favoriteGet error: ', error);
-					dispatch({
-						type: FAVORITE_FETCH_FAIL,
-						payload: { error: 'Kunde inte ladda dina favoriter.', loading: false }
-					});
-				});
+			AsyncStorage.getItem('minahallplatser-favorites').then((dataJson) => {
+				const favorites = JSON.parse(dataJson);
+				if (favorites) {
+					dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: favorites });
+					firebase.database().ref(`/users/${currentUser.uid}/favorites`)
+						.on('value', snapshot => {
+							AsyncStorage.setItem('minahallplatser-favorites', JSON.stringify(snapshot.val()));
+							dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: snapshot.val() });
+						}, (error) => {
+							console.log('favoriteGet error: ', error);
+							dispatch({
+								type: FAVORITE_FETCH_FAIL,
+								payload: { error: 'Kunde inte ladda dina favoriter.', loading: false }
+							});
+						});
+				} else {
+					console.log('Did not find favorites locally');
+					firebase.database().ref(`/users/${currentUser.uid}/favorites`)
+						.on('value', snapshot => {
+							AsyncStorage.setItem('minahallplatser-favorites', JSON.stringify(snapshot.val()));
+							dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: snapshot.val() });
+						}, (error) => {
+							console.log('favoriteGet error: ', error);
+							dispatch({
+								type: FAVORITE_FETCH_FAIL,
+								payload: { error: 'Kunde inte ladda dina favoriter.', loading: false }
+							});
+						});
+				}
+			}).catch((err) => {
+				console.log(err);
+			});
 		};
 	}
 	return (dispatch) => {

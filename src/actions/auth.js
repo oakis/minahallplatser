@@ -12,7 +12,8 @@ import {
 	REGISTER_USER,
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
-	RESET_PASSWORD
+	RESET_PASSWORD,
+	GET_TOKEN
 } from './types';
 import { key, secret, url } from '../Vasttrafik';
 
@@ -118,6 +119,29 @@ export const autoLogin = (user) => {
 			loginUserSuccess(dispatch, user);
 		}
 		loginUserFail(dispatch);
+	};
+};
+
+export const getToken = () => {
+	return (dispatch) => {
+		const { currentUser } = firebase.auth();
+		if (currentUser) {
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					Authorization: `Basic ${encoded}`
+				},
+				body: `grant_type=client_credentials&scope=device_${currentUser.uid}`
+			}).then((res) => res.json()
+			.then((token) => {
+				dispatch({ type: GET_TOKEN, payload: token });
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+			);
+		}
 	};
 };
 
