@@ -39,7 +39,6 @@ class ShowDepartures extends Component {
 	}
 
 	refresh() {
-		console.log('refreshing');
 		this.props.getToken();
 		this.props.getDepartures({
 			id: this.props.id,
@@ -63,14 +62,12 @@ class ShowDepartures extends Component {
 		}
 		const getFontColor = () => {
 			if (!stop.rtTime) {
-				console.log(stop.direction, '*** ordinarie ***')
 				return minahallplatser.brandWarning;
 			} else if (isNaN(timeLeft)) {
-				console.log('--- går nu ---')
 				return minahallplatser.brandDanger;
 			}
 			return '#000';
-		}
+		};
 		const styles = {
 			rowStyle: {
 				height: 50
@@ -110,7 +107,11 @@ class ShowDepartures extends Component {
 		const { rowStyle, iconStyle, col1Style, col2Style, col3Style,
 				departureStyle, nextDepStyle, directionStyle } = styles;
 		return (
-			<ListItem style={{ backgroundColor: (stop.index % 2) ? '#fff' : '#efefef', marginLeft: 0, paddingLeft: 17 }}>
+			<ListItem
+				style={{
+					backgroundColor: (stop.index % 2) ? '#fff' : '#efefef', marginLeft: 0, paddingLeft: 17
+				}}
+			>
 					<Row style={rowStyle}>
 						<Col style={col1Style}>
 							<Text style={iconStyle}>{stop.sname}</Text>
@@ -181,4 +182,5 @@ const MapStateToProps = (state) => {
 	return { access_token, departures, time, date, loading, error };
 };
 
-export default connect(MapStateToProps, { getDepartures, clearDepartures, getToken })(ShowDepartures);
+export default connect(MapStateToProps,
+	{ getDepartures, clearDepartures, getToken })(ShowDepartures);

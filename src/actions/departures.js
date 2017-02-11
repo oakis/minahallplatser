@@ -7,7 +7,7 @@ import {
 } from './types';
 
 export const getDepartures = ({ id, access_token, time, date }) => {
-	const checkStart = moment();
+	// const checkStart = moment();
 	const url = `https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=${id}&date=${date}&time=${time}&format=json&timeSpan=90&maxDeparturesPerLine=2&needJourneyDetail=0`;
 	return (dispatch) => {
 		fetch(url, { headers: { Authorization: `Bearer ${access_token}` } })
@@ -47,13 +47,10 @@ export const getDepartures = ({ id, access_token, time, date }) => {
 						});
 
 						mapdDepartures = _.orderBy(mapdDepartures, ['timeLeft', 'nextStop']);
-						let listIndex = 0;
-						mapdDepartures.forEach((dep) => {
-							dep.index = listIndex;
-							listIndex++;
-						});
+						mapdDepartures = _.map(mapdDepartures, (dep, index) => {
+								return { ...dep, index };
+							});
 						// console.log('Full request took ', moment().diff(checkStart), ' milliseconds.');
-
 						dispatch({
 							type: GET_DEPARTURES,
 							payload: {

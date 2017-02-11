@@ -47,33 +47,39 @@ class ShowNearbyStops extends Component {
 	renderList() {
 		if (this.props.loading) {
 			return (
-				<Spinner
-					style={{
+				<Content
+					contentContainerStyle={{
 						flex: 1,
 						flexDirection: 'column',
 						justifyContent: 'center',
 						alignItems: 'center'
 					}}
-				/>
+				>
+					<Spinner />
+				</Content>
 			);
 		} else if (this.props.searchError) {
-			return <Text style={{ textAlign: 'center' }}>{this.props.searchError}</Text>;
+			return (
+				<Content>
+					<Text style={{ textAlign: 'center' }}>{this.props.searchError}</Text>
+				</Content>
+			);
 		}
 
-		return ( 
-			<List
-				dataArray={this.props.stops}
-				renderRow={this.renderStops.bind(this)}
-			/>
+		return (
+			<Content>
+				<List
+					dataArray={this.props.stops}
+					renderRow={this.renderStops.bind(this)}
+				/>
+			</Content>
 		);
 	}
 
 	render() {
 		return (
 			<Container theme={minahallplatser}>
-				<Content>
-						{this.renderList()}
-				</Content>
+				{this.renderList()}
 			</Container>
 		);
 	}
