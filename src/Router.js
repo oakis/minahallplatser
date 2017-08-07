@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { Icon } from 'native-base';
-import { Scene, Router, Actions } from 'react-native-router-flux';
+import { Scene, Router, Actions, Schema } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import FavoriteList from './components/FavoriteList';
 import AddFavorite from './components/AddFavorite';
@@ -12,22 +12,22 @@ import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
 
 const NavbarColor = () => {
-	return (Platform.OS === 'ios') ? '#F8F8F8' : '#779ECB';
+	return (Platform.OS === 'ios') ? '#007AFF' : '#779ECB';
 };
 
 const NavbarTextColor = () => {
-	return (Platform.OS === 'ios') ? '#000000' : '#ffffff';
+	return '#ffffff';
 };
 
-const RouterComponent = () => {
-	return (
-		<Router
-			sceneStyle={{ paddingTop: 54 }}
-			titleStyle={{ color: NavbarTextColor() }}
-			navigationBarStyle={{ backgroundColor: NavbarColor() }}
-			rightButtonTextStyle={{ color: NavbarTextColor() }}
-			barButtonIconStyle={{ tintColor: NavbarTextColor() }}
-		>
+const RouterComponent = () => (
+	<Router
+		titleStyle={{ color: NavbarTextColor(), alignSelf: 'center' }}
+		navigationBarStyle={{ backgroundColor: NavbarColor(), paddingHorizontal: 10 }}
+		rightButtonTextStyle={{ color: NavbarTextColor() }}
+		barButtonIconStyle={{ tintColor: NavbarTextColor() }}
+		leftButtonTextStyle={{ color: NavbarTextColor() }}
+	>
+		<Scene key="root" hideNavBar='true'>
 			<Scene key="splash" component={SplashScreen} hideNavBar='true' />
 			<Scene key="auth">
 				<Scene key="login" component={LoginForm} title="Inloggning" initial />
@@ -41,12 +41,12 @@ const RouterComponent = () => {
 			</Scene>
 			<Scene key="dashboard">
 				<Scene
-					getLeftTitle={() => {
-						return <Icon name="ios-navigate" style={{ color: '#fff' }} />;
+					renderRightButton={() => {
+						return <Icon name="ios-navigate" style={{ color: '#fff' }} onPress={() => Actions.listNearbyStops()} />;
 					}}
-					onLeft={() => Actions.listNearbyStops()}
-					getRightTitle={() => <Icon name="ios-add-circle" style={{ color: '#fff' }} />}
-					onRight={() => Actions.addfav()}
+					renderLeftButton={() => {
+						return <Icon name="ios-add-circle" style={{ color: '#fff' }} onPress={() => Actions.addfav()} />;
+					}}
 					key="favlist"
 					component={FavoriteList}
 					title="Mina Hållplatser"
@@ -54,11 +54,11 @@ const RouterComponent = () => {
 					initial
 				/>
 				<Scene key="addfav" component={AddFavorite} title="Lägg till favorit" />
-				<Scene key="departures" component={ShowDepartures} title="" />
+				<Scene key="departures" component={ShowDepartures} title="Avgångar" />
 				<Scene key="listNearbyStops" component={ShowNearbyStops} title="Hållplatser nära dig" />
 			</Scene>
-		</Router>
-	);
-};
+		</Scene>
+	</Router>
+);
 
 export default RouterComponent;

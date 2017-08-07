@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Spinner, Container, Content, Text, List, ListItem, Grid, Row, Col } from 'native-base';
+import { Spinner, Container, Content, Text, List, ListItem, Left, Body, Right } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { getDepartures, clearDepartures, getToken } from '../actions';
 import minahallplatser from '../themes/minahallplatser';
@@ -68,30 +68,44 @@ class ShowDepartures extends Component {
 			}
 			return '#000';
 		};
+		const height = 50;
+
 		const styles = {
-			rowStyle: {
-				height: 50
-			},
-			iconStyle: {
-				color: stop.bgColor
+			listStyle: {
+				flex: 1,
+				height,
+				backgroundColor: (stop.index % 2) ? '#fff' : '#efefef',
+				marginLeft: 0,
+				paddingRight: 10
 			},
 			col1Style: {
-				backgroundColor: stop.fgColor,
-				borderWidth: 2,
-				borderRadius: 3,
+				height,
 				width: 50,
+				backgroundColor: 'red',
 				alignItems: 'center',
 				justifyContent: 'center'
 			},
 			col2Style: {
+				height,
+				width: 50,
 				flex: 1,
-				marginLeft: 15,
-				justifyContent: 'center'
+				backgroundColor: 'blue',
+				justifyContent: 'space-between'
 			},
 			col3Style: {
+				height,
+				backgroundColor: 'green',
 				width: 60,
 				alignItems: 'flex-end',
 				justifyContent: 'center'
+			},
+			stopNumStyle: {
+				width: 48,
+				height: 48,
+				backgroundColor: stop.fgColor,
+				borderWidth: 1,
+				borderRadius: 3,
+				color: stop.bgColor
 			},
 			departureStyle: {
 				fontSize: 24,
@@ -104,37 +118,23 @@ class ShowDepartures extends Component {
 				fontWeight: 'bold'
 			}
 		};
-		const { rowStyle, iconStyle, col1Style, col2Style, col3Style,
-				departureStyle, nextDepStyle, directionStyle } = styles;
+		const { stopNumStyle, col1Style, col2Style, col3Style,
+				departureStyle, nextDepStyle, directionStyle, listStyle } = styles;
 		return (
 			<ListItem
-				style={{
-					backgroundColor: (stop.index % 2) ? '#fff' : '#efefef', marginLeft: 0, paddingLeft: 17
-				}}
+				style={listStyle}
 			>
-					<Row style={rowStyle}>
-						<Col style={col1Style}>
-							<Text style={iconStyle}>{stop.sname}</Text>
-						</Col>
-						<Col style={col2Style}>
-							<Row>
-								<Text style={directionStyle}>{stop.direction}</Text>
-							</Row>
-							<Row>
-								<Text>Läge {stop.track}</Text>
-							</Row>
-						</Col>
-						<Col style={col3Style}>
-							<Row style={{ alignItems: 'center' }}>
-								<Col size={2}>
-									<Text style={departureStyle}>{timeLeft}</Text>
-								</Col>
-								<Col size={1}>
-									<Text style={nextDepStyle}>{stop.nextStop}</Text>
-								</Col>
-							</Row>
-						</Col>
-					</Row>
+				<Left style={col1Style}>
+					<Text style={stopNumStyle}>{stop.sname}</Text>
+				</Left>
+				<Body style={col2Style}>	
+					<Text style={directionStyle}>{stop.direction}</Text>
+					<Text>Läge {stop.track}</Text>
+				</Body>
+				<Right style={col3Style}>		
+					<Text style={departureStyle}>{timeLeft}</Text>
+					<Text style={nextDepStyle}>{stop.nextStop}</Text>
+				</Right>
 			</ListItem>
 		);
 	}
@@ -165,11 +165,9 @@ class ShowDepartures extends Component {
 
 	render() {
 		return (
-			<Container theme={minahallplatser}>
+			<Container>
 				<Content>
-					<Grid>
-						{this.renderSpinner()}
-					</Grid>
+					{this.renderSpinner()}
 				</Content>
 			</Container>
 		);

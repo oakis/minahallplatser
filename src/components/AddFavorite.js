@@ -51,7 +51,7 @@ class AddFavorite extends Component {
 
 	render() {
 		return (
-			<Container theme={minahallplatser}>
+			<Container>
 				<Content
 					keyboardShouldPersistTaps="always"
 					keyboardDismissMode="on-drag"

@@ -78,7 +78,7 @@ class ShowNearbyStops extends Component {
 
 	render() {
 		return (
-			<Container theme={minahallplatser}>
+			<Container>
 				{this.renderList()}
 			</Container>
 		);

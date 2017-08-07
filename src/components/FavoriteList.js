@@ -1,10 +1,11 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Keyboard, Alert, AsyncStorage } from 'react-native';
+import { Keyboard, Alert, AsyncStorage, FlatList, TouchableOpacity } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Container, Content, List, ListItem, Text, Spinner, Icon } from 'native-base';
+import { Container, Content, Text, Spinner } from 'native-base';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { favoriteGet, favoriteDelete } from '../actions';
 import minahallplatser from '../themes/minahallplatser';
 
@@ -36,31 +37,56 @@ class FavoriteList extends Component {
 		this.props.favorites = favorites;
 	}
 
-	renderRow(favorite) {
+	keyExtractor(item) {
+		return item.id;
+	}
+
+	renderItem({ item }) {
+		const styles = {
+			view: {
+				flex: 1,
+				flexDirection: 'row',
+				justifyContent: 'space-between',
+				marginTop: 5,
+				marginHorizontal: 10,
+				paddingBottom: 5,
+				borderBottomWidth: 1,
+				borderBottomColor: '#dedede'
+			},
+			text: {
+				justifyContent: 'flex-start'
+			},
+			icon: {
+				justifyContent: 'flex-end',
+				color: minahallplatser.brandDanger
+			}
+		};
 		return (
-			<ListItem
+			<TouchableOpacity
 				iconRight
 				button
-				onPress={() => Actions.departures(favorite)}
+				onPress={() => Actions.departures(item)}
+				style={styles.view}
 			>
-				<Text>
-					{favorite.busStop}
+				<Text style={styles.text}>
+					{item.busStop}
 				</Text>
 				<Icon
 					name='ios-remove-circle-outline'
-					style={{ color: minahallplatser.brandDanger }}
+					style={styles.icon}
+					size={24}
 					onPress={() => {
 						Alert.alert(
-							favorite.busStop,
-							`Är du säker att du vill ta bort ${favorite.busStop}?`,
+							item.busStop,
+							`Är du säker att du vill ta bort ${item.busStop}?`,
 							[
 								{ text: 'Avbryt' },
-								{ text: 'Ja', onPress: () => favoriteDelete(favorite.id) }
+								{ text: 'Ja', onPress: () => favoriteDelete(item.id) }
 							]
 						);
 					}}
 				/>
-			</ListItem>
+			</TouchableOpacity>
 		);
 	}
 
@@ -80,10 +106,11 @@ class FavoriteList extends Component {
 		} else if (this.props.favorites.length > 0) {
 			return (
 				<Content>
-					<List
-						dataArray={this.props.favorites}
-						renderRow={this.renderRow}
+					<FlatList
+						data={this.props.favorites}
+						renderItem={this.renderItem}
 						favoriteDelete={this.props.favoriteDelete}
+						keyExtractor={this.keyExtractor}
 					/>
 				</Content>
 			);
@@ -98,7 +125,7 @@ class FavoriteList extends Component {
 
 	render() {
 		return (
-			<Container theme={minahallplatser}>
+			<Container>
 				{this.renderList()}
 			</Container>
 		);
@@ -107,6 +134,7 @@ class FavoriteList extends Component {
 
 const mapStateToProps = state => {
 	const favorites = _.values(state.fav.list);
+	console.log(favorites);
 	const { loading, error } = state.fav;
 	return { favorites, loading, error };
 };

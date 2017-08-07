@@ -30,7 +30,7 @@ class SplashScreen extends Component {
 
 	render() {
 		return (
-			<Container theme={minahallplatser}>
+			<Container>
 				<Content
 					contentContainerStyle={{
 						flex: 1,

@@ -58,7 +58,7 @@ class RegisterForm extends Component {
 			}
 		};
 		return (
-			<Container theme={minahallplatser}>
+			<Container>
 				<Content
 					contentContainerStyle={{
 						flex: 1,

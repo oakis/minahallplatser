@@ -32,7 +32,7 @@ class ResetPassword extends Component {
 	render() {
 		const width = Dimensions.get('window').width * 0.8;
 		return (
-			<Container theme={minahallplatser}>
+			<Container>
 				<Content
 					contentContainerStyle={{
 						flex: 1,

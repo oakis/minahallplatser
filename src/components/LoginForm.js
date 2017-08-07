@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Dimensions, AsyncStorage } from 'react-native';
-import firebase from 'firebase';
+import { Text, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Content, Button, Input, InputGroup, Spinner } from 'native-base';
 import { connect } from 'react-redux';
@@ -32,13 +31,13 @@ class LoginForm extends Component {
 			return <Spinner color="#fff" />;
 		}
 
-		return 'Logga in';
+		return <Text>Logga in</Text>;
 	}
 
 	render() {
 		const width = Dimensions.get('window').width * 0.8;
 		return (
-			<Container theme={minahallplatser}>
+			<Container>
 				<Content
 					contentContainerStyle={{
 						flex: 1,
@@ -112,4 +111,6 @@ const styles = {
 	}
 };
 
-export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin })(LoginForm);
+export default connect(mapStateToProps, {
+	emailChanged, passwordChanged, loginUser, resetRoute, autoLogin
+})(LoginForm);

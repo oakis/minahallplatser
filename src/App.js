@@ -7,6 +7,8 @@ import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import Router from './Router';
 
+console.ignoredYellowBox = ['Setting a timer'];
+
 firebase.initializeApp({
   apiKey: 'AIzaSyDIOpswAOjBWwBMsViR6L0tNmliBrmMxTM',
   authDomain: 'minahallplatser.firebaseapp.com',
@@ -16,6 +18,11 @@ firebase.initializeApp({
 });
 
 class App extends Component {
+
+  handleBackPress() {
+    console.log(this.props.route);
+    return true;
+  }
 
   render() {
     return (
