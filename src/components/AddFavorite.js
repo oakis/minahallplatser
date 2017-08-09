@@ -1,9 +1,12 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import { ToastAndroid } from 'react-native';
+import { ToastAndroid, FlatList, Keyboard, Alert, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { Container, Content, InputGroup, Input, Text, ListItem, List, Icon } from 'native-base';
+import { Container, Content, InputGroup, Input } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import { searchDepartures, searchChanged, favoriteCreate } from '../actions';
-import minahallplatser from '../themes/minahallplatser';
+import { ListItem } from './common/ListItem';
+import colors from './style/color';
 
 class AddFavorite extends Component {
 
@@ -32,20 +35,22 @@ class AddFavorite extends Component {
 		this.props.departureList = departureList;
 	}
 
-	renderDepartures(stop) {
+	renderItem({ item }) {
 		return (
 			<ListItem
-				iconRight
-				button
-				onPress={() => {
-					this.props.favoriteCreate({ busStop: stop.name, id: stop.id });
+				text={item.name}
+				icon={(_.includes(this.props.favorites, item.id)) ? 'ios-star' : 'ios-star-outline'}
+				pressItem={() => {
+					Keyboard.dismiss();
+					Actions.departures(item);
 				}}
-			>
-				<Text>
-					{stop.name}
-				</Text>
-				<Icon name='ios-star-outline' style={{ color: '#FFA500' }} />
-			</ListItem>
+				pressIcon={() => {
+					Keyboard.dismiss();
+					this.props.favoriteCreate({ busStop: item.name, id: item.id });
+				}}
+				iconVisible
+				iconColor={colors.info}
+			/>
 		);
 	}
 
@@ -66,10 +71,11 @@ class AddFavorite extends Component {
 							value={this.props.busStop}
 						/>
 					</InputGroup>
-					<List
+					<FlatList
+						data={this.props.departureList}
+						renderItem={this.renderItem.bind(this)}
+						keyExtractor={item => item.id}
 						keyboardShouldPersistTaps="always"
-						dataArray={this.props.departureList}
-						renderRow={this.renderDepartures.bind(this)}
 					/>
 				</Content>
 			</Container>
@@ -78,10 +84,11 @@ class AddFavorite extends Component {
 }
 
 const MapStateToProps = (state) => {
+	const favorites = _.map(_.values(state.fav.list), 'id');
 	const { busStop, departureList, searchError } = state.search;
 	const { access_token } = state.auth.token;
 	const { addError } = state.fav;
-	return { busStop, access_token, departureList, addError, searchError };
+	return { busStop, access_token, departureList, addError, searchError, favorites };
 };
 
 export default connect(MapStateToProps,

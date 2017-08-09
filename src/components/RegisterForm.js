@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, Dimensions } from 'react-native';
-import { Container, Content, Button, Input, InputGroup, Spinner } from 'native-base';
+import { Container, Content, Button, Input, InputGroup } from 'native-base';
 import { connect } from 'react-redux';
 import {
 	emailChanged,
@@ -9,7 +9,8 @@ import {
 	registerUser,
 	resetRoute
 } from '../actions';
-import minahallplatser from '../themes/minahallplatser';
+import { Spinner } from './common/Spinner';
+import colors from './style/color';
 
 class RegisterForm extends Component {
 	
@@ -44,7 +45,7 @@ class RegisterForm extends Component {
 			return <Spinner color="#fff" />;
 		}
 
-		return 'Registrera';
+		return <Text>Registrera</Text>;
 	}
 
 	render() {

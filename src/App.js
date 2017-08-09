@@ -19,11 +19,6 @@ firebase.initializeApp({
 
 class App extends Component {
 
-  handleBackPress() {
-    console.log(this.props.route);
-    return true;
-  }
-
   render() {
     return (
       <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>

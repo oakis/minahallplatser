@@ -157,7 +157,7 @@ const loginUserSuccess = (dispatch, user) => {
 	.then((token) => {
 		AsyncStorage.setItem('minahallplatser-user', JSON.stringify(user), () => {
 			dispatch({ type: LOGIN_USER_SUCCESS, payload: { user, token } });
-			Actions.dashboard();
+			Actions.dashboard({ type: 'reset' });
 		});
 	})
 	.catch((error) => {

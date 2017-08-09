@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { Icon } from 'native-base';
-import { Scene, Router, Actions, Schema } from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import FavoriteList from './components/FavoriteList';
 import AddFavorite from './components/AddFavorite';
@@ -10,6 +10,7 @@ import RegisterForm from './components/RegisterForm';
 import ShowNearbyStops from './components/ShowNearbyStops';
 import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
+import colors from './components/style/color';
 
 const NavbarColor = () => {
 	return (Platform.OS === 'ios') ? '#007AFF' : '#779ECB';
@@ -24,33 +25,41 @@ const RouterComponent = () => (
 		titleStyle={{ color: NavbarTextColor(), alignSelf: 'center' }}
 		navigationBarStyle={{ backgroundColor: NavbarColor(), paddingHorizontal: 10 }}
 		rightButtonTextStyle={{ color: NavbarTextColor() }}
-		barButtonIconStyle={{ tintColor: NavbarTextColor() }}
-		leftButtonTextStyle={{ color: NavbarTextColor() }}
+		leftButtonTextStyle={{ color: NavbarTextColor(), tintColor: 'red' }}
+		renderBackButton={() => {
+			return (
+				<Icon 
+					name="ios-arrow-back"
+					style={{ color: colors.alternative, fontSize: 24 }}
+					onPress={() => Actions.pop()}
+				/>
+			);
+		}
+   }
 	>
 		<Scene key="root" hideNavBar='true'>
 			<Scene key="splash" component={SplashScreen} hideNavBar='true' />
 			<Scene key="auth">
-				<Scene key="login" component={LoginForm} title="Inloggning" initial />
+				<Scene key="login" component={LoginForm} title="Logga in" initial />
 				<Scene
 					key="register"
 					component={RegisterForm}
 					title="Registrera"
-					onBack={() => Actions.login({ type: 'reset' })}
+					onBack={() => Actions.auth({ type: 'reset' })}
 				/>
 				<Scene key="resetpw" component={ResetPassword} title="Glömt lösenord" />
 			</Scene>
 			<Scene key="dashboard">
 				<Scene
 					renderRightButton={() => {
-						return <Icon name="ios-navigate" style={{ color: '#fff' }} onPress={() => Actions.listNearbyStops()} />;
+						return <Icon name="ios-navigate" style={{ color: colors.alternative, fontSize: 24 }} onPress={() => Actions.listNearbyStops()} />;
 					}}
 					renderLeftButton={() => {
-						return <Icon name="ios-add-circle" style={{ color: '#fff' }} onPress={() => Actions.addfav()} />;
+						return <Icon name="ios-add-circle" style={{ color: colors.alternative, fontSize: 24 }} onPress={() => Actions.addfav()} />;
 					}}
 					key="favlist"
 					component={FavoriteList}
 					title="Mina Hållplatser"
-					panHandlers={null}
 					initial
 				/>
 				<Scene key="addfav" component={AddFavorite} title="Lägg till favorit" />

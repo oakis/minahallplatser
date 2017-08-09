@@ -1,10 +1,12 @@
 import moment from 'moment';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Spinner, Container, Content, Text, List, ListItem, Left, Body, Right } from 'native-base';
+import { View, Text, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { getDepartures, clearDepartures, getToken } from '../actions';
-import minahallplatser from '../themes/minahallplatser';
+import { DepartureListItem } from './common/DepartureListItem';
+import { Spinner } from './common/Spinner';
+import colors from './style/color';
 
 class ShowDepartures extends Component {
 	
@@ -53,89 +55,9 @@ class ShowDepartures extends Component {
 		this.props.loading = (departures.length === 0);
 	}
 
-	renderDepartures(stop) {
-		let timeLeft = '';
-		if (stop.timeLeft === 0) {
-			timeLeft = 'Nu';
-		} else {
-			timeLeft = stop.timeLeft;
-		}
-		const getFontColor = () => {
-			if (!stop.rtTime) {
-				return minahallplatser.brandWarning;
-			} else if (isNaN(timeLeft)) {
-				return minahallplatser.brandDanger;
-			}
-			return '#000';
-		};
-		const height = 50;
-
-		const styles = {
-			listStyle: {
-				flex: 1,
-				height,
-				backgroundColor: (stop.index % 2) ? '#fff' : '#efefef',
-				marginLeft: 0,
-				paddingRight: 10
-			},
-			col1Style: {
-				height,
-				width: 50,
-				backgroundColor: 'red',
-				alignItems: 'center',
-				justifyContent: 'center'
-			},
-			col2Style: {
-				height,
-				width: 50,
-				flex: 1,
-				backgroundColor: 'blue',
-				justifyContent: 'space-between'
-			},
-			col3Style: {
-				height,
-				backgroundColor: 'green',
-				width: 60,
-				alignItems: 'flex-end',
-				justifyContent: 'center'
-			},
-			stopNumStyle: {
-				width: 48,
-				height: 48,
-				backgroundColor: stop.fgColor,
-				borderWidth: 1,
-				borderRadius: 3,
-				color: stop.bgColor
-			},
-			departureStyle: {
-				fontSize: 24,
-				color: getFontColor()
-			},
-			nextDepStyle: {
-				fontSize: 12
-			},
-			directionStyle: {
-				fontWeight: 'bold'
-			}
-		};
-		const { stopNumStyle, col1Style, col2Style, col3Style,
-				departureStyle, nextDepStyle, directionStyle, listStyle } = styles;
+	renderDepartures({ item }) {
 		return (
-			<ListItem
-				style={listStyle}
-			>
-				<Left style={col1Style}>
-					<Text style={stopNumStyle}>{stop.sname}</Text>
-				</Left>
-				<Body style={col2Style}>	
-					<Text style={directionStyle}>{stop.direction}</Text>
-					<Text>Läge {stop.track}</Text>
-				</Body>
-				<Right style={col3Style}>		
-					<Text style={departureStyle}>{timeLeft}</Text>
-					<Text style={nextDepStyle}>{stop.nextStop}</Text>
-				</Right>
-			</ListItem>
+			<DepartureListItem item={item} />
 		);
 	}
 
@@ -143,12 +65,8 @@ class ShowDepartures extends Component {
 		if (this.props.loading) {
 			return (
 				<Spinner
-					style={{
-						flex: 1,
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center'
-					}}
+					size="large"
+					color={colors.primary}
 				/>
 			);
 		} else if (this.props.error) {
@@ -156,20 +74,19 @@ class ShowDepartures extends Component {
 		}
 
 		return ( 
-			<List
-				dataArray={this.props.departures}
-				renderRow={this.renderDepartures.bind(this)}
+			<FlatList
+				data={this.props.departures}
+				renderItem={this.renderDepartures}
+				keyExtractor={item => item.journeyid}
 			/>
 		);
 	}
 
 	render() {
 		return (
-			<Container>
-				<Content>
-					{this.renderSpinner()}
-				</Content>
-			</Container>
+			<View style={{ flex: 1 }}>
+				{this.renderSpinner()}
+			</View>
 		);
 	}
 }
@@ -177,6 +94,7 @@ class ShowDepartures extends Component {
 const MapStateToProps = (state) => {
 	const { departures, time, date, loading, error } = state.departures;
 	const { access_token } = state.auth.token;
+	console.log(departures);
 	return { access_token, departures, time, date, loading, error };
 };
 
