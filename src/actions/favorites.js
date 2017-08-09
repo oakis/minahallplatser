@@ -16,7 +16,7 @@ export const favoriteCreate = ({ busStop, id }) => {
 			.push({ busStop, id })
 			.then(() => {
 				dispatch({ type: FAVORITE_CREATE });
-				Actions.favlist({ type: 'reset' });
+				Actions.dashboard({ type: 'reset' });
 			}, (error) => {
 				console.log('favoriteCreate error: ', error);
 				favoriteCreateFail(dispatch);
@@ -77,23 +77,23 @@ export const favoriteGet = (currentUser) => {
 };
 
 export const favoriteDelete = (stopId) => {
-	const { currentUser } = firebase.auth();
-	const ref = firebase.database().ref(`/users/${currentUser.uid}/favorites`);
-	let removeByKey;
-	ref.on('value', snapshot => {
-		snapshot.forEach((child) => {
-			const id = child.val().id;
-			if (id === stopId) {
-				removeByKey = ref.child(child.key);
-			}
+	return (dispatch) => {
+		const { currentUser } = firebase.auth();
+		const ref = firebase.database().ref(`/users/${currentUser.uid}/favorites`);
+		let removeByKey;
+		ref.on('value', snapshot => {
+			snapshot.forEach((child) => {
+				const id = child.val().id;
+				if (id === stopId) {
+					removeByKey = ref.child(child.key);
+				}
+			});
 		});
-	});
-	removeByKey.remove()
+		removeByKey.remove()
 		.then(() => {
 			console.log('Removed entry');
-			return (dispatch) => {
-				dispatch({ type: FAVORITE_DELETE });
-			};
+			dispatch({ type: FAVORITE_DELETE, payload: stopId });
 		})
 		.catch((error) => console.log(error));
+	};
 };

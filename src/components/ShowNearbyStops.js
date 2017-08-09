@@ -1,9 +1,12 @@
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Spinner, Container, Content, Text, List, ListItem, Icon } from 'native-base';
+import { FlatList, View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { getNearbyStops, favoriteCreate } from '../actions';
-import minahallplatser from '../themes/minahallplatser';
+import { getNearbyStops, favoriteCreate, favoriteDelete } from '../actions';
+import { ListItem } from './common/ListItem';
+import { Spinner } from './common/Spinner';
+import colors from './style/color';
 
 class ShowNearbyStops extends Component {
 	
@@ -21,74 +24,64 @@ class ShowNearbyStops extends Component {
 		this.props.stops = stops;
 	}
 
-	renderStops(stop) {
+	renderItem({ item }) {
 		return (
 			<ListItem
-				iconRight
-				button
-				onPress={() => {
-					Actions.departures({ busStop: stop.name, id: stop.id });
+				text={item.name}
+				icon={(_.includes(this.props.favorites, item.id)) ? 'ios-star' : 'ios-star-outline'}
+				pressItem={() => {
+					Actions.departures({ busStop: item.name, id: item.id });
 				}}
-			>
-				<Text>
-					{stop.name}
-				</Text>
-				<Icon
-					name='ios-star-outline'
-					style={{ color: '#FFA500' }}
-					onPress={() => {
-						this.props.favoriteCreate({ busStop: stop.name, id: stop.id });
-					}}
-				/>
-			</ListItem>
+				pressIcon={() => {
+					if (_.includes(this.props.favorites, item.id)) {
+						this.props.favoriteDelete(item.id);
+					} else {
+						this.props.favoriteCreate({ busStop: item.name, id: item.id });
+					}
+				}}
+				iconVisible
+				iconColor={colors.info}
+			/>
 		);
 	}
 
 	renderList() {
 		if (this.props.loading) {
 			return (
-				<Content
-					contentContainerStyle={{
-						flex: 1,
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center'
-					}}
-				>
-					<Spinner />
-				</Content>
+				<Spinner
+					size="large"
+					color={colors.primary}
+				/>
 			);
 		} else if (this.props.searchError) {
 			return (
-				<Content>
-					<Text style={{ textAlign: 'center' }}>{this.props.searchError}</Text>
-				</Content>
+				<Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center' }}>{this.props.searchError}</Text>
 			);
 		}
 
 		return (
-			<Content>
-				<List
-					dataArray={this.props.stops}
-					renderRow={this.renderStops.bind(this)}
-				/>
-			</Content>
+			<FlatList
+				data={this.props.stops}
+				renderItem={this.renderItem.bind(this)}
+				keyExtractor={item => item.id}
+			/>
 		);
 	}
 
 	render() {
 		return (
-			<Container theme={minahallplatser}>
+			<View style={{ flex: 1 }}>
 				{this.renderList()}
-			</Container>
+			</View>
 		);
 	}
 }
 
 const MapStateToProps = (state) => {
+	const favorites = _.map(_.values(state.fav.list), 'id');
 	const { stops, loading, searchError } = state.search;
 	const { access_token } = state.auth.token;
-	return { access_token, stops, loading, searchError };
+	return { access_token, stops, loading, searchError, favorites };
 };
 
-export default connect(MapStateToProps, { getNearbyStops, favoriteCreate })(ShowNearbyStops);
+export default connect(MapStateToProps, { getNearbyStops, favoriteCreate, favoriteDelete })(ShowNearbyStops);

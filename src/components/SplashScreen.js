@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Text, AsyncStorage } from 'react-native';
+import { View, Text, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
-import { Container, Content, Spinner } from 'native-base';
 import { connect } from 'react-redux';
 import { autoLogin } from '../actions';
-import minahallplatser from '../themes/minahallplatser';
-
+import { Spinner } from './common/Spinner';
+import colors from './style/color';
 
 class SplashScreen extends Component {
 
@@ -30,22 +29,22 @@ class SplashScreen extends Component {
 
 	render() {
 		return (
-			<Container theme={minahallplatser}>
-				<Content
-					contentContainerStyle={{
-						flex: 1,
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center'
-					}}
-					keyboardShouldPersistTaps="always"
-					keyboardDismissMode="on-drag"
-				>
-					{/* Mina hållplatser logo, custom 'spinner' under logo (brummande buss t.ex) */} 
-					<Text>Mina Hållplatser</Text>
-					<Spinner />
-				</Content>
-			</Container>
+			<View
+				style={{
+					flex: 1,
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'center'
+				}}
+			>
+				{/* Mina hållplatser logo, custom 'spinner' under logo (brummande buss t.ex) */} 
+				<Text>Mina Hållplatser</Text>
+				<Spinner
+					size="large"
+					color={colors.primary}
+					noFlex
+				/>
+			</View>
 		);
 	}
 

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Text, Dimensions } from 'react-native';
-import { Container, Content, Button, Input, InputGroup, Spinner } from 'native-base';
+import { Container, Content, Button, Input, InputGroup } from 'native-base';
 import { connect } from 'react-redux';
 import { emailChanged, resetUserPassword, resetRoute } from '../actions';
-import minahallplatser from '../themes/minahallplatser';
+import { Spinner } from './common/Spinner';
+import colors from './style/color';
 
 class ResetPassword extends Component {
 
@@ -26,13 +27,13 @@ class ResetPassword extends Component {
 			return <Spinner color="#fff" />;
 		}
 
-		return 'Återställ lösenord';
+		return <Text>Återställ lösenord</Text>;
 	}
 
 	render() {
 		const width = Dimensions.get('window').width * 0.8;
 		return (
-			<Container theme={minahallplatser}>
+			<Container>
 				<Content
 					contentContainerStyle={{
 						flex: 1,
