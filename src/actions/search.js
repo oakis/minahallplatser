@@ -7,6 +7,7 @@ import {
 	SEARCH_BY_GPS_FAIL,
 	CLR_SEARCH
 } from './types';
+import { timeStart, timeEnd } from '../components/helpers/time';
 
 export const searchChanged = (text) => {
 	return {
@@ -17,6 +18,7 @@ export const searchChanged = (text) => {
 
 export const searchDepartures = ({ busStop, access_token }) => {
 	return (dispatch) => {
+		timeStart();
 		fetch(`https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=${busStop}&format=json`,
 			{
 				headers: {
@@ -25,9 +27,12 @@ export const searchDepartures = ({ busStop, access_token }) => {
 			})
 			.then((data) => data.json())
 			.then((list) => {
+				console.log(list);
+				timeEnd('searchDepartures');
 				dispatch({ type: SEARCH_DEPARTURES, payload: list.LocationList.StopLocation });
 			})
 			.catch((error) => {
+				timeEnd('searchDepartures');
 				console.log(error);
 				dispatch({
 					type: SEARCH_DEPARTURES_FAIL,
@@ -59,6 +64,7 @@ export const getNearbyStops = ({ access_token }) => {
 };
 
 const getCoordsSuccess = ({ dispatch, longitude, latitude, access_token }) => {
+	timeStart();
 	fetch(`https://api.vasttrafik.se/bin/rest.exe/v2/location.nearbystops?originCoordLat=${latitude}&originCoordLong=${longitude}&format=json`,
 	{
 			headers: {
@@ -67,7 +73,8 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude, access_token }) => {
 	})
 	.then((data) => data.json())
 	.then((list) => {
-		console.log('NearbyStops:', list);
+		timeEnd('getNearbyStops');
+		console.log('getNearbyStops:', list);
 		if (!list.LocationList.StopLocation) {
 			dispatch({
 				type: SEARCH_BY_GPS_FAIL,
@@ -79,6 +86,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude, access_token }) => {
 		}
 	})
 	.catch((error) => {
+		timeEnd('getNearbyStops');
 		console.log(error);
 		dispatch({
 			type: SEARCH_BY_GPS_FAIL,
