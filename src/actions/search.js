@@ -67,8 +67,16 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude, access_token }) => {
 	})
 	.then((data) => data.json())
 	.then((list) => {
-		const mapdList = _.uniqBy(_.filter(list.LocationList.StopLocation, (o) => !o.track), 'name');
-		dispatch({ type: SEARCH_BY_GPS, payload: mapdList });
+		console.log('NearbyStops:', list);
+		if (!list.LocationList.StopLocation) {
+			dispatch({
+				type: SEARCH_BY_GPS_FAIL,
+				payload: { searchError: 'Hittade inga hållplatser nära dig.' }
+			});
+		} else {
+			const mapdList = _.uniqBy(_.filter(list.LocationList.StopLocation, (o) => !o.track), 'name');
+			dispatch({ type: SEARCH_BY_GPS, payload: mapdList });
+		}
 	})
 	.catch((error) => {
 		console.log(error);

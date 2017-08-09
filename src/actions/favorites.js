@@ -77,6 +77,7 @@ export const favoriteGet = (currentUser) => {
 };
 
 export const favoriteDelete = (stopId) => {
+	console.log('favoriteDelete()');
 	return (dispatch) => {
 		const { currentUser } = firebase.auth();
 		const ref = firebase.database().ref(`/users/${currentUser.uid}/favorites`);

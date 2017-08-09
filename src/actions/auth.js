@@ -1,6 +1,6 @@
 import base64 from 'base-64';
 import firebase from 'firebase';
-import { AsyncStorage, ToastAndroid } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
 	EMAIL_CHANGED,
@@ -16,17 +16,14 @@ import {
 	GET_TOKEN
 } from './types';
 import { key, secret, url } from '../Vasttrafik';
+import { showMessage } from '../components/helpers/message';
 
 const encoded = base64.encode(`${key}:${secret}`);
 
 export const resetUserPassword = (email) => {
 	return (dispatch) => {
 		firebase.auth().sendPasswordResetEmail(email).then(() => {
-			ToastAndroid.showWithGravity(
-				`Ett mail för att återställa ditt lösenord har skickats till ${email}.`,
-				ToastAndroid.LONG,
-				ToastAndroid.CENTER
-			);
+			showMessage('long', `Ett mail för att återställa ditt lösenord har skickats till ${email}.`);
 			dispatch({ type: RESET_PASSWORD });
 			Actions.login({ type: 'reset' });
 		}, (error) => {
