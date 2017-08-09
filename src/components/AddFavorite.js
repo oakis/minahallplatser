@@ -1,15 +1,23 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { FlatList, Keyboard } from 'react-native';
+import { FlatList, Keyboard, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content, InputGroup, Input } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { searchDepartures, searchChanged, favoriteCreate } from '../actions';
 import { ListItem } from './common/ListItem';
+import { Spinner } from './common/Spinner';
 import colors from './style/color';
 import { showMessage } from './helpers/message';
 
 class AddFavorite extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			loading: false
+		};
+	}
 
 	componentWillMount() {
 		this.createDataSource(this.props);
@@ -17,6 +25,9 @@ class AddFavorite extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.createDataSource(nextProps);
+		if (nextProps.loading !== this.state.loading) {
+			this.setState({ loading: nextProps.loading });
+		}
 	}
 
 	componentDidUpdate() {
@@ -35,6 +46,7 @@ class AddFavorite extends Component {
 		clearTimeout(this.timeout);
 		this.timeout = setTimeout(() => {
 			console.log('Searching for stops.');
+			this.setState({ loading: true });
 			const { access_token } = this.props;
 			this.props.searchDepartures({ busStop, access_token });
 		}, 100);
@@ -63,6 +75,29 @@ class AddFavorite extends Component {
 		);
 	}
 
+	renderList() {
+		if (this.state.loading) {
+			return (
+				<View style={{ marginTop: 10 }}>
+					<Spinner
+						size="large"
+						color={colors.primary}
+						noFlex
+					/>
+				</View>
+			);
+		}
+
+		return (
+			<FlatList
+				data={this.props.departureList}
+				renderItem={this.renderItem.bind(this)}
+				keyExtractor={item => item.id}
+				keyboardShouldPersistTaps="always"
+			/>
+		);
+	}
+
 	render() {
 		return (
 			<Container>
@@ -80,12 +115,7 @@ class AddFavorite extends Component {
 							value={this.props.busStop}
 						/>
 					</InputGroup>
-					<FlatList
-						data={this.props.departureList}
-						renderItem={this.renderItem.bind(this)}
-						keyExtractor={item => item.id}
-						keyboardShouldPersistTaps="always"
-					/>
+					{this.renderList()}
 				</Content>
 			</Container>
 		);
@@ -94,10 +124,10 @@ class AddFavorite extends Component {
 
 const MapStateToProps = (state) => {
 	const favorites = _.map(_.values(state.fav.list), 'id');
-	const { busStop, departureList, searchError } = state.search;
+	const { busStop, departureList, searchError, loading } = state.search;
 	const { access_token } = state.auth.token;
 	const { addError } = state.fav;
-	return { busStop, access_token, departureList, addError, searchError, favorites };
+	return { busStop, access_token, departureList, addError, searchError, favorites, loading };
 };
 
 export default connect(MapStateToProps,
