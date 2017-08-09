@@ -1,5 +1,5 @@
-import { isAndroid, isIOS } from './device';
 import { ToastAndroid } from 'react-native';
+import { isAndroid, isIOS } from './device';
 
 export const showMessage = (length, message) => {
     if (isAndroid()) {

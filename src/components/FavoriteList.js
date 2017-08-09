@@ -45,10 +45,13 @@ class FavoriteList extends Component {
 						`Är du säker att du vill ta bort ${item.busStop}?`,
 						[
 							{ text: 'Avbryt' },
-							{ text: 'Ja', onPress: () => {
-								console.log(this.props);
-								this.props.favoriteDelete(item.id)
-							}}
+							{
+								text: 'Ja',
+								onPress: () => {
+									console.log(this.props);
+									this.props.favoriteDelete(item.id);
+								}
+							}
 						]
 					);
 				}}
