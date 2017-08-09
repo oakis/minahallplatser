@@ -3,7 +3,6 @@ import { Text, View } from 'react-native';
 import colors from '../style/color';
 
 export const DepartureListItem = ({ item }) => {
-    console.log(item.index);
 	let timeLeft = '';
     if (item.timeLeft === 0) {
         timeLeft = 'Nu';
@@ -46,11 +45,16 @@ export const DepartureListItem = ({ item }) => {
             justifyContent: 'center'
         },
         stopNumStyle: {
-            width: 48,
-            height: 48,
+            flex: 1,
+            width: 40,
+            height: 50,
             backgroundColor: item.fgColor,
             borderWidth: 2,
             borderRadius: 3,
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        stopNumText: {
             color: item.bgColor,
             textAlign: 'center',
             textAlignVertical: 'center',
@@ -67,13 +71,15 @@ export const DepartureListItem = ({ item }) => {
             fontWeight: 'bold'
         }
     };
-    const { stopNumStyle, col1Style, col2Style, col3Style,
+    const { stopNumStyle, col1Style, col2Style, col3Style, stopNumText,
             departureStyle, nextDepStyle, directionStyle, listStyle } = styles;
 
 	return (
 		<View style={listStyle}>
             <View style={col1Style}>
-                <Text style={stopNumStyle}>{item.sname}</Text>
+                <View style={stopNumStyle}>
+                    <Text style={stopNumText}>{item.sname}</Text>
+                </View>
             </View>
 
             <View style={col2Style}>

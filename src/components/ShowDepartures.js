@@ -94,7 +94,7 @@ class ShowDepartures extends Component {
 const MapStateToProps = (state) => {
 	const { departures, time, date, loading, error } = state.departures;
 	const { access_token } = state.auth.token;
-	console.log(departures);
+	console.log('Recieved departures:', departures);
 	return { access_token, departures, time, date, loading, error };
 };
 

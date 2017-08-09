@@ -12,11 +12,6 @@ import colors from './style/color';
 
 class FavoriteList extends Component {
 
-	constructor(props) {
-		super(props);
-		this.favoriteDelete = this.props.favoriteDelete.bind(this);
-	}
-
 	componentWillMount() {
 		Keyboard.dismiss();
 		firebase.auth().onAuthStateChanged((fbUser) => {
@@ -50,7 +45,10 @@ class FavoriteList extends Component {
 						`Är du säker att du vill ta bort ${item.busStop}?`,
 						[
 							{ text: 'Avbryt' },
-							{ text: 'Ja', onPress: () => favoriteDelete(item.id) }
+							{ text: 'Ja', onPress: () => {
+								console.log(this.props);
+								this.props.favoriteDelete(item.id)
+							}}
 						]
 					);
 				}}
@@ -76,8 +74,7 @@ class FavoriteList extends Component {
 			return (
 				<FlatList
 					data={this.props.favorites}
-					renderItem={this.renderItem}
-					favoriteDelete={this.props.favoriteDelete}
+					renderItem={this.renderItem.bind(this)}
 					keyExtractor={item => item.id}
 				/>
 			);

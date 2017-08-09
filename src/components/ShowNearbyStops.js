@@ -55,7 +55,9 @@ class ShowNearbyStops extends Component {
 			);
 		} else if (this.props.searchError) {
 			return (
-				<Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center' }}>{this.props.searchError}</Text>
+				<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+					<Text>{this.props.searchError}</Text>
+				</View>
 			);
 		}
 

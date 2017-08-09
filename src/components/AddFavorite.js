@@ -1,12 +1,13 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { ToastAndroid, FlatList, Keyboard, Alert, Text } from 'react-native';
+import { FlatList, Keyboard, Alert, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content, InputGroup, Input } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { searchDepartures, searchChanged, favoriteCreate } from '../actions';
 import { ListItem } from './common/ListItem';
 import colors from './style/color';
+import { showMessage } from './helpers/message';
 
 class AddFavorite extends Component {
 
@@ -21,7 +22,7 @@ class AddFavorite extends Component {
 	componentDidUpdate() {
 		if (this.props.addError || this.props.searchError) {
 			const error = this.props.addError || this.props.searchError;
-			ToastAndroid.showWithGravity(error, ToastAndroid.SHORT, ToastAndroid.CENTER);
+			showMessage(null, error);
 		}
 	}
 

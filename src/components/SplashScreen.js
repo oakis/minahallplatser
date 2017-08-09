@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { autoLogin } from '../actions';
 import { Spinner } from './common/Spinner';
 import colors from './style/color';
+import { showMessage } from './helpers/message';
 
 class SplashScreen extends Component {
 
@@ -38,7 +39,7 @@ class SplashScreen extends Component {
 				}}
 			>
 				{/* Mina hållplatser logo, custom 'spinner' under logo (brummande buss t.ex) */} 
-				<Text>Mina Hållplatser</Text>
+				<Text style={{ marginBottom: 10 }}>Mina Hållplatser</Text>
 				<Spinner
 					size="large"
 					color={colors.primary}
