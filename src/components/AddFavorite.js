@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { FlatList, Keyboard, Alert, Text } from 'react-native';
+import { FlatList, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content, InputGroup, Input } from 'native-base';
 import { Actions } from 'react-native-router-flux';
@@ -26,10 +26,18 @@ class AddFavorite extends Component {
 		}
 	}
 
+	componentWillUnmount() {
+		clearTimeout(this.timeout);
+	}
+
 	onInputChange(busStop) {
 		this.props.searchChanged(busStop);
-		const { access_token } = this.props;
-		this.props.searchDepartures({ busStop, access_token });
+		clearTimeout(this.timeout);
+		this.timeout = setTimeout(() => {
+			console.log('Searching for stops.');
+			const { access_token } = this.props;
+			this.props.searchDepartures({ busStop, access_token });
+		}, 100);
 	}
 
 	createDataSource({ departureList }) {
