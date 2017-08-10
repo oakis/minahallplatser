@@ -21,7 +21,7 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = colors.s
                 style={{
                     marginLeft: (icon) ? 5 : 0,
                     fontWeight: 'bold',
-                    fontFamily: (isAndroid()) ? 'sans-serif-thin' : 'San Francisco',
+                    fontFamily: (isAndroid()) ? 'sans-serif-thin' : 'System',
                     color: colors[fontColor]
                 }}
             >
