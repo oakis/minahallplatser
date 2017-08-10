@@ -12,15 +12,21 @@ import {
 export const favoriteCreate = ({ busStop, id }) => {
 	const { currentUser } = firebase.auth();
 	return (dispatch) => {
-		firebase.database().ref(`/users/${currentUser.uid}/favorites`)
-			.push({ busStop, id })
-			.then(() => {
-				dispatch({ type: FAVORITE_CREATE });
-				Actions.dashboard({ type: 'reset' });
-			}, (error) => {
-				console.log('favoriteCreate error: ', error);
-				favoriteCreateFail(dispatch);
-			});
+		const fbRef = firebase.database().ref(`/users/${currentUser.uid}/favorites`);
+		fbRef.orderByChild('id').equalTo(id).once('value', (snapshot) => {
+			if (snapshot.val() == null) {
+				fbRef.push({ busStop, id })
+					.then(() => {
+						dispatch({ type: FAVORITE_CREATE });
+						Actions.dashboard({ type: 'reset' });
+					}, (error) => {
+						console.log('favoriteCreate error: ', error);
+						favoriteCreateFail(dispatch);
+					});
+			} else {
+				dispatch(favoriteDelete(id));
+			}
+		});
 	};
 };
 
@@ -77,7 +83,7 @@ export const favoriteGet = (currentUser) => {
 };
 
 export const favoriteDelete = (stopId) => {
-	console.log('favoriteDelete()');
+	console.log('favoriteDelete():', stopId);
 	return (dispatch) => {
 		const { currentUser } = firebase.auth();
 		const ref = firebase.database().ref(`/users/${currentUser.uid}/favorites`);
@@ -91,10 +97,10 @@ export const favoriteDelete = (stopId) => {
 			});
 		});
 		removeByKey.remove()
-		.then(() => {
-			console.log('Removed entry');
-			dispatch({ type: FAVORITE_DELETE, payload: stopId });
-		})
-		.catch((error) => console.log(error));
+			.then(() => {
+				console.log('Removed entry');
+				dispatch({ type: FAVORITE_DELETE, payload: stopId });
+			})
+			.catch((error) => console.log(error));
 	};
 };

@@ -33,11 +33,7 @@ class ShowNearbyStops extends Component {
 					Actions.departures({ busStop: item.name, id: item.id });
 				}}
 				pressIcon={() => {
-					if (_.includes(this.props.favorites, item.id)) {
-						this.props.favoriteDelete(item.id);
-					} else {
-						this.props.favoriteCreate({ busStop: item.name, id: item.id });
-					}
+					this.props.favoriteCreate({ busStop: item.name, id: item.id });
 				}}
 				iconVisible
 				iconColor={colors.info}
