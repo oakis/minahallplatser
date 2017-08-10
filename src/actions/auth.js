@@ -26,7 +26,7 @@ export const resetUserPassword = (email) => {
 		firebase.auth().sendPasswordResetEmail(email).then(() => {
 			showMessage('long', `Ett mail för att återställa ditt lösenord har skickats till ${email}.`);
 			dispatch({ type: RESET_PASSWORD });
-			Actions.login({ type: 'reset' });
+			Actions.auth({ type: 'reset' });
 		}, (error) => {
 			console.log('resetUserPassword error: ', error);
 		});

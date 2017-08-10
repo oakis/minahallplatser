@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Text, Dimensions } from 'react-native';
+import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Content, Button, Input, InputGroup } from 'native-base';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin } from '../actions';
-import { Spinner } from './common/Spinner';
-import colors from './style/color';
+import { Input } from './common/Input';
+import { Button } from './common/Button';
 
 class LoginForm extends Component {
 
@@ -27,78 +26,61 @@ class LoginForm extends Component {
 		this.props.loginUser({ email, password });
 	}
 
-	renderSpinner() {
-		if (this.props.loading) {
-			return (
-				<Spinner
-					size="small"
-					color={colors.alternative}
-				/>
-			);
-		}
-
-		return <Text>Logga in</Text>;
-	}
-
 	render() {
-		const width = Dimensions.get('window').width * 0.8;
 		return (
-			<Container>
-				<Content
-					contentContainerStyle={{
-						flex: 1,
-						flexDirection: 'column',
-						justifyContent: 'flex-start',
-						alignItems: 'center'
-					}}
-					keyboardShouldPersistTaps="always"
-					keyboardDismissMode="on-drag"
-				>
-					<InputGroup borderType="underline" style={{ width }}>
-						<Input
-							placeholder="din@email.se"
-							label="Email"
-							keyboardType="email-address"
-							autoFocus
-							returnKeyType="next"
-							onChangeText={this.onEmailChange.bind(this)}
-							value={this.props.email}
-						/>
-					</InputGroup>
+			<View
+				style={{
+					flex: 1,
+					marginLeft: 10,
+					marginRight: 10,
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'center'
+				}}
+				keyboardShouldPersistTaps="always"
+				keyboardDismissMode="on-drag"
+			>
+					<Input
+						placeholder="din@email.se"
+						keyboardType="email-address"
+						returnKeyType="next"
+						onChangeText={this.onEmailChange.bind(this)}
+						value={this.props.email}
+						icon="ios-mail"
+					/>
+					<Input
+						secureTextEntry
+						placeholder="ditt lösenord"
+						onChangeText={this.onPasswordChange.bind(this)}
+						value={this.props.password}
+						icon="ios-key"
+						iconSize={22}
+					/>
 
-					<InputGroup borderType="underline" style={{ width }}>
-						<Input
-							secureTextEntry
-							placeholder="ditt lösenord"
-							label="Lösenord"
-							onChangeText={this.onPasswordChange.bind(this)}
-							value={this.props.password}
-						/>
-					</InputGroup>
+				<Text style={styles.errorStyle}>
+					{this.props.error}
+				</Text>
 
-					<Button
-						primary
-						block
-						capitalize
-						onPress={this.onButtonPress.bind(this)}
-						style={{ width, marginTop: 10, alignSelf: 'center' }}
-					>
-						{this.renderSpinner()}
-					</Button>
+				<Button
+					loading={this.props.loading}
+					uppercase
+					color="primary"
+					label="Logga in"
+					onPress={this.onButtonPress.bind(this)}
+				/>
 
-					<Text style={styles.errorStyle}>
-						{this.props.error}
-					</Text>
+				<Button
+					fontColor="primary"
+					label="Registrera"
+					onPress={() => Actions.register()}
+				/>
+				<Button
+					fontColor="primary"
+					label="Glömt lösenord"
+					onPress={() => Actions.resetpw()}
+				/>
 
-					<Text style={{ fontSize: 18, marginTop: 10 }} onPress={() => Actions.resetpw()}>
-						Glömt lösenord?
-					</Text>
-					<Text style={{ fontSize: 18, marginTop: 10 }} onPress={() => Actions.register()}>
-						Har du inget konto? Registrera HÄR.
-					</Text>
-
-				</Content>
-			</Container>
+			</View>
 		);
 	}
 

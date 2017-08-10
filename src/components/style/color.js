@@ -8,5 +8,6 @@ export default {
     warning: '#FFB347',
     
     lightgrey: '#efefef',
-    darkgrey: '#dedede'
+    darkgrey: '#dedede',
+    smoothBlack: '#282828'
 };

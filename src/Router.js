@@ -31,7 +31,7 @@ const RouterComponent = () => (
 		<Scene key="root" hideNavBar='true'>
 			<Scene key="splash" component={SplashScreen} hideNavBar='true' />
 			<Scene key="auth">
-				<Scene key="login" component={LoginForm} title="Logga in" initial />
+				<Scene key="login" component={LoginForm} hideNavBar='true' />
 				<Scene
 					key="register"
 					component={RegisterForm}

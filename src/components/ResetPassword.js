@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Text, Dimensions } from 'react-native';
-import { Container, Content, Button, Input, InputGroup } from 'native-base';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, resetUserPassword, resetRoute } from '../actions';
-import { Spinner } from './common/Spinner';
-import colors from './style/color';
+import { Input } from './common/Input';
+import { Button } from './common/Button';
 
 class ResetPassword extends Component {
 
@@ -22,56 +21,42 @@ class ResetPassword extends Component {
 		this.props.resetUserPassword(email);
 	}
 
-	renderSpinner() {
-		if (this.props.loading) {
-			return <Spinner color="#fff" />;
-		}
-
-		return <Text>Återställ lösenord</Text>;
-	}
-
 	render() {
-		const width = Dimensions.get('window').width * 0.8;
 		return (
-			<Container>
-				<Content
-					contentContainerStyle={{
-						flex: 1,
-						flexDirection: 'column',
-						justifyContent: 'flex-start',
-						alignItems: 'center'
-					}}
-					keyboardShouldPersistTaps="always"
-					keyboardDismissMode="on-drag"
-				>
-					<InputGroup borderType="underline" style={{ width }}>
-						<Input
-							placeholder="din@email.se"
-							label="Email"
-							keyboardType="email-address"
-							autoFocus
-							returnKeyType="next"
-							onChangeText={this.onEmailChange.bind(this)}
-							value={this.props.email}
-						/>
-					</InputGroup>
+			<View
+				style={{
+					flex: 1,
+					marginLeft: 10,
+					marginRight: 10,
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'center'
+				}}
+				keyboardShouldPersistTaps="always"
+				keyboardDismissMode="on-drag"
+			>
+				<Input
+					placeholder="din@email.se"
+					keyboardType="email-address"
+					returnKeyType="next"
+					onChangeText={this.onEmailChange.bind(this)}
+					value={this.props.email}
+					icon="ios-mail"
+				/>
 
-					<Button
-						primary
-						block
-						capitalize
-						onPress={this.onButtonPress.bind(this)}
-						style={{ width, marginTop: 10, alignSelf: 'center' }}
-					>
-						{this.renderSpinner()}
-					</Button>
+				<Button
+					loading={this.props.loading}
+					uppercase
+					color="primary"
+					label="Återställ lösenord"
+					onPress={this.onButtonPress.bind(this)}
+				/>
 
-					<Text style={styles.errorStyle}>
-						{this.props.error}
-					</Text>
+				<Text style={styles.errorStyle}>
+					{this.props.error}
+				</Text>
 
-				</Content>
-			</Container>
+			</View>
 		);
 	}
 

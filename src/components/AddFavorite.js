@@ -2,11 +2,11 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { FlatList, Keyboard, View } from 'react-native';
 import { connect } from 'react-redux';
-import { Container, Content, InputGroup, Input } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { searchDepartures, searchChanged, favoriteCreate } from '../actions';
 import { ListItem } from './common/ListItem';
 import { Spinner } from './common/Spinner';
+import { Input } from './common/Input';
 import colors from './style/color';
 import { showMessage } from './helpers/message';
 
@@ -100,24 +100,17 @@ class AddFavorite extends Component {
 
 	render() {
 		return (
-			<Container>
-				<Content
-					keyboardShouldPersistTaps="always"
-					keyboardDismissMode="on-drag"
-				>
-					<InputGroup>
-						<Input
-							autoFocus
-							returnKeyType="search"
-							label="Sök"
-							placeholder="Sök hållplats.."
-							onChangeText={this.onInputChange.bind(this)}
-							value={this.props.busStop}
-						/>
-					</InputGroup>
-					{this.renderList()}
-				</Content>
-			</Container>
+			<View>
+				<Input
+					autoFocus
+					returnKeyType="search"
+					placeholder="Sök hållplats.."
+					onChangeText={this.onInputChange.bind(this)}
+					value={this.props.busStop}
+					icon="ios-search"
+				/>
+				{this.renderList()}
+			</View>
 		);
 	}
 }
