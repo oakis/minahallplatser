@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import colors from '../style/color';
 
 export const ListItem = ({ text, icon = null, pressItem, pressIcon = null, iconVisible = false, iconColor = '#000' }) => {	
 	const styles = {
@@ -12,7 +13,7 @@ export const ListItem = ({ text, icon = null, pressItem, pressIcon = null, iconV
 			marginHorizontal: 10,
 			paddingBottom: 5,
 			borderBottomWidth: 1,
-			borderBottomColor: '#dedede'
+			borderBottomColor: colors.darkgrey
 		},
 		text: {
 			justifyContent: 'flex-start',

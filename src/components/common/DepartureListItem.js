@@ -17,37 +17,39 @@ export const DepartureListItem = ({ item }) => {
         }
         return colors.default;
     };
-    const height = 55;
+    const height = 50;
 
     const styles = {
         listStyle: {
             flex: 1,
-            height,
-            backgroundColor: (item.index % 2) ? '#fff' : '#efefef',
+            height: 60,
+            backgroundColor: (item.index % 2) ? colors.alternative : colors.lightgrey,
             marginLeft: 0,
-            paddingTop: 10,
-            paddingBottom: 10,
-            flexDirection: 'row'
+            flexDirection: 'row',
+            alignItems: 'center'
         },
         col1Style: {
+            height: 40,
             width: 50,
             alignItems: 'center',
             justifyContent: 'center'
         },
         col2Style: {
+            height,
             flex: 1,
             paddingLeft: 10,
             justifyContent: 'center'
         },
         col3Style: {
+            height,
             width: 40,
             alignItems: 'center',
             justifyContent: 'center'
         },
         stopNumStyle: {
             flex: 1,
+            height: 40,
             width: 40,
-            height: 50,
             backgroundColor: item.fgColor,
             borderWidth: 2,
             borderRadius: 3,

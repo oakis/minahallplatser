@@ -7,5 +7,6 @@ export default {
     danger: '#FF6961',
     warning: '#FFB347',
     
-    border: '#dedede'
+    lightgrey: '#efefef',
+    darkgrey: '#dedede'
 };
