@@ -17,6 +17,7 @@ import {
 } from './types';
 import { key, secret, url } from '../Vasttrafik';
 import { showMessage } from '../components/helpers/message';
+import { saveTokenExpires } from '../components/helpers/token';
 
 const encoded = base64.encode(`${key}:${secret}`);
 
@@ -132,6 +133,7 @@ export const getToken = () => {
 				body: `grant_type=client_credentials&scope=device_${currentUser.uid}`
 			}).then((res) => res.json()
 			.then((token) => {
+				saveTokenExpires(token);
 				dispatch({ type: GET_TOKEN, payload: token });
 			})
 			.catch((error) => {

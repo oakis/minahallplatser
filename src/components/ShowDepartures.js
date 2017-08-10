@@ -7,12 +7,15 @@ import { getDepartures, clearDepartures, getToken } from '../actions';
 import { DepartureListItem } from './common/DepartureListItem';
 import { Spinner } from './common/Spinner';
 import colors from './style/color';
+import { tokenNeedsRefresh } from '../components/helpers/token';
 
 class ShowDepartures extends Component {
 	
 	componentWillMount() {
 		Actions.refresh({ title: this.props.busStop });
-		this.props.getToken();
+		if (tokenNeedsRefresh()) {
+			this.props.getToken();
+		}
 		this.props.getDepartures({
 			id: this.props.id,
 			access_token: this.props.access_token,
@@ -41,7 +44,9 @@ class ShowDepartures extends Component {
 	}
 
 	refresh() {
-		this.props.getToken();
+		if (tokenNeedsRefresh()) {
+			this.props.getToken();
+		}
 		this.props.getDepartures({
 			id: this.props.id,
 			access_token: this.props.access_token,
