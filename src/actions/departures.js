@@ -5,9 +5,10 @@ import {
 	GET_DEPARTURES_FAIL,
 	CLR_DEPARTURES
 } from './types';
+import { timeStart, timeEnd } from '../components/helpers/time';
 
 export const getDepartures = ({ id, access_token, time, date }) => {
-	const checkStart = moment();
+	timeStart();
 	const url = `https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=${id}&date=${date}&time=${time}&format=json&timeSpan=90&maxDeparturesPerLine=2&needJourneyDetail=0`;
 	return (dispatch) => {
 		fetch(url, { headers: { Authorization: `Bearer ${access_token}` } })
@@ -20,7 +21,7 @@ export const getDepartures = ({ id, access_token, time, date }) => {
 				});
 			})
 			.then((departures) => {
-				console.log('Fetch took ', moment().diff(checkStart), ' milliseconds.');
+				timeEnd('getDepartures');
 				if (departures.DepartureBoard) {
 					if (departures.DepartureBoard.Departure) {
 						const serverdate = departures.DepartureBoard.serverdate || moment().format('YYYY-MM-DD');
@@ -34,7 +35,7 @@ export const getDepartures = ({ id, access_token, time, date }) => {
 								{ name: item.name, direction: item.direction }
 							);
 							const timeDeparture = moment(
-								`${serverdate} ${item.rtTime || item.time}`
+								`${item.date} ${item.rtTime || item.time}`
 							);
 							const timeLeft = timeDeparture.diff(now, 'minutes');
 							if (findIndex !== -1 && !mapdDepartures[findIndex].nextStop) {
@@ -48,9 +49,8 @@ export const getDepartures = ({ id, access_token, time, date }) => {
 
 						mapdDepartures = _.orderBy(mapdDepartures, ['timeLeft', 'nextStop']);
 						mapdDepartures = _.map(mapdDepartures, (dep, index) => {
-								return { ...dep, index };
-							});
-						// console.log('Full request took ', moment().diff(checkStart), ' milliseconds.');
+							return { ...dep, index };
+						});
 						dispatch({
 							type: GET_DEPARTURES,
 							payload: {
@@ -66,7 +66,7 @@ export const getDepartures = ({ id, access_token, time, date }) => {
 						});
 					}
 				} else {
-					console.log('Error', departures)
+					console.log('Error', departures);
 					dispatch({
 						type: GET_DEPARTURES_FAIL,
 						payload: 'Något gick snett. Försök igen om en stund.'
