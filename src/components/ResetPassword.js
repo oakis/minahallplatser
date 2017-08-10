@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, resetUserPassword, resetRoute } from '../actions';
-import { Input } from './common/Input';
-import { Button } from './common/Button';
+import { Input, Button } from './common';
 
 class ResetPassword extends Component {
 

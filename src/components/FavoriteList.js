@@ -5,8 +5,7 @@ import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete } from '../actions';
-import { ListItem } from './common/ListItem';
-import { Spinner } from './common/Spinner';
+import { ListItem, Spinner } from './common';
 import colors from './style/color';
 
 

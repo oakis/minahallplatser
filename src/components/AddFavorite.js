@@ -4,9 +4,7 @@ import { FlatList, Keyboard, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { searchDepartures, searchChanged, favoriteCreate } from '../actions';
-import { ListItem } from './common/ListItem';
-import { Spinner } from './common/Spinner';
-import { Input } from './common/Input';
+import { ListItem, Spinner, Input } from './common';
 import colors from './style/color';
 import { showMessage } from './helpers/message';
 

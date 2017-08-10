@@ -8,8 +8,7 @@ import {
 	registerUser,
 	resetRoute
 } from '../actions';
-import { Input } from './common/Input';
-import { Button } from './common/Button';
+import { Input, Button } from './common';
 
 class RegisterForm extends Component {
 	

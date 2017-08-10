@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { getDepartures, clearDepartures, getToken } from '../actions';
-import { DepartureListItem } from './common/DepartureListItem';
-import { Spinner } from './common/Spinner';
+import { DepartureListItem, Spinner } from './common';
 import colors from './style/color';
 import { tokenNeedsRefresh } from '../components/helpers/token';
 

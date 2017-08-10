@@ -4,9 +4,8 @@ import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { autoLogin } from '../actions';
-import { Spinner } from './common/Spinner';
+import { Spinner } from './common';
 import colors from './style/color';
-import { showMessage } from './helpers/message';
 
 class SplashScreen extends Component {
 

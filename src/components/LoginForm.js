@@ -3,8 +3,7 @@ import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin } from '../actions';
-import { Input } from './common/Input';
-import { Button } from './common/Button';
+import { Button, Input } from './common';
 
 class LoginForm extends Component {
 
