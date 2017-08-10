@@ -6,26 +6,6 @@ import { Spinner } from './Spinner';
 import colors from '../style/color';
 
 export const Button = ({ icon, iconSize = 24, label, color, fontColor = colors.smoothBlack, onPress, uppercase = false, loading }) => {
-    function content() {
-        return (
-            <View
-                style={{
-                    alignSelf: 'stretch',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    marginBottom: 2,
-                    backgroundColor: colors[color],
-                    borderRadius: 3
-                }}
-            >
-                <Icon name={icon} size={iconSize} />
-                {showSpinnerOrText()}
-            </View>
-        );
-    }
 
     function showSpinnerOrText() {
         if (loading) {
@@ -41,7 +21,7 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = colors.s
                 style={{
                     marginLeft: (icon) ? 5 : 0,
                     fontWeight: 'bold',
-                    fontFamily: 'sans-serif-thin',
+                    //fontFamily: 'sans-serif-thin',
                     color: colors[fontColor]
                 }}
             >
@@ -49,23 +29,37 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = colors.s
         );
     }
 
+    const buttonStyle = {
+        alignSelf: 'stretch',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginBottom: 2,
+        backgroundColor: colors[color],
+        borderRadius: 3
+    };
+
     function renderButton() {
-        if (isAndroid) {
+        if (isAndroid()) {
             return (
                 <TouchableNativeFeedback
+                    style={buttonStyle}
                     onPress={onPress}
-                    style={{ backgroundColor: colors.primary, flex: 1 }}
                 >
-                    {content()}
+                    <Icon name={icon} size={iconSize} />
+                    {showSpinnerOrText()}
                 </TouchableNativeFeedback>
             );
         }
         return (
             <TouchableOpacity
-                style={{ backgroundColor: colors.primary, flex: 1 }}
+                style={buttonStyle}
                 onPress={onPress}
             >
-                {content()}
+                <Icon name={icon} size={iconSize} />
+                {showSpinnerOrText()}
             </TouchableOpacity>
         );
     }
