@@ -21,11 +21,12 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = colors.s
                 style={{
                     marginLeft: (icon) ? 5 : 0,
                     fontWeight: 'bold',
-                    //fontFamily: 'sans-serif-thin',
+                    fontFamily: (isAndroid()) ? 'sans-serif-thin' : 'San Francisco',
                     color: colors[fontColor]
                 }}
             >
-                {(uppercase) ? label.toUpperCase() : label}</Text>
+                {(uppercase) ? label.toUpperCase() : label}
+            </Text>
         );
     }
 
@@ -45,11 +46,12 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = colors.s
         if (isAndroid()) {
             return (
                 <TouchableNativeFeedback
-                    style={buttonStyle}
                     onPress={onPress}
                 >
-                    <Icon name={icon} size={iconSize} />
-                    {showSpinnerOrText()}
+                    <View style={buttonStyle}>
+                        <Icon name={icon} size={iconSize} />
+                        {showSpinnerOrText()}
+                    </View>
                 </TouchableNativeFeedback>
             );
         }
