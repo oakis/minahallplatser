@@ -1,5 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
@@ -12,20 +11,12 @@ import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
 import colors from './components/style/color';
 
-const NavbarColor = () => {
-	return (Platform.OS === 'ios') ? '#007AFF' : '#779ECB';
-};
-
-const NavbarTextColor = () => {
-	return '#ffffff';
-};
-
 const RouterComponent = () => (
 	<Router
-		titleStyle={{ color: NavbarTextColor(), alignSelf: 'center' }}
-		navigationBarStyle={{ backgroundColor: NavbarColor(), paddingHorizontal: 10 }}
-		rightButtonTextStyle={{ color: NavbarTextColor() }}
-		leftButtonTextStyle={{ color: NavbarTextColor(), tintColor: 'red' }}
+		titleStyle={{ color: colors.alternative, alignSelf: 'center' }}
+		navigationBarStyle={{ backgroundColor: colors.primary, paddingHorizontal: 10 }}
+		rightButtonTextStyle={{ color: colors.alternative }}
+		leftButtonTextStyle={{ color: colors.alternative }}
 		renderBackButton={() => {
 			return (
 				<Icon 
