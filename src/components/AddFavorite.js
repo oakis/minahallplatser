@@ -61,7 +61,7 @@ class AddFavorite extends Component {
 				icon={(_.includes(this.props.favorites, item.id)) ? 'ios-star' : 'ios-star-outline'}
 				pressItem={() => {
 					Keyboard.dismiss();
-					Actions.departures(item);
+					Actions.departures({ busStop: item.name, id: item.id });
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
