@@ -16,17 +16,18 @@ export const searchChanged = (text) => {
 	};
 };
 
-export const searchDepartures = ({ busStop, accessToken }) => {
+export const searchDepartures = ({ busStop, access_token }) => {
 	return (dispatch) => {
 		timeStart();
 		fetch(`https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=${busStop}&format=json`,
 			{
 				headers: {
-					Authorization: `Bearer ${accessToken}`
+					Authorization: `Bearer ${access_token}`
 				}
 			})
 			.then((data) => data.json())
 			.then((list) => {
+				console.log(list);
 				timeEnd('searchDepartures');
 				dispatch({ type: SEARCH_DEPARTURES, payload: list.LocationList.StopLocation });
 			})
@@ -41,12 +42,12 @@ export const searchDepartures = ({ busStop, accessToken }) => {
 	};
 };
 
-export const getNearbyStops = ({ accessToken }) => {
+export const getNearbyStops = ({ access_token }) => {
 	return (dispatch) => {
 		dispatch({ type: CLR_SEARCH });
 		navigator.geolocation.getCurrentPosition((position) => {
 			const { longitude, latitude } = position.coords;
-			getCoordsSuccess({ dispatch, longitude, latitude, accessToken });
+			getCoordsSuccess({ dispatch, longitude, latitude, access_token });
 		},
 		() => {
 			dispatch({
@@ -62,12 +63,12 @@ export const getNearbyStops = ({ accessToken }) => {
 	};
 };
 
-const getCoordsSuccess = ({ dispatch, longitude, latitude, accessToken }) => {
+const getCoordsSuccess = ({ dispatch, longitude, latitude, access_token }) => {
 	timeStart();
 	fetch(`https://api.vasttrafik.se/bin/rest.exe/v2/location.nearbystops?originCoordLat=${latitude}&originCoordLong=${longitude}&format=json`,
 	{
 			headers: {
-			Authorization: `Bearer ${accessToken}`
+			Authorization: `Bearer ${access_token}`
 		}
 	})
 	.then((data) => data.json())
