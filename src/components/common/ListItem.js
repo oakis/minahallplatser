@@ -12,6 +12,7 @@ export const ListItem = ({ text, icon = null, pressItem, pressIcon = null, iconV
 			marginTop: 5,
 			marginHorizontal: 10,
 			paddingBottom: 5,
+			height: 50,
 			borderBottomWidth: 1,
 			borderBottomColor: colors.darkgrey
 		},
@@ -21,6 +22,7 @@ export const ListItem = ({ text, icon = null, pressItem, pressIcon = null, iconV
 		},
 		icon: {
 			justifyContent: 'flex-end',
+			alignSelf: 'center',
 			color: iconColor
 		}
 	};
