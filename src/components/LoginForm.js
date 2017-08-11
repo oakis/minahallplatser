@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin } from '../actions';
-import { Button, Input } from './common';
+import { Button, Input, Message } from './common';
 
 class LoginForm extends Component {
 
-	componentWillMount() {
+	componentWillUnmount() {
 		this.props.resetRoute();
 	}
 
@@ -39,26 +39,28 @@ class LoginForm extends Component {
 				keyboardShouldPersistTaps="always"
 				keyboardDismissMode="on-drag"
 			>
-					<Input
-						placeholder="din@email.se"
-						keyboardType="email-address"
-						returnKeyType="next"
-						onChangeText={this.onEmailChange.bind(this)}
-						value={this.props.email}
-						icon="ios-mail"
-					/>
-					<Input
-						secureTextEntry
-						placeholder="ditt lösenord"
-						onChangeText={this.onPasswordChange.bind(this)}
-						value={this.props.password}
-						icon="ios-key"
-						iconSize={22}
-					/>
 
-				<Text style={styles.errorStyle}>
-					{this.props.error}
-				</Text>
+				<Message
+					type="danger"
+					message={this.props.error}
+				/>
+
+				<Input
+					placeholder="din@email.se"
+					keyboardType="email-address"
+					returnKeyType="next"
+					onChangeText={this.onEmailChange.bind(this)}
+					value={this.props.email}
+					icon="ios-mail"
+				/>
+				<Input
+					secureTextEntry
+					placeholder="ditt lösenord"
+					onChangeText={this.onPasswordChange.bind(this)}
+					value={this.props.password}
+					icon="ios-key"
+					iconSize={22}
+				/>
 
 				<Button
 					loading={this.props.loading}
@@ -88,14 +90,6 @@ class LoginForm extends Component {
 const mapStateToProps = ({ auth }) => {
 	const { email, password, error, loading, token } = auth;
 	return { email, password, error, loading, token };
-};
-
-const styles = {
-	errorStyle: {
-		fontSize: 20,
-		alignSelf: 'center',
-		color: 'red'
-	}
 };
 
 export default connect(mapStateToProps, {

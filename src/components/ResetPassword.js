@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { View, TouchableWithoutFeedback, Text, Keyboard } from 'react-native';
+import { View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, resetUserPassword, resetRoute } from '../actions';
-import { Input, Button } from './common';
+import { Input, Button, Message } from './common';
 
 class ResetPassword extends Component {
 
 	componentWillMount() {
+		this.props.resetRoute();
+	}
+
+	componentWillUnmount() {
 		this.props.resetRoute();
 	}
 
@@ -35,6 +39,10 @@ class ResetPassword extends Component {
 						alignItems: 'center'
 					}}
 				>
+					<Message
+						type="danger"
+						message={this.props.error}
+					/>
 					<Input
 						placeholder="din@email.se"
 						keyboardType="email-address"
@@ -43,19 +51,13 @@ class ResetPassword extends Component {
 						value={this.props.email}
 						icon="ios-mail"
 					/>
-
 					<Button
 						loading={this.props.loading}
 						uppercase
 						color="primary"
 						label="Återställ lösenord"
 						onPress={this.onButtonPress.bind(this)}
-						fontColor="alternative"
 					/>
-
-					<Text style={styles.errorStyle}>
-						{this.props.error}
-					</Text>
 				</View>
 			</TouchableWithoutFeedback>
 		);
@@ -66,14 +68,6 @@ class ResetPassword extends Component {
 const mapStateToProps = ({ auth }) => {
 	const { email, error, loading } = auth;
 	return { email, error, loading };
-};
-
-const styles = {
-	errorStyle: {
-		fontSize: 12,
-		alignSelf: 'center',
-		color: 'red'
-	}
 };
 
 export default connect(mapStateToProps,

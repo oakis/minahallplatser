@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import {
 	emailChanged,
@@ -8,10 +8,10 @@ import {
 	registerUser,
 	resetRoute
 } from '../actions';
-import { Input, Button } from './common';
+import { Input, Button, Message } from './common';
 
 class RegisterForm extends Component {
-	
+
 	componentWillMount() {
 		this.props.resetRoute();
 	}
@@ -39,13 +39,6 @@ class RegisterForm extends Component {
 	}
 
 	render() {
-		const styles = {
-			errorStyle: {
-				fontSize: 20,
-				textAlign: 'center',
-				color: 'red'
-			}
-		};
 		return (
 			<View
 				style={{
@@ -59,6 +52,10 @@ class RegisterForm extends Component {
 				keyboardShouldPersistTaps="always"
 				keyboardDismissMode="on-drag"
 			>
+				<Message
+					type="danger"
+					message={this.props.error}
+				/>
 				<Input
 					placeholder="din@email.se"
 					keyboardType="email-address"
@@ -83,7 +80,6 @@ class RegisterForm extends Component {
 					icon="ios-key"
 					iconSize={22}
 				/>
-
 				<Button
 					loading={this.props.loading}
 					uppercase
@@ -91,11 +87,6 @@ class RegisterForm extends Component {
 					label="Registrera"
 					onPress={this.onButtonPress.bind(this)}
 				/>
-
-				<Text style={styles.errorStyle}>
-					{this.props.error}
-				</Text>
-
 			</View>
 		);
 	}
