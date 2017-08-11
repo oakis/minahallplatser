@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, TouchableWithoutFeedback, Text, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, resetUserPassword, resetRoute } from '../actions';
 import { Input, Button } from './common';
@@ -22,40 +22,42 @@ class ResetPassword extends Component {
 
 	render() {
 		return (
-			<View
-				style={{
-					flex: 1,
-					marginLeft: 10,
-					marginRight: 10,
-					flexDirection: 'column',
-					justifyContent: 'center',
-					alignItems: 'center'
-				}}
-				keyboardShouldPersistTaps="always"
-				keyboardDismissMode="on-drag"
+			<TouchableWithoutFeedback
+				onPress={() => Keyboard.dismiss()}
 			>
-				<Input
-					placeholder="din@email.se"
-					keyboardType="email-address"
-					returnKeyType="next"
-					onChangeText={this.onEmailChange.bind(this)}
-					value={this.props.email}
-					icon="ios-mail"
-				/>
+				<View
+					style={{
+						flex: 1,
+						marginLeft: 10,
+						marginRight: 10,
+						flexDirection: 'column',
+						justifyContent: 'center',
+						alignItems: 'center'
+					}}
+				>
+					<Input
+						placeholder="din@email.se"
+						keyboardType="email-address"
+						returnKeyType="next"
+						onChangeText={this.onEmailChange.bind(this)}
+						value={this.props.email}
+						icon="ios-mail"
+					/>
 
-				<Button
-					loading={this.props.loading}
-					uppercase
-					color="primary"
-					label="Återställ lösenord"
-					onPress={this.onButtonPress.bind(this)}
-				/>
+					<Button
+						loading={this.props.loading}
+						uppercase
+						color="primary"
+						label="Återställ lösenord"
+						onPress={this.onButtonPress.bind(this)}
+						fontColor="alternative"
+					/>
 
-				<Text style={styles.errorStyle}>
-					{this.props.error}
-				</Text>
-
-			</View>
+					<Text style={styles.errorStyle}>
+						{this.props.error}
+					</Text>
+				</View>
+			</TouchableWithoutFeedback>
 		);
 	}
 
@@ -68,7 +70,7 @@ const mapStateToProps = ({ auth }) => {
 
 const styles = {
 	errorStyle: {
-		fontSize: 20,
+		fontSize: 12,
 		alignSelf: 'center',
 		color: 'red'
 	}

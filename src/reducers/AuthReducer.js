@@ -38,10 +38,12 @@ export default (state = INIT_STATE, action) => {
 				passwordSecond: '',
 				loading: false,
 				user: action.payload.user,
-				token: action.payload.token
+				token: action.payload.token,
+				error: ''
 			};
 		case LOGIN_USER_FAIL:
-			return { ...state, password: '', loading: false };
+			console.log(action);
+			return { ...state, password: '', loading: false, error: action.payload };
 		case LOGIN_USER:
 			return { ...state, loading: true, error: '' };
 		case REGISTER_USER:
@@ -51,7 +53,7 @@ export default (state = INIT_STATE, action) => {
 		case CHANGE_ROUTE:
 			return { ...INIT_STATE };
 		case RESET_PASSWORD:
-			return { ...INIT_STATE };
+			return { ...INIT_STATE, error: action.payload };
 		case GET_TOKEN:
 			return { ...state, token: action.payload };
 		default:

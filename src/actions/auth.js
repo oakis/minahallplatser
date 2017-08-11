@@ -28,7 +28,7 @@ export const resetUserPassword = (email) => {
 			dispatch({ type: RESET_PASSWORD });
 			Actions.auth({ type: 'reset' });
 		}, (error) => {
-			console.log('resetUserPassword error: ', error);
+			dispatch({ type: RESET_PASSWORD, payload: getFirebaseError(error) });
 		});
 	};
 };
@@ -66,36 +66,16 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 		if (password !== passwordSecond) {
 			dispatch({ type: REGISTER_USER_FAIL, payload: { error: 'Lösenorden matchade inte.' } });
 		} else {
-			let errorMessage;
 			firebase.auth().createUserWithEmailAndPassword(email, password)
 				.catch((error) => {
-					switch (error.code) {
-						case 'auth/network-request-failed':
-							errorMessage = 'Det gick inte att ansluta till databasen.';
-							break;
-						case 'auth/invalid-email':
-							errorMessage = 'Var god fyll i en giltig email.';
-							break;
-						case 'auth/email-already-in-use':
-							errorMessage = 'Emailen finns redan registrerad.';
-							break;
-						case 'auth/operation-not-allowed':
-							errorMessage = 'Registreringen är för tillfället stängd.';
-							break;
-						case 'auth/weak-password':
-							errorMessage = 'Lösenordet är för kort, använd minst 6 tecken.';
-							break;
-						default:
-							errorMessage = 'Något gick snett, kontakta gärna oakismen@gmail.com och berätta vad du gjorde när detta hände. Tack på förhand! :)';
-					}
-					dispatch({ type: REGISTER_USER_FAIL, payload: { error: errorMessage } });
+					dispatch({ type: REGISTER_USER_FAIL, payload: { error: getFirebaseError(error) } });
 				})
 				.then((registered) => {
 					if (registered) {
 						dispatch({ type: LOGIN_USER });
 						firebase.auth().signInWithEmailAndPassword(email, password)
 							.then(user => loginUserSuccess(dispatch, user))
-							.catch(() => loginUserFail(dispatch));
+							.catch((error) => loginUserFail(dispatch, error));
 					}
 				});
 		}
@@ -105,9 +85,17 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 export const loginUser = ({ email, password }) => {
 	return (dispatch) => {
 		dispatch({ type: LOGIN_USER });
-		firebase.auth().signInWithEmailAndPassword(email, password)
+		if (email && password) {
+			firebase.auth().signInWithEmailAndPassword(email, password)
 			.then(user => loginUserSuccess(dispatch, user))
-			.catch(() => loginUserFail(dispatch));
+			.catch(error => loginUserFail(dispatch, error));
+		} else if (email && !password) {
+			dispatch({ type: LOGIN_USER_FAIL, payload: 'Du måste fylla i ditt lösenord.' });
+		} else if (!email && password) {
+			dispatch({ type: LOGIN_USER_FAIL, payload: 'Du måste fylla i din email.' });
+		} else {
+			dispatch({ type: LOGIN_USER_FAIL, payload: 'Du måste fylla i email och lösenord.' });
+		}
 	};
 };
 
@@ -115,8 +103,9 @@ export const autoLogin = (user) => {
 	return (dispatch) => {
 		if (user.uid === firebase.auth().currentUser.uid) {
 			loginUserSuccess(dispatch, user);
+			return;
 		}
-		loginUserFail(dispatch);
+		loginUserFail(dispatch, user);
 	};
 };
 
@@ -152,20 +141,41 @@ const loginUserSuccess = (dispatch, user) => {
 			Authorization: `Basic ${encoded}`
 		},
 		body: `grant_type=client_credentials&scope=device_${user.uid}`
-	}).then((res) => res.json()
+	})
+	.then((res) => res.json()
 	.then((token) => {
 		AsyncStorage.setItem('minahallplatser-user', JSON.stringify(user), () => {
 			dispatch({ type: LOGIN_USER_SUCCESS, payload: { user, token } });
 			Actions.dashboard({ type: 'reset' });
 		});
 	})
-	.catch((error) => {
-		console.log(error);
-		loginUserFail(dispatch);
-	})
+	.catch((error) => loginUserFail(dispatch, error))
 	);
 };
 
-const loginUserFail = (dispatch) => {
-	dispatch({ type: LOGIN_USER_FAIL });
+const loginUserFail = (dispatch, error) => {
+	console.log('loginUserFail', getFirebaseError(error));
+	dispatch({ type: LOGIN_USER_FAIL, payload: getFirebaseError(error) });
+};
+
+const getFirebaseError = (error) => {
+	console.log(error);
+	switch (error.code) {
+		case 'auth/network-request-failed':
+			return 'Det gick inte att ansluta till databasen.';
+		case 'auth/invalid-email':
+			return 'Var god fyll i en giltig email.';
+		case 'auth/email-already-in-use':
+			return 'Emailen finns redan registrerad.';
+		case 'auth/operation-not-allowed':
+			return 'Registreringen är för tillfället stängd.';
+		case 'auth/weak-password':
+			return 'Lösenordet är för kort, använd minst 6 tecken.';
+		case 'auth/user-not-found':
+			return 'Det finns ingen användare registrerad med denna email.';
+		case 'auth/wrong-password':
+			return 'Du fyllde i fel lösenord, var god försök igen.';
+		default:
+			return 'Något gick snett, kontakta gärna oakismen@gmail.com och berätta vad du gjorde när detta hände. Tack på förhand! :)';
+	}
 };
