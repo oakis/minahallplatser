@@ -5,8 +5,7 @@ import { isAndroid } from '../helpers/device';
 import { Spinner } from './Spinner';
 import colors from '../style/color';
 
-export const Button = ({ icon, iconSize = 24, label, color, fontColor = colors.smoothBlack, onPress, uppercase = false, loading }) => {
-
+export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alternative', onPress, uppercase = false, loading }) => {
     function showSpinnerOrText() {
         if (loading) {
             return (
@@ -37,9 +36,10 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = colors.s
         alignItems: 'center',
         paddingTop: 10,
         paddingBottom: 10,
-        marginBottom: 2,
+        marginBottom: 5,
         backgroundColor: colors[color],
-        borderRadius: 3
+        borderRadius: 3,
+        elevation: 1
     };
 
     function renderButton() {
