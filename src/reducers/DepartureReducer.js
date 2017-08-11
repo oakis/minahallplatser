@@ -20,7 +20,8 @@ export default (state = INIT_STATE, action) => {
 				departures: action.payload.departures,
 				time: action.payload.time,
 				date: action.payload.date,
-				loading: false
+				loading: false,
+				error: ''
 			};
 		case GET_DEPARTURES_FAIL:
 			return { ...state, error: action.payload, loading: false };
