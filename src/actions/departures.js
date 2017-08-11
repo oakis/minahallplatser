@@ -7,11 +7,11 @@ import {
 } from './types';
 import { timeStart, timeEnd } from '../components/helpers/time';
 
-export const getDepartures = ({ id, access_token, time, date }) => {
+export const getDepartures = ({ id, accessToken, time, date }) => {
 	timeStart();
 	const url = `https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=${id}&date=${date}&time=${time}&format=json&timeSpan=90&maxDeparturesPerLine=2&needJourneyDetail=0`;
 	return (dispatch) => {
-		fetch(url, { headers: { Authorization: `Bearer ${access_token}` } })
+		fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } })
 			.then((data) => data.json())
 			.catch((error) => {
 				console.log('DepartureBoard error: ', error);

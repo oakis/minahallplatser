@@ -17,7 +17,7 @@ class ShowDepartures extends Component {
 		}
 		this.props.getDepartures({
 			id: this.props.id,
-			access_token: this.props.access_token,
+			accessToken: this.props.accessToken,
 			date: moment().format('YYYY-MM-DD'),
 			time: moment().format('HH:mm') });
 		this.createDataSource(this.props);
@@ -48,7 +48,7 @@ class ShowDepartures extends Component {
 		}
 		this.props.getDepartures({
 			id: this.props.id,
-			access_token: this.props.access_token,
+			accessToken: this.props.accessToken,
 			date: moment().format('YYYY-MM-DD'),
 			time: moment().format('HH:mm')
 		});
@@ -97,9 +97,9 @@ class ShowDepartures extends Component {
 
 const MapStateToProps = (state) => {
 	const { departures, time, date, loading, error } = state.departures;
-	const { access_token } = state.auth.token;
+	const { accessToken } = state.auth.token;
 	console.log('Recieved departures:', departures);
-	return { access_token, departures, time, date, loading, error };
+	return { accessToken, departures, time, date, loading, error };
 };
 
 export default connect(MapStateToProps,
