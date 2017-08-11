@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, ImageBackground, Text, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
@@ -29,22 +29,30 @@ class SplashScreen extends Component {
 
 	render() {
 		return (
-			<View
+			<ImageBackground
+				source={{ uri: 'https://www.w3schools.com/css/img_fjords.jpg' }}
 				style={{
-					flex: 1,
-					flexDirection: 'column',
-					justifyContent: 'center',
-					alignItems: 'center'
+					flex: 1
 				}}
 			>
-				{/* Mina hållplatser logo, custom 'spinner' under logo (brummande buss t.ex) */} 
-				<Text style={{ marginBottom: 10 }}>Mina Hållplatser</Text>
-				<Spinner
-					size="large"
-					color={colors.primary}
-					noFlex
-				/>
-			</View>
+				<View
+					style={{
+						backgroundColor: 'rgba(255,255,255,0.7)',
+						flex: 1,
+						flexDirection: 'column',
+						justifyContent: 'center',
+						alignItems: 'center'
+					}}
+				>
+					{/* Mina hållplatser logo, custom 'spinner' under logo (brummande buss t.ex) */} 
+					<Text style={{ marginBottom: 10, opacity: 1 }}>Mina Hållplatser</Text>
+					<Spinner
+						size="large"
+						color={colors.primary}
+						noFlex
+					/>
+				</View>
+			</ImageBackground>
 		);
 	}
 
