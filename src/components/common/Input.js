@@ -18,6 +18,8 @@ export const Input = ({ value, label, icon, iconSize = 24, placeholder, onChange
                 underlineColorAndroid={colors.primary}
                 keyboardType={keyboardType}
                 secureTextEntry={secureTextEntry}
+                autoCorrect={false}
+                autoCapitalize={'none'}
             />
         </View>
     );
