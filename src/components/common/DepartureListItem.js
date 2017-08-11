@@ -60,7 +60,8 @@ export const DepartureListItem = ({ item }) => {
             color: item.bgColor,
             textAlign: 'center',
             textAlignVertical: 'center',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            fontSize: (item.sname.length > 3) ? 12 : 14,
         },
         departureStyle: {
             fontSize: 24,

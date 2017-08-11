@@ -13,7 +13,7 @@ import colors from './components/style/color';
 
 const RouterComponent = () => (
 	<Router
-		titleStyle={{ color: colors.alternative, alignSelf: 'center' }}
+		titleStyle={{ color: colors.alternative, alignSelf: 'center', fontSize: 14 }}
 		navigationBarStyle={{ backgroundColor: colors.primary, paddingHorizontal: 10 }}
 		rightButtonTextStyle={{ color: colors.alternative }}
 		leftButtonTextStyle={{ color: colors.alternative }}
