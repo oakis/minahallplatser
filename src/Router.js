@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
@@ -11,6 +12,8 @@ import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
 import colors from './components/style/color';
 
+const iconSize = 24;
+
 const RouterComponent = () => (
 	<Router
 		titleStyle={{ color: colors.alternative, alignSelf: 'center', fontSize: 14 }}
@@ -19,14 +22,24 @@ const RouterComponent = () => (
 		leftButtonTextStyle={{ color: colors.alternative }}
 		renderBackButton={() => {
 			return (
-				<Icon 
-					name="ios-arrow-back"
-					style={{ color: colors.alternative, fontSize: 24 }}
+				<TouchableWithoutFeedback
 					onPress={() => Actions.pop()}
-				/>
+				>
+					<View
+						style={{
+							width: 30,
+							height: 30,
+							justifyContent: 'center'
+						}}
+					>
+						<Icon 
+							name="ios-arrow-back"
+							style={{ color: colors.alternative, fontSize: iconSize }}
+						/>
+					</View>
+				</TouchableWithoutFeedback>
 			);
-		}
-   }
+		}}
 	>
 		<Scene key="root" hideNavBar='true'>
 			<Scene key="splash" component={SplashScreen} hideNavBar='true' />
@@ -43,10 +56,10 @@ const RouterComponent = () => (
 			<Scene key="dashboard">
 				<Scene
 					renderRightButton={() => {
-						return <Icon name="ios-navigate" style={{ color: colors.alternative, fontSize: 24 }} onPress={() => Actions.listNearbyStops()} />;
+						return <Icon name="ios-navigate" style={{ color: colors.alternative, fontSize: iconSize }} onPress={() => Actions.listNearbyStops()} />;
 					}}
 					renderLeftButton={() => {
-						return <Icon name="ios-add-circle" style={{ color: colors.alternative, fontSize: 24 }} onPress={() => Actions.addfav()} />;
+						return <Icon name="ios-add-circle" style={{ color: colors.alternative, fontSize: iconSize }} onPress={() => Actions.addfav()} />;
 					}}
 					key="favlist"
 					component={FavoriteList}
