@@ -17,7 +17,7 @@ import {
 } from './types';
 import { key, secret, url } from '../Vasttrafik';
 import { showMessage } from '../components/helpers/message';
-import { saveTokenExpires } from '../components/helpers/token';
+import { saveTokenExpires, tokenNeedsRefresh } from '../components/helpers/token';
 
 const encoded = base64.encode(`${key}:${secret}`);
 
@@ -109,10 +109,11 @@ export const autoLogin = (user) => {
 	};
 };
 
-export const getToken = () => {
-	return (dispatch) => {
+export const getToken = () => (dispatch) => {
+	return new Promise((resolve, reject) => {
 		const { currentUser } = firebase.auth();
-		if (currentUser) {
+		console.log('getToken');
+		if (currentUser && tokenNeedsRefresh()) {
 			fetch(url, {
 				method: 'POST',
 				headers: {
@@ -124,13 +125,16 @@ export const getToken = () => {
 			.then((token) => {
 				saveTokenExpires(token);
 				dispatch({ type: GET_TOKEN, payload: token });
+				resolve();
 			})
 			.catch((error) => {
 				console.log(error);
+				reject();
 			})
 			);
 		}
-	};
+		reject();
+	});
 };
 
 const loginUserSuccess = (dispatch, user) => {
@@ -145,6 +149,7 @@ const loginUserSuccess = (dispatch, user) => {
 	.then((res) => res.json()
 	.then((token) => {
 		AsyncStorage.setItem('minahallplatser-user', JSON.stringify(user), () => {
+			saveTokenExpires(token);
 			dispatch({ type: LOGIN_USER_SUCCESS, payload: { user, token } });
 			Actions.dashboard({ type: 'reset' });
 		});

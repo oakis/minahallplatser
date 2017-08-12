@@ -3,18 +3,14 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { getDepartures, clearDepartures, getToken } from '../actions';
+import { getDepartures, clearDepartures } from '../actions';
 import { DepartureListItem, Spinner } from './common';
 import colors from './style/color';
-import { tokenNeedsRefresh } from '../components/helpers/token';
 
 class ShowDepartures extends Component {
 	
 	componentWillMount() {
 		Actions.refresh({ title: this.props.busStop });
-		if (tokenNeedsRefresh()) {
-			this.props.getToken();
-		}
 		this.props.getDepartures({
 			id: this.props.id,
 			access_token: this.props.access_token,
@@ -43,9 +39,6 @@ class ShowDepartures extends Component {
 	}
 
 	refresh() {
-		if (tokenNeedsRefresh()) {
-			this.props.getToken();
-		}
 		this.props.getDepartures({
 			id: this.props.id,
 			access_token: this.props.access_token,
@@ -103,4 +96,4 @@ const MapStateToProps = (state) => {
 };
 
 export default connect(MapStateToProps,
-	{ getDepartures, clearDepartures, getToken })(ShowDepartures);
+	{ getDepartures, clearDepartures })(ShowDepartures);
