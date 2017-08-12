@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete } from '../actions';
-import { ListItem, Spinner } from './common';
+import { ListItem, Spinner, Message } from './common';
 import colors from './style/color';
 
 
@@ -70,7 +70,10 @@ class FavoriteList extends Component {
 			);
 		} else if (this.props.error) {
 			return (
-				<Text style={{ textAlign: 'center' }}>{this.props.error}</Text>
+				<Message
+					message={this.props.error}
+					type="danger"
+				/>
 			);
 		} else if (this.props.favorites.length > 0) {
 			return (
@@ -83,7 +86,10 @@ class FavoriteList extends Component {
 		}
 
 		return (
-			<Text style={{ textAlign: 'center' }}>Du har inte sparat några favoriter än.</Text>
+			<Message
+				message="Du har inte sparat några favoriter än."
+				type="info"
+			/>
 		);
 	}
 
