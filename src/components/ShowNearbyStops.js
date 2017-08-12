@@ -5,7 +5,7 @@ import { FlatList, View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { getNearbyStops, favoriteCreate, favoriteDelete } from '../actions';
 import { ListItem, Spinner } from './common';
-import colors from './style/color';
+import { colors } from './style';
 
 class ShowNearbyStops extends Component {
 	

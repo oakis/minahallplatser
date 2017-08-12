@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import colors from '../style/color';
+import { colors } from '../style';
 
 export const DepartureListItem = ({ item }) => {
 	let timeLeft = '';

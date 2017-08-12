@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { autoLogin } from '../actions';
 import { Spinner } from './common';
-import colors from './style/color';
+import { colors } from './style';
 
 class SplashScreen extends Component {
 

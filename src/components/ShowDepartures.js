@@ -5,7 +5,7 @@ import { View, Text, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { getDepartures, clearDepartures } from '../actions';
 import { DepartureListItem, Spinner } from './common';
-import colors from './style/color';
+import { colors } from './style';
 
 class ShowDepartures extends Component {
 	

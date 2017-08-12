@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import colors from '../style/color';
+import { colors } from '../style';
 
 export const Message = ({ type, message }) => {
     const style = {

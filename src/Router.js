@@ -10,7 +10,7 @@ import RegisterForm from './components/RegisterForm';
 import ShowNearbyStops from './components/ShowNearbyStops';
 import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
-import colors from './components/style/color';
+import { colors } from './components/style';
 
 const iconSize = 24;
 

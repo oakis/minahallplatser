@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete } from '../actions';
 import { ListItem, Spinner, Message } from './common';
-import colors from './style/color';
+import { colors } from './style';
 
 
 class FavoriteList extends Component {

@@ -112,7 +112,6 @@ export const autoLogin = (user) => {
 export const getToken = () => (dispatch) => {
 	return new Promise((resolve, reject) => {
 		const { currentUser } = firebase.auth();
-		console.log('getToken');
 		if (currentUser && tokenNeedsRefresh()) {
 			fetch(url, {
 				method: 'POST',
