@@ -58,7 +58,7 @@ class AddFavorite extends Component {
 		return (
 			<ListItem
 				text={item.name}
-				icon={(_.includes(this.props.favorites, item.id)) ? 'ios-star' : 'ios-star-outline'}
+				icon={item.icon}
 				pressItem={() => {
 					Keyboard.dismiss();
 					Actions.departures({ busStop: item.name, id: item.id });
@@ -115,9 +115,12 @@ class AddFavorite extends Component {
 
 const MapStateToProps = (state) => {
 	const favorites = _.map(_.values(state.fav.list), 'id');
-	const { busStop, departureList, searchError, loading } = state.search;
+	const { busStop, searchError, loading } = state.search;
 	const { access_token } = state.auth.token;
 	const { addError } = state.fav;
+	const departureList = _.map(state.search.departureList, (item) => {
+		return { ...item, icon: (_.includes(favorites, item.id)) ? 'ios-star' : 'ios-star-outline' };
+	});
 	return { busStop, access_token, departureList, addError, searchError, favorites, loading };
 };
 
