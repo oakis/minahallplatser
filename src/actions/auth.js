@@ -17,7 +17,7 @@ import {
 } from './types';
 import { key, secret, url } from '../Vasttrafik';
 import { showMessage } from '../components/helpers/message';
-import { saveTokenExpires, tokenNeedsRefresh } from '../components/helpers/token';
+import { saveTokenExpires, tokenNeedsRefresh, tokenWillExpireIn } from '../components/helpers/token';
 
 const encoded = base64.encode(`${key}:${secret}`);
 
@@ -110,6 +110,7 @@ export const autoLogin = (user) => {
 };
 
 export const getToken = () => (dispatch) => {
+	tokenWillExpireIn();
 	return new Promise((resolve, reject) => {
 		const { currentUser } = firebase.auth();
 		if (currentUser && tokenNeedsRefresh()) {
