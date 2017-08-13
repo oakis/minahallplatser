@@ -20,7 +20,7 @@ export default (state = INIT_STATE, action) => {
 		case SEARCH_CHANGED:
 			return { ...state, busStop: action.payload };
 		case SEARCH_DEPARTURES:
-			return { ...state, departureList: action.payload, loading: false };
+			return { ...state, departureList: action.payload, searchError: '', loading: false };
 		case SEARCH_DEPARTURES_FAIL:
 			return { ...state, searchError: action.payload.searchError, loading: false };
 		case SEARCH_BY_GPS:
