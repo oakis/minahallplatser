@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, TouchableNativeFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { isAndroid } from '../helpers/device';
+import { isAndroid } from '../helpers';
 import { Spinner } from './Spinner';
 import { colors } from '../style';
 

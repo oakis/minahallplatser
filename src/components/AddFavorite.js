@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import { searchDepartures, searchChanged, favoriteCreate } from '../actions';
 import { ListItem, Spinner, Input } from './common';
 import { colors } from './style';
-import { showMessage } from './helpers/message';
+import { showMessage } from './helpers';
 
 class AddFavorite extends Component {
 

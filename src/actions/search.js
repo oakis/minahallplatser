@@ -7,7 +7,7 @@ import {
 	SEARCH_BY_GPS_FAIL,
 	CLR_SEARCH
 } from './types';
-import { timeStart, timeEnd } from '../components/helpers/time';
+import { timeStart, timeEnd } from '../components/helpers';
 import { getToken } from './auth';
 
 export const searchChanged = (text) => {

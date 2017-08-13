@@ -16,8 +16,7 @@ import {
 	GET_TOKEN
 } from './types';
 import { key, secret, url } from '../Vasttrafik';
-import { showMessage } from '../components/helpers/message';
-import { saveTokenExpires, tokenNeedsRefresh, tokenWillExpireIn } from '../components/helpers/token';
+import { showMessage, saveTokenExpires, tokenNeedsRefresh, tokenWillExpireIn } from '../components/helpers';
 
 const encoded = base64.encode(`${key}:${secret}`);
 
