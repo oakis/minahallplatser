@@ -39,7 +39,11 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alterna
         marginBottom: 5,
         backgroundColor: colors[color],
         borderRadius: 3,
-        elevation: 1
+        elevation: 1,
+        shadowRadius: 1,
+        shadowColor: colors.smoothBlack,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.5
     };
 
     function renderButton() {

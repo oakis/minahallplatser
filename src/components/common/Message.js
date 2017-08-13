@@ -14,7 +14,11 @@ export const Message = ({ type, message }) => {
             margin: 15,
             backgroundColor: colors[type],
             borderRadius: 3,
-            elevation: 5
+            elevation: 5,
+            shadowRadius: 5,
+            shadowColor: colors.smoothBlack,
+            shadowOffset: { width: 2.5, height: 2.5 },
+            shadowOpacity: 0.5
         },
         text: {
             color: colors.alternative,

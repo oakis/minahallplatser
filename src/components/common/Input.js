@@ -5,7 +5,17 @@ import { colors } from '../style';
 
 export const Input = ({ value, label, icon, iconSize = 24, placeholder, onChangeText, autoFocus = false, returnKeyType, keyboardType, secureTextEntry = false }) => {
     return (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View
+            style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 10,
+                shadowRadius: 5,
+                shadowColor: colors.smoothBlack,
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: 0.2
+            }}
+        >
             {(label) ? <Text>{label}</Text> : null}
             {(icon) ? <Icon name={icon} size={iconSize} style={{ paddingLeft: 5, paddingRight: 5 }} /> : null}
             <TextInput
