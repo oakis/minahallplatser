@@ -7,7 +7,7 @@ import {
 	SEARCH_BY_GPS_FAIL,
 	CLR_SEARCH
 } from './types';
-import { timeStart, timeEnd } from '../components/helpers';
+import { timeStart, timeEnd, handleVasttrafikFetch } from '../components/helpers';
 import { getToken } from './auth';
 
 export const searchChanged = (text) => {
@@ -27,7 +27,7 @@ export const searchDepartures = ({ busStop, access_token }) => {
 						Authorization: `Bearer ${access_token}`
 					}
 				})
-				.then((data) => data.json())
+				.then(handleVasttrafikFetch)
 				.then((list) => {
 					console.log(list);
 					timeEnd('searchDepartures');
@@ -75,7 +75,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude, access_token }) => {
 				Authorization: `Bearer ${access_token}`
 			}
 		})
-		.then((data) => data.json())
+		.then(handleVasttrafikFetch)
 		.then((list) => {
 			timeEnd('getNearbyStops');
 			console.log('getNearbyStops:', list);

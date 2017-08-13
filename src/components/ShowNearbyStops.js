@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { getNearbyStops, favoriteCreate, favoriteDelete } from '../actions';
-import { ListItem, Spinner } from './common';
+import { ListItem, Spinner, Message } from './common';
 import { colors } from './style';
 
 class ShowNearbyStops extends Component {
@@ -50,9 +50,10 @@ class ShowNearbyStops extends Component {
 			);
 		} else if (this.props.searchError) {
 			return (
-				<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-					<Text>{this.props.searchError}</Text>
-				</View>
+				<Message
+					type="warning"
+					message={this.props.searchError}
+				/>
 			);
 		}
 

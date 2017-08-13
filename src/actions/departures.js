@@ -5,7 +5,7 @@ import {
 	GET_DEPARTURES_FAIL,
 	CLR_DEPARTURES
 } from './types';
-import { timeStart, timeEnd } from '../components/helpers/time';
+import { timeStart, timeEnd, handleVasttrafikFetch } from '../components/helpers';
 import { getToken } from './auth';
 
 export const getDepartures = ({ id, access_token, time, date }) => {
@@ -14,14 +14,7 @@ export const getDepartures = ({ id, access_token, time, date }) => {
 	return (dispatch) => {
 		dispatch(getToken()).finally(() => {
 			fetch(url, { headers: { Authorization: `Bearer ${access_token}` } })
-				.then((data) => data.json())
-				.catch((error) => {
-					console.log('DepartureBoard error: ', error);
-					dispatch({
-						type: GET_DEPARTURES_FAIL,
-						payload: 'Kunde inte hämta avgångar från Västtrafik.'
-					});
-				})
+				.then(handleVasttrafikFetch)
 				.then((departures) => {
 					timeEnd('getDepartures');
 					if (departures.DepartureBoard) {
@@ -68,17 +61,18 @@ export const getDepartures = ({ id, access_token, time, date }) => {
 							});
 						}
 					} else {
-						console.log('Error', departures);
+						console.log('!departures.DepartureBoard.Departure:', departures);
 						dispatch({
 							type: GET_DEPARTURES_FAIL,
 							payload: 'Något gick snett. Försök igen om en stund.'
 						});
 					}
-				}, (error) => {
-					console.log('Could not get departures: ', error);
+				})
+				.catch((error) => {
+					console.log('catch:', error);
 					dispatch({
 						type: GET_DEPARTURES_FAIL,
-						payload: 'Kunde inte hämta avgångar från Västtrafik.'
+						payload: 'Det gick inte att kontakta Västtrafik, kontrollera din anslutning.'
 					});
 				});
 		});

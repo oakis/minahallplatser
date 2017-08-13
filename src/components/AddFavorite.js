@@ -4,16 +4,16 @@ import { FlatList, Keyboard, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { searchDepartures, searchChanged, favoriteCreate } from '../actions';
-import { ListItem, Spinner, Input } from './common';
+import { ListItem, Spinner, Input, Message } from './common';
 import { colors } from './style';
-import { showMessage } from './helpers';
 
 class AddFavorite extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			loading: false
+			loading: false,
+			error: this.props.addError || this.props.searchError
 		};
 	}
 
@@ -24,14 +24,7 @@ class AddFavorite extends Component {
 	componentWillReceiveProps(nextProps) {
 		this.createDataSource(nextProps);
 		if (nextProps.loading !== this.state.loading) {
-			this.setState({ loading: nextProps.loading });
-		}
-	}
-
-	componentDidUpdate() {
-		if (this.props.addError || this.props.searchError) {
-			const error = this.props.addError || this.props.searchError;
-			showMessage(null, error);
+			this.setState({ loading: nextProps.loading, error: nextProps.searchError || nextProps.addError });
 		}
 	}
 
@@ -83,6 +76,13 @@ class AddFavorite extends Component {
 						noFlex
 					/>
 				</View>
+			);
+		} else if (this.state.error) {
+			return (
+				<Message
+					type="warning"
+					message={this.state.error}
+				/>
 			);
 		}
 

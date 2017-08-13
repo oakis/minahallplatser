@@ -1,10 +1,10 @@
 import moment from 'moment';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { getDepartures, clearDepartures } from '../actions';
-import { DepartureListItem, Spinner } from './common';
+import { DepartureListItem, Spinner, Message } from './common';
 import { colors } from './style';
 
 class ShowDepartures extends Component {
@@ -67,7 +67,7 @@ class ShowDepartures extends Component {
 				/>
 			);
 		} else if (this.props.error) {
-			return <Text style={{ textAlign: 'center' }}>{this.props.error}</Text>;
+			return <Message type="warning" message={this.props.error} />;
 		}
 
 		return ( 

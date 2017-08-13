@@ -1,4 +1,5 @@
-export const convertJSON = (response) => {
+export const handleVasttrafikFetch = (response) => {
+    console.log(response);
     if (!response.ok) {
         throw Error(response.statusText);
     }

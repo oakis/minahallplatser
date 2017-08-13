@@ -16,13 +16,14 @@ import {
 	GET_TOKEN
 } from './types';
 import { key, secret, url } from '../Vasttrafik';
-import { showMessage, saveTokenExpires, tokenNeedsRefresh, tokenWillExpireIn } from '../components/helpers';
+import { showMessage, saveTokenExpires, tokenNeedsRefresh, tokenWillExpireIn, handleVasttrafikFetch } from '../components/helpers';
 
 const encoded = base64.encode(`${key}:${secret}`);
 
 export const resetUserPassword = (email) => {
 	return (dispatch) => {
-		firebase.auth().sendPasswordResetEmail(email).then(() => {
+		firebase.auth().sendPasswordResetEmail(email)
+		.then(() => {
 			showMessage('long', `Ett mail för att återställa ditt lösenord har skickats till ${email}.`);
 			dispatch({ type: RESET_PASSWORD });
 			Actions.auth({ type: 'reset' });
@@ -120,7 +121,8 @@ export const getToken = () => (dispatch) => {
 					Authorization: `Basic ${encoded}`
 				},
 				body: `grant_type=client_credentials&scope=device_${currentUser.uid}`
-			}).then((res) => res.json()
+			})
+			.then(handleVasttrafikFetch)
 			.then((token) => {
 				saveTokenExpires(token);
 				dispatch({ type: GET_TOKEN, payload: token });
@@ -129,8 +131,7 @@ export const getToken = () => (dispatch) => {
 			.catch((error) => {
 				console.log(error);
 				reject();
-			})
-			);
+			});
 		}
 		reject();
 	});
@@ -145,7 +146,7 @@ const loginUserSuccess = (dispatch, user) => {
 		},
 		body: `grant_type=client_credentials&scope=device_${user.uid}`
 	})
-	.then((res) => res.json()
+	.then(handleVasttrafikFetch)
 	.then((token) => {
 		AsyncStorage.setItem('minahallplatser-user', JSON.stringify(user), () => {
 			saveTokenExpires(token);
@@ -153,20 +154,26 @@ const loginUserSuccess = (dispatch, user) => {
 			Actions.dashboard({ type: 'reset' });
 		});
 	})
-	.catch((error) => loginUserFail(dispatch, error))
-	);
+	.catch((error) => loginUserFail(dispatch, error));
 };
 
 const loginUserFail = (dispatch, error) => {
-	console.log('loginUserFail', getFirebaseError(error));
-	dispatch({ type: LOGIN_USER_FAIL, payload: getFirebaseError(error) });
+	console.log('loginUserFail', error);
+	if (error.code) {
+		dispatch({ type: LOGIN_USER_FAIL, payload: getFirebaseError(error) });
+	} else {
+		dispatch({ type: LOGIN_USER_FAIL, payload: getFirebaseError({ code: 'auth/network-request-failed' }) });
+	}
+	if (Actions.currentScene === 'splash') {
+		Actions.auth();
+	}
 };
 
 const getFirebaseError = (error) => {
 	console.log(error);
 	switch (error.code) {
 		case 'auth/network-request-failed':
-			return 'Det gick inte att ansluta till databasen.';
+			return 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
 		case 'auth/invalid-email':
 			return 'Var god fyll i en giltig email.';
 		case 'auth/email-already-in-use':
