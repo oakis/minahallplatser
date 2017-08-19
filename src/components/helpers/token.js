@@ -9,7 +9,7 @@ export const tokenNeedsRefresh = () => {
 
 export const saveTokenExpires = (token) => {
     tokenExpires = moment().add(token.expires_in, 'seconds');
-    console.log('saveTokenExpires()', tokenExpires._d);
+    console.log('saveTokenExpires()', tokenExpires.format('YYYY-MM-DD HH:mm'));
 };
 
 export const tokenWillExpireIn = () => {
