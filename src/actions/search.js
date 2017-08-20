@@ -9,6 +9,7 @@ import {
 } from './types';
 import { timeStart, timeEnd, handleVasttrafikFetch } from '../components/helpers';
 import { getToken } from './auth';
+import { serverUrl } from '../Server';
 
 export const searchChanged = (text) => {
 	return {
@@ -21,26 +22,41 @@ export const searchDepartures = ({ busStop, access_token }) => {
 	return (dispatch) => {
 		dispatch(getToken()).finally(() => {
 			timeStart();
-			fetch(`https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=${busStop}&format=json`,
-				{
-					headers: {
-						Authorization: `Bearer ${access_token}`
-					}
+			const url = `${serverUrl}/api/search`;
+			const config = {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					busStop,
+					access_token
 				})
-				.then(handleVasttrafikFetch)
-				.then((list) => {
-					console.log(list);
-					timeEnd('searchDepartures');
-					dispatch({ type: SEARCH_DEPARTURES, payload: list.LocationList.StopLocation });
-				})
-				.catch((error) => {
-					timeEnd('searchDepartures');
-					console.log(error);
+			};
+			fetch(url, config)
+			.then(handleVasttrafikFetch)
+			.then(({ success, data }) => {
+				if (success) {
+					dispatch({
+						type: SEARCH_DEPARTURES,
+						payload: data
+					});
+					timeEnd('getDepartures');
+				} else {
 					dispatch({
 						type: SEARCH_DEPARTURES_FAIL,
-						payload: { searchError: 'Kunde inte kontakta Västtrafik. Försök igen senare.' }
+						payload: data
 					});
+					timeEnd('getDepartures');
+				}
+			})
+			.catch((data) => {
+				dispatch({
+					type: SEARCH_DEPARTURES_FAIL,
+					payload: data
 				});
+				timeEnd('getDepartures');
+			});
 		});
 	};
 };
@@ -69,24 +85,29 @@ export const getNearbyStops = ({ access_token }) => {
 const getCoordsSuccess = ({ dispatch, longitude, latitude, access_token }) => {
 	dispatch(getToken()).finally(() => {
 		timeStart();
-		fetch(`https://api.vasttrafik.se/bin/rest.exe/v2/location.nearbystops?originCoordLat=${latitude}&originCoordLong=${longitude}&format=json`,
-		{
-				headers: {
-				Authorization: `Bearer ${access_token}`
-			}
-		})
+		const url = `${serverUrl}/api/gps`;
+		const config = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				longitude,
+				latitude,
+				access_token
+			})
+		};
+		fetch(url, config)
 		.then(handleVasttrafikFetch)
-		.then((list) => {
+		.then(({ success, data }) => {
 			timeEnd('getNearbyStops');
-			console.log('getNearbyStops:', list);
-			if (!list.LocationList.StopLocation) {
+			if (success) {
+				dispatch({ type: SEARCH_BY_GPS, payload: data });
+			} else {
 				dispatch({
 					type: SEARCH_BY_GPS_FAIL,
-					payload: { searchError: 'Hittade inga hållplatser nära dig.' }
+					payload: data
 				});
-			} else {
-				const mapdList = _.uniqBy(_.filter(list.LocationList.StopLocation, (o) => !o.track), 'name');
-				dispatch({ type: SEARCH_BY_GPS, payload: mapdList });
 			}
 		})
 		.catch((error) => {
