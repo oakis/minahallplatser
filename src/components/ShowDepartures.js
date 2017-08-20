@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
@@ -13,9 +12,8 @@ class ShowDepartures extends Component {
 		Actions.refresh({ title: this.props.busStop });
 		this.props.getDepartures({
 			id: this.props.id,
-			access_token: this.props.access_token,
-			date: moment().format('YYYY-MM-DD'),
-			time: moment().format('HH:mm') });
+			access_token: this.props.access_token
+		});
 		this.createDataSource(this.props);
 	}
 
@@ -41,9 +39,7 @@ class ShowDepartures extends Component {
 	refresh() {
 		this.props.getDepartures({
 			id: this.props.id,
-			access_token: this.props.access_token,
-			date: moment().format('YYYY-MM-DD'),
-			time: moment().format('HH:mm')
+			access_token: this.props.access_token
 		});
 	}
 
