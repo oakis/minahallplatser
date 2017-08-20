@@ -1,4 +1,3 @@
-import base64 from 'base-64';
 import firebase from 'firebase';
 import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -12,13 +11,9 @@ import {
 	REGISTER_USER,
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
-	RESET_PASSWORD,
-	GET_TOKEN
+	RESET_PASSWORD
 } from './types';
-import { key, secret, url } from '../Vasttrafik';
-import { showMessage, saveTokenExpires, tokenNeedsRefresh, tokenWillExpireIn, handleVasttrafikFetch } from '../components/helpers';
-
-const encoded = base64.encode(`${key}:${secret}`);
+import { showMessage, getToken } from '../components/helpers';
 
 export const resetUserPassword = (email) => {
 	return (dispatch) => {
@@ -109,52 +104,13 @@ export const autoLogin = (user) => {
 	};
 };
 
-export const getToken = () => (dispatch) => {
-	tokenWillExpireIn();
-	return new Promise((resolve, reject) => {
-		const { currentUser } = firebase.auth();
-		if (currentUser && tokenNeedsRefresh()) {
-			fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-					Authorization: `Basic ${encoded}`
-				},
-				body: `grant_type=client_credentials&scope=device_${currentUser.uid}`
-			})
-			.then(handleVasttrafikFetch)
-			.then((token) => {
-				saveTokenExpires(token);
-				dispatch({ type: GET_TOKEN, payload: token });
-				resolve();
-			})
-			.catch((error) => {
-				console.log(error);
-				reject();
-			});
-		}
-		reject();
-	});
-};
-
 const loginUserSuccess = (dispatch, user) => {
-	fetch(url, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
-			Authorization: `Basic ${encoded}`
-		},
-		body: `grant_type=client_credentials&scope=device_${user.uid}`
-	})
-	.then(handleVasttrafikFetch)
-	.then((token) => {
+	getToken().finally(() => {
 		AsyncStorage.setItem('minahallplatser-user', JSON.stringify(user), () => {
-			saveTokenExpires(token);
-			dispatch({ type: LOGIN_USER_SUCCESS, payload: { user, token } });
+			dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
 			Actions.dashboard({ type: 'reset' });
 		});
-	})
-	.catch((error) => loginUserFail(dispatch, error));
+	});
 };
 
 const loginUserFail = (dispatch, error) => {

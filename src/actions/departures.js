@@ -3,25 +3,24 @@ import {
 	GET_DEPARTURES_FAIL,
 	CLR_DEPARTURES
 } from './types';
-import { timeStart, timeEnd, handleVasttrafikFetch } from '../components/helpers';
-import { getToken } from './auth';
+import { timeStart, timeEnd, handleVasttrafikFetch, getToken } from '../components/helpers';
 import { serverUrl } from '../Server';
 
-export const getDepartures = ({ id, access_token }) => {
+export const getDepartures = ({ id }) => {
 	timeStart();
-	const url = `${serverUrl}/api/departures`;
-	const config = {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			id,
-			access_token
-		})
-	};
 	return (dispatch) => {
-		dispatch(getToken()).finally(() => {
+		getToken().finally((token) => {
+			const url = `${serverUrl}/api/departures`;
+			const config = {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					id,
+					access_token: token
+				})
+			};
 			fetch(url, config)
 			.then(handleVasttrafikFetch)
 			.then(({ success, data }) => {

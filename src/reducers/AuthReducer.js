@@ -8,8 +8,7 @@ import {
 	REGISTER_USER,
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
-	RESET_PASSWORD,
-	GET_TOKEN
+	RESET_PASSWORD
 } from '../actions/types';
 
 const INIT_STATE = {
@@ -18,8 +17,7 @@ const INIT_STATE = {
 	passwordSecond: '',
 	user: {},
 	error: '',
-	loading: false,
-	token: ''
+	loading: false
 };
 
 export default (state = INIT_STATE, action) => {
@@ -37,8 +35,7 @@ export default (state = INIT_STATE, action) => {
 				password: '',
 				passwordSecond: '',
 				loading: false,
-				user: action.payload.user,
-				token: action.payload.token,
+				user: action.payload,
 				error: ''
 			};
 		case LOGIN_USER_FAIL:
@@ -53,8 +50,6 @@ export default (state = INIT_STATE, action) => {
 			return { ...INIT_STATE };
 		case RESET_PASSWORD:
 			return { ...INIT_STATE, error: action.payload };
-		case GET_TOKEN:
-			return { ...state, token: action.payload };
 		default:
 			return state;
 	}

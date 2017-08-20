@@ -10,8 +10,7 @@ import { colors } from './style';
 class ShowNearbyStops extends Component {
 	
 	componentWillMount() {
-		const { access_token } = this.props;
-		this.props.getNearbyStops({ access_token });
+		this.props.getNearbyStops();
 		this.createDataSource(this.props);
 	}
 
@@ -78,8 +77,7 @@ class ShowNearbyStops extends Component {
 const MapStateToProps = (state) => {
 	const favorites = _.map(_.values(state.fav.list), 'id');
 	const { stops, loading, searchError } = state.search;
-	const { access_token } = state.auth.token;
-	return { access_token, stops, loading, searchError, favorites };
+	return { stops, loading, searchError, favorites };
 };
 
 export default connect(MapStateToProps, { getNearbyStops, favoriteCreate, favoriteDelete })(ShowNearbyStops);

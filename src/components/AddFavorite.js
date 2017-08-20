@@ -38,8 +38,7 @@ class AddFavorite extends Component {
 		this.timeout = setTimeout(() => {
 			console.log('Searching for stops.');
 			this.setState({ loading: true });
-			const { access_token } = this.props;
-			this.props.searchDepartures({ busStop, access_token });
+			this.props.searchDepartures({ busStop });
 		}, 100);
 	}
 
@@ -116,12 +115,11 @@ class AddFavorite extends Component {
 const MapStateToProps = (state) => {
 	const favorites = _.map(_.values(state.fav.list), 'id');
 	const { busStop, searchError, loading } = state.search;
-	const { access_token } = state.auth.token;
 	const { addError } = state.fav;
 	const departureList = _.map(state.search.departureList, (item) => {
 		return { ...item, icon: (_.includes(favorites, item.id)) ? 'ios-star' : 'ios-star-outline' };
 	});
-	return { busStop, access_token, departureList, addError, searchError, favorites, loading };
+	return { busStop, departureList, addError, searchError, favorites, loading };
 };
 
 export default connect(MapStateToProps,

@@ -6,8 +6,6 @@ import {
 
 const INIT_STATE = {
 	departures: [],
-	time: '',
-	date: '',
 	loading: true,
 	error: ''
 };
@@ -18,8 +16,6 @@ export default (state = INIT_STATE, action) => {
 			return {
 				...state,
 				departures: action.payload.departures,
-				time: action.payload.time,
-				date: action.payload.date,
 				loading: false,
 				error: ''
 			};

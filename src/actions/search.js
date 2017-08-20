@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
 	SEARCH_CHANGED,
 	SEARCH_DEPARTURES,
@@ -7,8 +6,7 @@ import {
 	SEARCH_BY_GPS_FAIL,
 	CLR_SEARCH
 } from './types';
-import { timeStart, timeEnd, handleVasttrafikFetch } from '../components/helpers';
-import { getToken } from './auth';
+import { timeStart, timeEnd, handleVasttrafikFetch, getToken } from '../components/helpers';
 import { serverUrl } from '../Server';
 
 export const searchChanged = (text) => {
@@ -18,9 +16,9 @@ export const searchChanged = (text) => {
 	};
 };
 
-export const searchDepartures = ({ busStop, access_token }) => {
+export const searchDepartures = ({ busStop }) => {
 	return (dispatch) => {
-		dispatch(getToken()).finally(() => {
+		getToken().finally((token) => {
 			timeStart();
 			const url = `${serverUrl}/api/search`;
 			const config = {
@@ -30,7 +28,7 @@ export const searchDepartures = ({ busStop, access_token }) => {
 				},
 				body: JSON.stringify({
 					busStop,
-					access_token
+					access_token: token
 				})
 			};
 			fetch(url, config)
@@ -61,12 +59,12 @@ export const searchDepartures = ({ busStop, access_token }) => {
 	};
 };
 
-export const getNearbyStops = ({ access_token }) => {
+export const getNearbyStops = () => {
 	return (dispatch) => {
 		dispatch({ type: CLR_SEARCH });
 		navigator.geolocation.getCurrentPosition((position) => {
 			const { longitude, latitude } = position.coords;
-			getCoordsSuccess({ dispatch, longitude, latitude, access_token });
+			getCoordsSuccess({ dispatch, longitude, latitude });
 		},
 		() => {
 			dispatch({
@@ -82,8 +80,8 @@ export const getNearbyStops = ({ access_token }) => {
 	};
 };
 
-const getCoordsSuccess = ({ dispatch, longitude, latitude, access_token }) => {
-	dispatch(getToken()).finally(() => {
+const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
+	getToken().finally((token) => {
 		timeStart();
 		const url = `${serverUrl}/api/gps`;
 		const config = {
@@ -94,7 +92,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude, access_token }) => {
 			body: JSON.stringify({
 				longitude,
 				latitude,
-				access_token
+				access_token: token
 			})
 		};
 		fetch(url, config)

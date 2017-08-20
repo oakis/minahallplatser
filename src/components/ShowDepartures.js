@@ -10,10 +10,7 @@ class ShowDepartures extends Component {
 	
 	componentWillMount() {
 		Actions.refresh({ title: this.props.busStop });
-		this.props.getDepartures({
-			id: this.props.id,
-			access_token: this.props.access_token
-		});
+		this.props.getDepartures({ id: this.props.id });
 		this.createDataSource(this.props);
 	}
 
@@ -37,10 +34,7 @@ class ShowDepartures extends Component {
 	}
 
 	refresh() {
-		this.props.getDepartures({
-			id: this.props.id,
-			access_token: this.props.access_token
-		});
+		this.props.getDepartures({ id: this.props.id });
 	}
 
 	createDataSource({ departures }) {
@@ -85,10 +79,9 @@ class ShowDepartures extends Component {
 }
 
 const MapStateToProps = (state) => {
-	const { departures, time, date, loading, error } = state.departures;
-	const { access_token } = state.auth.token;
+	const { departures, loading, error } = state.departures;
 	console.log('Recieved departures:', departures);
-	return { access_token, departures, time, date, loading, error };
+	return { departures, loading, error };
 };
 
 export default connect(MapStateToProps,

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View, Text } from 'react-native';
+import { Keyboard, Alert, AsyncStorage, FlatList, View } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -47,7 +47,6 @@ class FavoriteList extends Component {
 							{
 								text: 'Ja',
 								onPress: () => {
-									console.log(this.props);
 									this.props.favoriteDelete(item.id);
 								}
 							}
