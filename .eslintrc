@@ -2,7 +2,8 @@
 	"extends": "rallycoding",
 	"rules": {
 		"arrow-body-style": 0,
-		"max-len": 0
+		"max-len": 0,
+		"react/jsx-no-bind": 1
 	},
 	"globals": {
 		"fetch": false,
