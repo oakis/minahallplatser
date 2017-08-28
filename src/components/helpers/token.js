@@ -5,14 +5,18 @@ import { handleVasttrafikFetch } from './';
 import { key, secret, url } from '../../Vasttrafik';
 
 const encoded = base64.encode(`${key}:${secret}`);
-let localToken;
+let localToken = {};
 let tokenExpires = moment();
 
 export const getToken = () => {
 	tokenWillExpireIn();
 	return new Promise((resolve, reject) => {
 		const { currentUser } = firebase.auth();
-		if (currentUser && tokenNeedsRefresh()) {
+		if (!currentUser) {
+			console.log('firebase not logged in', firebase.auth());
+			return;
+		}
+		if (tokenNeedsRefresh()) {
 			fetch(url, {
 				method: 'POST',
 				headers: {
@@ -24,26 +28,28 @@ export const getToken = () => {
 			.then(handleVasttrafikFetch)
 			.then((token) => {
 				saveToken(token);
-				resolve(token.access_token);
+				resolve(token);
 			})
-			.catch((error) => {
-				console.log(error);
-				reject(localToken.access_token);
+			.catch(() => {
+				console.log('fetch catch');
+				reject(localToken);
 			});
+		} else {
+			console.log('token doesnt need refresh');
+			reject(localToken);
 		}
-		reject(localToken.access_token);
 	});
 };
 
 const tokenNeedsRefresh = () => {
-    console.log('tokenNeedsRefresh()', tokenExpires.diff(moment()) / 1000 < 0);
-    return tokenExpires.diff(moment()) / 1000 < 0;
+    console.log('tokenNeedsRefresh()', !Object.prototype.hasOwnProperty.call(localToken, 'access_token') || tokenExpires.diff(moment()) / 1000 <= 0);
+    return !Object.prototype.hasOwnProperty.call(localToken, 'access_token') || tokenExpires.diff(moment()) / 1000 <= 0;
 };
 
 const saveToken = (token) => {
     console.log('saveToken()', token);
     localToken = token;
-    saveTokenExpires(token);
+	saveTokenExpires(token);
 };
 
 const saveTokenExpires = (token) => {
@@ -53,5 +59,4 @@ const saveTokenExpires = (token) => {
 
 const tokenWillExpireIn = () => {
     console.log('tokenWillExpireIn()', tokenExpires.diff(moment()) / 1000);
-    return tokenExpires.diff(moment()) / 1000;
 };

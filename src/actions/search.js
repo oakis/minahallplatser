@@ -18,7 +18,7 @@ export const searchChanged = (text) => {
 
 export const searchDepartures = ({ busStop }) => {
 	return (dispatch) => {
-		getToken().finally((token) => {
+		getToken().finally(({ access_token }) => {
 			timeStart();
 			const url = `${serverUrl}/api/search`;
 			const config = {
@@ -28,7 +28,7 @@ export const searchDepartures = ({ busStop }) => {
 				},
 				body: JSON.stringify({
 					busStop,
-					access_token: token
+					access_token
 				})
 			};
 			fetch(url, config)
@@ -81,7 +81,7 @@ export const getNearbyStops = () => {
 };
 
 const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
-	getToken().finally((token) => {
+	getToken().finally(({ access_token }) => {
 		timeStart();
 		const url = `${serverUrl}/api/gps`;
 		const config = {
@@ -92,7 +92,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 			body: JSON.stringify({
 				longitude,
 				latitude,
-				access_token: token
+				access_token
 			})
 		};
 		fetch(url, config)

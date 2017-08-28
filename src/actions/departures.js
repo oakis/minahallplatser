@@ -9,7 +9,8 @@ import { serverUrl } from '../Server';
 export const getDepartures = ({ id }) => {
 	timeStart();
 	return (dispatch) => {
-		getToken().finally((token) => {
+		getToken()
+		.finally(({ access_token }) => {
 			const url = `${serverUrl}/api/departures`;
 			const config = {
 				method: 'POST',
@@ -18,33 +19,31 @@ export const getDepartures = ({ id }) => {
 				},
 				body: JSON.stringify({
 					id,
-					access_token: token
+					access_token
 				})
 			};
 			fetch(url, config)
-			.then(handleVasttrafikFetch)
+			.finally(handleVasttrafikFetch)
 			.then(({ success, data }) => {
 				if (success) {
 					dispatch({
 						type: GET_DEPARTURES,
 						payload: data
 					});
-					timeEnd('getDepartures');
 				} else {
 					dispatch({
 						type: GET_DEPARTURES_FAIL,
 						payload: data
 					});
-					timeEnd('getDepartures');
 				}
 			})
-			.catch((data) => {
+			.catch((error) => {
 				dispatch({
 					type: GET_DEPARTURES_FAIL,
-					payload: data
+					payload: error
 				});
-				timeEnd('getDepartures');
-			});
+			})
+			.finally(() => timeEnd('getDepartures'));
 		});
 	};
 };
