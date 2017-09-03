@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "clean": "npm cache clean && cd android && sudo ./gradlew clean",
+    "clean": "cd android && sudo ./gradlew clean",
     "build-debug": "curl http://localhost:8081/index.android.bundle?platform=android -o android/app/src/main/assets/index.android.bundle && cd android && sudo ./gradlew clean && ./gradlew assembleDebug",
     "build-release": "npm run clean && cd android && sudo ./gradlew assembleRelease"
   },

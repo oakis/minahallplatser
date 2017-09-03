@@ -7,6 +7,12 @@ import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import Router from './Router';
 
+if (__DEV__) {
+  window.log = console.log.bind(window.console);
+} else {
+  window.log = () => {};
+}
+
 console.ignoredYellowBox = ['Setting a timer'];
 
 if (!firebase.apps.length) {
@@ -19,11 +25,13 @@ if (!firebase.apps.length) {
     });
 }
 
+export const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
 class App extends Component {
 
   render() {
     return (
-      <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
+      <Provider store={store}>
         <Router />
       </Provider>
     );
