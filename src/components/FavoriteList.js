@@ -4,7 +4,7 @@ import { Keyboard, Alert, AsyncStorage, FlatList, View } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { favoriteGet, favoriteDelete } from '../actions';
+import { favoriteGet, favoriteDelete, clearErrors } from '../actions';
 import { ListItem, Spinner, Message } from './common';
 import { colors } from './style';
 
@@ -37,7 +37,10 @@ class FavoriteList extends Component {
 			<ListItem
 				text={item.busStop}
 				icon='ios-remove-circle-outline'
-				pressItem={() => Actions.departures(item)}
+				pressItem={async () => {
+					await this.props.clearErrors();
+					Actions.departures(item);
+				}}
 				pressIcon={() => {
 					Alert.alert(
 						item.busStop,
@@ -103,8 +106,9 @@ class FavoriteList extends Component {
 
 const mapStateToProps = state => {
 	const favorites = _.values(state.fav.list);
-	const { loading, error } = state.fav;
+	const { loading } = state.fav;
+	const { error } = state.errors;
 	return { favorites, loading, error };
 };
 
-export default connect(mapStateToProps, { favoriteGet, favoriteDelete })(FavoriteList);
+export default connect(mapStateToProps, { favoriteGet, favoriteDelete, clearErrors })(FavoriteList);

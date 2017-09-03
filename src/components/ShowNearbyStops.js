@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { getNearbyStops, favoriteCreate, favoriteDelete } from '../actions';
+import { getNearbyStops, favoriteCreate, favoriteDelete, clearErrors } from '../actions';
 import { ListItem, Spinner, Message } from './common';
 import { colors } from './style';
 
@@ -27,14 +27,15 @@ class ShowNearbyStops extends Component {
 			<ListItem
 				text={item.name}
 				icon={(_.includes(this.props.favorites, item.id)) ? 'ios-star' : 'ios-star-outline'}
-				pressItem={() => {
+				pressItem={async () => {
+					await this.props.clearErrors();
 					Actions.departures({ busStop: item.name, id: item.id });
 				}}
 				pressIcon={() => {
 					this.props.favoriteCreate({ busStop: item.name, id: item.id });
 				}}
 				iconVisible
-				iconColor={colors.info}
+				iconColor={colors.warning}
 			/>
 		);
 	}
@@ -47,11 +48,11 @@ class ShowNearbyStops extends Component {
 					color={colors.primary}
 				/>
 			);
-		} else if (this.props.searchError) {
+		} else if (this.props.error) {
 			return (
 				<Message
 					type="warning"
-					message={this.props.searchError}
+					message={this.props.error}
 				/>
 			);
 		}
@@ -76,8 +77,9 @@ class ShowNearbyStops extends Component {
 
 const MapStateToProps = (state) => {
 	const favorites = _.map(_.values(state.fav.list), 'id');
-	const { stops, loading, searchError } = state.search;
-	return { stops, loading, searchError, favorites };
+	const { stops, loading } = state.search;
+	const { error } = state.errors;
+	return { stops, loading, error, favorites };
 };
 
-export default connect(MapStateToProps, { getNearbyStops, favoriteCreate, favoriteDelete })(ShowNearbyStops);
+export default connect(MapStateToProps, { getNearbyStops, favoriteCreate, favoriteDelete, clearErrors })(ShowNearbyStops);

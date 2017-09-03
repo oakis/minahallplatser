@@ -16,18 +16,17 @@ const INIT_STATE = {
 	password: '',
 	passwordSecond: '',
 	user: {},
-	error: '',
 	loading: false
 };
 
 export default (state = INIT_STATE, action) => {
 	switch (action.type) {
 		case EMAIL_CHANGED:
-			return { ...state, email: action.payload, error: '' };
+			return { ...state, email: action.payload };
 		case PASSWORD_CHANGED:
-			return { ...state, password: action.payload, error: '' };
+			return { ...state, password: action.payload };
 		case PASSWORD_CHANGED_SECOND:
-			return { ...state, passwordSecond: action.payload, error: '' };
+			return { ...state, passwordSecond: action.payload };
 		case LOGIN_USER_SUCCESS:
 			return {
 				...state,
@@ -35,21 +34,20 @@ export default (state = INIT_STATE, action) => {
 				password: '',
 				passwordSecond: '',
 				loading: false,
-				user: action.payload,
-				error: ''
+				user: action.payload
 			};
 		case LOGIN_USER_FAIL:
-			return { ...state, password: '', loading: false, error: action.payload };
+			return { ...state, password: '', loading: false };
 		case LOGIN_USER:
-			return { ...state, loading: true, error: '' };
+			return { ...state, loading: true };
 		case REGISTER_USER:
-			return { ...state, loading: true, error: '' };
+			return { ...state, loading: true };
 		case REGISTER_USER_FAIL:
-			return { ...state, loading: false, error: action.payload.error };
+			return { ...state, loading: false };
 		case CHANGE_ROUTE:
 			return { ...INIT_STATE };
 		case RESET_PASSWORD:
-			return { ...INIT_STATE, error: action.payload };
+			return { ...INIT_STATE };
 		default:
 			return state;
 	}

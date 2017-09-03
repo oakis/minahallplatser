@@ -4,7 +4,8 @@ import {
 	SEARCH_DEPARTURES_FAIL,
 	SEARCH_BY_GPS,
 	SEARCH_BY_GPS_FAIL,
-	CLR_SEARCH
+	CLR_SEARCH,
+	ERROR, CLR_ERROR
 } from './types';
 import { timeStart, timeEnd, handleVasttrafikFetch, getToken } from '../components/helpers';
 import { serverUrl } from '../Server';
@@ -39,20 +40,17 @@ export const searchDepartures = ({ busStop }) => {
 						type: SEARCH_DEPARTURES,
 						payload: data
 					});
+					dispatch({ type: CLR_ERROR });
 					timeEnd('getDepartures');
 				} else {
-					dispatch({
-						type: SEARCH_DEPARTURES_FAIL,
-						payload: data
-					});
+					dispatch({ type: SEARCH_DEPARTURES_FAIL });
+					dispatch({ type: ERROR, payload: data });
 					timeEnd('getDepartures');
 				}
 			})
 			.catch((data) => {
-				dispatch({
-					type: SEARCH_DEPARTURES_FAIL,
-					payload: data
-				});
+				dispatch({ type: SEARCH_DEPARTURES_FAIL });
+				dispatch({ type: ERROR, payload: data });
 				timeEnd('getDepartures');
 			});
 		});
@@ -67,10 +65,8 @@ export const getNearbyStops = () => {
 			getCoordsSuccess({ dispatch, longitude, latitude });
 		},
 		() => {
-			dispatch({
-				type: SEARCH_BY_GPS_FAIL,
-				payload: { searchError: 'Kunde inte hitta din position.' }
-			});
+			dispatch({ type: SEARCH_BY_GPS_FAIL });
+			dispatch({ type: ERROR, payload: 'Kunde inte hitta din position.' });
 		},
 		{
 			enableHighAccuracy: false,
@@ -102,19 +98,15 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 			if (success) {
 				dispatch({ type: SEARCH_BY_GPS, payload: data });
 			} else {
-				dispatch({
-					type: SEARCH_BY_GPS_FAIL,
-					payload: data
-				});
+				dispatch({ type: SEARCH_BY_GPS_FAIL	});
+				dispatch({ type: ERROR, payload: data });
 			}
 		})
 		.catch((error) => {
 			timeEnd('getNearbyStops');
-			console.log(error);
-			dispatch({
-				type: SEARCH_BY_GPS_FAIL,
-				payload: { searchError: 'Kunde inte kontakta Västtrafik. Försök igen senare.' }
-			});
+			window.log(error);
+			dispatch({ type: SEARCH_BY_GPS_FAIL });
+			dispatch({ type: ERROR, payload: 'Kunde inte kontakta Västtrafik. Försök igen senare.' });
 		});
 	});
 };

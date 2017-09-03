@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin } from '../actions';
+import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors } from '../actions';
 import { Button, Input, Message } from './common';
 
 class LoginForm extends Component {
@@ -73,12 +73,18 @@ class LoginForm extends Component {
 				<Button
 					fontColor="primary"
 					label="Registrera"
-					onPress={() => Actions.register()}
+					onPress={async () => {
+						await this.props.clearErrors();
+						Actions.register();
+					}}
 				/>
 				<Button
 					fontColor="primary"
 					label="Glömt lösenord"
-					onPress={() => Actions.resetpw()}
+					onPress={async () => {
+						await this.props.clearErrors();
+						Actions.resetpw();
+					}}
 				/>
 
 			</View>
@@ -87,11 +93,12 @@ class LoginForm extends Component {
 
 }
 
-const mapStateToProps = ({ auth }) => {
-	const { email, password, error, loading, token } = auth;
+const mapStateToProps = ({ auth, errors }) => {
+	const { email, password, loading, token } = auth;
+	const { error } = errors;
 	return { email, password, error, loading, token };
 };
 
 export default connect(mapStateToProps, {
-	emailChanged, passwordChanged, loginUser, resetRoute, autoLogin
+	emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors
 })(LoginForm);

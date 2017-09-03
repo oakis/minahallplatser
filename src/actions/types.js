@@ -30,3 +30,7 @@ export const CLR_SEARCH = 'CLR_SEARCH';
 export const GET_DEPARTURES = 'GET_DEPARTURES';
 export const GET_DEPARTURES_FAIL = 'GET_DEPARTURES_FAIL';
 export const CLR_DEPARTURES = 'CLR_DEPARTURES';
+
+// Errors
+export const ERROR = 'ERROR';
+export const CLR_ERROR = 'CLR_ERROR';

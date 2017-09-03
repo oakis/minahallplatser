@@ -9,8 +9,8 @@ export const showMessage = (length, message) => {
             ToastAndroid.CENTER
         );
     } else if (isIOS()) {
-        console.log(message);
+        window.log(message);
     } else {
-        console.log('Message ignored since device is not Android nor iOS');
+        window.log('Message ignored since device is not Android nor iOS');
     }
 };

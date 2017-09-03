@@ -7,5 +7,5 @@ export const timeStart = () => {
 };
 
 export const timeEnd = (type) => {
-    console.log(`${type}: fetch took ${moment().diff(time)} milliseconds.`);
+    window.log(`${type}: fetch took ${moment().diff(time)} milliseconds.`);
 };

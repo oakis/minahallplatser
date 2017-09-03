@@ -10,7 +10,6 @@ import {
 const INIT_STATE = {
 	busStop: '',
 	departureList: [],
-	searchError: '',
 	stops: [],
 	loading: true
 };
@@ -20,13 +19,13 @@ export default (state = INIT_STATE, action) => {
 		case SEARCH_CHANGED:
 			return { ...state, busStop: action.payload };
 		case SEARCH_DEPARTURES:
-			return { ...state, departureList: action.payload, searchError: '', loading: false };
+			return { ...state, departureList: action.payload, loading: false };
 		case SEARCH_DEPARTURES_FAIL:
-			return { ...state, searchError: action.payload.searchError, loading: false };
+			return { ...state, loading: false };
 		case SEARCH_BY_GPS:
-			return { ...state, stops: action.payload, searchError: '', loading: false };
+			return { ...state, stops: action.payload, loading: false };
 		case SEARCH_BY_GPS_FAIL:
-			return { ...INIT_STATE, searchError: action.payload.searchError, loading: false };
+			return { ...INIT_STATE, loading: false };
 		case CLR_SEARCH:
 			return { ...INIT_STATE };
 		default:

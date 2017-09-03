@@ -3,10 +3,12 @@ import AuthReducer from './AuthReducer';
 import FavReducer from './FavReducer';
 import searchReducer from './searchReducer';
 import DepartureReducer from './DepartureReducer';
+import ErrorReducer from './ErrorReducer';
 
 export default combineReducers({
 	auth: AuthReducer,
 	fav: FavReducer,
 	search: searchReducer,
-	departures: DepartureReducer
+	departures: DepartureReducer,
+	errors: ErrorReducer
 });

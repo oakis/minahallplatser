@@ -24,7 +24,7 @@ class SplashScreen extends Component {
 			.catch(() => {
 				Actions.auth();
 			});
-		}, (err) => console.log(err));
+		}, (err) => window.log(err));
 	}
 
 	render() {

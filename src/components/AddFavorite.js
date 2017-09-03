@@ -12,8 +12,7 @@ class AddFavorite extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loading: false,
-			error: this.props.addError || this.props.searchError
+			loading: false
 		};
 	}
 
@@ -24,7 +23,7 @@ class AddFavorite extends Component {
 	componentWillReceiveProps(nextProps) {
 		this.createDataSource(nextProps);
 		if (nextProps.loading !== this.state.loading) {
-			this.setState({ loading: nextProps.loading, error: nextProps.searchError || nextProps.addError });
+			this.setState({ loading: nextProps.loading });
 		}
 	}
 
@@ -36,7 +35,7 @@ class AddFavorite extends Component {
 		this.props.searchChanged(busStop);
 		clearTimeout(this.timeout);
 		this.timeout = setTimeout(() => {
-			console.log('Searching for stops.');
+			window.log('Searching for stops.');
 			this.setState({ loading: true });
 			this.props.searchDepartures({ busStop });
 		}, 100);
@@ -53,6 +52,7 @@ class AddFavorite extends Component {
 				icon={item.icon}
 				pressItem={() => {
 					Keyboard.dismiss();
+					
 					Actions.departures({ busStop: item.name, id: item.id });
 				}}
 				pressIcon={() => {
@@ -60,7 +60,7 @@ class AddFavorite extends Component {
 					this.props.favoriteCreate({ busStop: item.name, id: item.id });
 				}}
 				iconVisible
-				iconColor={colors.info}
+				iconColor={colors.warning}
 			/>
 		);
 	}
@@ -76,11 +76,11 @@ class AddFavorite extends Component {
 					/>
 				</View>
 			);
-		} else if (this.state.error) {
+		} else if (this.props.error) {
 			return (
 				<Message
 					type="warning"
-					message={this.state.error}
+					message={this.props.error}
 				/>
 			);
 		}
@@ -114,12 +114,12 @@ class AddFavorite extends Component {
 
 const MapStateToProps = (state) => {
 	const favorites = _.map(_.values(state.fav.list), 'id');
-	const { busStop, searchError, loading } = state.search;
-	const { addError } = state.fav;
+	const { busStop, loading } = state.search;
+	const { error } = state.errors;
 	const departureList = _.map(state.search.departureList, (item) => {
 		return { ...item, icon: (_.includes(favorites, item.id)) ? 'ios-star' : 'ios-star-outline' };
 	});
-	return { busStop, departureList, addError, searchError, favorites, loading };
+	return { busStop, departureList, error, favorites, loading };
 };
 
 export default connect(MapStateToProps,

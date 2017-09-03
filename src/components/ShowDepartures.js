@@ -79,8 +79,9 @@ class ShowDepartures extends Component {
 }
 
 const MapStateToProps = (state) => {
-	const { departures, loading, error } = state.departures;
-	console.log('Recieved departures:', departures);
+	const { departures, loading } = state.departures;
+	const { error } = state.errors;
+	window.log('Recieved departures:', departures);
 	return { departures, loading, error };
 };
 

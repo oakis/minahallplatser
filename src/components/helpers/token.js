@@ -13,7 +13,7 @@ export const getToken = () => {
 	return new Promise((resolve, reject) => {
 		const { currentUser } = firebase.auth();
 		if (!currentUser) {
-			console.log('firebase not logged in', firebase.auth());
+			window.log('firebase not logged in', firebase.auth());
 			return;
 		}
 		if (tokenNeedsRefresh()) {
@@ -31,32 +31,32 @@ export const getToken = () => {
 				resolve(token);
 			})
 			.catch(() => {
-				console.log('fetch catch');
+				window.log('fetch catch');
 				reject(localToken);
 			});
 		} else {
-			console.log('token doesnt need refresh');
+			window.log('token doesnt need refresh');
 			reject(localToken);
 		}
 	});
 };
 
 const tokenNeedsRefresh = () => {
-    console.log('tokenNeedsRefresh()', !Object.prototype.hasOwnProperty.call(localToken, 'access_token') || tokenExpires.diff(moment()) / 1000 <= 0);
+    window.log('tokenNeedsRefresh()', !Object.prototype.hasOwnProperty.call(localToken, 'access_token') || tokenExpires.diff(moment()) / 1000 <= 0);
     return !Object.prototype.hasOwnProperty.call(localToken, 'access_token') || tokenExpires.diff(moment()) / 1000 <= 0;
 };
 
 const saveToken = (token) => {
-    console.log('saveToken()', token);
+    window.log('saveToken()', token);
     localToken = token;
 	saveTokenExpires(token);
 };
 
 const saveTokenExpires = (token) => {
     tokenExpires = moment().add(token.expires_in, 'seconds');
-    console.log('saveTokenExpires()', tokenExpires.format('YYYY-MM-DD HH:mm'));
+    window.log('saveTokenExpires()', tokenExpires.format('YYYY-MM-DD HH:mm'));
 };
 
 const tokenWillExpireIn = () => {
-    console.log('tokenWillExpireIn()', tokenExpires.diff(moment()) / 1000);
+    window.log('tokenWillExpireIn()', tokenExpires.diff(moment()) / 1000);
 };

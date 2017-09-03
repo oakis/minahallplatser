@@ -2,7 +2,7 @@ export const colors = {
     default: '#000',
     alternative: '#fff',
     primary: '#779ECB',
-    info: '#FFA500',
+    info: '#779ECB',
     success: '#77DD77',
     danger: '#FF6961',
     warning: '#FFB347',

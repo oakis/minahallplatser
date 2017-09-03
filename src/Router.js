@@ -11,6 +11,8 @@ import ShowNearbyStops from './components/ShowNearbyStops';
 import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
 import { colors } from './components/style';
+import { store } from './App';
+import { CLR_ERROR } from './actions/types';
 
 const iconSize = 24;
 
@@ -23,7 +25,10 @@ const RouterComponent = () => (
 		renderBackButton={() => {
 			return (
 				<TouchableWithoutFeedback
-					onPress={() => Actions.pop()}
+					onPress={async () => {
+						await store.dispatch({ type: CLR_ERROR });
+						Actions.pop();
+					}}
 				>
 					<View
 						style={{
@@ -49,17 +54,38 @@ const RouterComponent = () => (
 					key="register"
 					component={RegisterForm}
 					title="Registrera"
-					onBack={() => Actions.auth({ type: 'reset' })}
+					onBack={async () => {
+						await store.dispatch({ type: CLR_ERROR });
+						Actions.auth({ type: 'reset' });
+					}}
 				/>
 				<Scene key="resetpw" component={ResetPassword} title="Glömt lösenord" />
 			</Scene>
 			<Scene key="dashboard">
 				<Scene
 					renderRightButton={() => {
-						return <Icon name="ios-navigate" style={{ color: colors.alternative, fontSize: iconSize }} onPress={() => Actions.listNearbyStops()} />;
+						return (
+							<Icon
+								name="ios-navigate"
+								style={{ color: colors.alternative, fontSize: iconSize }}
+								onPress={async () => {
+									await store.dispatch({ type: CLR_ERROR });
+									Actions.listNearbyStops();
+								}}
+							/>
+						);
 					}}
 					renderLeftButton={() => {
-						return <Icon name="ios-add-circle" style={{ color: colors.alternative, fontSize: iconSize }} onPress={() => Actions.addfav()} />;
+						return (
+							<Icon
+								name="ios-add-circle"
+								style={{ color: colors.alternative, fontSize: iconSize }}
+								onPress={async () => {
+									await store.dispatch({ type: CLR_ERROR });
+									Actions.addfav();
+								}}
+							/>
+						);
 					}}
 					key="favlist"
 					component={FavoriteList}

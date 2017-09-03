@@ -8,7 +8,6 @@ import {
 
 const INIT_STATE = {
 	busStop: '',
-	error: '',
 	loading: true
 };
 
@@ -17,11 +16,11 @@ export default (state = INIT_STATE, action) => {
 		case FAVORITE_CREATE:
 			return { ...state, ...INIT_STATE, loading: false };
 		case FAVORITE_CREATE_FAIL:
-			return { ...state, error: action.payload.error, loading: false };
+			return { ...state, loading: false };
 		case FAVORITE_FETCH_SUCCESS:
-			return { ...state, list: action.payload, loading: false, error: '' };
+			return { ...state, list: action.payload, loading: false };
 		case FAVORITE_FETCH_FAIL:
-			return { ...state, error: action.payload.error, loading: action.payload.loading };
+			return { ...state, loading: action.payload.loading };
 		case FAVORITE_DELETE:
 			return { ...state, ...INIT_STATE, loading: false };
 		default:

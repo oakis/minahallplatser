@@ -6,7 +6,8 @@ import {
 	FAVORITE_CREATE_FAIL,
 	FAVORITE_FETCH_SUCCESS,
 	FAVORITE_FETCH_FAIL,
-	FAVORITE_DELETE
+	FAVORITE_DELETE,
+	ERROR
 } from './types';
 
 export const favoriteCreate = ({ busStop, id }) => {
@@ -20,7 +21,7 @@ export const favoriteCreate = ({ busStop, id }) => {
 						dispatch({ type: FAVORITE_CREATE });
 						Actions.dashboard({ type: 'reset' });
 					}, (error) => {
-						console.log('favoriteCreate error: ', error);
+						window.log('favoriteCreate error: ', error);
 						favoriteCreateFail(dispatch);
 					});
 			} else {
@@ -31,10 +32,8 @@ export const favoriteCreate = ({ busStop, id }) => {
 };
 
 const favoriteCreateFail = (dispatch) => {
-	dispatch({
-		type: FAVORITE_CREATE_FAIL,
-		payload: { addError: 'Kunde inte spara favorit, försök igen senare. :)' }
-	});
+	dispatch({ type: FAVORITE_CREATE_FAIL });
+	dispatch({ type: ERROR, payload: 'Kunde inte spara favorit, försök igen senare.' });
 };
 
 export const favoriteGet = (currentUser) => {
@@ -49,41 +48,44 @@ export const favoriteGet = (currentUser) => {
 							AsyncStorage.setItem('minahallplatser-favorites', JSON.stringify(snapshot.val()));
 							dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: snapshot.val() });
 						}, (error) => {
-							console.log('favoriteGet error: ', error);
+							window.log('favoriteGet error: ', error);
 							dispatch({
 								type: FAVORITE_FETCH_FAIL,
-								payload: { error: 'Kunde inte ladda dina favoriter.', loading: false }
+								payload: { loading: false }
 							});
+							dispatch({ type: ERROR, payload: 'Kunde inte ladda dina favoriter.' });
 						});
 				} else {
-					console.log('Did not find favorites locally');
+					window.log('Did not find favorites locally');
 					firebase.database().ref(`/users/${currentUser.uid}/favorites`)
 						.on('value', snapshot => {
 							AsyncStorage.setItem('minahallplatser-favorites', JSON.stringify(snapshot.val()));
 							dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: snapshot.val() });
 						}, (error) => {
-							console.log('favoriteGet error: ', error);
+							window.log('favoriteGet error: ', error);
 							dispatch({
 								type: FAVORITE_FETCH_FAIL,
-								payload: { error: 'Kunde inte ladda dina favoriter.', loading: false }
+								payload: { loading: false }
 							});
+							dispatch({ type: ERROR, payload: 'Kunde inte ladda dina favoriter.' });
 						});
 				}
 			}).catch((err) => {
-				console.log(err);
+				window.log(err);
 			});
 		};
 	}
 	return (dispatch) => {
 		dispatch({
 			type: FAVORITE_FETCH_FAIL,
-			payload: { error: 'Kunde inte ladda dina favoriter.', loading: false }
+			payload: { loading: false }
 		});
+		dispatch({ type: ERROR, payload: 'Kunde inte ladda dina favoriter.' });
 	};
 };
 
 export const favoriteDelete = (stopId) => {
-	console.log('favoriteDelete():', stopId);
+	window.log('favoriteDelete():', stopId);
 	return (dispatch) => {
 		const { currentUser } = firebase.auth();
 		const ref = firebase.database().ref(`/users/${currentUser.uid}/favorites`);
@@ -98,9 +100,9 @@ export const favoriteDelete = (stopId) => {
 		});
 		removeByKey.remove()
 			.then(() => {
-				console.log('Removed entry');
+				window.log('Removed entry');
 				dispatch({ type: FAVORITE_DELETE, payload: stopId });
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => window.log(error));
 	};
 };

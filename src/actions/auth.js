@@ -11,7 +11,9 @@ import {
 	REGISTER_USER,
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
-	RESET_PASSWORD
+	RESET_PASSWORD,
+	ERROR,
+	CLR_ERROR
 } from './types';
 import { showMessage, getToken } from '../components/helpers';
 
@@ -23,7 +25,8 @@ export const resetUserPassword = (email) => {
 			dispatch({ type: RESET_PASSWORD });
 			Actions.auth({ type: 'reset' });
 		}, (error) => {
-			dispatch({ type: RESET_PASSWORD, payload: getFirebaseError(error) });
+			dispatch({ type: RESET_PASSWORD });
+			dispatch({ type: ERROR, payload: getFirebaseError(error) });
 		});
 	};
 };
@@ -59,11 +62,13 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 	return (dispatch) => {
 		dispatch({ type: REGISTER_USER });
 		if (password !== passwordSecond) {
-			dispatch({ type: REGISTER_USER_FAIL, payload: { error: 'Lösenorden matchade inte.' } });
+			dispatch({ type: REGISTER_USER_FAIL });
+			dispatch({ type: ERROR, payload: 'Lösenorden matchade inte.' });
 		} else {
 			firebase.auth().createUserWithEmailAndPassword(email, password)
 				.catch((error) => {
-					dispatch({ type: REGISTER_USER_FAIL, payload: { error: getFirebaseError(error) } });
+					dispatch({ type: REGISTER_USER_FAIL });
+					dispatch({ type: ERROR, payload: getFirebaseError(error) });
 				})
 				.then((registered) => {
 					if (registered) {
@@ -85,11 +90,14 @@ export const loginUser = ({ email, password }) => {
 			.then(user => loginUserSuccess(dispatch, user))
 			.catch(error => loginUserFail(dispatch, error));
 		} else if (email && !password) {
-			dispatch({ type: LOGIN_USER_FAIL, payload: 'Du måste fylla i ditt lösenord.' });
+			dispatch({ type: LOGIN_USER_FAIL });
+			dispatch({ type: ERROR, payload: 'Du måste fylla i ditt lösenord.' });
 		} else if (!email && password) {
-			dispatch({ type: LOGIN_USER_FAIL, payload: 'Du måste fylla i din email.' });
+			dispatch({ type: LOGIN_USER_FAIL });
+			dispatch({ type: ERROR, payload: 'Du måste fylla i din email.' });
 		} else {
-			dispatch({ type: LOGIN_USER_FAIL, payload: 'Du måste fylla i email och lösenord.' });
+			dispatch({ type: LOGIN_USER_FAIL });
+			dispatch({ type: ERROR, payload: 'Du måste fylla i email och lösenord.' });
 		}
 	};
 };
@@ -114,11 +122,12 @@ const loginUserSuccess = (dispatch, user) => {
 };
 
 const loginUserFail = (dispatch, error) => {
-	console.log('loginUserFail', error);
 	if (error.code) {
-		dispatch({ type: LOGIN_USER_FAIL, payload: getFirebaseError(error) });
+		dispatch({ type: LOGIN_USER_FAIL });
+		dispatch({ type: ERROR, payload: getFirebaseError(error) });
 	} else {
-		dispatch({ type: LOGIN_USER_FAIL, payload: getFirebaseError({ code: 'auth/network-request-failed' }) });
+		dispatch({ type: LOGIN_USER_FAIL });
+		dispatch({ type: ERROR, payload: getFirebaseError({ code: 'auth/network-request-failed' }) });
 	}
 	if (Actions.currentScene === 'splash') {
 		Actions.auth();
@@ -126,7 +135,6 @@ const loginUserFail = (dispatch, error) => {
 };
 
 const getFirebaseError = (error) => {
-	console.log(error);
 	switch (error.code) {
 		case 'auth/network-request-failed':
 			return 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';

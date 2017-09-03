@@ -65,8 +65,9 @@ class ResetPassword extends Component {
 
 }
 
-const mapStateToProps = ({ auth }) => {
-	const { email, error, loading } = auth;
+const mapStateToProps = ({ auth, errors }) => {
+	const { email, loading } = auth;
+	const { error } = errors;
 	return { email, error, loading };
 };
 

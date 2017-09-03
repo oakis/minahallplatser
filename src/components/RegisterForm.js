@@ -94,7 +94,8 @@ class RegisterForm extends Component {
 }
 
 const MapStateToProps = (state) => {
-	const { error, loading, email, password, passwordSecond } = state.auth;
+	const { loading, email, password, passwordSecond } = state.auth;
+	const { error } = state.errors;
 	return { error, loading, email, password, passwordSecond };
 };
 
