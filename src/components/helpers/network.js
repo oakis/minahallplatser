@@ -1,6 +1,14 @@
 export const handleVasttrafikFetch = (response) => {
-    console.log(`handleVasttrafikFetch() - Status: ${response.status} - ok: ${response.ok} - statusText: ${response.statusText}`);
-    console.log(response);
-    if (!response.ok) throw response.statusText || 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
-    return response.json();
+    window.log(`handleVasttrafikFetch() - Status: ${response.status} - ok: ${response.ok}`);
+    if (!response.ok) {
+        const error = response.statusText || 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
+        window.log('handleVasttrafikFetch(): Error', error);
+        throw error;
+    }
+    return response.json()
+        .then((data) => {
+            window.log('handleVasttrafikFetch(): OK', data);
+            return data;
+        })
+        .catch((err) => err);
 };
