@@ -12,8 +12,12 @@ export const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
 if (__DEV__) {
   window.log = console.log.bind(window.console);
+  window.timeStart = console.time.bind(window.console);
+  window.timeEnd = console.timeEnd.bind(window.console);
 } else {
   window.log = () => {};
+  window.timeStart = () => {};
+  window.timeEnd = () => {};
 }
 
 const defaultHandler = ErrorUtils.getGlobalHandler && ErrorUtils.getGlobalHandler() || ErrorUtils._globalHandler;

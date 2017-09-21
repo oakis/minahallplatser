@@ -5,11 +5,11 @@ import {
 	CLR_DEPARTURES,
 	ERROR
 } from './types';
-import { timeStart, timeEnd, handleVasttrafikFetch, getToken } from '../components/helpers';
+import { handleVasttrafikFetch, getToken } from '../components/helpers';
 import { serverUrl } from '../Server';
 
 export const getDepartures = ({ id }) => {
-	timeStart();
+	window.timeStart('getDepartures');
 	return (dispatch) => {
 		getToken()
 		.finally(({ access_token }) => {
@@ -51,9 +51,9 @@ export const getDepartures = ({ id }) => {
 };
 
 export const clearDepartures = () => {
-	timeStart();
+	window.timeStart('clearDepartures');
 	return (dispatch) => {
 		dispatch({ type: CLR_DEPARTURES, payload: [] });
-		timeEnd('clearDepartures');
+		window.timeEnd('clearDepartures');
 	};
 };

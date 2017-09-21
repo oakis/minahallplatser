@@ -10,7 +10,7 @@ import {
 	ERROR, CLR_ERROR
 } from './types';
 
-import { timeStart, timeEnd, handleVasttrafikFetch, getToken } from '../components/helpers';
+import { handleVasttrafikFetch, getToken } from '../components/helpers';
 import { serverUrl } from '../Server';
 
 export const searchChanged = (text) => {
@@ -23,7 +23,7 @@ export const searchChanged = (text) => {
 export const searchDepartures = ({ busStop }) => {
 	return (dispatch) => {
 		getToken().finally(({ access_token }) => {
-			timeStart();
+			window.timeStart('searchDepartures');
 			const url = `${serverUrl}/api/search`;
 			const config = {
 				method: 'POST',
@@ -44,17 +44,17 @@ export const searchDepartures = ({ busStop }) => {
 						payload: data
 					});
 					dispatch({ type: CLR_ERROR });
-					timeEnd('getDepartures');
+					window.timeEnd('searchDepartures');
 				} else {
 					dispatch({ type: SEARCH_DEPARTURES_FAIL });
 					dispatch({ type: ERROR, payload: data });
-					timeEnd('getDepartures');
+					window.timeEnd('searchDepartures');
 				}
 			})
 			.catch((data) => {
 				dispatch({ type: SEARCH_DEPARTURES_FAIL });
 				dispatch({ type: ERROR, payload: data });
-				timeEnd('getDepartures');
+				window.timeEnd('searchDepartures');
 			});
 		});
 	};
@@ -83,7 +83,7 @@ export const getNearbyStops = () => {
 
 const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 	getToken().finally(({ access_token }) => {
-		timeStart();
+		window.timeStart('getNearbyStops');
 		const url = `${serverUrl}/api/gps`;
 		const config = {
 			method: 'POST',
@@ -99,7 +99,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 		fetch(url, config, 'getNearbyStops')
 		.then(handleVasttrafikFetch)
 		.then(({ success, data }) => {
-			timeEnd('getNearbyStops');
+			window.timeEnd('getNearbyStops');
 			if (success) {
 				dispatch({ type: SEARCH_BY_GPS, payload: data });
 			} else {
@@ -108,7 +108,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 			}
 		})
 		.catch((error) => {
-			timeEnd('getNearbyStops');
+			window.timeEnd('getNearbyStops');
 			window.log(error);
 			dispatch({ type: SEARCH_BY_GPS_FAIL });
 			dispatch({ type: ERROR, payload: 'Kunde inte kontakta Västtrafik. Försök igen senare.' });
