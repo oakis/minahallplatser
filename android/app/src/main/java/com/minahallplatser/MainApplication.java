@@ -4,6 +4,9 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.smixx.fabric.FabricPackage;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -26,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new FabricPackage(),
             new VectorIconsPackage()
       );
     }
@@ -40,5 +44,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    Fabric.with(this, new Crashlytics());
   }
 }

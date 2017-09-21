@@ -28,6 +28,10 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+      <meta-data
+        android:name="io.fabric.ApiKey"
+        android:value="289bd91e895092c867390ba70c204883180654b7"
+      />
     </application>
 
 </manifest>
