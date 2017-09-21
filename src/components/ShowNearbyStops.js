@@ -28,7 +28,7 @@ class ShowNearbyStops extends Component {
 		this.props.stops = stops;
 	}
 
-	renderItem({ item }) {
+	renderItem = ({ item }) => {
 		return (
 			<ListItem
 				text={item.name}
@@ -66,7 +66,7 @@ class ShowNearbyStops extends Component {
 		return (
 			<FlatList
 				data={this.props.stops}
-				renderItem={this.renderItem.bind(this)}
+				renderItem={this.renderItem}
 				keyExtractor={item => item.id}
 			/>
 		);

@@ -34,7 +34,7 @@ class AddFavorite extends Component {
 		fetch.abort('searchDepartures');
 	}
 
-	onInputChange(busStop) {
+	onInputChange = (busStop) => {
 		fetch.abort('searchDepartures');
 		this.props.searchChanged(busStop);
 		clearTimeout(this.timeout);
@@ -49,7 +49,7 @@ class AddFavorite extends Component {
 		this.props.departureList = departureList;
 	}
 
-	renderItem({ item }) {
+	renderItem = ({ item }) => {
 		return (
 			<ListItem
 				text={item.name}
@@ -92,7 +92,7 @@ class AddFavorite extends Component {
 		return (
 			<FlatList
 				data={this.props.departureList}
-				renderItem={this.renderItem.bind(this)}
+				renderItem={this.renderItem}
 				keyExtractor={item => item.id}
 				keyboardShouldPersistTaps="always"
 			/>
@@ -106,7 +106,7 @@ class AddFavorite extends Component {
 					autoFocus
 					returnKeyType="search"
 					placeholder="Sök hållplats.."
-					onChangeText={this.onInputChange.bind(this)}
+					onChangeText={this.onInputChange}
 					value={this.props.busStop}
 					icon="ios-search"
 				/>

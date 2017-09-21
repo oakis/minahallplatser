@@ -12,15 +12,15 @@ class LoginForm extends Component {
 		this.props.clearErrors();
 	}
 
-	onEmailChange(text) {
+	onEmailChange = (text) => {
 		this.props.emailChanged(text);
 	}
 
-	onPasswordChange(text) {
+	onPasswordChange = (text) => {
 		this.props.passwordChanged(text);
 	}
 
-	onButtonPress() {
+	onButtonPress = () => {
 		this.props.loading = true;
 		const { email, password } = this.props;
 		this.props.loginUser({ email, password });
@@ -50,14 +50,14 @@ class LoginForm extends Component {
 					placeholder="din@email.se"
 					keyboardType="email-address"
 					returnKeyType="next"
-					onChangeText={this.onEmailChange.bind(this)}
+					onChangeText={this.onEmailChange}
 					value={this.props.email}
 					icon="ios-mail"
 				/>
 				<Input
 					secureTextEntry
 					placeholder="ditt lösenord"
-					onChangeText={this.onPasswordChange.bind(this)}
+					onChangeText={this.onPasswordChange}
 					value={this.props.password}
 					icon="ios-key"
 					iconSize={22}
@@ -68,7 +68,7 @@ class LoginForm extends Component {
 					uppercase
 					color="primary"
 					label="Logga in"
-					onPress={this.onButtonPress.bind(this)}
+					onPress={this.onButtonPress}
 				/>
 
 				<Button

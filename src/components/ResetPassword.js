@@ -15,11 +15,11 @@ class ResetPassword extends Component {
 		this.props.clearErrors();
 	}
 
-	onEmailChange(text) {
+	onEmailChange = (text) => {
 		this.props.emailChanged(text);
 	}
 
-	onButtonPress() {
+	onButtonPress = () => {
 		this.props.loading = true;
 		const { email } = this.props;
 		this.props.resetUserPassword(email);
@@ -48,7 +48,7 @@ class ResetPassword extends Component {
 						placeholder="din@email.se"
 						keyboardType="email-address"
 						returnKeyType="next"
-						onChangeText={this.onEmailChange.bind(this)}
+						onChangeText={this.onEmailChange}
 						value={this.props.email}
 						icon="ios-mail"
 					/>
@@ -57,7 +57,7 @@ class ResetPassword extends Component {
 						uppercase
 						color="primary"
 						label="Återställ lösenord"
-						onPress={this.onButtonPress.bind(this)}
+						onPress={this.onButtonPress}
 					/>
 				</View>
 			</TouchableWithoutFeedback>

@@ -22,19 +22,19 @@ class RegisterForm extends Component {
 		this.props.clearErrors();
 	}
 
-	onEmailChange(text) {
+	onEmailChange = (text) => {
 		this.props.emailChanged(text);
 	}
 
-	onPasswordChange(text) {
+	onPasswordChange = (text) => {
 		this.props.passwordChanged(text);
 	}
 
-	onPasswordSecondChange(text) {
+	onPasswordSecondChange = (text) => {
 		this.props.passwordSecondChanged(text);
 	}
 
-	onButtonPress() {
+	onButtonPress = () => {
 		this.props.loading = true;
 		const { email, password, passwordSecond } = this.props;
 		this.props.registerUser({ email, password, passwordSecond });
@@ -62,14 +62,14 @@ class RegisterForm extends Component {
 					placeholder="din@email.se"
 					keyboardType="email-address"
 					returnKeyType="next"
-					onChangeText={this.onEmailChange.bind(this)}
+					onChangeText={this.onEmailChange}
 					value={this.props.email}
 					icon="ios-mail"
 				/>
 				<Input
 					secureTextEntry
 					placeholder="ditt lösenord"
-					onChangeText={this.onPasswordChange.bind(this)}
+					onChangeText={this.onPasswordChange}
 					value={this.props.password}
 					icon="ios-key"
 					iconSize={22}
@@ -77,7 +77,7 @@ class RegisterForm extends Component {
 				<Input
 					secureTextEntry
 					placeholder="lösenord igen"
-					onChangeText={this.onPasswordSecondChange.bind(this)}
+					onChangeText={this.onPasswordSecondChange}
 					value={this.props.passwordSecond}
 					icon="ios-key"
 					iconSize={22}
@@ -87,7 +87,7 @@ class RegisterForm extends Component {
 					uppercase
 					color="primary"
 					label="Registrera"
-					onPress={this.onButtonPress.bind(this)}
+					onPress={this.onButtonPress}
 				/>
 			</View>
 		);

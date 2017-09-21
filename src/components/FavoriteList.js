@@ -36,7 +36,7 @@ class FavoriteList extends Component {
 		this.props.favorites = favorites;
 	}
 
-	renderItem({ item }) {
+	renderItem = ({ item }) => {
 		return (
 			<ListItem
 				text={item.busStop}
@@ -85,7 +85,7 @@ class FavoriteList extends Component {
 			return (
 				<FlatList
 					data={this.props.favorites}
-					renderItem={this.renderItem.bind(this)}
+					renderItem={this.renderItem}
 					keyExtractor={item => item.id}
 				/>
 			);
