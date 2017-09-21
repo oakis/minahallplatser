@@ -12,8 +12,7 @@ import {
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
 	RESET_PASSWORD,
-	ERROR,
-	CLR_ERROR
+	ERROR
 } from './types';
 import { showMessage, getToken } from '../components/helpers';
 

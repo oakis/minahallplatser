@@ -8,6 +8,7 @@ import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import Router from './Router';
 
+export const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
 if (__DEV__) {
   window.log = console.log.bind(window.console);
@@ -18,6 +19,10 @@ if (__DEV__) {
 const defaultHandler = ErrorUtils.getGlobalHandler && ErrorUtils.getGlobalHandler() || ErrorUtils._globalHandler;
 
 ErrorUtils.setGlobalHandler(({ stack }) => {
+    const { uid, email, displayName } = store.getState().auth.user;
+    Crashlytics.setUserName(displayName);
+    Crashlytics.setUserEmail(email);
+    Crashlytics.setUserIdentifier(uid);
     window.log('Sending error to Crashlytics:', stack);
     Crashlytics.logException(stack);
     defaultHandler.apply(this, arguments);
@@ -34,8 +39,6 @@ if (!firebase.apps.length) {
       messagingSenderId: '814413367686'
     });
 }
-
-export const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
 class App extends Component {
 
