@@ -6,8 +6,9 @@
 		"react/jsx-no-bind": 1
 	},
 	"globals": {
-		"fetch": false,
 		"navigator": false,
-		"window": false
+		"window": false,
+		"ErrorUtils": false,
+		"__DEV__": false
 	}
 }
