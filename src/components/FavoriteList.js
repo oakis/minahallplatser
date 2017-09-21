@@ -28,7 +28,7 @@ class FavoriteList extends Component {
 		this.createDataSource(nextProps);
 	}
 
-	componentWillUnount() {
+	componentWillUnmount() {
 		this.props.clearErrors();
 	}
 

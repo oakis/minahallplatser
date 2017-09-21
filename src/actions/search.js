@@ -8,6 +8,7 @@ import {
 	ERROR, CLR_ERROR
 } from './types';
 import { timeStart, timeEnd, handleVasttrafikFetch, getToken } from '../components/helpers';
+import { Actions } from 'react-native-router-flux';
 import { serverUrl } from '../Server';
 
 export const searchChanged = (text) => {
@@ -65,8 +66,10 @@ export const getNearbyStops = () => {
 			getCoordsSuccess({ dispatch, longitude, latitude });
 		},
 		() => {
-			dispatch({ type: SEARCH_BY_GPS_FAIL });
-			dispatch({ type: ERROR, payload: 'Kunde inte hitta din position.' });
+			if (Actions.currentScene === 'listNearbyStops') {
+				dispatch({ type: SEARCH_BY_GPS_FAIL });
+				dispatch({ type: ERROR, payload: 'Kunde inte hitta din position.' });
+			}
 		},
 		{
 			enableHighAccuracy: false,
