@@ -1,23 +1,13 @@
 import React from 'react';
 import { Text, TextInput, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { colors } from '../style';
+import { colors, component, metrics } from '../style';
 
 export const Input = ({ value, label, icon, iconSize = 24, placeholder, onChangeText, autoFocus = false, returnKeyType, keyboardType, secureTextEntry = false }) => {
     return (
-        <View
-            style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 10,
-                shadowRadius: 5,
-                shadowColor: colors.smoothBlack,
-                shadowOffset: { width: 0, height: 0 },
-                shadowOpacity: 0.2
-            }}
-        >
+        <View style={component.input.container}>
             {(label) ? <Text>{label}</Text> : null}
-            {(icon) ? <Icon name={icon} size={iconSize} style={{ paddingLeft: 5, paddingRight: 5 }} /> : null}
+            {(icon) ? <Icon name={icon} size={iconSize} style={{ paddingLeft: metrics.padding.sm, paddingRight: metrics.padding.sm }} /> : null}
             <TextInput
                 style={{ marginTop: 0, flex: 1 }}
                 placeholder={placeholder}

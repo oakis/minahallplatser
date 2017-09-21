@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, TouchableNativeFeedback, View } from 'react-nat
 import Icon from 'react-native-vector-icons/Ionicons';
 import { isAndroid } from '../helpers';
 import { Spinner } from './Spinner';
-import { colors } from '../style';
+import { colors, component } from '../style';
 
 export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alternative', onPress, uppercase = false, loading }) => {
     function showSpinnerOrText() {
@@ -29,30 +29,13 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alterna
         );
     }
 
-    const buttonStyle = {
-        alignSelf: 'stretch',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 10,
-        paddingBottom: 10,
-        marginBottom: 5,
-        backgroundColor: colors[color],
-        borderRadius: 3,
-        elevation: 1,
-        shadowRadius: 1,
-        shadowColor: colors.smoothBlack,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.5
-    };
-
     function renderButton() {
         if (isAndroid()) {
             return (
                 <TouchableNativeFeedback
                     onPress={onPress}
                 >
-                    <View style={buttonStyle}>
+                    <View style={[component.button, { backgroundColor: colors[color] }]}>
                         <Icon name={icon} size={iconSize} />
                         {showSpinnerOrText()}
                     </View>
@@ -61,7 +44,7 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alterna
         }
         return (
             <TouchableOpacity
-                style={buttonStyle}
+                style={[component.button, { backgroundColor: colors[color] }]}
                 onPress={onPress}
             >
                 <Icon name={icon} size={iconSize} />
