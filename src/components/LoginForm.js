@@ -9,6 +9,7 @@ class LoginForm extends Component {
 
 	componentWillUnmount() {
 		this.props.resetRoute();
+		this.props.clearErrors();
 	}
 
 	onEmailChange(text) {

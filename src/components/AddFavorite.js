@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { FlatList, Keyboard, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { searchDepartures, searchChanged, favoriteCreate } from '../actions';
+import { searchDepartures, searchChanged, favoriteCreate, clearErrors } from '../actions';
 import { ListItem, Spinner, Input, Message } from './common';
 import { colors } from './style';
 
@@ -29,6 +29,7 @@ class AddFavorite extends Component {
 
 	componentWillUnmount() {
 		clearTimeout(this.timeout);
+		this.props.clearErrors();
 	}
 
 	onInputChange(busStop) {
@@ -123,5 +124,5 @@ const MapStateToProps = (state) => {
 };
 
 export default connect(MapStateToProps,
-	{ searchDepartures, searchChanged, favoriteCreate }
+	{ searchDepartures, searchChanged, favoriteCreate, clearErrors }
 )(AddFavorite);

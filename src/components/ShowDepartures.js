@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { getDepartures, clearDepartures } from '../actions';
+import { getDepartures, clearDepartures, clearErrors } from '../actions';
 import { DepartureListItem, Spinner, Message } from './common';
 import { colors } from './style';
 
@@ -26,6 +26,7 @@ class ShowDepartures extends Component {
 		clearInterval(this.interval);
 		this.interval = null;
 		this.props.clearDepartures();
+		this.props.clearErrors();
 	}
 
 	startRefresh() {
@@ -86,4 +87,4 @@ const MapStateToProps = (state) => {
 };
 
 export default connect(MapStateToProps,
-	{ getDepartures, clearDepartures })(ShowDepartures);
+	{ getDepartures, clearDepartures, clearErrors })(ShowDepartures);

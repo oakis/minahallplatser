@@ -18,6 +18,10 @@ class ShowNearbyStops extends Component {
 		this.createDataSource(nextProps);
 	}
 
+	componentWillUnount() {
+		this.props.clearErrors();
+	}
+
 	createDataSource({ stops }) {
 		this.props.stops = stops;
 	}

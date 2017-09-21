@@ -6,7 +6,8 @@ import {
 	passwordChanged,
 	passwordSecondChanged,
 	registerUser,
-	resetRoute
+	resetRoute,
+	clearErrors
 } from '../actions';
 import { Input, Button, Message } from './common';
 
@@ -18,6 +19,7 @@ class RegisterForm extends Component {
 
 	componentWillUnmount() {
 		this.props.resetRoute();
+		this.props.clearErrors();
 	}
 
 	onEmailChange(text) {
@@ -100,5 +102,5 @@ const MapStateToProps = (state) => {
 };
 
 export default connect(MapStateToProps,
-	{ emailChanged, passwordChanged, passwordSecondChanged, registerUser, resetRoute }
+	{ emailChanged, passwordChanged, passwordSecondChanged, registerUser, resetRoute, clearErrors }
 )(RegisterForm);

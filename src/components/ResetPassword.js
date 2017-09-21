@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
-import { emailChanged, resetUserPassword, resetRoute } from '../actions';
+import { emailChanged, resetUserPassword, resetRoute, clearErrors } from '../actions';
 import { Input, Button, Message } from './common';
 
 class ResetPassword extends Component {
@@ -12,6 +12,7 @@ class ResetPassword extends Component {
 
 	componentWillUnmount() {
 		this.props.resetRoute();
+		this.props.clearErrors();
 	}
 
 	onEmailChange(text) {
@@ -72,5 +73,5 @@ const mapStateToProps = ({ auth, errors }) => {
 };
 
 export default connect(mapStateToProps,
-	{ emailChanged, resetUserPassword, resetRoute }
+	{ emailChanged, resetUserPassword, resetRoute, clearErrors }
 )(ResetPassword);

@@ -28,6 +28,10 @@ class FavoriteList extends Component {
 		this.createDataSource(nextProps);
 	}
 
+	componentWillUnount() {
+		this.props.clearErrors();
+	}
+
 	createDataSource({ favorites }) {
 		this.props.favorites = favorites;
 	}
