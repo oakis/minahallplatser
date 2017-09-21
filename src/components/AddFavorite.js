@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import fetch from 'react-native-cancelable-fetch';
 import React, { Component } from 'react';
 import { FlatList, Keyboard, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -30,9 +31,11 @@ class AddFavorite extends Component {
 	componentWillUnmount() {
 		clearTimeout(this.timeout);
 		this.props.clearErrors();
+		fetch.abort('searchDepartures');
 	}
 
 	onInputChange(busStop) {
+		fetch.abort('searchDepartures');
 		this.props.searchChanged(busStop);
 		clearTimeout(this.timeout);
 		this.timeout = setTimeout(() => {

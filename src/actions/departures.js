@@ -1,3 +1,4 @@
+import fetch from 'react-native-cancelable-fetch';
 import {
 	GET_DEPARTURES,
 	GET_DEPARTURES_FAIL,
@@ -23,7 +24,7 @@ export const getDepartures = ({ id }) => {
 					access_token
 				})
 			};
-			fetch(url, config)
+			fetch(url, config, 'getDepartures')
 			.finally(handleVasttrafikFetch)
 			.then(({ success, data }) => {
 				if (success) {

@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import fetch from 'react-native-cancelable-fetch';
 import { getDepartures, clearDepartures, clearErrors } from '../actions';
 import { DepartureListItem, Spinner, Message } from './common';
 import { colors } from './style';
@@ -27,6 +28,7 @@ class ShowDepartures extends Component {
 		this.interval = null;
 		this.props.clearDepartures();
 		this.props.clearErrors();
+		fetch.abort('getDepartures');
 	}
 
 	startRefresh() {

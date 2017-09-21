@@ -1,6 +1,7 @@
 import moment from 'moment';
 import base64 from 'base-64';
 import firebase from 'firebase';
+import fetch from 'react-native-cancelable-fetch';
 import { handleVasttrafikFetch } from './';
 import { key, secret, url } from '../../Vasttrafik';
 
@@ -24,7 +25,7 @@ export const getToken = () => {
 					Authorization: `Basic ${encoded}`
 				},
 				body: `grant_type=client_credentials&scope=device_${currentUser.uid}`
-			})
+			}, 'getToken')
 			.then(handleVasttrafikFetch)
 			.then((token) => {
 				saveToken(token);

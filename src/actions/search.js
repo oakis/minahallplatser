@@ -1,3 +1,5 @@
+import { Actions } from 'react-native-router-flux';
+import fetch from 'react-native-cancelable-fetch';
 import {
 	SEARCH_CHANGED,
 	SEARCH_DEPARTURES,
@@ -7,8 +9,8 @@ import {
 	CLR_SEARCH,
 	ERROR, CLR_ERROR
 } from './types';
+
 import { timeStart, timeEnd, handleVasttrafikFetch, getToken } from '../components/helpers';
-import { Actions } from 'react-native-router-flux';
 import { serverUrl } from '../Server';
 
 export const searchChanged = (text) => {
@@ -33,7 +35,7 @@ export const searchDepartures = ({ busStop }) => {
 					access_token
 				})
 			};
-			fetch(url, config)
+			fetch(url, config, 'searchDepartures')
 			.then(handleVasttrafikFetch)
 			.then(({ success, data }) => {
 				if (success) {
@@ -94,7 +96,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 				access_token
 			})
 		};
-		fetch(url, config)
+		fetch(url, config, 'getNearbyStops')
 		.then(handleVasttrafikFetch)
 		.then(({ success, data }) => {
 			timeEnd('getNearbyStops');

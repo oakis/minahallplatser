@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import fetch from 'react-native-cancelable-fetch';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
@@ -20,6 +21,7 @@ class ShowNearbyStops extends Component {
 
 	componentWillUnmount() {
 		this.props.clearErrors();
+		fetch.abort('getNearbyStops');
 	}
 
 	createDataSource({ stops }) {
