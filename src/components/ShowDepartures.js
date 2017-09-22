@@ -38,6 +38,7 @@ class ShowDepartures extends Component {
 	}
 
 	refresh() {
+		Actions.refresh({ right: () => <Spinner color={colors.alternative} /> });
 		this.props.getDepartures({ id: this.props.id });
 	}
 
@@ -45,6 +46,7 @@ class ShowDepartures extends Component {
 		window.log('Updated departure list:', departures);
 		this.props.departures = departures;
 		this.props.loading = (departures.length === 0);
+		Actions.refresh({ right: null });
 	}
 
 	renderDepartures({ item }) {

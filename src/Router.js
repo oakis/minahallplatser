@@ -10,6 +10,7 @@ import RegisterForm from './components/RegisterForm';
 import ShowNearbyStops from './components/ShowNearbyStops';
 import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
+import { Spinner } from './components/common';
 import { colors } from './components/style';
 import { store } from './App';
 import { CLR_ERROR } from './actions/types';
@@ -93,7 +94,7 @@ const RouterComponent = () => (
 					initial
 				/>
 				<Scene key="addfav" component={AddFavorite} title="Lägg till favorit" />
-				<Scene key="departures" component={ShowDepartures} title="Avgångar" />
+				<Scene key="departures" component={ShowDepartures} title="Avgångar" right={() => <Spinner color={colors.alternative} />} />
 				<Scene key="listNearbyStops" component={ShowNearbyStops} title="Hållplatser nära dig" />
 			</Scene>
 		</Scene>
