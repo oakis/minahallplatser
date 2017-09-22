@@ -3,7 +3,7 @@ import {
 	GET_DEPARTURES,
 	GET_DEPARTURES_FAIL,
 	CLR_DEPARTURES,
-	ERROR
+	ERROR, CLR_ERROR
 } from './types';
 import { handleVasttrafikFetch, getToken } from '../components/helpers';
 import { serverUrl } from '../Server';
@@ -11,6 +11,7 @@ import { serverUrl } from '../Server';
 export const getDepartures = ({ id }) => {
 	window.timeStart('getDepartures');
 	return (dispatch) => {
+		dispatch({ type: CLR_ERROR });
 		getToken()
 		.finally(({ access_token }) => {
 			const url = `${serverUrl}/api/departures`;
@@ -45,7 +46,7 @@ export const getDepartures = ({ id }) => {
 				});
 				dispatch({ type: ERROR, payload: error });
 			})
-			.finally(() => timeEnd('getDepartures'));
+			.finally(() => window.timeEnd('getDepartures'));
 		});
 	};
 };

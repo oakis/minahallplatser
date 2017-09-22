@@ -12,15 +12,16 @@ class ShowDepartures extends Component {
 	componentWillMount() {
 		Actions.refresh({ title: this.props.busStop });
 		this.props.getDepartures({ id: this.props.id });
-		this.createDataSource(this.props);
 	}
 
 	componentDidMount() {
 		this.startRefresh();
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.createDataSource(nextProps);
+	componentWillReceiveProps({ departures }) {
+		if (JSON.stringify(this.props.departures) !== JSON.stringify(departures)) {
+			this.createDataSource(departures);
+		}
 	}
 
 	componentWillUnmount() {
@@ -40,7 +41,8 @@ class ShowDepartures extends Component {
 		this.props.getDepartures({ id: this.props.id });
 	}
 
-	createDataSource({ departures }) {
+	createDataSource(departures) {
+		window.log('Updated departure list:', departures);
 		this.props.departures = departures;
 		this.props.loading = (departures.length === 0);
 	}
@@ -84,7 +86,6 @@ class ShowDepartures extends Component {
 const MapStateToProps = (state) => {
 	const { departures, loading } = state.departures;
 	const { error } = state.errors;
-	window.log('Recieved departures:', departures);
 	return { departures, loading, error };
 };
 
