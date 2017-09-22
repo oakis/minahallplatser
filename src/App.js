@@ -10,10 +10,24 @@ import Router from './Router';
 
 export const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
+const PerformanceNow = global.nativePerformanceNow || global.performanceNow;
+const startTimes = {};
+
 if (__DEV__) {
   window.log = console.log.bind(window.console);
-  window.timeStart = console.time.bind(window.console);
-  window.timeEnd = console.timeEnd.bind(window.console);
+  window.timeStart = console.time || (label => {
+      startTimes[label] = PerformanceNow();
+  });
+  window.timeEnd = console.timeEnd || (label => {
+      const endTime = PerformanceNow();
+      if (startTimes[label]) {
+          const delta = endTime - startTimes[label];
+          window.log(`${label}: ${delta.toFixed(3)}ms`);
+          delete startTimes[label];
+      } else {
+          console.warn(`Warning: No such label '${label}' for window.timeEnd()`);
+      }
+  });
 } else {
   window.log = () => {};
   window.timeStart = () => {};
