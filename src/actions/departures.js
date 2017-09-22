@@ -11,7 +11,6 @@ import { serverUrl } from '../Server';
 export const getDepartures = ({ id }) => {
 	window.timeStart('getDepartures');
 	return (dispatch) => {
-		dispatch({ type: CLR_ERROR });
 		getToken()
 		.finally(({ access_token }) => {
 			const url = `${serverUrl}/api/departures`;
@@ -29,6 +28,7 @@ export const getDepartures = ({ id }) => {
 			.finally(handleVasttrafikFetch)
 			.then(({ success, data }) => {
 				if (success) {
+					dispatch({ type: CLR_ERROR });
 					dispatch({
 						type: GET_DEPARTURES,
 						payload: data
