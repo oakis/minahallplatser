@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from './';
 import { colors } from '../style';
 
 export const DepartureListItem = ({ item }) => {

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { component } from '../style';
+import { Text } from '../common';
 
 export const ListItem = ({ text, icon = null, pressItem, pressIcon = null, iconVisible = false, iconColor = '#000' }) => {
 	return (

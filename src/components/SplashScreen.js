@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, ImageBackground, Text, AsyncStorage } from 'react-native';
+import { View, ImageBackground, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { autoLogin } from '../actions';
-import { Spinner } from './common';
+import { Spinner, Text } from './common';
 import { colors } from './style';
 
 class SplashScreen extends Component {

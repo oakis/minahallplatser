@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Text } from './';
 import { colors, component, metrics } from '../style';
 
 export const Input = ({ value, label, icon, iconSize = 24, placeholder, onChangeText, autoFocus = false, returnKeyType, keyboardType, secureTextEntry = false }) => {

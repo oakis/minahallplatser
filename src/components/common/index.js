@@ -5,3 +5,4 @@ export * from './Input';
 export * from './ListItem';
 export * from './Spinner';
 export * from './Message';
+export * from './Text';

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, TouchableOpacity, TouchableNativeFeedback, View } from 'react-native';
+import { TouchableOpacity, TouchableNativeFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { isAndroid } from '../helpers';
-import { Spinner } from './Spinner';
+import { Text, Spinner } from './';
 import { colors, component } from '../style';
 
 export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alternative', onPress, uppercase = false, loading }) => {

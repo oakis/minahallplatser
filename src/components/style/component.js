@@ -69,7 +69,8 @@ export const component = {
 		},
 		text: {
 			justifyContent: 'flex-start',
-			alignSelf: 'center'
+            alignSelf: 'center',
+            fontSize: 18
 		},
 		icon: {
 			justifyContent: 'flex-end',

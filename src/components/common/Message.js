@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Text } from '../common';
 import { colors, component } from '../style';
 
 export const Message = ({ type, message }) => {
