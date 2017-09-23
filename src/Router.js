@@ -12,6 +12,7 @@ import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
 import { Spinner } from './components/common';
 import { colors } from './components/style';
+import { isAndroid } from './components/helpers';
 import { store } from './App';
 import { CLR_ERROR } from './actions/types';
 
@@ -19,7 +20,12 @@ const iconSize = 24;
 
 const RouterComponent = () => (
 	<Router
-		titleStyle={{ color: colors.alternative, alignSelf: 'center', fontSize: 14 }}
+		titleStyle={{
+			color: colors.alternative,
+			alignSelf: 'center',
+			fontSize: 14,
+			fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
+		}}
 		navigationBarStyle={{ backgroundColor: colors.primary, paddingHorizontal: 10 }}
 		rightButtonTextStyle={{ color: colors.alternative }}
 		leftButtonTextStyle={{ color: colors.alternative }}
