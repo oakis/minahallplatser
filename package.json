@@ -18,7 +18,7 @@
     "react-native": "^0.47.1",
     "react-native-cancelable-fetch": "^0.1.1",
     "react-native-fabric": "^0.5.1",
-    "react-native-router-flux": "github:aksonov/react-native-router-flux#92f055e52d11e0ff8c38bd5f1a5100bc927d5242",
+    "react-native-router-flux": "^4.0.0-beta.21",
     "react-native-vector-icons": "^4.3.0",
     "react-redux": "^5.0.1",
     "redux": "^3.6.0",
