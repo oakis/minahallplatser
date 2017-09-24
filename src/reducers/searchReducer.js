@@ -11,13 +11,13 @@ const INIT_STATE = {
 	busStop: '',
 	departureList: [],
 	stops: [],
-	loading: true
+	loading: false
 };
 
 export default (state = INIT_STATE, action) => {
 	switch (action.type) {
 		case SEARCH_CHANGED:
-			return { ...state, busStop: action.payload };
+			return { ...state, busStop: action.payload, loading: true };
 		case SEARCH_DEPARTURES:
 			return { ...state, departureList: action.payload, loading: false };
 		case SEARCH_DEPARTURES_FAIL:

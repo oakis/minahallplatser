@@ -2,11 +2,11 @@ import React from 'react';
 import { Text } from 'react-native';
 import { isAndroid } from '../helpers';
 
-const textStyle = {
-    fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
-};
-
-const DefaultFont = ({ style, children, ...props }) => {
+const DefaultFont = ({ style, heading = false, children, ...props }) => {
+    const textStyle = {
+        fontFamily: (isAndroid()) ? 'sans-serif' : 'System',
+        fontSize: (heading) ? 22 : 16
+    };
     let applyStyle;
     if (Array.isArray(style)) {
         applyStyle = [textStyle, ...style];

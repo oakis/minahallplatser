@@ -27,6 +27,14 @@ export const component = {
             shadowOpacity: 0.2
         }
     },
+    text: {
+        heading: {
+            marginTop: metrics.margin.md,
+            paddingLeft: metrics.padding.md,
+            borderBottomWidth: 2,
+            borderColor: colors.primary
+        }
+    },
     message: {
         view: {
             alignSelf: 'stretch',
@@ -63,9 +71,7 @@ export const component = {
 			marginTop: metrics.margin.sm,
 			marginHorizontal: metrics.margin.md,
 			paddingBottom: metrics.padding.sm,
-			height: 50,
-			borderBottomWidth: 1,
-			borderBottomColor: colors.darkgrey
+			height: 50
 		},
 		text: {
 			justifyContent: 'flex-start',

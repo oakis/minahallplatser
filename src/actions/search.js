@@ -36,7 +36,7 @@ export const searchDepartures = ({ busStop }) => {
 				})
 			};
 			fetch(url, config, 'searchDepartures')
-			.then(handleVasttrafikFetch)
+			.finally(handleVasttrafikFetch)
 			.then(({ success, data }) => {
 				if (success) {
 					dispatch({

@@ -1,12 +1,15 @@
 import _ from 'lodash';
+import fetch from 'react-native-cancelable-fetch';
 import React, { Component } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View } from 'react-native';
+import { Keyboard, Alert, AsyncStorage, SectionList, View, ScrollView } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { favoriteGet, favoriteDelete, clearErrors } from '../actions';
-import { ListItem, Spinner, Message } from './common';
-import { colors } from './style';
+import { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate } from '../actions';
+import { ListItem, Spinner, Message, Input, Text, ListItemSeparator } from './common';
+import { colors, component } from './style';
+import { CLR_SEARCH } from '../actions/types';
+import { store } from '../App';
 
 
 class FavoriteList extends Component {
@@ -20,32 +23,56 @@ class FavoriteList extends Component {
 					this.props.favoriteGet(user);
 				}
 			});
-			this.createDataSource(this.props);
+			this.populateFavorites(this.props);
 		});
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.createDataSource(nextProps);
+		this.populateSearchResults(nextProps);
+		this.populateFavorites(nextProps);
 	}
 
 	componentWillUnmount() {
+		fetch.abort('searchDepartures');
+		clearTimeout(this.timeout);
 		this.props.clearErrors();
 	}
 
-	createDataSource({ favorites }) {
+	onInputChange = (busStop) => {
+		fetch.abort('searchDepartures');
+		this.props.searchChanged(busStop);
+		clearTimeout(this.timeout);
+		this.timeout = setTimeout(() => {
+			window.log('Searching for stops.');
+			this.props.searchDepartures({ busStop });
+		}, 200);
+	}
+
+	resetSearch = () => {
+		store.dispatch({ type: CLR_SEARCH });
+	}
+
+	populateSearchResults({ departureList }) {
+		this.props.departureList = departureList;
+	}
+
+
+	populateFavorites({ favorites }) {
 		this.props.favorites = favorites;
 	}
 
-	renderItem = ({ item }) => {
+	renderFavoriteItem = ({ item }) => {
 		return (
 			<ListItem
 				text={item.busStop}
 				icon='ios-remove-circle-outline'
 				pressItem={async () => {
+					Keyboard.dismiss();
 					await this.props.clearErrors();
 					Actions.departures(item);
 				}}
 				pressIcon={() => {
+					Keyboard.dismiss();
 					Alert.alert(
 						item.busStop,
 						`Är du säker att du vill ta bort ${item.busStop}?`,
@@ -66,53 +93,114 @@ class FavoriteList extends Component {
 		);
 	}
 
-	renderList() {
-		if (this.props.loading) {
+	renderSearchItem = ({ item }) => {
+		return (
+			<ListItem
+				text={item.name}
+				icon={item.icon}
+				pressItem={() => {
+					Keyboard.dismiss();
+					Actions.departures({ busStop: item.name, id: item.id });
+				}}
+				pressIcon={() => {
+					Keyboard.dismiss();
+					this.props.favoriteCreate({ busStop: item.name, id: item.id });
+				}}
+				iconVisible
+				iconColor={colors.warning}
+			/>
+		);
+	}
+
+	renderSectionHeader = ({ section }) => {
+		if (section.data.length === 0) {
+			return <View />;
+		}
+		return (
+			<Text
+				heading
+				style={component.text.heading}
+			>{section.title}</Text>
+		);
+	}
+
+	renderSectionList() {
+		if (this.props.favoritesLoading) {
 			return (
-				<Spinner
-					size="large"
-					color={colors.primary}
-				/>
-			);
-		} else if (this.props.error) {
-			return (
-				<Message
-					message={this.props.error}
-					type="danger"
-				/>
-			);
-		} else if (this.props.favorites.length > 0) {
-			return (
-				<FlatList
-					data={this.props.favorites}
-					renderItem={this.renderItem}
-					keyExtractor={item => item.id}
-				/>
+				<View style={{ marginTop: 10 }}>
+					<Spinner
+						size="large"
+						color={colors.primary}
+					/>
+				</View>
 			);
 		}
-
 		return (
-			<Message
-				message="Du har inte sparat några favoriter än."
-				type="info"
+			<SectionList
+				sections={[
+					{
+						data: this.props.departureList,
+						renderItem: this.renderSearchItem,
+						title: 'Sökresultat'
+					},
+					{
+						data: this.props.favorites,
+						renderItem: this.renderFavoriteItem,
+						title: 'Sparade favoriter'
+					}
+				]}
+				keyExtractor={item => item.id}
+				ItemSeparatorComponent={ListItemSeparator}
+				renderSectionHeader={this.renderSectionHeader}
+				scrollEnabled={false}
+				keyboardShouldPersistTaps='always'
 			/>
 		);
 	}
 
 	render() {
 		return (
-			<View style={{ flex: 1 }}>
-				{this.renderList()}
-			</View>
+			<ScrollView scrollEnabled keyboardShouldPersistTaps={'always'}>
+				<Input
+					returnKeyType="search"
+					placeholder="Sök hållplats.."
+					onChangeText={this.onInputChange}
+					value={this.props.busStop}
+					icon="ios-search"
+					loading={this.props.searchLoading}
+					iconRight="ios-close"
+					iconRightPress={this.resetSearch}
+				/>
+				{(this.props.error) ?
+					<Message
+						type="warning"
+						message={this.props.error}
+					/> :
+					null
+				}
+				{this.renderSectionList()}
+				{(this.props.favorites.length === 0 && !this.props.favoritesLoading) ?
+					<Message
+						type="warning"
+						message={'Du har inte sparat några favoriter än.'}
+					/> : null
+				}
+			</ScrollView>
 		);
 	}
 }
 
 const mapStateToProps = state => {
 	const favorites = _.values(state.fav.list);
-	const { loading } = state.fav;
+	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
-	return { favorites, loading, error };
+	const favoriteIds = _.map(_.values(state.fav.list), 'id');
+	const { busStop } = state.search;
+	const searchLoading = state.search.loading;
+	const departureList = _.map(state.search.departureList, (item) => {
+		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline' };
+	});
+	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading };
 };
 
-export default connect(mapStateToProps, { favoriteGet, favoriteDelete, clearErrors })(FavoriteList);
+export default connect(mapStateToProps, { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate })(FavoriteList);

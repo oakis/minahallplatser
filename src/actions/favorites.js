@@ -7,7 +7,8 @@ import {
 	FAVORITE_FETCH_SUCCESS,
 	FAVORITE_FETCH_FAIL,
 	FAVORITE_DELETE,
-	ERROR
+	ERROR,
+	CLR_SEARCH
 } from './types';
 
 export const favoriteCreate = ({ busStop, id }) => {
@@ -19,6 +20,7 @@ export const favoriteCreate = ({ busStop, id }) => {
 				fbRef.push({ busStop, id })
 					.then(() => {
 						dispatch({ type: FAVORITE_CREATE });
+						dispatch({ type: CLR_SEARCH });
 						Actions.dashboard({ type: 'reset' });
 					}, (error) => {
 						window.log('favoriteCreate error: ', error);

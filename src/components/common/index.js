@@ -6,3 +6,4 @@ export * from './ListItem';
 export * from './Spinner';
 export * from './Message';
 export * from './Text';
+export * from './ListItemSeparator';

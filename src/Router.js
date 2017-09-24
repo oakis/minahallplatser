@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import FavoriteList from './components/FavoriteList';
-import AddFavorite from './components/AddFavorite';
 import ShowDepartures from './components/ShowDepartures';
 import RegisterForm from './components/RegisterForm';
 import ShowNearbyStops from './components/ShowNearbyStops';
@@ -82,24 +81,11 @@ const RouterComponent = () => (
 							/>
 						);
 					}}
-					renderLeftButton={() => {
-						return (
-							<Icon
-								name="ios-add-circle"
-								style={{ color: colors.alternative, fontSize: iconSize }}
-								onPress={async () => {
-									await store.dispatch({ type: CLR_ERROR });
-									Actions.addfav();
-								}}
-							/>
-						);
-					}}
 					key="favlist"
 					component={FavoriteList}
 					title="Mina Hållplatser"
 					initial
 				/>
-				<Scene key="addfav" component={AddFavorite} title="Lägg till favorit" />
 				<Scene key="departures" component={ShowDepartures} title="Avgångar" right={() => <Spinner color={colors.alternative} />} />
 				<Scene key="listNearbyStops" component={ShowNearbyStops} title="Hållplatser nära dig" />
 			</Scene>
