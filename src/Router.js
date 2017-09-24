@@ -69,7 +69,7 @@ const RouterComponent = () => (
 			</Scene>
 			<Scene key="dashboard">
 				<Scene
-					renderRightButton={() => {
+					right={() => {
 						return (
 							<Icon
 								name="ios-navigate"
@@ -77,6 +77,18 @@ const RouterComponent = () => (
 								onPress={async () => {
 									await store.dispatch({ type: CLR_ERROR });
 									Actions.listNearbyStops();
+								}}
+							/>
+						);
+					}}
+					left={() => {
+						return (
+							<Icon
+								name="ios-create"
+								style={{ color: colors.alternative, fontSize: iconSize }}
+								onPress={async () => {
+									await store.dispatch({ type: CLR_ERROR });
+									Actions.refresh({ editing: this.editing = !this.editing });
 								}}
 							/>
 						);

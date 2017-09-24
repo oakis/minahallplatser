@@ -87,7 +87,7 @@ class FavoriteList extends Component {
 						]
 					);
 				}}
-				iconVisible
+				iconVisible={this.props.editing}
 				iconColor={colors.danger}
 			/>
 		);
