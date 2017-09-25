@@ -162,7 +162,6 @@ class FavoriteList extends Component {
 		return (
 			<ScrollView scrollEnabled keyboardShouldPersistTaps={'always'}>
 				<Input
-					returnKeyType="search"
 					placeholder="Sök hållplats.."
 					onChangeText={this.onInputChange}
 					value={this.props.busStop}
