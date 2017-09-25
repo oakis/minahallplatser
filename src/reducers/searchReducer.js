@@ -3,6 +3,7 @@ import {
 	SEARCH_DEPARTURES,
 	SEARCH_DEPARTURES_FAIL,
 	SEARCH_BY_GPS,
+	SEARCH_BY_GPS_SUCCESS,
 	SEARCH_BY_GPS_FAIL,
 	CLR_SEARCH
 } from '../actions/types';
@@ -23,6 +24,8 @@ export default (state = INIT_STATE, action) => {
 		case SEARCH_DEPARTURES_FAIL:
 			return { ...state, loading: false };
 		case SEARCH_BY_GPS:
+			return { ...state, loading: true };
+		case SEARCH_BY_GPS_SUCCESS:
 			return { ...state, stops: action.payload, loading: false };
 		case SEARCH_BY_GPS_FAIL:
 			return { ...INIT_STATE, loading: false };

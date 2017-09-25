@@ -5,6 +5,7 @@ import {
 	SEARCH_DEPARTURES,
 	SEARCH_DEPARTURES_FAIL,
 	SEARCH_BY_GPS,
+	SEARCH_BY_GPS_SUCCESS,
 	SEARCH_BY_GPS_FAIL,
 	CLR_SEARCH,
 	ERROR, CLR_ERROR
@@ -22,6 +23,13 @@ export const searchChanged = (text) => {
 
 export const searchDepartures = ({ busStop }) => {
 	return (dispatch) => {
+		if (busStop === '') {
+			fetch.abort('searchDepartures');
+			dispatch({
+				type: SEARCH_DEPARTURES,
+				payload: []
+			});
+		}
 		getToken().finally(({ access_token }) => {
 			window.timeStart('searchDepartures');
 			const url = `${serverUrl}/api/search`;
@@ -63,6 +71,7 @@ export const searchDepartures = ({ busStop }) => {
 export const getNearbyStops = () => {
 	return (dispatch) => {
 		dispatch({ type: CLR_SEARCH });
+		dispatch({ type: SEARCH_BY_GPS });
 		navigator.geolocation.getCurrentPosition((position) => {
 			const { longitude, latitude } = position.coords;
 			getCoordsSuccess({ dispatch, longitude, latitude });
@@ -101,7 +110,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 		.then(({ success, data }) => {
 			window.timeEnd('getNearbyStops');
 			if (success) {
-				dispatch({ type: SEARCH_BY_GPS, payload: data });
+				dispatch({ type: SEARCH_BY_GPS_SUCCESS, payload: data });
 			} else {
 				dispatch({ type: SEARCH_BY_GPS_FAIL	});
 				dispatch({ type: ERROR, payload: data });
