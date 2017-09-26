@@ -11,7 +11,7 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alterna
             return (
                 <Spinner
 					size="small"
-					color={colors.alternative}
+					color={colors[fontColor]}
                 />
             );
         }
