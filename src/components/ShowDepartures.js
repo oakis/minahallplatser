@@ -4,7 +4,7 @@ import { View, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import { getDepartures, clearDepartures, clearErrors } from '../actions';
-import { DepartureListItem, Spinner, Message } from './common';
+import { DepartureListItem, Spinner, Message, ListItemSeparator } from './common';
 import { colors } from './style';
 
 class ShowDepartures extends Component {
@@ -72,6 +72,7 @@ class ShowDepartures extends Component {
 				data={this.props.departures}
 				renderItem={this.renderDepartures}
 				keyExtractor={item => item.journeyid}
+				ItemSeparatorComponent={ListItemSeparator}
 			/>
 		);
 	}

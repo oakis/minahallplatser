@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { getNearbyStops, favoriteCreate, favoriteDelete, clearErrors } from '../actions';
-import { ListItem, Spinner, Message } from './common';
+import { ListItem, Spinner, Message, ListItemSeparator } from './common';
 import { colors } from './style';
 
 class ShowNearbyStops extends Component {
@@ -68,6 +68,7 @@ class ShowNearbyStops extends Component {
 				data={this.props.stops}
 				renderItem={this.renderItem}
 				keyExtractor={item => item.id}
+				ItemSeparatorComponent={ListItemSeparator}
 			/>
 		);
 	}
