@@ -8,7 +8,7 @@ import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate } from '../actions';
 import { ListItem, Spinner, Message, Input, Text, ListItemSeparator } from './common';
 import { colors, component } from './style';
-import { CLR_SEARCH } from '../actions/types';
+import { CLR_SEARCH, CLR_ERROR } from '../actions/types';
 import { store } from '../App';
 
 
@@ -50,6 +50,7 @@ class FavoriteList extends Component {
 
 	resetSearch = () => {
 		store.dispatch({ type: CLR_SEARCH });
+		store.dispatch({ type: CLR_ERROR });
 	}
 
 	populateSearchResults({ departureList }) {
