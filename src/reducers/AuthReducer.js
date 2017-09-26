@@ -5,6 +5,7 @@ import {
 	LOGIN_USER_SUCCESS,
 	LOGIN_USER_FAIL,
 	LOGIN_USER,
+	LOGIN_ANON_USER,
 	REGISTER_USER,
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
@@ -16,7 +17,8 @@ const INIT_STATE = {
 	password: '',
 	passwordSecond: '',
 	user: {},
-	loading: false
+	loading: false,
+	loadingAnon: false
 };
 
 export default (state = INIT_STATE, action) => {
@@ -34,12 +36,15 @@ export default (state = INIT_STATE, action) => {
 				password: '',
 				passwordSecond: '',
 				loading: false,
+				loadingAnon: false,
 				user: action.payload
 			};
 		case LOGIN_USER_FAIL:
-			return { ...state, password: '', loading: false };
+			return { ...state, password: '', loading: false, loadingAnon: false };
 		case LOGIN_USER:
 			return { ...state, loading: true };
+		case LOGIN_ANON_USER:
+			return { ...state, loadingAnon: true };
 		case REGISTER_USER:
 			return { ...state, loading: true };
 		case REGISTER_USER_FAIL:

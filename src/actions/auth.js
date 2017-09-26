@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import moment from 'moment';
 import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
@@ -8,6 +9,7 @@ import {
 	LOGIN_USER_SUCCESS,
 	LOGIN_USER_FAIL,
 	LOGIN_USER,
+	LOGIN_ANON_USER,
 	REGISTER_USER,
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
@@ -101,6 +103,15 @@ export const loginUser = ({ email, password }) => {
 	};
 };
 
+export const loginAnonUser = () => {
+	return (dispatch) => {
+		dispatch({ type: LOGIN_ANON_USER });
+		firebase.auth().signInAnonymously()
+		.then(user => loginUserSuccess(dispatch, user))
+		.catch(error => loginUserFail(dispatch, error));
+	};
+};
+
 export const autoLogin = (user) => {
 	return (dispatch) => {
 		if (user.uid === firebase.auth().currentUser.uid) {
@@ -113,6 +124,8 @@ export const autoLogin = (user) => {
 
 const loginUserSuccess = (dispatch, user) => {
 	getToken().finally(() => {
+		const fbUser = firebase.database().ref(`/users/${user.uid}`);
+		fbUser.update({ lastLogin: moment().format(), isAnonymous: user.isAnonymous });
 		AsyncStorage.setItem('minahallplatser-user', JSON.stringify(user), () => {
 			dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
 			Actions.dashboard({ type: 'reset' });
