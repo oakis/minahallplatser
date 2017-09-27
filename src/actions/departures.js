@@ -13,7 +13,7 @@ export const getDepartures = ({ id }) => {
 	return (dispatch) => {
 		getToken()
 		.finally(({ access_token }) => {
-			const url = `${serverUrl}/api/departures`;
+			const url = `${serverUrl}/api/vasttrafik/departures`;
 			const config = {
 				method: 'POST',
 				headers: {

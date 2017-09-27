@@ -32,7 +32,7 @@ export const searchDepartures = ({ busStop }) => {
 		}
 		getToken().finally(({ access_token }) => {
 			window.timeStart('searchDepartures');
-			const url = `${serverUrl}/api/search`;
+			const url = `${serverUrl}/api/vasttrafik/search`;
 			const config = {
 				method: 'POST',
 				headers: {
@@ -93,7 +93,7 @@ export const getNearbyStops = () => {
 const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 	getToken().finally(({ access_token }) => {
 		window.timeStart('getNearbyStops');
-		const url = `${serverUrl}/api/gps`;
+		const url = `${serverUrl}/api/vasttrafik/gps`;
 		const config = {
 			method: 'POST',
 			headers: {
