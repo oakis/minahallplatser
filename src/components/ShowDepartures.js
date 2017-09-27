@@ -20,9 +20,12 @@ class ShowDepartures extends Component {
 		this.startRefresh();
 	}
 
-	componentWillReceiveProps({ departures }) {
+	componentWillReceiveProps({ departures, timestamp }) {
 		if (JSON.stringify(this.props.departures) !== JSON.stringify(departures)) {
 			this.createDataSource(departures);
+		}
+		if (this.props.timestamp !== timestamp) {
+			Actions.refresh({ right: null });
 		}
 	}
 
@@ -48,7 +51,6 @@ class ShowDepartures extends Component {
 		window.log('Updated departure list:', departures);
 		this.props.departures = departures;
 		this.props.loading = (departures.length === 0);
-		Actions.refresh({ right: null });
 	}
 
 	renderDepartures({ item }) {
@@ -89,9 +91,9 @@ class ShowDepartures extends Component {
 }
 
 const MapStateToProps = (state) => {
-	const { departures, loading } = state.departures;
+	const { departures, loading, timestamp } = state.departures;
 	const { error } = state.errors;
-	return { departures, loading, error };
+	return { departures, loading, error, timestamp };
 };
 
 export default connect(MapStateToProps,
