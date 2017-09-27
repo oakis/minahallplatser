@@ -2,7 +2,7 @@ import moment from 'moment';
 import base64 from 'base-64';
 import firebase from 'firebase';
 import fetch from 'react-native-cancelable-fetch';
-import { handleVasttrafikFetch } from './';
+import { handleJsonFetch } from './';
 import { key, secret, url } from '../../Vasttrafik';
 
 const encoded = base64.encode(`${key}:${secret}`);
@@ -26,17 +26,15 @@ export const getToken = () => {
 				},
 				body: `grant_type=client_credentials&scope=device_${currentUser.uid}`
 			}, 'getToken')
-			.then(handleVasttrafikFetch)
+			.then(handleJsonFetch)
 			.then((token) => {
 				saveToken(token);
 				resolve(token);
 			})
 			.catch(() => {
-				window.log('fetch catch');
 				reject(localToken);
 			});
 		} else {
-			window.log('token doesnt need refresh');
 			reject(localToken);
 		}
 	});
