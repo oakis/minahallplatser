@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import _ from 'lodash';
 import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
@@ -88,15 +89,15 @@ export const favoriteGet = (currentUser) => {
 
 export const favoriteDelete = (stopId) => {
 	window.log('favoriteDelete():', stopId);
-	return (dispatch) => {
+	return async (dispatch) => {
 		const { currentUser } = firebase.auth();
 		const ref = firebase.database().ref(`/users/${currentUser.uid}/favorites`);
 		let removeByKey;
-		ref.on('value', snapshot => {
-			snapshot.forEach((child) => {
-				const id = child.val().id;
-				if (id === stopId) {
-					removeByKey = ref.child(child.key);
+		await ref.on('value', async snapshot => {
+			const favorites = await snapshot.val();
+			_.forEach(favorites, (item, key) => {
+				if (item.id === stopId) {
+					removeByKey = ref.child(key);
 				}
 			});
 		});
