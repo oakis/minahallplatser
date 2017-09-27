@@ -11,7 +11,7 @@ import {
 	ERROR, CLR_ERROR
 } from './types';
 
-import { handleVasttrafikFetch, getToken } from '../components/helpers';
+import { handleJsonFetch, getToken } from '../components/helpers';
 import { serverUrl } from '../Server';
 
 export const searchChanged = (text) => {
@@ -44,7 +44,7 @@ export const searchDepartures = ({ busStop }) => {
 				})
 			};
 			fetch(url, config, 'searchDepartures')
-			.finally(handleVasttrafikFetch)
+			.finally(handleJsonFetch)
 			.then(({ success, data }) => {
 				if (success) {
 					dispatch({
@@ -106,7 +106,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 			})
 		};
 		fetch(url, config, 'getNearbyStops')
-		.then(handleVasttrafikFetch)
+		.then(handleJsonFetch)
 		.then(({ success, data }) => {
 			window.timeEnd('getNearbyStops');
 			if (success) {

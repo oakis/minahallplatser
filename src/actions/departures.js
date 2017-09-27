@@ -5,7 +5,7 @@ import {
 	CLR_DEPARTURES,
 	ERROR, CLR_ERROR
 } from './types';
-import { handleVasttrafikFetch, getToken } from '../components/helpers';
+import { handleJsonFetch, getToken, updateDeparturesCount } from '../components/helpers';
 import { serverUrl } from '../Server';
 
 export const getDepartures = ({ id }) => {
@@ -25,9 +25,10 @@ export const getDepartures = ({ id }) => {
 				})
 			};
 			fetch(url, config, 'getDepartures')
-			.finally(handleVasttrafikFetch)
+			.finally(handleJsonFetch)
 			.then(({ success, data }) => {
 				if (success) {
+					updateDeparturesCount(data.departures.length);
 					dispatch({ type: CLR_ERROR });
 					dispatch({
 						type: GET_DEPARTURES,

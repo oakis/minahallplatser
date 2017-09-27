@@ -5,6 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import { getDepartures, clearDepartures, clearErrors } from '../actions';
 import { DepartureListItem, Spinner, Message, ListItemSeparator } from './common';
+import { updateStopsCount } from './helpers';
 import { colors } from './style';
 
 class ShowDepartures extends Component {
@@ -12,6 +13,7 @@ class ShowDepartures extends Component {
 	componentWillMount() {
 		Actions.refresh({ title: this.props.busStop });
 		this.props.getDepartures({ id: this.props.id });
+		updateStopsCount();
 	}
 
 	componentDidMount() {
