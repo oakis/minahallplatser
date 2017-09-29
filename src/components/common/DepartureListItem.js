@@ -1,9 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 import { Text } from './';
 import { colors } from '../style';
 
-export const DepartureListItem = ({ item }) => {
+export const DepartureListItem = ({ item, onLongPress }) => {
 	let timeLeft = '';
     if (item.timeLeft === 0) {
         timeLeft = 'Nu';
@@ -79,22 +79,27 @@ export const DepartureListItem = ({ item }) => {
             departureStyle, nextDepStyle, directionStyle, listStyle } = styles;
 
 	return (
-		<View style={listStyle}>
-            <View style={col1Style}>
-                <View style={stopNumStyle}>
-                    <Text style={stopNumText}>{item.sname}</Text>
+        <TouchableWithoutFeedback
+            onLongPress={onLongPress}
+            delayLongPress={500}
+        >
+            <View style={listStyle}>
+                <View style={col1Style}>
+                    <View style={stopNumStyle}>
+                        <Text style={stopNumText}>{item.sname}</Text>
+                    </View>
+                </View>
+
+                <View style={col2Style}>
+                    <Text style={directionStyle}>{item.direction}</Text>
+                    <Text>Läge {item.track}</Text>
+                </View>
+
+                <View style={col3Style}>
+                    <Text style={departureStyle}>{timeLeft}</Text>
+                    <Text style={nextDepStyle}>{item.nextStop}</Text>
                 </View>
             </View>
-
-            <View style={col2Style}>
-                <Text style={directionStyle}>{item.direction}</Text>
-                <Text>Läge {item.track}</Text>
-            </View>
-
-            <View style={col3Style}>
-                <Text style={departureStyle}>{timeLeft}</Text>
-                <Text style={nextDepStyle}>{item.nextStop}</Text>
-            </View>
-		</View>
+        </TouchableWithoutFeedback>
 	);
 };

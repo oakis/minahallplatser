@@ -191,10 +191,10 @@ class FavoriteList extends Component {
 }
 
 const mapStateToProps = state => {
-	const favorites = _.values(state.fav.list);
+	const { favorites } = state.fav;
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
-	const favoriteIds = _.map(_.values(state.fav.list), 'id');
+	const favoriteIds = _.map(favorites, 'id');
 	const { busStop } = state.search;
 	const searchLoading = state.search.loading;
 	const departureList = _.map(state.search.departureList, (item) => {
