@@ -9,10 +9,10 @@ import { handleJsonFetch, getToken, updateDeparturesCount } from '../components/
 import { serverUrl } from '../Server';
 
 export const getDepartures = ({ id }) => {
-	window.timeStart('getDepartures');
 	return (dispatch) => {
 		getToken()
 		.finally(({ access_token }) => {
+			window.timeStart('getDepartures');
 			const url = `${serverUrl}/api/vasttrafik/departures`;
 			const config = {
 				method: 'POST',
