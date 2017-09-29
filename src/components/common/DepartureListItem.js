@@ -4,12 +4,7 @@ import { Text } from './';
 import { colors } from '../style';
 
 export const DepartureListItem = ({ item, onLongPress }) => {
-	let timeLeft = '';
-    if (item.timeLeft === 0) {
-        timeLeft = 'Nu';
-    } else {
-        timeLeft = item.timeLeft;
-    }
+	const timeLeft = (item.timeLeft <= 0) ? 'Nu' : item.timeLeft;
     const getFontColor = () => {
         if (!item.rtTime) {
             return colors.warning;
