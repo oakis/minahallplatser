@@ -22,7 +22,7 @@ export default (state = INIT_STATE, action) => {
 		case GET_DEPARTURES_FAIL:
 			return { ...state, loading: false };
 		case CLR_DEPARTURES:
-			return { ...state, ...INIT_STATE };
+			return INIT_STATE;
 		default:
 			return state;
 	}
