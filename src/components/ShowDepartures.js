@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import React, { Component } from 'react';
-import { View, SectionList } from 'react-native';
+import React, { PureComponent } from 'react';
+import { View, ScrollView, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle } from '../actions';
@@ -9,7 +9,7 @@ import { DepartureListItem, Spinner, Message, ListItemSeparator } from './common
 import { updateStopsCount } from './helpers';
 import { colors } from './style';
 
-class ShowDepartures extends Component {
+class ShowDepartures extends PureComponent {
 	
 	componentWillMount() {
 		Actions.refresh({ title: this.props.busStop });
@@ -63,6 +63,10 @@ class ShowDepartures extends Component {
 		this.props.departures = departures;
 	}
 
+	ListFooterComponent = () => {
+		return (this.props.departures.length === 0 || this.props.favorites.length === 0) ? null : <View style={{ height: 5, backgroundColor: colors.primary }} />;
+	}
+
 	renderDepartures = ({ item, index }) => {
 		const itemWithNewIndex = { ...item, index };
 		return (
@@ -71,10 +75,6 @@ class ShowDepartures extends Component {
 				onLongPress={() => this.props.favoriteLineToggle(item)}
 			/>
 		);
-	}
-
-	renderSectionFooter = ({ section }) => {
-		return (section.data.length === 0 || section.title === 'departures' || this.props.departures.length === 0) ? null : <View style={{ height: 5, backgroundColor: colors.primary }} />;
 	}
 
 	renderSpinner() {
@@ -89,23 +89,35 @@ class ShowDepartures extends Component {
 			return <Message type="warning" message={this.props.error} />;
 		}
 
-		return ( 
-			<SectionList
-				sections={[
-					{
-						data: this.props.favorites,
-						renderItem: this.renderDepartures
-					},
-					{
-						data: this.props.departures,
-						renderItem: this.renderDepartures,
-						title: 'departures'
-					}
-				]}
-				keyExtractor={item => item.journeyid}
-				ItemSeparatorComponent={ListItemSeparator}
-				renderSectionFooter={this.renderSectionFooter}
-			/>
+		return (
+			<ScrollView>
+				<FlatList
+					data={this.props.favorites}
+					renderItem={this.renderDepartures}
+					keyExtractor={item => item.journeyid}
+					ItemSeparatorComponent={ListItemSeparator}
+					ListFooterComponent={this.ListFooterComponent}
+					getItemLayout={(data, index) => (
+						{ length: 51, offset: 51 * index, index }
+					)}
+					maxToRenderPerBatch={11}
+					initialNumToRender={11}
+					scrollEnabled={false}
+				/>
+				<FlatList
+					data={this.props.departures}
+					renderItem={this.renderDepartures}
+					title={'departures'}
+					keyExtractor={item => item.journeyid}
+					ItemSeparatorComponent={ListItemSeparator}
+					getItemLayout={(data, index) => (
+						{ length: 51, offset: 51 * index, index }
+					)}
+					maxToRenderPerBatch={11}
+					initialNumToRender={11}
+					scrollEnabled={false}
+				/>
+			</ScrollView>
 		);
 	}
 
@@ -121,15 +133,15 @@ class ShowDepartures extends Component {
 const MapStateToProps = (state) => {
 	const { lines } = state.fav;
 	const { loading, timestamp } = state.departures;
-	const favorites = [];
-	const departures = [];
+	let favorites = [];
+	let departures = [];
 	_.forEach(state.departures.departures, item => {
 		const { sname, direction } = item;
 		const departure = `${sname} ${direction}`;
 		if (_.includes(lines, departure)) {
-			favorites.push(item);
+			favorites = [...favorites, item];
 		} else {
-			departures.push(item);
+			departures = [...departures, item];
 		}
 	});
 	const { error } = state.errors;
