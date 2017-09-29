@@ -12,7 +12,7 @@ export const getDepartures = ({ id }) => {
 	return (dispatch) => {
 		getToken()
 		.finally(({ access_token }) => {
-			window.timeStart('getDepartures');
+			window.timeStart('getDepartures()');
 			const url = `${serverUrl}/api/vasttrafik/departures`;
 			const config = {
 				method: 'POST',
@@ -47,7 +47,7 @@ export const getDepartures = ({ id }) => {
 				});
 				dispatch({ type: ERROR, payload: error });
 			})
-			.finally(() => window.timeEnd('getDepartures'));
+			.finally(() => window.timeEnd('getDepartures()'));
 		});
 	};
 };
