@@ -7,6 +7,7 @@ export class DepartureListItem extends PureComponent {
     render() {
         const { item, onLongPress } = this.props;
         const timeLeft = (item.timeLeft <= 0) ? 'Nu' : item.timeLeft;
+        const nextStop = (item.nextStop <= 0) ? 'Nu' : item.nextStop;
         const getFontColor = () => {
             if (!item.rtTime) {
                 return colors.warning;
@@ -94,7 +95,7 @@ export class DepartureListItem extends PureComponent {
 
                     <View style={col3Style}>
                         <Text style={departureStyle}>{timeLeft}</Text>
-                        <Text style={nextDepStyle}>{item.nextStop}</Text>
+                        <Text style={nextDepStyle}>{nextStop}</Text>
                     </View>
                 </View>
             </TouchableWithoutFeedback>
