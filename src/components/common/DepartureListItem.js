@@ -5,7 +5,7 @@ import { colors } from '../style';
 
 export class DepartureListItem extends PureComponent {
     render() {
-        const { item, onLongPress } = this.props;
+        const { item, onPress } = this.props;
         const timeLeft = (item.timeLeft <= 0) ? 'Nu' : item.timeLeft;
         const nextStop = (item.nextStop <= 0) ? 'Nu' : item.nextStop;
         const getFontColor = () => {
@@ -78,7 +78,7 @@ export class DepartureListItem extends PureComponent {
 
         return (
             <TouchableWithoutFeedback
-                onLongPress={onLongPress}
+                onPress={onPress}
                 delayLongPress={500}
             >
                 <View style={listStyle}>

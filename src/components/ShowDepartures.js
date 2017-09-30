@@ -72,7 +72,7 @@ class ShowDepartures extends PureComponent {
 		return (
 			<DepartureListItem
 				item={itemWithNewIndex}
-				onLongPress={() => this.props.favoriteLineToggle(item)}
+				onPress={() => this.props.favoriteLineToggle(item)}
 			/>
 		);
 	}
@@ -103,6 +103,7 @@ class ShowDepartures extends PureComponent {
 					maxToRenderPerBatch={11}
 					initialNumToRender={11}
 					scrollEnabled={false}
+					extraData={this.props.favorites}
 				/>
 				<FlatList
 					data={this.props.departures}
@@ -116,6 +117,7 @@ class ShowDepartures extends PureComponent {
 					maxToRenderPerBatch={11}
 					initialNumToRender={11}
 					scrollEnabled={false}
+					extraData={this.props.departures}
 				/>
 			</ScrollView>
 		);

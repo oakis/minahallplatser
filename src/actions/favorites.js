@@ -2,11 +2,13 @@ import firebase from 'firebase';
 import _ from 'lodash';
 import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { store } from '../App';
 import {
 	FAVORITE_CREATE, FAVORITE_CREATE_FAIL, FAVORITE_DELETE,
 	FAVORITE_FETCH_SUCCESS, FAVORITE_FETCH_FAIL,
 	ERROR,
-	CLR_SEARCH
+	CLR_SEARCH,
+	LINES_FETCH, LINE_ADD, LINE_REMOVE
 } from './types';
 
 // Stops
@@ -60,6 +62,22 @@ export const favoriteGet = (currentUser) => {
 					});
 					dispatch({ type: ERROR, payload: 'Kunde inte ladda dina favoriter.' });
 				});
+				AsyncStorage.getItem('minahallplatser-lines').then((localLines) => {
+					const lines = JSON.parse(localLines);
+					if (lines) {
+						dispatch({ type: LINES_FETCH, payload: lines });
+					} else {
+						window.log('Did not find lines locally');
+					}
+				});
+				firebase.database().ref(`/users/${currentUser.uid}/lines`)
+				.once('value', snapshot => {
+					AsyncStorage.setItem('minahallplatser-lines', JSON.stringify(snapshot.val()));
+					dispatch({ type: LINES_FETCH, payload: snapshot.val() });
+				}, (error) => {
+					window.log('lines error: ', error);
+					dispatch({ type: ERROR, payload: 'Kunde inte ladda dina sparade linjer.' });
+				});
 			}).catch((err) => {
 				window.log(err);
 			});
@@ -103,34 +121,34 @@ export const favoriteLineToggle = ({ sname, direction }) => {
 	const line = `${sname} ${direction}`;
 	const { currentUser } = firebase.auth();
 	return (dispatch) => {
-		const fbRef = firebase.database().ref(`/users/${currentUser.uid}/favorites/lines`);
-		fbRef.once('value', snapshot => {
-			const lines = snapshot.val();
-			let exists = false;
-			let fbKey;
-			_.forEach(lines, (item, key) => {
-				if (item === line) {
-					dispatch({ type: FAVORITE_CREATE_FAIL });
-					exists = true;
-					fbKey = fbRef.child(key);
-				}
+		const fbRef = firebase.database().ref(`/users/${currentUser.uid}/lines`);
+		let exists = false;
+		let fbKey;
+		if (_.includes(store.getState().fav.lines, line)) {
+			exists = true;
+			dispatch({ type: FAVORITE_CREATE_FAIL });
+		}
+		if (!exists) {
+			window.log('favoriteLineToggle push:', line);
+			dispatch({ type: LINE_ADD, payload: line });
+			fbRef.push(line)
+			.catch((error) => {
+				window.log('favoriteLineToggle push error:', error);
+				favoriteCreateFail(dispatch);
 			});
-			if (!exists) {
-				fbRef.push(line)
-				.then(() => {
-					window.log('favoriteLineToggle push:', line);
-				})
-				.catch((error) => {
-					window.log('favoriteLineToggle push error:', error);
-					favoriteCreateFail(dispatch);
+		} else {
+			window.log('favoriteLineToggle remove:', line);
+			dispatch({ type: LINE_REMOVE, payload: line });
+			fbRef.once('value', snapshot => {
+				const fbLines = snapshot.val();
+				_.forEach(fbLines, (item, key) => {
+					if (item === line) {
+						fbKey = fbRef.child(key);
+					}
 				});
-			} else {
 				fbKey.remove()
-				.then(() => {
-					window.log('favoriteLineToggle remove:', line);
-				})
 				.catch((error) => window.log(error));
-			}
-		});
+			});
+		}
 	};
 };

@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import {
 	FAVORITE_CREATE, FAVORITE_CREATE_FAIL, FAVORITE_DELETE,
-	FAVORITE_FETCH_SUCCESS, FAVORITE_FETCH_FAIL
+	FAVORITE_FETCH_SUCCESS, FAVORITE_FETCH_FAIL,
+	LINES_FETCH, LINE_ADD, LINE_REMOVE
 } from '../actions/types';
 
 const INIT_STATE = {
@@ -19,8 +20,7 @@ export default (state = INIT_STATE, action) => {
 		case FAVORITE_FETCH_SUCCESS: {
 			return {
 				...state,
-				favorites: _.filter(action.payload, (v, i) => i !== 'lines'),
-				lines: (action.payload.lines) ? _.values(action.payload.lines) : [],
+				favorites: _.values(action.payload),
 				loading: false
 			};
 		}
@@ -28,6 +28,12 @@ export default (state = INIT_STATE, action) => {
 			return { ...state, loading: action.payload.loading };
 		case FAVORITE_DELETE:
 			return { ...state, loading: false };
+		case LINES_FETCH:
+			return { ...state, lines: _.values(action.payload) };
+		case LINE_ADD:
+			return { ...state, lines: [...state.lines, action.payload] };
+		case LINE_REMOVE:
+			return { ...state, lines: state.lines.filter((e) => e !== action.payload) };
 		default:
 			return state;
 	}
