@@ -7,7 +7,7 @@ export class DepartureListItem extends PureComponent {
     render() {
         const { item, onPress } = this.props;
         const timeLeft = (item.timeLeft <= 0) ? 'Nu' : item.timeLeft;
-        const nextStop = (item.nextStop <= 0) ? 'Nu' : item.nextStop;
+        const nextStop = (item.nextStop <= 0 && item.nextStop !== null) ? 'Nu' : item.nextStop;
         const getFontColor = () => {
             if (!item.rtTime) {
                 return colors.warning;
