@@ -63,7 +63,7 @@ export class DepartureListItem extends PureComponent {
                 fontSize: (item.sname.length > 3) ? 12 : 14,
             },
             departureStyle: {
-                fontSize: 24,
+                fontSize: (item.timeLeft > 99) ? 20 : 24,
                 color: getFontColor()
             },
             nextDepStyle: {
