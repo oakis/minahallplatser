@@ -30,7 +30,7 @@ export default (state = INIT_STATE, action) => {
 		case SEARCH_BY_GPS_FAIL:
 			return { ...INIT_STATE, loading: false };
 		case CLR_SEARCH:
-			return { ...INIT_STATE };
+			return { ...state, departureList: [], loading: false };
 		default:
 			return state;
 	}
