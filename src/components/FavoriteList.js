@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { Component } from 'react';
-import { Keyboard, Alert, AsyncStorage, SectionList, View, ScrollView } from 'react-native';
+import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate } from '../actions';
-import { ListItem, Spinner, Message, Input, Text, ListItemSeparator } from './common';
-import { colors, component } from './style';
+import { ListItem, Spinner, Message, Input, ListItemSeparator } from './common';
+import { colors } from './style';
 import { CLR_SEARCH, CLR_ERROR } from '../actions/types';
 import { store } from '../App';
 
@@ -113,18 +113,6 @@ class FavoriteList extends Component {
 		);
 	}
 
-	renderSectionHeader = ({ section }) => {
-		if (section.data.length === 0) {
-			return <View />;
-		}
-		return (
-			<Text
-				heading
-				style={component.text.heading}
-			>{section.title}</Text>
-		);
-	}
-
 	renderSectionList() {
 		if (this.props.favoritesLoading) {
 			return (
@@ -137,25 +125,26 @@ class FavoriteList extends Component {
 			);
 		}
 		return (
-			<SectionList
-				sections={[
-					{
-						data: this.props.departureList,
-						renderItem: this.renderSearchItem,
-						title: 'Sökresultat'
-					},
-					{
-						data: this.props.favorites,
-						renderItem: this.renderFavoriteItem,
-						title: 'Sparade favoriter'
-					}
-				]}
-				keyExtractor={item => item.id}
-				ItemSeparatorComponent={ListItemSeparator}
-				renderSectionHeader={this.renderSectionHeader}
-				scrollEnabled={false}
-				keyboardShouldPersistTaps='always'
-			/>
+			<View>
+				<FlatList
+					data={this.props.departureList}
+					renderItem={this.renderSearchItem}
+					keyExtractor={item => item.id}
+					ItemSeparatorComponent={ListItemSeparator}
+					scrollEnabled={false}
+					keyboardShouldPersistTaps='always'
+				/>
+				{(this.props.departureList.length > 0) ? <View style={{ height: 5, backgroundColor: colors.primary }} /> : null}
+				<FlatList
+					data={this.props.favorites}
+					renderItem={this.renderFavoriteItem}
+					keyExtractor={item => item.id}
+					ItemSeparatorComponent={ListItemSeparator}
+					scrollEnabled={false}
+					keyboardShouldPersistTaps='always'
+					extraData={this.props.editing}
+				/>
+			</View>
 		);
 	}
 
