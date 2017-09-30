@@ -13,7 +13,7 @@ const INIT_STATE = {
 export default (state = INIT_STATE, action) => {
 	switch (action.type) { 
 		case FAVORITE_CREATE:
-			return { ...state, ...INIT_STATE, loading: false };
+			return { ...state, loading: false };
 		case FAVORITE_CREATE_FAIL:
 			return { ...state, loading: false };
 		case FAVORITE_FETCH_SUCCESS: {
@@ -27,7 +27,7 @@ export default (state = INIT_STATE, action) => {
 		case FAVORITE_FETCH_FAIL:
 			return { ...state, loading: action.payload.loading };
 		case FAVORITE_DELETE:
-			return { ...state, ...INIT_STATE, loading: false };
+			return { ...state, loading: false };
 		default:
 			return state;
 	}
