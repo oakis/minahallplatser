@@ -159,6 +159,7 @@ class FavoriteList extends Component {
 					loading={this.props.searchLoading}
 					iconRight="ios-close"
 					iconRightPress={this.resetSearch}
+					style={{ marginLeft: 5, marginRight: 5, marginBottom: 0 }}
 				/>
 				{(this.props.error) ?
 					<Message
