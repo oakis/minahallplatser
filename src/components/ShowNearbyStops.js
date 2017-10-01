@@ -83,7 +83,7 @@ class ShowNearbyStops extends Component {
 }
 
 const MapStateToProps = (state) => {
-	const favorites = _.map(_.values(state.fav.list), 'id');
+	const favorites = _.map(_.values(state.fav.favorites), 'id');
 	const { stops, loading } = state.search;
 	const { error } = state.errors;
 	return { stops, loading, error, favorites };
