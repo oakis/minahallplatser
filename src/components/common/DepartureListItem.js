@@ -1,13 +1,19 @@
 import React, { PureComponent } from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
+import moment from 'moment';
 import { Text } from './';
 import { colors } from '../style';
+
+function formatTime(minutes) {
+    const duration = moment.duration(minutes, 'minutes');
+    return (minutes > 59) ? `${duration.hours()}h ${duration.minutes()}m` : minutes;
+}
 
 export class DepartureListItem extends PureComponent {
     render() {
         const { item, onPress } = this.props;
-        const timeLeft = (item.timeLeft <= 0) ? 'Nu' : item.timeLeft;
-        const nextStop = (item.nextStop <= 0 && item.nextStop !== null) ? 'Nu' : item.nextStop;
+        const timeLeft = (item.timeLeft <= 0) ? 'Nu' : formatTime(item.timeLeft);
+        const nextStop = (item.nextStop <= 0 && item.nextStop !== null) ? 'Nu' : formatTime(item.nextStop);
         const getFontColor = () => {
             if (!item.rtTime) {
                 return colors.warning;
@@ -41,9 +47,10 @@ export class DepartureListItem extends PureComponent {
             },
             col3Style: {
                 height,
-                width: 40,
+                width: 50,
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                marginRight: 5
             },
             stopNumStyle: {
                 flex: 1,
@@ -63,7 +70,7 @@ export class DepartureListItem extends PureComponent {
                 fontSize: (item.sname.length > 3) ? 12 : 14,
             },
             departureStyle: {
-                fontSize: (item.timeLeft > 99) ? 20 : 24,
+                fontSize: (item.timeLeft > 59) ? 14 : 24,
                 color: getFontColor()
             },
             nextDepStyle: {
