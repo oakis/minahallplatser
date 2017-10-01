@@ -10,6 +10,13 @@ import { updateStopsCount } from './helpers';
 import { colors } from './style';
 
 class ShowDepartures extends PureComponent {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			addFavorite: false
+		};
+	}
 	
 	componentWillMount() {
 		Actions.refresh({ title: this.props.busStop });
@@ -72,7 +79,10 @@ class ShowDepartures extends PureComponent {
 		return (
 			<DepartureListItem
 				item={itemWithNewIndex}
-				onPress={() => this.props.favoriteLineToggle(item)}
+				onPress={() => {
+					this.props.favoriteLineToggle(item);
+					this.setState({ addFavorite: !this.state.addFavorite });
+				}}
 			/>
 		);
 	}
@@ -97,13 +107,10 @@ class ShowDepartures extends PureComponent {
 					keyExtractor={item => item.journeyid}
 					ItemSeparatorComponent={ListItemSeparator}
 					ListFooterComponent={this.ListFooterComponent}
-					getItemLayout={(data, index) => (
-						{ length: 51, offset: 51 * index, index }
-					)}
 					maxToRenderPerBatch={11}
 					initialNumToRender={11}
 					scrollEnabled={false}
-					extraData={this.props.favorites}
+					extraData={this.state}
 				/>
 				<FlatList
 					data={this.props.departures}
@@ -117,7 +124,7 @@ class ShowDepartures extends PureComponent {
 					maxToRenderPerBatch={11}
 					initialNumToRender={11}
 					scrollEnabled={false}
-					extraData={this.props.departures}
+					extraData={this.state}
 				/>
 			</ScrollView>
 		);
