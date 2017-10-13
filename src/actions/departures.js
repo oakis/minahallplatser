@@ -5,15 +5,15 @@ import {
 	CLR_DEPARTURES,
 	ERROR, CLR_ERROR
 } from './types';
-import { handleVasttrafikFetch, getToken } from '../components/helpers';
+import { handleJsonFetch, getToken, updateDeparturesCount } from '../components/helpers';
 import { serverUrl } from '../Server';
 
 export const getDepartures = ({ id }) => {
-	window.timeStart('getDepartures');
 	return (dispatch) => {
 		getToken()
 		.finally(({ access_token }) => {
-			const url = `${serverUrl}/api/departures`;
+			window.timeStart('getDepartures()');
+			const url = `${serverUrl}/api/vasttrafik/departures`;
 			const config = {
 				method: 'POST',
 				headers: {
@@ -25,9 +25,10 @@ export const getDepartures = ({ id }) => {
 				})
 			};
 			fetch(url, config, 'getDepartures')
-			.finally(handleVasttrafikFetch)
+			.finally(handleJsonFetch)
 			.then(({ success, data }) => {
 				if (success) {
+					updateDeparturesCount(data.departures.length);
 					dispatch({ type: CLR_ERROR });
 					dispatch({
 						type: GET_DEPARTURES,
@@ -46,7 +47,7 @@ export const getDepartures = ({ id }) => {
 				});
 				dispatch({ type: ERROR, payload: error });
 			})
-			.finally(() => window.timeEnd('getDepartures'));
+			.finally(() => window.timeEnd('getDepartures()'));
 		});
 	};
 };

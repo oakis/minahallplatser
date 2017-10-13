@@ -4,11 +4,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Text, Spinner } from './';
 import { colors, component, metrics } from '../style';
 
-export const Input = ({ value, label, icon, iconRight = null, iconRightPress = null, iconSize = 24, placeholder, onChangeText, autoFocus = false, returnKeyType, keyboardType, secureTextEntry = false, loading = false }) => {
+export const Input = ({ style, value, label, icon, iconRight = null, iconRightPress = null, iconSize = 24, placeholder, onChangeText, autoFocus = false, returnKeyType, keyboardType, secureTextEntry = false, loading = false }) => {
     return (
-        <View style={component.input.container}>
+        <View style={[component.input.container, style]}>
             {(label) ? <Text>{label}</Text> : null}
-            {(icon) ? <Icon name={icon} size={iconSize} style={{ paddingLeft: metrics.padding.sm, paddingRight: metrics.padding.sm }} /> : null}
+            {(icon) ? <Icon name={icon} size={iconSize} style={{ marginLeft: metrics.margin.sm, marginRight: metrics.margin.sm }} /> : null}
             <TextInput
                 style={{ marginTop: 0, flex: 1 }}
                 placeholder={placeholder}
@@ -23,10 +23,10 @@ export const Input = ({ value, label, icon, iconRight = null, iconRightPress = n
                 autoCapitalize={'none'}
             />
             {(iconRight !== null) ?
-                <View style={{ paddingLeft: metrics.padding.sm, paddingRight: metrics.padding.sm }}>
+                <View style={{ marginLeft: metrics.margin.sm, marginRight: metrics.margin.sm }}>
                     {(loading) ?
                         <Spinner color={colors.primary} /> :
-                        <Icon onPress={iconRightPress} name={iconRight} size={iconSize} style={{ paddingLeft: metrics.padding.sm, paddingRight: metrics.padding.sm }} />
+                        <Icon onPress={iconRightPress} name={iconRight} size={iconSize} style={{ marginLeft: metrics.margin.sm, marginRight: metrics.margin.sm }} />
                     }
                 </View>
                 : null

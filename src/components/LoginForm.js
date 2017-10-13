@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors } from '../actions';
+import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser } from '../actions';
 import { Button, Input, Message } from './common';
 
 class LoginForm extends Component {
@@ -87,6 +87,15 @@ class LoginForm extends Component {
 						Actions.resetpw();
 					}}
 				/>
+				<Button
+					loading={this.props.loadingAnon}
+					fontColor="primary"
+					label="Använd appen utan konto"
+					onPress={async () => {
+						await this.props.clearErrors();
+						this.props.loginAnonUser();
+					}}
+				/>
 
 			</View>
 		);
@@ -95,11 +104,11 @@ class LoginForm extends Component {
 }
 
 const mapStateToProps = ({ auth, errors }) => {
-	const { email, password, loading, token } = auth;
+	const { email, password, loading, token, loadingAnon } = auth;
 	const { error } = errors;
-	return { email, password, error, loading, token };
+	return { email, password, error, loading, token, loadingAnon };
 };
 
 export default connect(mapStateToProps, {
-	emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors
+	emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser
 })(LoginForm);

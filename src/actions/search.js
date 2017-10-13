@@ -11,7 +11,7 @@ import {
 	ERROR, CLR_ERROR
 } from './types';
 
-import { handleVasttrafikFetch, getToken } from '../components/helpers';
+import { handleJsonFetch, getToken } from '../components/helpers';
 import { serverUrl } from '../Server';
 
 export const searchChanged = (text) => {
@@ -32,7 +32,7 @@ export const searchDepartures = ({ busStop }) => {
 		}
 		getToken().finally(({ access_token }) => {
 			window.timeStart('searchDepartures');
-			const url = `${serverUrl}/api/search`;
+			const url = `${serverUrl}/api/vasttrafik/search`;
 			const config = {
 				method: 'POST',
 				headers: {
@@ -44,7 +44,7 @@ export const searchDepartures = ({ busStop }) => {
 				})
 			};
 			fetch(url, config, 'searchDepartures')
-			.finally(handleVasttrafikFetch)
+			.finally(handleJsonFetch)
 			.then(({ success, data }) => {
 				if (success) {
 					dispatch({
@@ -93,7 +93,7 @@ export const getNearbyStops = () => {
 const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 	getToken().finally(({ access_token }) => {
 		window.timeStart('getNearbyStops');
-		const url = `${serverUrl}/api/gps`;
+		const url = `${serverUrl}/api/vasttrafik/gps`;
 		const config = {
 			method: 'POST',
 			headers: {
@@ -106,7 +106,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 			})
 		};
 		fetch(url, config, 'getNearbyStops')
-		.then(handleVasttrafikFetch)
+		.then(handleJsonFetch)
 		.then(({ success, data }) => {
 			window.timeEnd('getNearbyStops');
 			if (success) {
