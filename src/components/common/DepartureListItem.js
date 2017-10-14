@@ -27,9 +27,10 @@ export class DepartureListItem extends PureComponent {
         const styles = {
             listStyle: {
                 flex: 1,
-                height: 60,
                 backgroundColor: (item.index % 2) ? colors.alternative : colors.lightgrey,
                 marginLeft: 0,
+                paddingTop: 5,
+                paddingBottom: 5,
                 flexDirection: 'row',
                 alignItems: 'center'
             },
@@ -40,7 +41,6 @@ export class DepartureListItem extends PureComponent {
                 justifyContent: 'center'
             },
             col2Style: {
-                height,
                 flex: 1,
                 paddingLeft: 10,
                 justifyContent: 'center'
@@ -78,10 +78,14 @@ export class DepartureListItem extends PureComponent {
             },
             directionStyle: {
                 fontWeight: 'bold'
+            },
+            viaStyle: {
+                marginTop: -5,
+                fontSize: 10
             }
         };
         const { stopNumStyle, col1Style, col2Style, col3Style, stopNumText,
-                departureStyle, nextDepStyle, directionStyle, listStyle } = styles;
+                departureStyle, nextDepStyle, directionStyle, listStyle, viaStyle } = styles;
 
         return (
             <TouchableWithoutFeedback
@@ -97,6 +101,7 @@ export class DepartureListItem extends PureComponent {
 
                     <View style={col2Style}>
                         <Text style={directionStyle}>{item.direction}</Text>
+                        {(item.via.length) ? <Text style={viaStyle}>{item.via}</Text> : null}
                         <Text>Läge {item.track}</Text>
                     </View>
 
