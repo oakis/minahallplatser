@@ -13,9 +13,9 @@ export class DepartureListItem extends PureComponent {
     render() {
         const { item, onPress } = this.props;
         const timeLeft = (item.timeLeft <= 0) ? 'Nu' : formatTime(item.timeLeft);
-        const nextStop = (item.nextStop <= 0 && item.nextStop !== null) ? 'Nu' : formatTime(item.nextStop);
+        const timeNext = (item.timeNext <= 0 && item.timeNext !== null) ? 'Nu' : formatTime(item.timeNext);
         const getFontColor = () => {
-            if (!item.rtTime) {
+            if (!item.isLive) {
                 return colors.warning;
             } else if (isNaN(timeLeft)) {
                 return colors.danger;
@@ -101,13 +101,13 @@ export class DepartureListItem extends PureComponent {
 
                     <View style={col2Style}>
                         <Text style={directionStyle}>{item.direction}</Text>
-                        {(item.via.length) ? <Text style={viaStyle}>{item.via}</Text> : null}
+                        {(item.via) ? <Text style={viaStyle}>{item.via}</Text> : null}
                         <Text>Läge {item.track}</Text>
                     </View>
 
                     <View style={col3Style}>
                         <Text style={departureStyle}>{timeLeft}</Text>
-                        <Text style={nextDepStyle}>{nextStop}</Text>
+                        <Text style={nextDepStyle}>{timeNext}</Text>
                     </View>
                 </View>
             </TouchableWithoutFeedback>
