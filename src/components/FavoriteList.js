@@ -34,18 +34,13 @@ class FavoriteList extends Component {
 
 	componentWillUnmount() {
 		fetch.abort('searchDepartures');
-		clearTimeout(this.timeout);
 		this.props.clearErrors();
 	}
 
 	onInputChange = (busStop) => {
 		fetch.abort('searchDepartures');
 		this.props.searchChanged(busStop);
-		clearTimeout(this.timeout);
-		this.timeout = setTimeout(() => {
-			window.log('Searching for stops.');
-			this.props.searchDepartures({ busStop });
-		}, 200);
+		this.props.searchDepartures({ busStop });
 	}
 
 	resetSearch = () => {
