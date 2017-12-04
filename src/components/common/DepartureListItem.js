@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
 import { Text } from './';
 import { colors } from '../style';
@@ -38,7 +39,8 @@ export class DepartureListItem extends PureComponent {
                 height: 40,
                 width: 50,
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                paddingLeft: 7
             },
             col2Style: {
                 flex: 1,
@@ -82,10 +84,14 @@ export class DepartureListItem extends PureComponent {
             viaStyle: {
                 marginTop: -5,
                 fontSize: 10
+            },
+            iconStyle: {
+                marginLeft: 5,
+                alignSelf: 'center'
             }
         };
         const { stopNumStyle, col1Style, col2Style, col3Style, stopNumText,
-                departureStyle, nextDepStyle, directionStyle, listStyle, viaStyle } = styles;
+                departureStyle, nextDepStyle, directionStyle, listStyle, viaStyle, iconStyle } = styles;
 
         return (
             <TouchableWithoutFeedback
@@ -102,7 +108,13 @@ export class DepartureListItem extends PureComponent {
                     <View style={col2Style}>
                         <Text style={directionStyle}>{item.direction}</Text>
                         {(item.via) ? <Text style={viaStyle}>{item.via}</Text> : null}
-                        <Text>Läge {item.track}</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text>Läge {item.track}</Text>
+                            {(Object.prototype.hasOwnProperty.call(item, 'accessibility')) ?
+                                <Icon name={'wheelchair'} size={13} style={iconStyle}>
+                                </Icon> :
+                            null}
+                        </View>
                     </View>
 
                     <View style={col3Style}>
