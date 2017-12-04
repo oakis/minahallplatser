@@ -5,7 +5,7 @@ import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView } from 'react
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate } from '../actions';
+import { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
 import { ListItem, Spinner, Message, Input, ListItemSeparator } from './common';
 import { colors } from './style';
 import { CLR_SEARCH, CLR_ERROR } from '../actions/types';
@@ -24,6 +24,7 @@ class FavoriteList extends Component {
 				}
 			});
 			this.populateFavorites(this.props);
+			this.props.getNearbyStops();
 		});
 	}
 
@@ -131,6 +132,15 @@ class FavoriteList extends Component {
 				/>
 				{(this.props.departureList.length > 0) ? <View style={{ height: 5, backgroundColor: colors.primary }} /> : null}
 				<FlatList
+					data={this.props.stopsNearby}
+					renderItem={this.renderSearchItem}
+					keyExtractor={item => item.id}
+					ItemSeparatorComponent={ListItemSeparator}
+					scrollEnabled={false}
+					keyboardShouldPersistTaps='always'
+				/>
+				{(this.props.stopsNearby.length > 0) ? <View style={{ height: 5, backgroundColor: colors.primary }} /> : null}
+				<FlatList
 					data={this.props.favorites}
 					renderItem={this.renderFavoriteItem}
 					keyExtractor={item => item.id}
@@ -180,12 +190,15 @@ const mapStateToProps = state => {
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
 	const favoriteIds = _.map(favorites, 'id');
-	const { busStop } = state.search;
+	const { busStop, stops } = state.search;
+	const stopsNearby = _.map(stops, (item) => {
+		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline' };
+	});
 	const searchLoading = state.search.loading;
 	const departureList = _.map(state.search.departureList, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline' };
 	});
-	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading };
+	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby };
 };
 
-export default connect(mapStateToProps, { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate })(FavoriteList);
+export default connect(mapStateToProps, { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate, getNearbyStops })(FavoriteList);
