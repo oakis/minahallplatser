@@ -22,7 +22,6 @@ export const searchChanged = (text) => {
 };
 
 export const searchDepartures = ({ busStop }) => {
-	console.log(busStop);
 	return (dispatch) => {
 		if (busStop === '') {
 			fetch.abort('searchDepartures');
@@ -62,6 +61,7 @@ export const searchDepartures = ({ busStop }) => {
 	};
 };
 
+let gpsCount = 0;
 export const getNearbyStops = () => {
 	return (dispatch) => {
 		dispatch({ type: CLR_SEARCH });
@@ -71,9 +71,12 @@ export const getNearbyStops = () => {
 			getCoordsSuccess({ dispatch, longitude, latitude });
 		},
 		() => {
-			if (Actions.currentScene === 'listNearbyStops') {
+			if (Actions.currentScene === 'listNearbyStops' && gpsCount > 5) {
 				dispatch({ type: SEARCH_BY_GPS_FAIL });
 				dispatch({ type: ERROR, payload: 'Kunde inte hitta din position.' });
+			} else {
+				gpsCount++;
+				return dispatch(getNearbyStops());
 			}
 		},
 		{
@@ -100,6 +103,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 		fetch(url, config, 'getNearbyStops')
 		.then(handleJsonFetch)
 		.then(({ data }) => {
+			gpsCount = 0;
 			window.timeEnd('getNearbyStops');
 			dispatch({ type: SEARCH_BY_GPS_SUCCESS, payload: data });
 		})
