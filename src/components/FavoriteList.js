@@ -163,7 +163,7 @@ class FavoriteList extends Component {
 					value={this.props.busStop}
 					icon="ios-search"
 					loading={this.props.searchLoading && this.props.busStop.length > 0}
-					iconRight="ios-close"
+					iconRight={this.props.busStop.length > 0 ? 'ios-close' : null}
 					iconRightPress={this.resetSearch}
 					underlineColorAndroid={'#fff'}
 					style={{ borderRadius: 15, paddingLeft: metrics.margin.sm, paddingRight: metrics.margin.sm, marginTop: metrics.margin.md, marginLeft: metrics.margin.md, marginRight: metrics.margin.md, marginBottom: 0, backgroundColor: '#fff' }}
