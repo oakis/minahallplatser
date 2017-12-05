@@ -98,7 +98,7 @@ const RouterComponent = () => (
 					title="Mina Hållplatser"
 					initial
 				/>
-				<Scene key="departures" component={ShowDepartures} title="Avgångar" right={() => <Spinner color={colors.alternative} />} />
+				<Scene key="departures" component={ShowDepartures} title="Avgångar" />
 				<Scene key="listNearbyStops" component={ShowNearbyStops} title="Hållplatser nära dig" />
 			</Scene>
 		</Scene>
