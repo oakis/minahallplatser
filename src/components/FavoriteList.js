@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { Component } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView } from 'react-native';
+import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, Text } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
 import { ListItem, Spinner, Message, Input, ListItemSeparator } from './common';
-import { colors } from './style';
+import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR } from '../actions/types';
 import { store } from '../App';
 
@@ -122,6 +122,7 @@ class FavoriteList extends Component {
 		}
 		return (
 			<View>
+				{(this.props.departureList.length > 0) ? <Text style={component.text.heading}>Sökresultat</Text> : null}
 				<FlatList
 					data={this.props.departureList}
 					renderItem={this.renderSearchItem}
@@ -130,7 +131,7 @@ class FavoriteList extends Component {
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
-				{(this.props.departureList.length > 0) ? <View style={{ height: 5, backgroundColor: colors.primary }} /> : null}
+				{(this.props.stopsNearby.length > 0) ? <Text style={component.text.heading}>Hållplatser nära dig</Text> : null}
 				<FlatList
 					data={this.props.stopsNearby}
 					renderItem={this.renderSearchItem}
@@ -139,7 +140,7 @@ class FavoriteList extends Component {
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
-				{(this.props.stopsNearby.length > 0) ? <View style={{ height: 5, backgroundColor: colors.primary }} /> : null}
+				{(this.props.favorites.length > 0) ? <Text style={component.text.heading}>Mina hållplatser</Text> : null}
 				<FlatList
 					data={this.props.favorites}
 					renderItem={this.renderFavoriteItem}
@@ -164,7 +165,8 @@ class FavoriteList extends Component {
 					loading={this.props.searchLoading}
 					iconRight="ios-close"
 					iconRightPress={this.resetSearch}
-					style={{ marginLeft: 5, marginRight: 5, marginBottom: 0 }}
+					underlineColorAndroid={'#fff'}
+					style={{ borderRadius: 15, paddingLeft: metrics.margin.sm, paddingRight: metrics.margin.sm, marginTop: metrics.margin.md, marginLeft: metrics.margin.md, marginRight: metrics.margin.md, marginBottom: 0, backgroundColor: '#fff' }}
 				/>
 				{(this.props.error) ?
 					<Message
