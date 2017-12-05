@@ -162,7 +162,7 @@ class FavoriteList extends Component {
 					onChangeText={this.onInputChange}
 					value={this.props.busStop}
 					icon="ios-search"
-					loading={this.props.searchLoading}
+					loading={this.props.searchLoading && this.props.busStop.length > 0}
 					iconRight="ios-close"
 					iconRightPress={this.resetSearch}
 					underlineColorAndroid={'#fff'}
