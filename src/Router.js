@@ -17,8 +17,14 @@ import { CLR_ERROR } from './actions/types';
 
 const iconSize = 24;
 
+const onBackAndroid = () => {
+	Actions.pop();
+	return true;
+};
+
 const RouterComponent = () => (
 	<Router
+		backAndroidHandler={onBackAndroid}
 		titleStyle={{
 			color: colors.alternative,
 			alignSelf: 'center',
