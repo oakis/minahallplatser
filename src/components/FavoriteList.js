@@ -1,18 +1,29 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
-import React, { Component } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, Text } from 'react-native';
+import React, { PureComponent } from 'react';
+import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, Text, NativeModules, LayoutAnimation } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
-import { ListItem, Spinner, Message, Input, ListItemSeparator } from './common';
+import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading } from './common';
 import { colors, component, metrics } from './style';
-import { CLR_SEARCH, CLR_ERROR } from '../actions/types';
+import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { store } from '../App';
 
+const { UIManager } = NativeModules;
 
-class FavoriteList extends Component {
+UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+
+
+class FavoriteList extends PureComponent {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			stopsNearby: []
+		};
+	}
 
 	componentWillMount() {
 		Keyboard.dismiss();
@@ -24,13 +35,16 @@ class FavoriteList extends Component {
 				}
 			});
 			this.populateFavorites(this.props);
-			this.props.getNearbyStops();
+			this.refreshNearbyStops();
 		});
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.populateSearchResults(nextProps);
 		this.populateFavorites(nextProps);
+		if (nextProps.stopsNearby.length > 0 && !_.isEqual(this.state.stopsNearby, nextProps.stopsNearby)) {
+			this.populateNearbyStops(nextProps);
+		}
 	}
 
 	componentWillUnmount() {
@@ -49,6 +63,11 @@ class FavoriteList extends Component {
 		store.dispatch({ type: CLR_ERROR });
 	}
 
+	refreshNearbyStops = () => {
+		store.dispatch({ type: SEARCH_BY_GPS_FAIL });
+		this.props.getNearbyStops();
+	}
+
 	populateSearchResults({ departureList }) {
 		this.props.departureList = departureList;
 	}
@@ -56,6 +75,14 @@ class FavoriteList extends Component {
 
 	populateFavorites({ favorites }) {
 		this.props.favorites = favorites;
+	}
+
+	populateNearbyStops({ stopsNearby }) {
+		LayoutAnimation.spring();
+		console.log('setting this.state.stopsNearby')
+		this.setState({
+			stopsNearby
+		});
 	}
 
 	renderFavoriteItem = ({ item }) => {
@@ -131,9 +158,9 @@ class FavoriteList extends Component {
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
-				{(this.props.stopsNearby.length > 0) ? <Text style={component.text.heading}>Hållplatser nära dig</Text> : null}
+				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
 				<FlatList
-					data={this.props.stopsNearby}
+					data={this.state.stopsNearby}
 					renderItem={this.renderSearchItem}
 					keyExtractor={item => item.id}
 					ItemSeparatorComponent={ListItemSeparator}
@@ -192,7 +219,7 @@ const mapStateToProps = state => {
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
 	const favoriteIds = _.map(favorites, 'id');
-	const { busStop, stops } = state.search;
+	const { busStop, stops, gpsLoading } = state.search;
 	const stopsNearby = _.map(stops, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline' };
 	});
@@ -200,7 +227,11 @@ const mapStateToProps = state => {
 	const departureList = _.map(state.search.departureList, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline' };
 	});
-	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby };
+	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading };
 };
 
-export default connect(mapStateToProps, { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate, getNearbyStops })(FavoriteList);
+export default connect(mapStateToProps,
+	{
+		favoriteGet, favoriteDelete, clearErrors, searchDepartures,
+		searchChanged, favoriteCreate, getNearbyStops
+	})(FavoriteList);

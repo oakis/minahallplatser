@@ -81,8 +81,8 @@ export const getNearbyStops = () => {
 		},
 		{
 			enableHighAccuracy: false,
-			timeout: 7500,
-			maximumAge: 20000
+			timeout: 2000,
+			maximumAge: 5000
 		});
 	};
 };
