@@ -23,15 +23,8 @@ class FavoriteList extends PureComponent {
 					this.props.favoriteGet(user);
 				}
 			});
-			this.populateFavorites(this.props);
 			this.refreshNearbyStops();
 		});
-	}
-
-	componentWillReceiveProps(nextProps) {
-		this.populateSearchResults(nextProps);
-		this.populateFavorites(nextProps);
-		this.populateNearbyStops(nextProps);
 	}
 
 	componentWillUnmount() {
@@ -53,19 +46,6 @@ class FavoriteList extends PureComponent {
 	refreshNearbyStops = () => {
 		store.dispatch({ type: SEARCH_BY_GPS_FAIL });
 		this.props.getNearbyStops();
-	}
-
-	populateSearchResults({ departureList }) {
-		this.props.departureList = departureList;
-	}
-
-
-	populateFavorites({ favorites }) {
-		this.props.favorites = favorites;
-	}
-
-	populateNearbyStops({ stopsNearby }) {
-		this.props.stopsNearby = stopsNearby;
 	}
 
 	renderFavoriteItem = ({ item }) => {
@@ -142,6 +122,7 @@ class FavoriteList extends PureComponent {
 					keyboardShouldPersistTaps='always'
 				/>
 				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
+				{(!this.props.gpsLoading && this.props.stopsNearby.length == 0) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
 				<FlatList
 					data={this.props.stopsNearby}
 					renderItem={this.renderSearchItem}
