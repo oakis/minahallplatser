@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, Text, NativeModules, LayoutAnimation } from 'react-native';
+import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, Text, NativeModules } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -11,19 +11,8 @@ import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { store } from '../App';
 
-const { UIManager } = NativeModules;
-
-UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-
 
 class FavoriteList extends PureComponent {
-
-	constructor(props) {
-		super(props);
-		this.state = {
-			stopsNearby: []
-		};
-	}
 
 	componentWillMount() {
 		Keyboard.dismiss();
@@ -42,9 +31,7 @@ class FavoriteList extends PureComponent {
 	componentWillReceiveProps(nextProps) {
 		this.populateSearchResults(nextProps);
 		this.populateFavorites(nextProps);
-		if (nextProps.stopsNearby.length > 0 && !_.isEqual(this.state.stopsNearby, nextProps.stopsNearby)) {
-			this.populateNearbyStops(nextProps);
-		}
+		this.populateNearbyStops(nextProps);
 	}
 
 	componentWillUnmount() {
@@ -78,11 +65,7 @@ class FavoriteList extends PureComponent {
 	}
 
 	populateNearbyStops({ stopsNearby }) {
-		LayoutAnimation.spring();
-		console.log('setting this.state.stopsNearby')
-		this.setState({
-			stopsNearby
-		});
+		this.props.stopsNearby = stopsNearby;
 	}
 
 	renderFavoriteItem = ({ item }) => {
@@ -160,7 +143,7 @@ class FavoriteList extends PureComponent {
 				/>
 				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
 				<FlatList
-					data={this.state.stopsNearby}
+					data={this.props.stopsNearby}
 					renderItem={this.renderSearchItem}
 					keyExtractor={item => item.id}
 					ItemSeparatorComponent={ListItemSeparator}
@@ -193,7 +176,7 @@ class FavoriteList extends PureComponent {
 					iconRight={this.props.busStop.length > 0 ? 'ios-close' : null}
 					iconRightPress={this.resetSearch}
 					underlineColorAndroid={'#fff'}
-					style={{ borderRadius: 15, paddingLeft: metrics.margin.sm, paddingRight: metrics.margin.sm, marginTop: metrics.margin.md, marginLeft: metrics.margin.md, marginRight: metrics.margin.md, marginBottom: 0, backgroundColor: '#fff' }}
+					style={{ borderRadius: 15, paddingLeft: metrics.margin.sm, paddingRight: metrics.margin.sm, marginTop: metrics.margin.md, marginLeft: metrics.margin.md, marginRight: metrics.margin.md, marginBottom: metrics.margin.md, backgroundColor: '#fff' }}
 				/>
 				{(this.props.error) ?
 					<Message

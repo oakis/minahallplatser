@@ -64,7 +64,6 @@ export const searchDepartures = ({ busStop }) => {
 let gpsCount = 0;
 export const getNearbyStops = () => {
 	return (dispatch) => {
-		dispatch({ type: CLR_SEARCH });
 		dispatch({ type: SEARCH_BY_GPS });
 		navigator.geolocation.getCurrentPosition((position) => {
 			const { longitude, latitude } = position.coords;
