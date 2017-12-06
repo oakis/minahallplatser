@@ -1,14 +1,14 @@
 {
   "name": "minahallplatser",
-  "version": "0.2.0",
-  "versionCode": "0020",
+  "version": "0.3.0",
+  "versionCode": "0030",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "clean": "cd android && sudo ./gradlew clean",
-    "build-debug": "curl http://localhost:8081/index.android.bundle?platform=android -o android/app/src/main/assets/index.android.bundle && cd android && sudo ./gradlew clean && ./gradlew assembleDebug && gdrive upload --name minahallplatser-debug-${npm_package_version}.apk ./app/build/outputs/apk/app-debug.apk",
-    "build-release": "npm run clean && cd android && sudo ./gradlew assembleRelease && gdrive upload --name minahallplatser-release-${npm_package_version}.apk ./app/build/outputs/apk/app-release.apk"
+    "clean": "cd android && gradlew clean",
+    "build-debug": "curl http://localhost:8081/index.android.bundle?platform=android -o android/app/src/main/assets/index.android.bundle && cd android && gradlew clean && gradlew assembleDebug && gdrive upload --name minahallplatser-debug-${npm_package_version}.apk app/build/outputs/apk/app-debug.apk",
+    "build-release": "npm run clean && cd android && gradlew assembleRelease && gdrive upload --name minahallplatser-release-${npm_package_version}.apk app/build/outputs/apk/app-release.apk"
   },
   "dependencies": {
     "base-64": "^0.1.0",
@@ -19,7 +19,7 @@
     "react-native": "^0.47.1",
     "react-native-cancelable-fetch": "^0.1.1",
     "react-native-fabric": "^0.5.1",
-    "react-native-router-flux": "^4.0.0-beta.21",
+    "react-native-router-flux": "^4.0.0-beta.24",
     "react-native-vector-icons": "^4.3.0",
     "react-redux": "^5.0.1",
     "redux": "^3.6.0",

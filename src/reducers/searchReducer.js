@@ -12,7 +12,8 @@ const INIT_STATE = {
 	busStop: '',
 	departureList: [],
 	stops: [],
-	loading: false
+	loading: false,
+	gpsLoading: false
 };
 
 export default (state = INIT_STATE, action) => {
@@ -24,11 +25,11 @@ export default (state = INIT_STATE, action) => {
 		case SEARCH_DEPARTURES_FAIL:
 			return { ...state, departureList: [], loading: false };
 		case SEARCH_BY_GPS:
-			return { ...state, loading: true };
+			return { ...state, gpsLoading: true };
 		case SEARCH_BY_GPS_SUCCESS:
-			return { ...state, stops: action.payload, loading: false };
+			return { ...state, stops: action.payload, gpsLoading: false };
 		case SEARCH_BY_GPS_FAIL:
-			return { ...INIT_STATE, loading: false };
+			return { ...state, stops: [], gpsLoading: false };
 		case CLR_SEARCH:
 			return { ...state, departureList: [], loading: false, busStop: '' };
 		default:

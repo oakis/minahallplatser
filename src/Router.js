@@ -6,7 +6,6 @@ import LoginForm from './components/LoginForm';
 import FavoriteList from './components/FavoriteList';
 import ShowDepartures from './components/ShowDepartures';
 import RegisterForm from './components/RegisterForm';
-import ShowNearbyStops from './components/ShowNearbyStops';
 import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
 import { Spinner } from './components/common';
@@ -17,9 +16,15 @@ import { CLR_ERROR } from './actions/types';
 
 const iconSize = 24;
 
+const onBackAndroid = () => {
+	Actions.pop();
+	return true;
+};
+
 const RouterComponent = () => (
 	<Router
-		titleStyle={{
+		backAndroidHandler={onBackAndroid}
+		headerTitleStyle={{
 			color: colors.alternative,
 			alignSelf: 'center',
 			fontSize: 14,
@@ -69,37 +74,13 @@ const RouterComponent = () => (
 			</Scene>
 			<Scene key="dashboard">
 				<Scene
-					right={() => {
-						return (
-							<Icon
-								name="ios-navigate"
-								style={{ color: colors.alternative, fontSize: iconSize }}
-								onPress={async () => {
-									await store.dispatch({ type: CLR_ERROR });
-									Actions.listNearbyStops();
-								}}
-							/>
-						);
-					}}
-					left={() => {
-						return (
-							<Icon
-								name="ios-create"
-								style={{ color: colors.alternative, fontSize: iconSize }}
-								onPress={async () => {
-									await store.dispatch({ type: CLR_ERROR });
-									Actions.refresh({ editing: this.editing = !this.editing });
-								}}
-							/>
-						);
-					}}
+					left={() => <View />}
 					key="favlist"
 					component={FavoriteList}
 					title="Mina Hållplatser"
 					initial
 				/>
-				<Scene key="departures" component={ShowDepartures} title="Avgångar" right={() => <Spinner color={colors.alternative} />} />
-				<Scene key="listNearbyStops" component={ShowNearbyStops} title="Hållplatser nära dig" />
+				<Scene key="departures" component={ShowDepartures} title="Avgångar" />
 			</Scene>
 		</Scene>
 	</Router>

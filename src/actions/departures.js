@@ -15,31 +15,24 @@ export const getDepartures = ({ id }) => {
 			window.timeStart('getDepartures()');
 			const url = `${serverUrl}/api/vasttrafik/departures`;
 			const config = {
-				method: 'POST',
+				method: 'post',
 				headers: {
-					'Content-Type': 'application/json'
+					'Accept': 'application/json',
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'access_token': access_token
 				},
-				body: JSON.stringify({
-					id,
-					access_token
-				})
+				body: `id=${id}`
 			};
+			console.log(url);
 			fetch(url, config, 'getDepartures')
 			.finally(handleJsonFetch)
-			.then(({ success, data }) => {
-				if (success) {
-					updateDeparturesCount(data.departures.length);
-					dispatch({ type: CLR_ERROR });
-					dispatch({
-						type: GET_DEPARTURES,
-						payload: data
-					});
-				} else {
-					dispatch({
-						type: GET_DEPARTURES_FAIL
-					});
-					dispatch({ type: ERROR, payload: data });
-				}
+			.then(({ departures, timestamp }) => {
+				updateDeparturesCount(departures.length);
+				dispatch({ type: CLR_ERROR });
+				dispatch({
+					type: GET_DEPARTURES,
+					payload: { departures, timestamp }
+				});
 			})
 			.catch((error) => {
 				dispatch({

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
 import { Text } from './';
 import { colors } from '../style';
@@ -13,9 +14,9 @@ export class DepartureListItem extends PureComponent {
     render() {
         const { item, onPress } = this.props;
         const timeLeft = (item.timeLeft <= 0) ? 'Nu' : formatTime(item.timeLeft);
-        const nextStop = (item.nextStop <= 0 && item.nextStop !== null) ? 'Nu' : formatTime(item.nextStop);
+        const timeNext = (item.timeNext <= 0 && item.timeNext !== null) ? 'Nu' : formatTime(item.timeNext);
         const getFontColor = () => {
-            if (!item.rtTime) {
+            if (!item.isLive) {
                 return colors.warning;
             } else if (isNaN(timeLeft)) {
                 return colors.danger;
@@ -27,9 +28,10 @@ export class DepartureListItem extends PureComponent {
         const styles = {
             listStyle: {
                 flex: 1,
-                height: 60,
                 backgroundColor: (item.index % 2) ? colors.alternative : colors.lightgrey,
                 marginLeft: 0,
+                paddingTop: 5,
+                paddingBottom: 5,
                 flexDirection: 'row',
                 alignItems: 'center'
             },
@@ -37,10 +39,10 @@ export class DepartureListItem extends PureComponent {
                 height: 40,
                 width: 50,
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                paddingLeft: 7
             },
             col2Style: {
-                height,
                 flex: 1,
                 paddingLeft: 10,
                 justifyContent: 'center'
@@ -78,10 +80,18 @@ export class DepartureListItem extends PureComponent {
             },
             directionStyle: {
                 fontWeight: 'bold'
+            },
+            viaStyle: {
+                marginTop: -5,
+                fontSize: 10
+            },
+            iconStyle: {
+                marginLeft: 5,
+                alignSelf: 'center'
             }
         };
         const { stopNumStyle, col1Style, col2Style, col3Style, stopNumText,
-                departureStyle, nextDepStyle, directionStyle, listStyle } = styles;
+                departureStyle, nextDepStyle, directionStyle, listStyle, viaStyle, iconStyle } = styles;
 
         return (
             <TouchableWithoutFeedback
@@ -97,12 +107,19 @@ export class DepartureListItem extends PureComponent {
 
                     <View style={col2Style}>
                         <Text style={directionStyle}>{item.direction}</Text>
-                        <Text>Läge {item.track}</Text>
+                        {(item.via) ? <Text style={viaStyle}>{item.via}</Text> : null}
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text>Läge {item.track}</Text>
+                            {(Object.prototype.hasOwnProperty.call(item, 'accessibility')) ?
+                                <Icon name={'wheelchair'} size={13} style={iconStyle}>
+                                </Icon> :
+                            null}
+                        </View>
                     </View>
 
                     <View style={col3Style}>
                         <Text style={departureStyle}>{timeLeft}</Text>
-                        <Text style={nextDepStyle}>{nextStop}</Text>
+                        <Text style={nextDepStyle}>{timeNext}</Text>
                     </View>
                 </View>
             </TouchableWithoutFeedback>
