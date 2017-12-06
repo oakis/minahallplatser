@@ -6,7 +6,6 @@ import LoginForm from './components/LoginForm';
 import FavoriteList from './components/FavoriteList';
 import ShowDepartures from './components/ShowDepartures';
 import RegisterForm from './components/RegisterForm';
-import ShowNearbyStops from './components/ShowNearbyStops';
 import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
 import { Spinner } from './components/common';
@@ -75,18 +74,6 @@ const RouterComponent = () => (
 			</Scene>
 			<Scene key="dashboard">
 				<Scene
-					right={() => {
-						return (
-							<Icon
-								name="ios-navigate"
-								style={{ color: colors.alternative, fontSize: iconSize }}
-								onPress={async () => {
-									await store.dispatch({ type: CLR_ERROR });
-									Actions.listNearbyStops();
-								}}
-							/>
-						);
-					}}
 					left={() => {
 						return (
 							<Icon
@@ -105,7 +92,6 @@ const RouterComponent = () => (
 					initial
 				/>
 				<Scene key="departures" component={ShowDepartures} title="Avgångar" />
-				<Scene key="listNearbyStops" component={ShowNearbyStops} title="Hållplatser nära dig" />
 			</Scene>
 		</Scene>
 	</Router>

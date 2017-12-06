@@ -70,7 +70,7 @@ export const getNearbyStops = () => {
 			getCoordsSuccess({ dispatch, longitude, latitude });
 		},
 		() => {
-			if (Actions.currentScene === 'listNearbyStops' && gpsCount > 5) {
+			if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
 				dispatch({ type: SEARCH_BY_GPS_FAIL });
 				dispatch({ type: ERROR, payload: 'Kunde inte hitta din position.' });
 			} else {
