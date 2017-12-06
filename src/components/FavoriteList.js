@@ -14,6 +14,13 @@ import { store } from '../App';
 
 class FavoriteList extends PureComponent {
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			editing: false
+		}
+	}
+
 	componentWillMount() {
 		Keyboard.dismiss();
 		firebase.auth().onAuthStateChanged((fbUser) => {
@@ -74,7 +81,7 @@ class FavoriteList extends PureComponent {
 						]
 					);
 				}}
-				iconVisible={this.props.editing}
+				iconVisible={this.state.editing}
 				iconColor={colors.danger}
 			/>
 		);
@@ -131,7 +138,7 @@ class FavoriteList extends PureComponent {
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
-				{(this.props.favorites.length > 0) ? <Text style={component.text.heading}>Mina hållplatser</Text> : null}
+				<ListHeading text={'Mina hållplatser'} icon={'edit'} iconSize={16} onPress={() => this.setState({ editing: !this.state.editing })} />
 				<FlatList
 					data={this.props.favorites}
 					renderItem={this.renderFavoriteItem}
@@ -139,7 +146,7 @@ class FavoriteList extends PureComponent {
 					ItemSeparatorComponent={ListItemSeparator}
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
-					extraData={this.props.editing}
+					extraData={this.state.editing}
 				/>
 			</View>
 		);

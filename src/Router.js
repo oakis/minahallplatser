@@ -24,7 +24,7 @@ const onBackAndroid = () => {
 const RouterComponent = () => (
 	<Router
 		backAndroidHandler={onBackAndroid}
-		titleStyle={{
+		headerTitleStyle={{
 			color: colors.alternative,
 			alignSelf: 'center',
 			fontSize: 14,
@@ -74,18 +74,7 @@ const RouterComponent = () => (
 			</Scene>
 			<Scene key="dashboard">
 				<Scene
-					left={() => {
-						return (
-							<Icon
-								name="ios-create"
-								style={{ color: colors.alternative, fontSize: iconSize }}
-								onPress={async () => {
-									await store.dispatch({ type: CLR_ERROR });
-									Actions.refresh({ editing: this.editing = !this.editing });
-								}}
-							/>
-						);
-					}}
+					left={() => <View />}
 					key="favlist"
 					component={FavoriteList}
 					title="Mina Hållplatser"
