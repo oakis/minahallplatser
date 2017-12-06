@@ -64,14 +64,13 @@ export const searchDepartures = ({ busStop }) => {
 let gpsCount = 0;
 export const getNearbyStops = () => {
 	return (dispatch) => {
-		dispatch({ type: CLR_SEARCH });
 		dispatch({ type: SEARCH_BY_GPS });
 		navigator.geolocation.getCurrentPosition((position) => {
 			const { longitude, latitude } = position.coords;
 			getCoordsSuccess({ dispatch, longitude, latitude });
 		},
 		() => {
-			if (Actions.currentScene === 'listNearbyStops' && gpsCount > 5) {
+			if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
 				dispatch({ type: SEARCH_BY_GPS_FAIL });
 				dispatch({ type: ERROR, payload: 'Kunde inte hitta din position.' });
 			} else {
@@ -81,8 +80,8 @@ export const getNearbyStops = () => {
 		},
 		{
 			enableHighAccuracy: false,
-			timeout: 7500,
-			maximumAge: 20000
+			timeout: 2000,
+			maximumAge: 5000
 		});
 	};
 };

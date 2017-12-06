@@ -1,18 +1,25 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
-import React, { Component } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView } from 'react-native';
+import React, { PureComponent } from 'react';
+import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, Text, NativeModules } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
-import { ListItem, Spinner, Message, Input, ListItemSeparator } from './common';
-import { colors } from './style';
-import { CLR_SEARCH, CLR_ERROR } from '../actions/types';
+import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading } from './common';
+import { colors, component, metrics } from './style';
+import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { store } from '../App';
 
 
-class FavoriteList extends Component {
+class FavoriteList extends PureComponent {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			editing: false
+		}
+	}
 
 	componentWillMount() {
 		Keyboard.dismiss();
@@ -23,14 +30,8 @@ class FavoriteList extends Component {
 					this.props.favoriteGet(user);
 				}
 			});
-			this.populateFavorites(this.props);
-			this.props.getNearbyStops();
+			this.refreshNearbyStops();
 		});
-	}
-
-	componentWillReceiveProps(nextProps) {
-		this.populateSearchResults(nextProps);
-		this.populateFavorites(nextProps);
 	}
 
 	componentWillUnmount() {
@@ -49,13 +50,9 @@ class FavoriteList extends Component {
 		store.dispatch({ type: CLR_ERROR });
 	}
 
-	populateSearchResults({ departureList }) {
-		this.props.departureList = departureList;
-	}
-
-
-	populateFavorites({ favorites }) {
-		this.props.favorites = favorites;
+	refreshNearbyStops = () => {
+		store.dispatch({ type: SEARCH_BY_GPS_FAIL });
+		this.props.getNearbyStops();
 	}
 
 	renderFavoriteItem = ({ item }) => {
@@ -84,7 +81,7 @@ class FavoriteList extends Component {
 						]
 					);
 				}}
-				iconVisible={this.props.editing}
+				iconVisible={this.state.editing}
 				iconColor={colors.danger}
 			/>
 		);
@@ -122,6 +119,7 @@ class FavoriteList extends Component {
 		}
 		return (
 			<View>
+				{(this.props.departureList.length > 0) ? <Text style={component.text.heading}>Sökresultat</Text> : null}
 				<FlatList
 					data={this.props.departureList}
 					renderItem={this.renderSearchItem}
@@ -130,7 +128,8 @@ class FavoriteList extends Component {
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
-				{(this.props.departureList.length > 0) ? <View style={{ height: 5, backgroundColor: colors.primary }} /> : null}
+				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
+				{(!this.props.gpsLoading && this.props.stopsNearby.length == 0) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
 				<FlatList
 					data={this.props.stopsNearby}
 					renderItem={this.renderSearchItem}
@@ -139,7 +138,7 @@ class FavoriteList extends Component {
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
-				{(this.props.stopsNearby.length > 0) ? <View style={{ height: 5, backgroundColor: colors.primary }} /> : null}
+				<ListHeading text={'Mina hållplatser'} icon={'edit'} iconSize={16} onPress={() => this.setState({ editing: !this.state.editing })} />
 				<FlatList
 					data={this.props.favorites}
 					renderItem={this.renderFavoriteItem}
@@ -147,7 +146,7 @@ class FavoriteList extends Component {
 					ItemSeparatorComponent={ListItemSeparator}
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
-					extraData={this.props.editing}
+					extraData={this.state.editing}
 				/>
 			</View>
 		);
@@ -161,10 +160,11 @@ class FavoriteList extends Component {
 					onChangeText={this.onInputChange}
 					value={this.props.busStop}
 					icon="ios-search"
-					loading={this.props.searchLoading}
-					iconRight="ios-close"
+					loading={this.props.searchLoading && this.props.busStop.length > 0}
+					iconRight={this.props.busStop.length > 0 ? 'ios-close' : null}
 					iconRightPress={this.resetSearch}
-					style={{ marginLeft: 5, marginRight: 5, marginBottom: 0 }}
+					underlineColorAndroid={'#fff'}
+					style={{ borderRadius: 15, paddingLeft: metrics.margin.sm, paddingRight: metrics.margin.sm, marginTop: metrics.margin.md, marginLeft: metrics.margin.md, marginRight: metrics.margin.md, marginBottom: metrics.margin.md, backgroundColor: '#fff' }}
 				/>
 				{(this.props.error) ?
 					<Message
@@ -190,7 +190,7 @@ const mapStateToProps = state => {
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
 	const favoriteIds = _.map(favorites, 'id');
-	const { busStop, stops } = state.search;
+	const { busStop, stops, gpsLoading } = state.search;
 	const stopsNearby = _.map(stops, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline' };
 	});
@@ -198,7 +198,11 @@ const mapStateToProps = state => {
 	const departureList = _.map(state.search.departureList, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline' };
 	});
-	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby };
+	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading };
 };
 
-export default connect(mapStateToProps, { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate, getNearbyStops })(FavoriteList);
+export default connect(mapStateToProps,
+	{
+		favoriteGet, favoriteDelete, clearErrors, searchDepartures,
+		searchChanged, favoriteCreate, getNearbyStops
+	})(FavoriteList);
