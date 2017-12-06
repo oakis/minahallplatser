@@ -27,7 +27,7 @@ export const getDepartures = ({ id }) => {
 			fetch(url, config, 'getDepartures')
 			.finally(handleJsonFetch)
 			.then(({ departures, timestamp }) => {
-				//updateDeparturesCount(data.departures.length);
+				updateDeparturesCount(departures.length);
 				dispatch({ type: CLR_ERROR });
 				dispatch({
 					type: GET_DEPARTURES,

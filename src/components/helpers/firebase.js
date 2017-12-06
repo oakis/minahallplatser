@@ -1,88 +1,63 @@
 import fetch from 'react-native-cancelable-fetch';
-import { serverUrl } from '../../Server';
+import { firebaseFunctionsUrl } from '../../Server';
 import { handleJsonFetch } from './';
 
 export const updateDeparturesCount = (count) => {
     if (__DEV__) {
         return;
     }
-    const url = `${serverUrl}/api/firebase/departurescount`;
-    const config = {
-        method: 'POST', 
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ count })
-    };
-    fetch(url, config, 'updateDeparturesCount')
+    const url = `${firebaseFunctionsUrl}/addDeparturesCount?count=${count}`;
+    fetch(url, {}, 'updateDeparturesCount')
     .finally(handleJsonFetch)
-    .then(({ success, message }) => {
-        if (success) {
-            window.log('updateDeparturesCount(): OK', message);
-        }
-        window.log('updateDeparturesCount(): FAILED', message);
+    .then(({ message }) => {
+        window.log(`updateDeparturesCount(): OK (${message})`);
     })
-    .catch((err) => new Error(err));
+    .catch((err) => {
+        window.log(`updateDeparturesCount(): FAILED' ${message})`);
+        new Error(err);
+    });
 };
 
 export const getDeparturesCount = async () => {
-    const url = `${serverUrl}/api/firebase/departurescount`;
-    const config = {
-        method: 'GET', 
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
-    return fetch(url, config, 'getDeparturesCount')
+    const url = `${firebaseFunctionsUrl}/getDeparturesCount`;
+    return fetch(url, {}, 'getDeparturesCount')
     .finally(handleJsonFetch)
-    .then(({ success, departuresCount }) => {
-        if (success) {
-            window.log('getDeparturesCount(): OK', departuresCount);
-            return departuresCount;
-        }
-        window.log('getDeparturesCount(): FAILED');
+    .then(({ departuresCount }) => {
+        window.log('getDeparturesCount(): OK', departuresCount);
+        return departuresCount;
     })
-    .catch((err) => new Error(err));
+    .catch((err) => {
+        window.log('getDeparturesCount(): FAILED', err);
+        new Error(err);
+    });
 };
 
 export const updateStopsCount = () => {
     if (__DEV__) {
         return;
     }
-    const url = `${serverUrl}/api/firebase/stopscount`;
-    const config = {
-        method: 'POST', 
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
-    fetch(url, config, 'updateStopsCount')
+    const url = `${firebaseFunctionsUrl}/addStopsCount`;
+    fetch(url, {}, 'updateStopsCount')
     .finally(handleJsonFetch)
-    .then(({ success, message }) => {
-        if (success) {
-            window.log('updateStopsCount(): OK', message);
-        }
-        window.log('updateStopsCount(): FAILED', message);
+    .then(({ message }) => {
+        window.log('updateStopsCount(): OK', message);
     })
-    .catch((err) => new Error(err));
+    .catch((err) => {
+        window.log('updateStopsCount(): FAILED', message);
+        new Error(err);
+    });
 };
 
 export const getStopsCount = async () => {
-    const url = `${serverUrl}/api/firebase/stopscount`;
-    const config = {
-        method: 'GET', 
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
-    return fetch(url, config, 'getStopsCount')
+    const url = `${firebaseFunctionsUrl}/getStopsCount`;
+    return fetch(url, {}, 'getStopsCount')
     .finally(handleJsonFetch)
-    .then(({ success, stopsCount }) => {
-        if (success) {
-            window.log('getStopsCount(): OK', stopsCount);
-            return stopsCount;
-        }
-        window.log('getStopsCount(): FAILED');
+    .then(({ stopsCount }) => {
+        window.log('getStopsCount(): OK', stopsCount);
+        return stopsCount;
     })
-    .catch((err) => new Error(err));
+    .catch((err) => {
+        window.log('getStopsCount(): FAILED', err);
+        new Error(err);
+    });
 };
