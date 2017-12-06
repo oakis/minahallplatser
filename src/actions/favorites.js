@@ -1,13 +1,11 @@
 import firebase from 'firebase';
 import _ from 'lodash';
 import { AsyncStorage } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { store } from '../App';
 import {
 	FAVORITE_CREATE, FAVORITE_CREATE_FAIL, FAVORITE_DELETE,
 	FAVORITE_FETCH_SUCCESS, FAVORITE_FETCH_FAIL,
 	ERROR,
-	CLR_SEARCH,
 	LINES_FETCH, LINE_ADD, LINE_REMOVE
 } from './types';
 import { generateUid } from '../components/helpers';
@@ -40,8 +38,6 @@ export const favoriteCreate = ({ busStop, id }) => {
 					fbRef.push({ busStop, id })
 						.then(() => {
 							dispatch({ type: FAVORITE_CREATE });
-							dispatch({ type: CLR_SEARCH });
-							Actions.dashboard({ type: 'reset' });
 						}, (error) => {
 							window.log('favoriteCreate error: ', error);
 							favoriteCreateFail(dispatch);
