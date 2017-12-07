@@ -1,4 +1,4 @@
-package com.minahallplatser;
+package com.oakis.minahallplatser;
 
 import com.facebook.react.ReactActivity;
 

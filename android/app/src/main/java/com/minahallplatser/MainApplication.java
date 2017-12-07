@@ -1,4 +1,4 @@
-package com.minahallplatser;
+package com.oakis.minahallplatser;
 
 import android.app.Application;
 import android.util.Log;

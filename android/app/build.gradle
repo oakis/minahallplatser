@@ -106,7 +106,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.minahallplatser"
+        applicationId "com.oakis.minahallplatser"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode userVersionCode
