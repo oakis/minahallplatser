@@ -1,3 +1,4 @@
+import { PermissionsAndroid } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import {
@@ -10,9 +11,22 @@ import {
 	CLR_SEARCH,
 	ERROR, CLR_ERROR
 } from './types';
-
 import { handleJsonFetch, getToken } from '../components/helpers';
 import { serverUrl } from '../Server';
+
+async function requestLocationPermission() {
+	try {
+		const granted = await PermissionsAndroid.request(
+			PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+		)
+		if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+			throw ("Access denied");
+		}
+	} catch (err) {
+		window.log(err)
+		throw ("Access denied");
+	}
+}
 
 export const searchChanged = (text) => {
 	return {
@@ -64,24 +78,32 @@ export const searchDepartures = ({ busStop }) => {
 let gpsCount = 0;
 export const getNearbyStops = () => {
 	return (dispatch) => {
-		dispatch({ type: SEARCH_BY_GPS });
-		navigator.geolocation.getCurrentPosition((position) => {
-			const { longitude, latitude } = position.coords;
-			getCoordsSuccess({ dispatch, longitude, latitude });
-		},
-		() => {
-			if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
-				dispatch({ type: SEARCH_BY_GPS_FAIL });
-				dispatch({ type: ERROR, payload: 'Kunde inte hitta din position.' });
-			} else {
-				gpsCount++;
-				return dispatch(getNearbyStops());
-			}
-		},
-		{
-			enableHighAccuracy: false,
-			timeout: 2000,
-			maximumAge: 5000
+		return requestLocationPermission().then(() => {
+			dispatch({ type: SEARCH_BY_GPS });
+			navigator.geolocation.getCurrentPosition((position) => {
+				const { longitude, latitude } = position.coords;
+				getCoordsSuccess({ dispatch, longitude, latitude });
+			},
+			(err) => {
+				window.log('Error:', err);
+				if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
+					dispatch({ type: SEARCH_BY_GPS_FAIL });
+				} else if (gpsCount < 5) {
+					gpsCount++;
+					return dispatch(getNearbyStops());
+				}
+				gpsCount = 0;
+				dispatch({ type: SEARCH_BY_GPS_FAIL })
+			},
+			{
+				enableHighAccuracy: false,
+				timeout: 3000,
+				maximumAge: 5000
+			});
+		})
+		.catch(() => {
+			dispatch({ type: SEARCH_BY_GPS_FAIL })
+			dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
 		});
 	};
 };
@@ -110,7 +132,6 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 			window.timeEnd('getNearbyStops');
 			window.log(error);
 			dispatch({ type: SEARCH_BY_GPS_FAIL });
-			dispatch({ type: ERROR, payload: 'Kunde inte kontakta Västtrafik. Försök igen senare.' });
 		});
 	});
 };
