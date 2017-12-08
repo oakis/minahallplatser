@@ -23,7 +23,6 @@ export const getDepartures = ({ id }) => {
 				},
 				body: `id=${id}`
 			};
-			console.log(url);
 			fetch(url, config, 'getDepartures')
 			.finally(handleJsonFetch)
 			.then(({ departures, timestamp }) => {
