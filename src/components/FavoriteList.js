@@ -5,7 +5,7 @@ import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, Text, Native
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { favoriteGet, favoriteDelete, clearErrors, searchDepartures, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
+import { favoriteGet, favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
 import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
@@ -30,19 +30,24 @@ class FavoriteList extends PureComponent {
 					this.props.favoriteGet(user);
 				}
 			});
-			this.refreshNearbyStops();
 		});
 	}
 
+	componentDidMount() {
+		setTimeout(() => {
+			this.refreshNearbyStops();
+		}, 1000);
+	}
+
 	componentWillUnmount() {
-		fetch.abort('searchDepartures');
+		fetch.abort('searchStops');
 		this.props.clearErrors();
 	}
 
 	onInputChange = (busStop) => {
-		fetch.abort('searchDepartures');
+		fetch.abort('searchStops');
 		this.props.searchChanged(busStop);
-		this.props.searchDepartures({ busStop });
+		this.props.searchStops({ busStop });
 	}
 
 	resetSearch = () => {
@@ -203,6 +208,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps,
 	{
-		favoriteGet, favoriteDelete, clearErrors, searchDepartures,
+		favoriteGet, favoriteDelete, clearErrors, searchStops,
 		searchChanged, favoriteCreate, getNearbyStops
 	})(FavoriteList);

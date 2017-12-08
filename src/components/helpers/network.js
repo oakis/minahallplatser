@@ -19,7 +19,7 @@ export const handleJsonFetch = (response) => {
         return response.json()
         .then((data) => {
             window.log('handleJsonFetch(): Error', data);
-            throw data;
+            throw data.data || data;
         })
     } else {
         const error = response.statusText || response.Message || 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';

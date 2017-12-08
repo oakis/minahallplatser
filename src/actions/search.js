@@ -35,17 +35,17 @@ export const searchChanged = (text) => {
 	};
 };
 
-export const searchDepartures = ({ busStop }) => {
+export const searchStops = ({ busStop }) => {
 	return (dispatch) => {
 		if (busStop === '') {
-			fetch.abort('searchDepartures');
+			fetch.abort('searchStops');
 			return dispatch({
 				type: SEARCH_DEPARTURES,
 				payload: []
 			});
 		}
 		getToken().finally(({ access_token }) => {
-			window.timeStart('searchDepartures');
+			window.timeStart('searchStops');
 			const url = `${serverUrl}/api/vasttrafik/stops`;
 			const config = {
 				method: 'post',
@@ -56,7 +56,7 @@ export const searchDepartures = ({ busStop }) => {
 				},
 				body: `search=${busStop}`
 			};
-			fetch(url, config, 'searchDepartures')
+			fetch(url, config, 'searchStops')
 			.finally(handleJsonFetch)
 			.then(({ data }) => {
 				dispatch({
@@ -64,12 +64,12 @@ export const searchDepartures = ({ busStop }) => {
 					payload: data
 				});
 				dispatch({ type: CLR_ERROR });
-				window.timeEnd('searchDepartures');
+				window.timeEnd('searchStops');
 			})
 			.catch((data) => {
 				dispatch({ type: SEARCH_DEPARTURES_FAIL });
 				dispatch({ type: ERROR, payload: data });
-				window.timeEnd('searchDepartures');
+				window.timeEnd('searchStops');
 			});
 		});
 	};
@@ -78,6 +78,7 @@ export const searchDepartures = ({ busStop }) => {
 let gpsCount = 0;
 export const getNearbyStops = () => {
 	return (dispatch) => {
+		dispatch({ type: CLR_ERROR });
 		return requestLocationPermission().then(() => {
 			dispatch({ type: SEARCH_BY_GPS });
 			navigator.geolocation.getCurrentPosition((position) => {
@@ -126,6 +127,7 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 		.then(({ data }) => {
 			gpsCount = 0;
 			window.timeEnd('getNearbyStops');
+			dispatch({ type: CLR_ERROR });
 			dispatch({ type: SEARCH_BY_GPS_SUCCESS, payload: data });
 		})
 		.catch((error) => {
