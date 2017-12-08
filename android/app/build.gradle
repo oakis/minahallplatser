@@ -78,6 +78,10 @@ def getNpmVersionCode() {
  * ]
  */
 
+project.ext.react = [
+    entryFile: "index.js"
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
 
 // Detta har jag lagt till själv!
@@ -102,13 +106,13 @@ def userVersionName = getNpmVersion()
 def userVersionCode = getNpmVersionCode()
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         applicationId "com.oakis.minahallplatser"
-        minSdkVersion 16
-        targetSdkVersion 22
+        minSdkVersion 21
+        targetSdkVersion 26
         versionCode userVersionCode
         versionName userVersionName
         ndk {
@@ -133,11 +137,13 @@ android {
     }
     buildTypes {
         release {
+            manifestPlaceholders = [excludeSystemAlertWindowPermission: "true"]
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
         }
         debug {
+            manifestPlaceholders = [excludeSystemAlertWindowPermission: "false"]
             applicationIdSuffix ".dev"
         }
     }
