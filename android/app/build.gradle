@@ -123,14 +123,14 @@ android {
             keyPassword MYAPP_RELEASE_KEY_PASSWORD
         }
     }
-    // splits {
-    //     abi {
-    //         reset()
-    //         enable enableSeparateBuildPerCPUArchitecture
-    //         universalApk false  // If true, also generate a universal APK
-    //         include "armeabi-v7a", "x86"
-    //     }
-    // }
+    splits {
+        abi {
+            reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk false  // If true, also generate a universal APK
+            include "armeabi-v7a", "x86"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
