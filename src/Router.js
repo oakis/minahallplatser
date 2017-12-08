@@ -17,6 +17,8 @@ import { CLR_ERROR } from './actions/types';
 const iconSize = 24;
 
 const onBackAndroid = () => {
+	if (Actions.currentScene == 'login')
+		return true;
 	Actions.pop();
 	return true;
 };
