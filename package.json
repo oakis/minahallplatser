@@ -1,7 +1,7 @@
 {
   "name": "minahallplatser",
-  "version": "0.4.0",
-  "versionCode": "0040",
+  "version": "0.3.1",
+  "versionCode": "0042",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
