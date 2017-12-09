@@ -15,6 +15,12 @@ export const handleJsonFetch = (response) => {
             Crashlytics.logException(data.StackTraceString);
             throw data.Message;
         })
+     } else if (response.status == 404) {
+        return response.json()
+        .then((data) => {
+            window.log('handleJsonFetch(): Error', data);
+            throw data.data || data;
+        })
     } else {
         const error = response.statusText || response.Message || 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
         window.log('handleJsonFetch(): Error', error);

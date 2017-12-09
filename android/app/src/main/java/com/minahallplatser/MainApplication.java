@@ -1,4 +1,4 @@
-package com.minahallplatser;
+package com.oakis.minahallplatser;
 
 import android.app.Application;
 import android.util.Log;
@@ -32,6 +32,11 @@ public class MainApplication extends Application implements ReactApplication {
             new FabricPackage(),
             new VectorIconsPackage()
       );
+    }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
     }
   };
 

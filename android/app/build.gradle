@@ -78,6 +78,10 @@ def getNpmVersionCode() {
  * ]
  */
 
+project.ext.react = [
+    entryFile: "index.js"
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
 
 // Detta har jag lagt till själv!
@@ -102,13 +106,13 @@ def userVersionName = getNpmVersion()
 def userVersionCode = getNpmVersionCode()
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
-        applicationId "com.minahallplatser"
-        minSdkVersion 16
-        targetSdkVersion 22
+        applicationId "com.oakis.minahallplatser"
+        minSdkVersion 21
+        targetSdkVersion 26
         versionCode userVersionCode
         versionName userVersionName
         ndk {
@@ -123,21 +127,23 @@ android {
             keyPassword MYAPP_RELEASE_KEY_PASSWORD
         }
     }
-    // splits {
-    //     abi {
-    //         reset()
-    //         enable enableSeparateBuildPerCPUArchitecture
-    //         universalApk false  // If true, also generate a universal APK
-    //         include "armeabi-v7a", "x86"
-    //     }
-    // }
+    splits {
+        abi {
+            reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk false  // If true, also generate a universal APK
+            include "armeabi-v7a", "x86"
+        }
+    }
     buildTypes {
         release {
+            manifestPlaceholders = [excludeSystemAlertWindowPermission: "true"]
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
         }
         debug {
+            manifestPlaceholders = [excludeSystemAlertWindowPermission: "false"]
             applicationIdSuffix ".dev"
         }
     }
@@ -150,7 +156,7 @@ android {
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+                    versionCodes.get(abi) + defaultConfig.versionCode
             }
         }
     }

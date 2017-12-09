@@ -28,6 +28,7 @@ build/
 .idea
 .gradle
 local.properties
+android/gradle.properties
 *.iml
 
 # node.js
@@ -47,3 +48,13 @@ src/Server.js
 buggar/
 todo.txt
 index.android.bundle
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+
+*/fastlane/report.xml
+*/fastlane/Preview.html
+*/fastlane/screenshots
