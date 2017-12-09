@@ -12,9 +12,9 @@ exports.getUsersCount = functions.https.onRequest((request, response) => {
       users.push(child.val());
     });
     users.forEach((user) => {
-      if (user.isAnonymous === true) {
+      if (user.isAnonymous === false) {
         registered++;
-      } else if (user.isAnonymous === false) {
+      } else if (user.isAnonymous === true) {
         anonymous++;
       } else {
         unknown++;
