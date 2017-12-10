@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Scene, Router, Actions } from 'react-native-router-flux';
+import { Scene, Router, Actions, ActionConst } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import FavoriteList from './components/FavoriteList';
 import ShowDepartures from './components/ShowDepartures';
@@ -10,7 +10,7 @@ import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
 import { Spinner } from './components/common';
 import { colors } from './components/style';
-import { isAndroid } from './components/helpers';
+import { isAndroid, track } from './components/helpers';
 import { store } from './App';
 import { CLR_ERROR } from './actions/types';
 
@@ -62,7 +62,7 @@ const RouterComponent = () => (
 		<Scene key="root" hideNavBar='true'>
 			<Scene key="splash" component={SplashScreen} hideNavBar='true' />
 			<Scene key="auth">
-				<Scene key="login" component={LoginForm} hideNavBar='true' />
+				<Scene key="login" component={LoginForm} hideNavBar='true' onEnter={() => track('Page View', { Page: 'Login' })} />
 				<Scene
 					key="register"
 					component={RegisterForm}
@@ -71,8 +71,9 @@ const RouterComponent = () => (
 						await store.dispatch({ type: CLR_ERROR });
 						Actions.auth({ type: 'reset' });
 					}}
+					onEnter={() => track('Page View', { Page: 'Register' })}
 				/>
-				<Scene key="resetpw" component={ResetPassword} title="Glömt lösenord" />
+				<Scene key="resetpw" component={ResetPassword} title="Glömt lösenord" onEnter={() => track('Page View', { Page: 'Reset Password' })} />
 			</Scene>
 			<Scene key="dashboard">
 				<Scene
@@ -81,6 +82,7 @@ const RouterComponent = () => (
 					component={FavoriteList}
 					title="Mina Hållplatser"
 					initial
+					onEnter={() => track('Page View', { Page: 'Dashboard' })}
 				/>
 				<Scene key="departures" component={ShowDepartures} title="Avgångar" />
 			</Scene>

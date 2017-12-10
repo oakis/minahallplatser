@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle } from '../actions';
 import { DepartureListItem, Spinner, Message, ListItemSeparator } from './common';
-import { updateStopsCount } from './helpers';
+import { updateStopsCount, track } from './helpers';
 import { colors } from './style';
 
 class ShowDepartures extends PureComponent {
@@ -20,6 +20,7 @@ class ShowDepartures extends PureComponent {
 	
 	componentWillMount() {
 		Actions.refresh({ title: this.props.busStop });
+		track('Page View', { Page: 'Departures', Stop: this.props.busStop })
 		this.props.getDepartures({ id: this.props.id });
 		updateStopsCount();
 	}

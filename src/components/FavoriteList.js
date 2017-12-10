@@ -10,6 +10,7 @@ import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading } fro
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { store } from '../App';
+import { track } from './helpers';
 
 
 class FavoriteList extends PureComponent {
@@ -35,7 +36,8 @@ class FavoriteList extends PureComponent {
 
 	componentDidMount() {
 		setTimeout(() => {
-			this.refreshNearbyStops();
+			store.dispatch({ type: SEARCH_BY_GPS_FAIL });
+			this.props.getNearbyStops();
 		}, 1000);
 	}
 
@@ -56,6 +58,7 @@ class FavoriteList extends PureComponent {
 	}
 
 	refreshNearbyStops = () => {
+		track('Refresh NearbyStops');
 		store.dispatch({ type: SEARCH_BY_GPS_FAIL });
 		this.props.getNearbyStops();
 	}
@@ -143,7 +146,7 @@ class FavoriteList extends PureComponent {
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
-				<ListHeading text={'Mina hållplatser'} icon={'edit'} iconSize={16} onPress={() => this.setState({ editing: !this.state.editing })} />
+				<ListHeading text={'Mina hållplatser'} icon={'edit'} iconSize={16} onPress={() => {  track('Edit Stops Toggle', { On: !this.state.editing }); this.setState({ editing: !this.state.editing }); }} />
 				<FlatList
 					data={this.props.favorites}
 					renderItem={this.renderFavoriteItem}
@@ -169,6 +172,7 @@ class FavoriteList extends PureComponent {
 					iconRight={this.props.busStop.length > 0 ? 'ios-close' : null}
 					iconRightPress={this.resetSearch}
 					underlineColorAndroid={'#fff'}
+					onFocus={() => track('Search Focused')}
 					style={{ borderRadius: 15, paddingLeft: metrics.margin.sm, paddingRight: metrics.margin.sm, marginTop: metrics.margin.md, marginLeft: metrics.margin.md, marginRight: metrics.margin.md, marginBottom: metrics.margin.md, backgroundColor: '#fff' }}
 				/>
 				{(this.props.error) ?
