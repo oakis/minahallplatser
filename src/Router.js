@@ -84,7 +84,7 @@ const RouterComponent = () => (
 					initial
 					onEnter={() => track('Page View', { Page: 'Dashboard' })}
 				/>
-				<Scene key="departures" component={ShowDepartures} title="Avgångar" />
+				<Scene key="departures" component={ShowDepartures} />
 			</Scene>
 		</Scene>
 	</Router>

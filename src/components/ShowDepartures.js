@@ -19,7 +19,6 @@ class ShowDepartures extends PureComponent {
 	}
 	
 	componentWillMount() {
-		Actions.refresh({ title: this.props.busStop });
 		track('Page View', { Page: 'Departures', Stop: this.props.busStop })
 		this.props.getDepartures({ id: this.props.id });
 		updateStopsCount();

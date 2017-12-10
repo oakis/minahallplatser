@@ -65,7 +65,7 @@ class FavoriteList extends PureComponent {
 				pressItem={async () => {
 					Keyboard.dismiss();
 					await this.props.clearErrors();
-					Actions.departures(item);
+					Actions.departures({ busStop: item.busStop, id: item.id, title: item.busStop });
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -96,7 +96,7 @@ class FavoriteList extends PureComponent {
 				icon={item.icon}
 				pressItem={() => {
 					Keyboard.dismiss();
-					Actions.departures({ busStop: item.name, id: item.id });
+					Actions.departures({ busStop: item.name, id: item.id, title: item.name });
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
