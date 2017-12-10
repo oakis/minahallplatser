@@ -32,13 +32,7 @@ class FavoriteList extends PureComponent {
 				}
 			});
 		});
-	}
-
-	componentDidMount() {
-		setTimeout(() => {
-			store.dispatch({ type: SEARCH_BY_GPS_FAIL });
-			this.props.getNearbyStops();
-		}, 1000);
+		this.props.getNearbyStops();
 	}
 
 	componentWillUnmount() {
