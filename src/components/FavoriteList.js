@@ -32,7 +32,10 @@ class FavoriteList extends PureComponent {
 				}
 			});
 		});
-		this.props.getNearbyStops();
+		if (this.props.stopsNearby.length == 0) {
+			this.props.getNearbyStops();
+		}
+		track('Page View', { Page: 'Dashboard' });
 	}
 
 	componentWillUnmount() {

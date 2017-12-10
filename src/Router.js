@@ -1,13 +1,14 @@
 import React from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Scene, Router, Actions, ActionConst } from 'react-native-router-flux';
+import { Scene, Router, Actions, ActionConst, Drawer } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import FavoriteList from './components/FavoriteList';
 import ShowDepartures from './components/ShowDepartures';
 import RegisterForm from './components/RegisterForm';
 import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
+import Menu from './components/Menu';
 import { Spinner } from './components/common';
 import { colors } from './components/style';
 import { isAndroid, track } from './components/helpers';
@@ -23,6 +24,30 @@ const onBackAndroid = () => {
 	return true;
 };
 
+const renderBackButton = () => {
+	return (
+		<TouchableWithoutFeedback
+			onPress={async () => {
+				await store.dispatch({ type: CLR_ERROR });
+				Actions.pop();
+			}}
+		>
+			<View
+				style={{
+					width: 30,
+					height: 30,
+					justifyContent: 'center'
+				}}
+			>
+				<Icon 
+					name="ios-arrow-back"
+					style={{ color: colors.alternative, fontSize: iconSize }}
+				/>
+			</View>
+		</TouchableWithoutFeedback>
+	);
+}
+
 const RouterComponent = () => (
 	<Router
 		backAndroidHandler={onBackAndroid}
@@ -35,29 +60,7 @@ const RouterComponent = () => (
 		navigationBarStyle={{ backgroundColor: colors.primary, paddingHorizontal: 10 }}
 		rightButtonTextStyle={{ color: colors.alternative }}
 		leftButtonTextStyle={{ color: colors.alternative }}
-		renderBackButton={() => {
-			return (
-				<TouchableWithoutFeedback
-					onPress={async () => {
-						await store.dispatch({ type: CLR_ERROR });
-						Actions.pop();
-					}}
-				>
-					<View
-						style={{
-							width: 30,
-							height: 30,
-							justifyContent: 'center'
-						}}
-					>
-						<Icon 
-							name="ios-arrow-back"
-							style={{ color: colors.alternative, fontSize: iconSize }}
-						/>
-					</View>
-				</TouchableWithoutFeedback>
-			);
-		}}
+		renderBackButton={renderBackButton}
 	>
 		<Scene key="root" hideNavBar='true'>
 			<Scene key="splash" component={SplashScreen} hideNavBar='true' />
@@ -75,17 +78,19 @@ const RouterComponent = () => (
 				/>
 				<Scene key="resetpw" component={ResetPassword} title="Glömt lösenord" onEnter={() => track('Page View', { Page: 'Reset Password' })} />
 			</Scene>
-			<Scene key="dashboard">
+			<Drawer
+				key="dashboard"
+				contentComponent={Menu}
+				drawerIcon={<Icon name="ios-menu" size={iconSize} style={{ color: colors.alternative }} />}
+			>
 				<Scene
-					left={() => <View />}
 					key="favlist"
 					component={FavoriteList}
 					title="Mina Hållplatser"
 					initial
-					onEnter={() => track('Page View', { Page: 'Dashboard' })}
 				/>
-				<Scene key="departures" component={ShowDepartures} />
-			</Scene>
+				<Scene key="departures" component={ShowDepartures} hideDrawerButton left={renderBackButton} />
+			</Drawer>
 		</Scene>
 	</Router>
 );

@@ -117,7 +117,7 @@ const returnCoords = (dispatch) => {
 			dispatch({ type: SEARCH_BY_GPS_FAIL });
 		} else if (gpsCount < 5) {
 			gpsCount++;
-			return dispatch(returnCoords(dispatch));
+			return returnCoords(dispatch);
 		}
 		gpsCount = 0;
 		dispatch({ type: SEARCH_BY_GPS_FAIL })
