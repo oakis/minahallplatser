@@ -36,6 +36,19 @@ export const component = {
             borderColor: colors.primary,
             fontSize: 20,
             fontWeight: 'bold'
+        },
+        menu: {
+            label: {
+                fontSize: 12,
+                fontWeight: 'bold',
+                paddingLeft: metrics.padding.lg,
+                paddingTop: metrics.padding.md,
+                paddingBottom: 0,
+                marginBottom: 0
+            },
+            value: {
+                paddingLeft: metrics.padding.lg
+            }
         }
     },
     message: {
@@ -68,7 +81,6 @@ export const component = {
     },
     listitem: {
         view: {
-			flex: 1,
 			flexDirection: 'row',
 			justifyContent: 'space-between',
 			marginTop: metrics.margin.sm,

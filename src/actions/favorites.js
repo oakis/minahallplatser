@@ -75,12 +75,15 @@ export const favoriteGet = (currentUser) => {
 						AsyncStorage.setItem('minahallplatser-favorites', JSON.stringify(snapshot.val()));
 						dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: snapshot.val() });
 					}, (error) => {
-						window.log('favoriteGet error: ', error);
-						dispatch({
-							type: FAVORITE_FETCH_FAIL,
-							payload: { loading: false }
-						});
-						dispatch({ type: ERROR, payload: 'Kunde inte ladda dina favoriter.' });
+						const isLoggedIn = firebase.auth().currentUser;
+						if (isLoggedIn) {
+							window.log('favoriteGet error: ', error);
+							dispatch({
+								type: FAVORITE_FETCH_FAIL,
+								payload: { loading: false }
+							});
+							dispatch({ type: ERROR, payload: 'Kunde inte ladda dina favoriter.' });
+						}
 					});
 				}
 				AsyncStorage.getItem('minahallplatser-lines').then((localLines) => {

@@ -25,12 +25,14 @@ class FavoriteList extends PureComponent {
 	componentWillMount() {
 		Keyboard.dismiss();
 		firebase.auth().onAuthStateChanged((fbUser) => {
-			AsyncStorage.getItem('minahallplatser-user').then((dataJson) => {
-				const user = JSON.parse(dataJson);
-				if (user.uid === fbUser.uid) {
-					this.props.favoriteGet(user);
-				}
-			});
+			if (fbUser && fbUser.uid) {
+				AsyncStorage.getItem('minahallplatser-user').then((dataJson) => {
+					const user = JSON.parse(dataJson);
+					if (user && user.uid === fbUser.uid) {
+						this.props.favoriteGet(user);
+					}
+				});
+			}
 		});
 		if (this.props.stopsNearby.length == 0) {
 			this.props.getNearbyStops();

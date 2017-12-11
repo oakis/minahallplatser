@@ -10,8 +10,6 @@ import {
 	LOGIN_USER_FAIL,
 	LOGIN_USER,
 	LOGIN_ANON_USER,
-	LOGOUT_USER_SUCCESS,
-	LOGOUT_USER_FAIL,
 	REGISTER_USER,
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
@@ -147,15 +145,6 @@ const loginUserFail = (dispatch, error) => {
 		Actions.auth();
 	}
 };
-
-export const logout = () => {
-	console.log('logout');
-	return (dispatch) => {
-		firebase.auth().signOut()
-		.then((data) => dispatch({ type: LOGOUT_USER_SUCCESS }))
-		.catch((error) => dispatch({ type: LOGOUT_USER_FAIL }));
-	}
-}
 
 const getFirebaseError = (error) => {
 	switch (error.code) {

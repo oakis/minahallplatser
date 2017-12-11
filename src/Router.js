@@ -82,6 +82,7 @@ const RouterComponent = () => (
 				key="dashboard"
 				contentComponent={Menu}
 				drawerIcon={<Icon name="ios-menu" size={iconSize} style={{ color: colors.alternative }} />}
+				drawerWidth={225}
 			>
 				<Scene
 					key="favlist"

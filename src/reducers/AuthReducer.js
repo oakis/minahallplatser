@@ -7,7 +7,6 @@ import {
 	LOGIN_USER,
 	LOGIN_ANON_USER,
 	LOGOUT_USER_SUCCESS,
-	LOGOUT_USER_FAIL,
 	REGISTER_USER,
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
@@ -24,7 +23,6 @@ const INIT_STATE = {
 };
 
 export default (state = INIT_STATE, action) => {
-	console.log(action);
 	switch (action.type) {
 		case EMAIL_CHANGED:
 			return { ...state, email: action.payload };
@@ -52,7 +50,6 @@ export default (state = INIT_STATE, action) => {
 		case REGISTER_USER_FAIL:
 			return { ...state, loading: false };
 		case LOGOUT_USER_SUCCESS:
-		case LOGOUT_USER_FAIL:
 		case CHANGE_ROUTE:
 		case RESET_PASSWORD:
 			return { ...INIT_STATE };
