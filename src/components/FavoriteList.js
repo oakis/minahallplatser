@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, Text, NativeModules } from 'react-native';
+import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, NativeModules } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
-import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading } from './common';
+import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading, Text } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { store } from '../App';
@@ -183,10 +183,9 @@ class FavoriteList extends PureComponent {
 				}
 				{this.renderSectionList()}
 				{(this.props.favorites.length === 0 && !this.props.favoritesLoading) ?
-					<Message
-						type="warning"
-						message={'Du har inte sparat några favoriter än.'}
-					/> : null
+					<Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>
+						Du har inte sparat några favoriter än.
+					</Text> : null
 				}
 			</ScrollView>
 		);
