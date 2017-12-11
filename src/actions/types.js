@@ -40,3 +40,7 @@ export const CLR_DEPARTURES = 'CLR_DEPARTURES';
 // Errors
 export const ERROR = 'ERROR';
 export const CLR_ERROR = 'CLR_ERROR';
+
+// Settings
+export const GET_SETTINGS = 'GET_SETTINGS';
+export const SET_SETTING = 'SET_SETTING';

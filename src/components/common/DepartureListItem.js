@@ -13,6 +13,7 @@ function formatTime(minutes) {
 export class DepartureListItem extends PureComponent {
     render() {
         const { item, onPress } = this.props;
+        const { clockLeft, clockNext } = item;
         const timeLeft = (item.timeLeft <= 0) ? 'Nu' : formatTime(item.timeLeft);
         const timeNext = (item.timeNext <= 0 && item.timeNext !== null) ? 'Nu' : formatTime(item.timeNext);
         const getFontColor = () => {
@@ -118,8 +119,8 @@ export class DepartureListItem extends PureComponent {
                     </View>
 
                     <View style={col3Style}>
-                        <Text style={departureStyle}>{timeLeft}</Text>
-                        <Text style={nextDepStyle}>{timeNext}</Text>
+                        <Text style={departureStyle}>{clockLeft}</Text>
+                        <Text style={nextDepStyle}>{clockNext}</Text>
                     </View>
                 </View>
             </TouchableWithoutFeedback>

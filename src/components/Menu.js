@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, ImageBackground } from 'react-native';
+import { View, AsyncStorage, ImageBackground, Picker } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { Text, ListItem, ListHeading, ListItemSeparator } from './common';
 import { LOGOUT_USER_SUCCESS } from '../actions/types';
+import { getSettings, setSetting } from '../actions';
 import { store } from '../App';
 import { colors, metrics, component } from './style';
 import { track } from './helpers';
@@ -14,7 +15,10 @@ class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: firebase.auth().currentUser
+            user: firebase.auth().currentUser,
+            settings: {
+                timeFormat: 'minutes'
+            }
         };
     }
 
@@ -53,10 +57,17 @@ class Menu extends Component {
 
                     <ListHeading text="Dina inställningar" />
 
-                    <Text style={component.text.menu.label} />
-                    <Text style={component.text.menu.value}>
-                        Kommer snart..
+                    <Text style={component.text.menu.label}>
+                        {'tidsformat'.toUpperCase()}
                     </Text>
+                    <Picker
+                        selectedValue={this.props.settings.timeFormat}
+                        onValueChange={(itemValue, itemIndex) => this.props.setSetting('timeFormat', itemValue)}
+                        style={{ marginLeft: metrics.margin.lg }}
+                    >
+                        <Picker.Item label="Minuter" value="minutes" />
+                        <Picker.Item label="Klockslag" value="clock" />
+                    </Picker>
 
                     <ListHeading/>
 
@@ -75,4 +86,10 @@ class Menu extends Component {
 
 }
 
-export default connect(null, null)(Menu);
+const mapStateToProps = state => {
+    console.log(state.settings);
+	const settings = state.settings;
+	return { settings };
+};
+
+export default connect(mapStateToProps, { getSettings, setSetting })(Menu);
