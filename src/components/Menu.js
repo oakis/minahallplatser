@@ -7,6 +7,7 @@ import { Text, ListItem, ListHeading, ListItemSeparator } from './common';
 import { LOGOUT_USER_SUCCESS } from '../actions/types';
 import { store } from '../App';
 import { colors, metrics, component } from './style';
+import { track } from './helpers';
 
 class Menu extends Component {
 
@@ -21,7 +22,9 @@ class Menu extends Component {
         firebase.auth().signOut().then(function() {
             AsyncStorage.clear();
             store.dispatch({ type: LOGOUT_USER_SUCCESS });
+            track('Logout', { Success: true });
         }, function(error) {
+            track('Logout', { Success: false });
             window.log('Sign Out Error', error);
         });
     }
