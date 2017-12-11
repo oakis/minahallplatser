@@ -6,7 +6,7 @@ export const getSettings = () => {
     return (dispatch) => {
         AsyncStorage.getItem('minahallplatser-settings').then((dataJson) => {
             const settings = JSON.parse(dataJson);
-            dispatch({ type: SET_SETTINGS, payload: settings });
+            dispatch({ type: SET_SETTING, payload: settings });
         });
     };
 };
@@ -17,7 +17,6 @@ export const setSetting = (type, value) => {
         AsyncStorage.getItem('minahallplatser-settings').then((dataJson) => {
             const settings = JSON.parse(dataJson) || {};
             settings[type] = value;
-            console.log(settings);
             AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings))
             .then(() => dispatch({ type: SET_SETTING, payload: settings }))
             .catch((e) => console.log('error', e));

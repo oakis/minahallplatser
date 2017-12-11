@@ -13,9 +13,12 @@ function formatTime(minutes) {
 export class DepartureListItem extends PureComponent {
     render() {
         const { item, onPress } = this.props;
+        const shouldShowMin = (item.timeFormat == 'minutes') ? true : false;
         const { clockLeft, clockNext } = item;
         const timeLeft = (item.timeLeft <= 0) ? 'Nu' : formatTime(item.timeLeft);
         const timeNext = (item.timeNext <= 0 && item.timeNext !== null) ? 'Nu' : formatTime(item.timeNext);
+        const left = shouldShowMin ? timeLeft : clockLeft;
+        const next = shouldShowMin ? timeNext : clockNext;
         const getFontColor = () => {
             if (!item.isLive) {
                 return colors.warning;
@@ -73,7 +76,7 @@ export class DepartureListItem extends PureComponent {
                 fontSize: (item.sname.length > 3) ? 12 : 14,
             },
             departureStyle: {
-                fontSize: (item.timeLeft > 59) ? 14 : 24,
+                fontSize: (!shouldShowMin) ? 18 : (item.timeLeft > 59) ? 14 : 24,
                 color: getFontColor()
             },
             nextDepStyle: {
@@ -119,8 +122,8 @@ export class DepartureListItem extends PureComponent {
                     </View>
 
                     <View style={col3Style}>
-                        <Text style={departureStyle}>{clockLeft}</Text>
-                        <Text style={nextDepStyle}>{clockNext}</Text>
+                        <Text style={departureStyle}>{left}</Text>
+                        <Text style={nextDepStyle}>{next}</Text>
                     </View>
                 </View>
             </TouchableWithoutFeedback>

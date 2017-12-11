@@ -8,13 +8,9 @@ const INIT_STATE = {
 };
 
 export default (state = INIT_STATE, action) => {
-    console.log(action);
     switch (action.type) {
         case GET_SETTINGS:
-            console.log(state);
-            return { ...state };
         case SET_SETTING:
-            console.log({ ...state, ...action.payload });
             return { ...state, ...action.payload };
         default:
             return state;

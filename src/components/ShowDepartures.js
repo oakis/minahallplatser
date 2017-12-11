@@ -75,7 +75,8 @@ class ShowDepartures extends PureComponent {
 	}
 
 	renderDepartures = ({ item, index }) => {
-		const itemWithNewIndex = { ...item, index };
+		const { timeFormat } = this.props;
+		const itemWithNewIndex = { ...item, index, timeFormat };
 		return (
 			<DepartureListItem
 				item={itemWithNewIndex}
@@ -154,7 +155,8 @@ const MapStateToProps = (state) => {
 		}
 	});
 	const { error } = state.errors;
-	return { departures, loading, error, timestamp, favorites };
+	const { timeFormat } = state.settings;
+	return { departures, loading, error, timestamp, favorites, timeFormat };
 };
 
 export default connect(MapStateToProps,

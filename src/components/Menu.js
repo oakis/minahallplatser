@@ -15,11 +15,12 @@ class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: firebase.auth().currentUser,
-            settings: {
-                timeFormat: 'minutes'
-            }
+            user: firebase.auth().currentUser
         };
+    }
+
+    componentWillMount() {
+        this.props.getSettings();
     }
 
     logout() {
@@ -87,8 +88,7 @@ class Menu extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.settings);
-	const settings = state.settings;
+	const { settings } = state;
 	return { settings };
 };
 
