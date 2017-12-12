@@ -64,7 +64,7 @@ class Menu extends Component {
                     <Picker
                         selectedValue={this.props.settings.timeFormat}
                         onValueChange={(itemValue, itemIndex) => this.props.setSetting('timeFormat', itemValue)}
-                        style={{ marginLeft: metrics.margin.lg }}
+                        style={{ marginLeft: metrics.margin.md + 2, marginTop: -12, marginBottom: -5, marginRight: -5 }}
                     >
                         <Picker.Item label="Minuter" value="minutes" />
                         <Picker.Item label="Klockslag" value="clock" />
