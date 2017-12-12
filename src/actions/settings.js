@@ -1,8 +1,7 @@
-import { GET_SETTINGS, SET_SETTING } from './types';
+import { SET_SETTING } from './types';
 import { AsyncStorage } from 'react-native';
 
 export const getSettings = () => {
-    console.log('getSettings');
     return (dispatch) => {
         AsyncStorage.getItem('minahallplatser-settings').then((dataJson) => {
             const settings = JSON.parse(dataJson);
@@ -12,15 +11,14 @@ export const getSettings = () => {
 };
 
 export const setSetting = (type, value) => {
-    console.log('setSetting', type, value);
     return (dispatch) => {
         AsyncStorage.getItem('minahallplatser-settings').then((dataJson) => {
             const settings = JSON.parse(dataJson) || {};
             settings[type] = value;
             AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings))
             .then(() => dispatch({ type: SET_SETTING, payload: settings }))
-            .catch((e) => console.log('error', e));
+            .catch((e) => window.log('error', e));
         })
-        .catch(e => console.log('error', e));
+        .catch(e => window.log('error', e));
     };
 };
