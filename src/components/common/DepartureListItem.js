@@ -22,7 +22,7 @@ export class DepartureListItem extends PureComponent {
         const getFontColor = () => {
             if (!item.isLive) {
                 return colors.warning;
-            } else if (isNaN(timeLeft)) {
+            } else if (timeLeft == 'Nu') {
                 return colors.danger;
             }
             return colors.default;
