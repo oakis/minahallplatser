@@ -65,3 +65,19 @@ exports.addStopsCount = functions.https.onRequest((request, response) => {
     });
   });
 });
+
+exports.incrementStopsOpen = functions.https.onRequest((request, response) => {
+  const ref = admin.database().ref('/users/' + request.query.user + '/favorites/')
+    ref.orderByChild('id').equalTo(request.query.stopId).on('value', snapshot => {
+      const key = ref.orderByChild('id').equalTo(request.query.stopId).key;
+      const opened = snapshot.child('opened');
+      if (opened.exists()) {
+        opened += 1;
+      } else {
+        ref.child(key).update({ opened: 1 })
+      }
+      response.json({
+        key
+      });
+    });
+});
