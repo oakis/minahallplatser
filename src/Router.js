@@ -11,15 +11,24 @@ import SplashScreen from './components/SplashScreen';
 import Menu from './components/Menu';
 import { Spinner } from './components/common';
 import { colors } from './components/style';
-import { isAndroid, track } from './components/helpers';
+import { isAndroid, track, showMessage, globals } from './components/helpers';
 import { store } from './App';
 import { CLR_ERROR } from './actions/types';
 
 const iconSize = 24;
 
 const onBackAndroid = () => {
-	if (Actions.currentScene == 'login')
-		return true;
+	if (Actions.currentScene == 'login' || Actions.currentScene == '_favlist') {
+		if (globals.shouldExitApp === false) {
+			showMessage('short', 'Backa en gång till för att stänga appen');
+			globals.shouldExitApp = true;
+			return true;
+		} else {
+			globals.shouldExitApp = false;
+			return false;
+		}
+
+	}
 	Actions.pop();
 	return true;
 };
@@ -65,7 +74,10 @@ const RouterComponent = () => (
 		<Scene key="root" hideNavBar='true'>
 			<Scene key="splash" component={SplashScreen} hideNavBar='true' />
 			<Scene key="auth">
-				<Scene key="login" component={LoginForm} hideNavBar='true' onEnter={() => track('Page View', { Page: 'Login' })} />
+				<Scene key="login" component={LoginForm} hideNavBar='true' onEnter={() => {
+					track('Page View', { Page: 'Login' });
+					globals.shouldExitApp = false;
+				}} />
 				<Scene
 					key="register"
 					component={RegisterForm}

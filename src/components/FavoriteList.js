@@ -10,7 +10,7 @@ import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading, Text
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { store } from '../App';
-import { track } from './helpers';
+import { track, globals } from './helpers';
 
 
 class FavoriteList extends PureComponent {
@@ -23,6 +23,7 @@ class FavoriteList extends PureComponent {
 	}
 
 	componentWillMount() {
+		globals.shouldExitApp = false;
 		Keyboard.dismiss();
 		firebase.auth().onAuthStateChanged((fbUser) => {
 			if (fbUser && fbUser.uid) {

@@ -53,7 +53,7 @@ class Menu extends Component {
                         {'e-mail'.toUpperCase()}
                     </Text>
                     <Text style={component.text.menu.value}>
-                        {this.state.user.isAnonymous ? 'Anonym' : this.state.user.email}
+                        {this.state.user && this.state.user.isAnonymous ? 'Anonym' : this.state.user.email}
                     </Text>
 
                     <ListHeading text="Dina inställningar" />
