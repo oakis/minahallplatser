@@ -3,7 +3,8 @@ import {
 } from '../actions/types';
 
 const INIT_STATE = {
-    timeFormat: 'minutes'
+    timeFormat: 'minutes',
+    favoriteOrder: 'nothing'
 };
 
 export default (state = INIT_STATE, action) => {

@@ -194,7 +194,8 @@ class FavoriteList extends PureComponent {
 }
 
 const mapStateToProps = state => {
-	const { favorites } = state.fav;
+	const { favoriteOrder } = state.settings;
+	const favorites = _.orderBy(state.fav.favorites, (o) => o[favoriteOrder] || 0, 'desc');
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
 	const favoriteIds = _.map(favorites, 'id');

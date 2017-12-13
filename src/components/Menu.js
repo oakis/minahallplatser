@@ -34,6 +34,26 @@ class Menu extends Component {
         });
     }
 
+    renderFavoriteOrder = () => {
+        if (this.state.user.isAnonymous)
+            return null;
+        return (
+            <View>
+                <Text style={component.text.menu.label}>
+                {'sortera favoriter'.toUpperCase()}
+                </Text>
+                <Picker
+                    selectedValue={this.props.favoriteOrder}
+                    onValueChange={(itemValue, itemIndex) => this.props.setSetting('favoriteOrder', itemValue)}
+                    style={{ marginLeft: metrics.margin.md + 2, marginTop: -12, marginBottom: -12, marginRight: -5 }}
+                >
+                    <Picker.Item label="Ingen sortering" value="nothing" />
+                    <Picker.Item label="Mina mest använda" value="opened" />
+                </Picker>
+            </View>
+        );
+    }
+
 	render() {
 		return (
 			<View style={{ flexDirection: 'column', backgroundColor: colors.background, flex: 1 }}>
@@ -62,13 +82,15 @@ class Menu extends Component {
                         {'tidsformat'.toUpperCase()}
                     </Text>
                     <Picker
-                        selectedValue={this.props.settings.timeFormat}
+                        selectedValue={this.props.timeFormat}
                         onValueChange={(itemValue, itemIndex) => this.props.setSetting('timeFormat', itemValue)}
-                        style={{ marginLeft: metrics.margin.md + 2, marginTop: -12, marginBottom: -5, marginRight: -5 }}
+                        style={{ marginLeft: metrics.margin.md + 2, marginTop: -12, marginBottom: -12, marginRight: -5 }}
                     >
                         <Picker.Item label="Minuter" value="minutes" />
                         <Picker.Item label="Klockslag" value="clock" />
                     </Picker>
+
+                    {this.renderFavoriteOrder()}
 
                     <ListHeading/>
 
@@ -88,8 +110,8 @@ class Menu extends Component {
 }
 
 const mapStateToProps = state => {
-	const { settings } = state;
-	return { settings };
+    const { timeFormat, favoriteOrder } = state.settings;
+	return { favoriteOrder, timeFormat };
 };
 
 export default connect(mapStateToProps, { getSettings, setSetting })(Menu);
