@@ -15,7 +15,9 @@ class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: firebase.auth().currentUser
+            user: firebase.auth().currentUser,
+            timeFormat: this.props.timeFormat,
+            favoriteOrder: this.props.favoriteOrder
         };
     }
 
@@ -43,8 +45,11 @@ class Menu extends Component {
                 {'sortera favoriter'.toUpperCase()}
                 </Text>
                 <Picker
-                    selectedValue={this.props.favoriteOrder}
-                    onValueChange={(itemValue, itemIndex) => this.props.setSetting('favoriteOrder', itemValue)}
+                    selectedValue={this.state.favoriteOrder}
+                    onValueChange={(itemValue, itemIndex) => {
+                        this.setState({ favoriteOrder: itemValue });
+                        this.props.setSetting('favoriteOrder', itemValue);
+                    }}
                     style={{ marginLeft: metrics.margin.md + 2, marginTop: -12, marginBottom: -12, marginRight: -5 }}
                 >
                     <Picker.Item label="Ingen sortering" value="nothing" />
@@ -82,8 +87,11 @@ class Menu extends Component {
                         {'tidsformat'.toUpperCase()}
                     </Text>
                     <Picker
-                        selectedValue={this.props.timeFormat}
-                        onValueChange={(itemValue, itemIndex) => this.props.setSetting('timeFormat', itemValue)}
+                        selectedValue={this.state.timeFormat}
+                        onValueChange={(itemValue, itemIndex) => {
+                            this.setState({ timeFormat: itemValue });
+                            this.props.setSetting('timeFormat', itemValue);
+                        }}
                         style={{ marginLeft: metrics.margin.md + 2, marginTop: -12, marginBottom: -12, marginRight: -5 }}
                     >
                         <Picker.Item label="Minuter" value="minutes" />
