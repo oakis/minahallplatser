@@ -1,15 +1,16 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, Text, NativeModules } from 'react-native';
+import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, NativeModules } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
-import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading } from './common';
+import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading, Text } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { store } from '../App';
+import { track, globals } from './helpers';
 
 
 class FavoriteList extends PureComponent {
@@ -22,21 +23,22 @@ class FavoriteList extends PureComponent {
 	}
 
 	componentWillMount() {
+		globals.shouldExitApp = false;
 		Keyboard.dismiss();
 		firebase.auth().onAuthStateChanged((fbUser) => {
-			AsyncStorage.getItem('minahallplatser-user').then((dataJson) => {
-				const user = JSON.parse(dataJson);
-				if (user.uid === fbUser.uid) {
-					this.props.favoriteGet(user);
-				}
-			});
+			if (fbUser && fbUser.uid) {
+				AsyncStorage.getItem('minahallplatser-user').then((dataJson) => {
+					const user = JSON.parse(dataJson);
+					if (user && user.uid === fbUser.uid) {
+						this.props.favoriteGet(user);
+					}
+				});
+			}
 		});
-	}
-
-	componentDidMount() {
-		setTimeout(() => {
-			this.refreshNearbyStops();
-		}, 1000);
+		if (this.props.stopsNearby.length == 0) {
+			this.props.getNearbyStops();
+		}
+		track('Page View', { Page: 'Dashboard' });
 	}
 
 	componentWillUnmount() {
@@ -56,6 +58,7 @@ class FavoriteList extends PureComponent {
 	}
 
 	refreshNearbyStops = () => {
+		track('Refresh NearbyStops');
 		store.dispatch({ type: SEARCH_BY_GPS_FAIL });
 		this.props.getNearbyStops();
 	}
@@ -68,7 +71,7 @@ class FavoriteList extends PureComponent {
 				pressItem={async () => {
 					Keyboard.dismiss();
 					await this.props.clearErrors();
-					Actions.departures(item);
+					Actions.departures({ busStop: item.busStop, id: item.id, title: item.busStop });
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -99,7 +102,7 @@ class FavoriteList extends PureComponent {
 				icon={item.icon}
 				pressItem={() => {
 					Keyboard.dismiss();
-					Actions.departures({ busStop: item.name, id: item.id });
+					Actions.departures({ busStop: item.name, id: item.id, title: item.name });
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -143,7 +146,7 @@ class FavoriteList extends PureComponent {
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
-				<ListHeading text={'Mina hållplatser'} icon={'edit'} iconSize={16} onPress={() => this.setState({ editing: !this.state.editing })} />
+				<ListHeading text={'Mina hållplatser'} icon={'edit'} iconSize={16} onPress={() => {  track('Edit Stops Toggle', { On: !this.state.editing }); this.setState({ editing: !this.state.editing }); }} />
 				<FlatList
 					data={this.props.favorites}
 					renderItem={this.renderFavoriteItem}
@@ -169,6 +172,7 @@ class FavoriteList extends PureComponent {
 					iconRight={this.props.busStop.length > 0 ? 'ios-close' : null}
 					iconRightPress={this.resetSearch}
 					underlineColorAndroid={'#fff'}
+					onFocus={() => track('Search Focused')}
 					style={{ borderRadius: 15, paddingLeft: metrics.margin.sm, paddingRight: metrics.margin.sm, marginTop: metrics.margin.md, marginLeft: metrics.margin.md, marginRight: metrics.margin.md, marginBottom: metrics.margin.md, backgroundColor: '#fff' }}
 				/>
 				{(this.props.error) ?
@@ -180,10 +184,9 @@ class FavoriteList extends PureComponent {
 				}
 				{this.renderSectionList()}
 				{(this.props.favorites.length === 0 && !this.props.favoritesLoading) ?
-					<Message
-						type="warning"
-						message={'Du har inte sparat några favoriter än.'}
-					/> : null
+					<Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>
+						Du har inte sparat några favoriter än.
+					</Text> : null
 				}
 			</ScrollView>
 		);
@@ -191,7 +194,8 @@ class FavoriteList extends PureComponent {
 }
 
 const mapStateToProps = state => {
-	const { favorites } = state.fav;
+	const { favoriteOrder } = state.settings;
+	const favorites = _.orderBy(state.fav.favorites, (o) => o[favoriteOrder] || 0, 'desc');
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
 	const favoriteIds = _.map(favorites, 'id');

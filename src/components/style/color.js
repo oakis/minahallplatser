@@ -9,5 +9,7 @@ export const colors = {
     
     lightgrey: '#efefef',
     darkgrey: '#dedede',
-    smoothBlack: '#282828'
+    smoothBlack: '#282828',
+
+    background: '#EAE9EF'
 };

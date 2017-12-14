@@ -8,7 +8,7 @@ import {
 	ERROR,
 	LINES_FETCH, LINE_ADD, LINE_REMOVE
 } from './types';
-import { generateUid } from '../components/helpers';
+import { generateUid, track } from '../components/helpers';
 
 // Stops
 
@@ -37,6 +37,7 @@ export const favoriteCreate = ({ busStop, id }) => {
 				if (snapshot.val() == null) {
 					fbRef.push({ busStop, id })
 						.then(() => {
+							track('Favorite Stop Add', { Stop: busStop });
 							dispatch({ type: FAVORITE_CREATE });
 						}, (error) => {
 							window.log('favoriteCreate error: ', error);
@@ -74,12 +75,15 @@ export const favoriteGet = (currentUser) => {
 						AsyncStorage.setItem('minahallplatser-favorites', JSON.stringify(snapshot.val()));
 						dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: snapshot.val() });
 					}, (error) => {
-						window.log('favoriteGet error: ', error);
-						dispatch({
-							type: FAVORITE_FETCH_FAIL,
-							payload: { loading: false }
-						});
-						dispatch({ type: ERROR, payload: 'Kunde inte ladda dina favoriter.' });
+						const isLoggedIn = firebase.auth().currentUser;
+						if (isLoggedIn) {
+							window.log('favoriteGet error: ', error);
+							dispatch({
+								type: FAVORITE_FETCH_FAIL,
+								payload: { loading: false }
+							});
+							dispatch({ type: ERROR, payload: 'Kunde inte ladda dina favoriter.' });
+						}
 					});
 				}
 				AsyncStorage.getItem('minahallplatser-lines').then((localLines) => {
@@ -124,6 +128,7 @@ export const favoriteDelete = (stopId) => {
 			const favorites = await snapshot.val();
 			_.forEach(favorites, (item, key) => {
 				if (item.id === stopId) {
+					track('Favorite Stop Remove', { Stop: item.busStop });
 					removeByKey = ref.child(key);
 				}
 			});
@@ -148,7 +153,10 @@ export const favoriteLineToggle = ({ sname, direction }) => {
 		let fbKey;
 		if (_.includes(store.getState().fav.lines, line)) {
 			exists = true;
+			track('Favorite Line Remove', { Line: line });
 			dispatch({ type: FAVORITE_CREATE_FAIL });
+		} else {
+			track('Favorite Line Add', { Line: line });
 		}
 		if (currentUser.isAnonymous) {
 			AsyncStorage.getItem('minahallplatser-lines').then((localLines) => {

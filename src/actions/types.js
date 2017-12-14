@@ -5,6 +5,7 @@ export const PASSWORD_CHANGED_SECOND = 'PASSWORD_CHANGED_SECOND';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAIL = 'LOGIN_USER_FAIL';
 export const LOGIN_USER = 'LOGIN_USER';
+export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
 export const LOGIN_ANON_USER = 'LOGIN_ANON_USER';
 export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_USER_FAIL = 'REGISTER_USER_FAIL';
@@ -39,3 +40,6 @@ export const CLR_DEPARTURES = 'CLR_DEPARTURES';
 // Errors
 export const ERROR = 'ERROR';
 export const CLR_ERROR = 'CLR_ERROR';
+
+// Settings
+export const SET_SETTING = 'SET_SETTING';

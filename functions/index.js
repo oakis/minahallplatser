@@ -65,3 +65,24 @@ exports.addStopsCount = functions.https.onRequest((request, response) => {
     });
   });
 });
+
+exports.incrementStopsOpen = functions.https.onRequest((request, response) => {
+  const ref = admin.database().ref('/users/' + request.query.user + '/favorites/')
+    ref.orderByChild('id').equalTo(request.query.stopId).once('value', snapshot => {
+      snapshot.forEach(data => {
+        const opened = data.child('opened');
+        if (opened.exists()) {
+          const updated = data.val();
+          updated.opened += 1;
+          ref.child(data.key).update(updated);
+        } else {
+          const updated = data.val();
+          updated.opened = 1;
+          ref.child(data.key).update(updated);
+        }
+      });
+      response.json({
+        message: 'Updated'
+      });
+    });
+});

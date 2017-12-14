@@ -18,7 +18,7 @@ export const updateDeparturesCount = (count) => {
     });
 };
 
-export const getDeparturesCount = async () => {
+export const getDeparturesCount = () => {
     const url = `${firebaseFunctionsUrl}/getDeparturesCount`;
     return fetch(url, {}, 'getDeparturesCount')
     .finally(handleJsonFetch)
@@ -48,7 +48,7 @@ export const updateStopsCount = () => {
     });
 };
 
-export const getStopsCount = async () => {
+export const getStopsCount = () => {
     const url = `${firebaseFunctionsUrl}/getStopsCount`;
     return fetch(url, {}, 'getStopsCount')
     .finally(handleJsonFetch)
@@ -61,3 +61,16 @@ export const getStopsCount = async () => {
         new Error(err);
     });
 };
+
+export const incrementStopsOpened = (user, stopId) => {
+    const url = `${firebaseFunctionsUrl}/incrementStopsOpen?user=${user}&stopId=${stopId}`;
+    fetch(url, {}, 'incrementStopsOpened')
+    .finally(handleJsonFetch)
+    .then(({ message }) => {
+        window.log('incrementStopsOpened(): OK', message);
+    })
+    .catch((err) => {
+        window.log('incrementStopsOpened(): FAILED', err);
+        new Error(err);
+    });
+}

@@ -44,6 +44,7 @@ android/app/libs
 
 src/Vasttrafik.js
 src/Server.js
+src/Variables.js
 
 buggar/
 todo.txt

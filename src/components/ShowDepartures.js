@@ -4,9 +4,10 @@ import React, { PureComponent } from 'react';
 import { View, ScrollView, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
+import firebase from 'firebase';
 import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle } from '../actions';
 import { DepartureListItem, Spinner, Message, ListItemSeparator } from './common';
-import { updateStopsCount } from './helpers';
+import { updateStopsCount, track, incrementStopsOpened } from './helpers';
 import { colors } from './style';
 
 class ShowDepartures extends PureComponent {
@@ -19,9 +20,13 @@ class ShowDepartures extends PureComponent {
 	}
 	
 	componentWillMount() {
-		Actions.refresh({ title: this.props.busStop });
+		track('Page View', { Page: 'Departures', Stop: this.props.busStop })
 		this.props.getDepartures({ id: this.props.id });
 		updateStopsCount();
+		const { currentUser } = firebase.auth();
+		if (!currentUser.isAnonymous && _.includes(this.props.favoriteIds, this.props.id)) {
+			incrementStopsOpened(currentUser.uid, this.props.id);
+		}
 	}
 
 	componentDidMount() {
@@ -75,7 +80,8 @@ class ShowDepartures extends PureComponent {
 	}
 
 	renderDepartures = ({ item, index }) => {
-		const itemWithNewIndex = { ...item, index };
+		const { timeFormat } = this.props;
+		const itemWithNewIndex = { ...item, index, timeFormat };
 		return (
 			<DepartureListItem
 				item={itemWithNewIndex}
@@ -154,7 +160,10 @@ const MapStateToProps = (state) => {
 		}
 	});
 	const { error } = state.errors;
-	return { departures, loading, error, timestamp, favorites };
+	const { timeFormat } = state.settings;
+	const favoriteDepartures = state.fav.favorites;
+	const favoriteIds = _.map(favoriteDepartures, 'id');
+	return { departures, loading, error, timestamp, favorites, timeFormat, favoriteIds };
 };
 
 export default connect(MapStateToProps,

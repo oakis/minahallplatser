@@ -6,6 +6,7 @@ import {
 	LOGIN_USER_FAIL,
 	LOGIN_USER,
 	LOGIN_ANON_USER,
+	LOGOUT_USER_SUCCESS,
 	REGISTER_USER,
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
@@ -41,16 +42,15 @@ export default (state = INIT_STATE, action) => {
 			};
 		case LOGIN_USER_FAIL:
 			return { ...state, password: '', loading: false, loadingAnon: false };
-		case LOGIN_USER:
-			return { ...state, loading: true };
 		case LOGIN_ANON_USER:
 			return { ...state, loadingAnon: true };
 		case REGISTER_USER:
+		case LOGIN_USER:
 			return { ...state, loading: true };
 		case REGISTER_USER_FAIL:
 			return { ...state, loading: false };
+		case LOGOUT_USER_SUCCESS:
 		case CHANGE_ROUTE:
-			return { ...INIT_STATE };
 		case RESET_PASSWORD:
 			return { ...INIT_STATE };
 		default:
