@@ -53,7 +53,7 @@ export class DepartureListItem extends PureComponent {
             },
             col3Style: {
                 height,
-                width: 50,
+                width: 56,
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginRight: 5
