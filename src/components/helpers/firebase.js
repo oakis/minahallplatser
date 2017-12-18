@@ -13,8 +13,8 @@ export const updateDeparturesCount = (count) => {
         window.log(`updateDeparturesCount(): OK (${message})`);
     })
     .catch((err) => {
-        window.log(`updateDeparturesCount(): FAILED' ${message})`);
-        new Error(err);
+        window.log(`updateDeparturesCount(): FAILED' ${err})`);
+        throw err;
     });
 };
 
@@ -28,7 +28,7 @@ export const getDeparturesCount = () => {
     })
     .catch((err) => {
         window.log('getDeparturesCount(): FAILED', err);
-        new Error(err);
+        throw err;
     });
 };
 
@@ -43,8 +43,8 @@ export const updateStopsCount = () => {
         window.log('updateStopsCount(): OK', message);
     })
     .catch((err) => {
-        window.log('updateStopsCount(): FAILED', message);
-        new Error(err);
+        window.log('updateStopsCount(): FAILED', err);
+        throw err;
     });
 };
 
@@ -58,7 +58,7 @@ export const getStopsCount = () => {
     })
     .catch((err) => {
         window.log('getStopsCount(): FAILED', err);
-        new Error(err);
+        throw err;
     });
 };
 
@@ -71,6 +71,6 @@ export const incrementStopsOpened = (user, stopId) => {
     })
     .catch((err) => {
         window.log('incrementStopsOpened(): FAILED', err);
-        new Error(err);
+        throw err;
     });
-}
+};

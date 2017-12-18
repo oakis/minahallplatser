@@ -17,9 +17,9 @@ export const getDepartures = ({ id }) => {
 			const config = {
 				method: 'post',
 				headers: {
-					'Accept': 'application/json',
+					Accept: 'application/json',
 					'Content-Type': 'application/x-www-form-urlencoded',
-					'access_token': access_token
+					access_token
 				},
 				body: `id=${id}`
 			};

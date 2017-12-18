@@ -6,7 +6,7 @@ export const Spinner = ({ size, color, noFlex = false, left = false }) => {
         <ActivityIndicator
             size={size}
             color={color}
-            style={[noFlex ? null : { flex: 1 }, left ? { alignSelf: 'flex-start' } : null ]}
+            style={[noFlex ? null : { flex: 1 }, left ? { alignSelf: 'flex-start' } : null]}
         />
     );
 };

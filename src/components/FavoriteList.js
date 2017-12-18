@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, NativeModules } from 'react-native';
+import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -19,7 +19,7 @@ class FavoriteList extends PureComponent {
 		super(props);
 		this.state = {
 			editing: false
-		}
+		};
 	}
 
 	componentWillMount() {
@@ -35,7 +35,7 @@ class FavoriteList extends PureComponent {
 				});
 			}
 		});
-		if (this.props.stopsNearby.length == 0) {
+		if (this.props.stopsNearby.length === 0) {
 			this.props.getNearbyStops();
 		}
 		track('Page View', { Page: 'Dashboard' });
@@ -137,7 +137,7 @@ class FavoriteList extends PureComponent {
 					keyboardShouldPersistTaps='always'
 				/>
 				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
-				{(!this.props.gpsLoading && this.props.stopsNearby.length == 0) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
+				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
 				<FlatList
 					data={this.props.stopsNearby}
 					renderItem={this.renderSearchItem}
@@ -146,7 +146,7 @@ class FavoriteList extends PureComponent {
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
-				<ListHeading text={'Mina hållplatser'} icon={'edit'} iconSize={16} onPress={() => {  track('Edit Stops Toggle', { On: !this.state.editing }); this.setState({ editing: !this.state.editing }); }} />
+				<ListHeading text={'Mina hållplatser'} icon={'edit'} iconSize={16} onPress={() => { track('Edit Stops Toggle', { On: !this.state.editing }); this.setState({ editing: !this.state.editing }); }} />
 				<FlatList
 					data={this.props.favorites}
 					renderItem={this.renderFavoriteItem}
@@ -212,6 +212,11 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps,
 	{
-		favoriteGet, favoriteDelete, clearErrors, searchStops,
-		searchChanged, favoriteCreate, getNearbyStops
+		favoriteGet,
+		favoriteDelete,
+		clearErrors,
+		searchStops,
+		searchChanged,
+		favoriteCreate,
+		getNearbyStops
 	})(FavoriteList);

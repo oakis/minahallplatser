@@ -13,7 +13,7 @@ function formatTime(minutes) {
 export class DepartureListItem extends PureComponent {
     render() {
         const { item, onPress } = this.props;
-        const shouldShowMin = (item.timeFormat == 'minutes') ? true : false;
+        const shouldShowMin = item.timeFormat === 'minutes';
         const { clockLeft, clockNext } = item;
         const timeLeft = (item.timeLeft <= 0) ? 'Nu' : formatTime(item.timeLeft);
         const timeNext = (item.timeNext <= 0 && item.timeNext !== null) ? 'Nu' : formatTime(item.timeNext);
@@ -22,10 +22,18 @@ export class DepartureListItem extends PureComponent {
         const getFontColor = () => {
             if (!item.isLive) {
                 return colors.warning;
-            } else if (timeLeft == 'Nu') {
+            } else if (timeLeft === 'Nu') {
                 return colors.danger;
             }
             return colors.default;
+        };
+        const getFontSize = () => {
+            if (!shouldShowMin) {
+                return 18;
+            } else if (item.timeLeft > 59) {
+                return 14;
+            }
+            return 24;
         };
         const height = 50;
 
@@ -76,7 +84,7 @@ export class DepartureListItem extends PureComponent {
                 fontSize: (item.sname.length > 3) ? 12 : 14,
             },
             departureStyle: {
-                fontSize: (!shouldShowMin) ? 18 : (item.timeLeft > 59) ? 14 : 24,
+                fontSize: getFontSize(),
                 color: getFontColor()
             },
             nextDepStyle: {
@@ -115,9 +123,9 @@ export class DepartureListItem extends PureComponent {
                         <View style={{ flexDirection: 'row' }}>
                             <Text>Läge {item.track}</Text>
                             {(Object.prototype.hasOwnProperty.call(item, 'accessibility')) ?
-                                <Icon name={'wheelchair'} size={13} style={iconStyle}>
-                                </Icon> :
-                            null}
+                                <Icon name={'wheelchair'} size={13} style={iconStyle} />
+                                : null
+                            }
                         </View>
                     </View>
 

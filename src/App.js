@@ -34,7 +34,8 @@ if (__DEV__) {
   window.timeEnd = () => {};
 }
 
-const defaultHandler = ErrorUtils.getGlobalHandler && ErrorUtils.getGlobalHandler() || ErrorUtils._globalHandler;
+/*eslint no-underscore-dangle: ["error", { "allow": ["_globalHandler"] }]*/
+const defaultHandler = (ErrorUtils.getGlobalHandler && ErrorUtils.getGlobalHandler()) || ErrorUtils._globalHandler;
 
 ErrorUtils.setGlobalHandler(({ stack }) => {
     const { uid, email, displayName } = store.getState().auth.user;

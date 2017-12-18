@@ -20,7 +20,7 @@ class ShowDepartures extends PureComponent {
 	}
 	
 	componentWillMount() {
-		track('Page View', { Page: 'Departures', Stop: this.props.busStop })
+		track('Page View', { Page: 'Departures', Stop: this.props.busStop });
 		this.props.getDepartures({ id: this.props.id });
 		updateStopsCount();
 		const { currentUser } = firebase.auth();
