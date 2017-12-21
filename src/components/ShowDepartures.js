@@ -1,21 +1,23 @@
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import React, { PureComponent } from 'react';
-import { View, ScrollView, FlatList } from 'react-native';
+import { View, ScrollView, FlatList, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import firebase from 'firebase';
+import { renderHelpButton } from '../Router';
 import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle } from '../actions';
-import { DepartureListItem, Spinner, Message, ListItemSeparator } from './common';
-import { updateStopsCount, track, incrementStopsOpened } from './helpers';
-import { colors } from './style';
+import { DepartureListItem, Spinner, Message, ListItemSeparator, Popup, Text } from './common';
+import { updateStopsCount, track, incrementStopsOpened, calcImageSize } from './helpers';
+import { colors, component, metrics } from './style';
 
 class ShowDepartures extends PureComponent {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			addFavorite: false
+			addFavorite: false,
+			showHelp: false
 		};
 	}
 	
@@ -43,7 +45,7 @@ class ShowDepartures extends PureComponent {
 			this.populateDepartures(departures);
 		}
 		if (this.props.timestamp !== timestamp) {
-			Actions.refresh({ right: null });
+			Actions.refresh({ right: renderHelpButton(this) });
 		}
 	}
 
@@ -61,7 +63,14 @@ class ShowDepartures extends PureComponent {
 	}
 
 	refresh() {
-		Actions.refresh({ right: () => <Spinner color={colors.alternative} /> });
+		Actions.refresh({ right: () => {
+			return (
+				<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+					<Spinner color={colors.alternative} />
+					{renderHelpButton(this)}
+				</View>
+			);
+		} });
 		this.props.getDepartures({ id: this.props.id });
 	}
 
@@ -79,6 +88,12 @@ class ShowDepartures extends PureComponent {
 		return (this.props.departures.length === 0 || this.props.favorites.length === 0) ? null : <View style={{ height: 5, backgroundColor: colors.primary }} />;
 	}
 
+	openPopup = () => {
+		this.setState({
+			showHelp: true
+		});
+	}
+
 	renderDepartures = ({ item, index }) => {
 		const { timeFormat } = this.props;
 		const itemWithNewIndex = { ...item, index, timeFormat };
@@ -93,7 +108,29 @@ class ShowDepartures extends PureComponent {
 		);
 	}
 
-	renderSpinner() {
+	renderPopup() {
+		const { imageWidth, imageHeight } = calcImageSize(0.85, metrics.margin.md * 2.5);
+		return (
+			<Popup
+				onPress={() => this.setState({ showHelp: false })}
+				isVisible={this.state.showHelp}
+			>
+				<Text style={component.popup.header}>På vilket sätt ser jag hur lång tid det är kvar till nästa avgång?</Text>
+				<Text style={component.popup.text}>Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. <Text style={{ fontStyle: 'italic' }}>Det går även att ändra till klockslag, och det gör du i menyn på startsidan.</Text></Text>
+				<Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode={'cover'} />
+				
+				<Text style={component.popup.header}>Varför har tiden till nästa avgång ibland färg?</Text>
+				<Text style={component.popup.text}>När en avgång snart ska gå från en hållplats så kommer alltid texten "<Text style={{ color: colors.danger }}>Nu</Text>" att visas med röd färg. Ibland kan man också se att en avgång har <Text style={{ color: colors.warning }}>orange</Text> text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.</Text>
+				<Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode={'cover'} />
+				
+				<Text style={component.popup.header}>Hur sparar man en linje som favorit?</Text>
+				<Text style={component.popup.text}>För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.</Text>
+				<Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode={'cover'} />
+			</Popup>
+		);
+	}
+
+	renderContent() {
 		if (this.props.loading) {
 			return (
 				<Spinner
@@ -139,7 +176,8 @@ class ShowDepartures extends PureComponent {
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
-				{this.renderSpinner()}
+				{this.renderPopup()}
+				{this.renderContent()}
 			</View>
 		);
 	}

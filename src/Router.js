@@ -54,6 +54,31 @@ const renderBackButton = () => {
 	);
 };
 
+export const renderHelpButton = (self) => {
+	return (
+		<TouchableWithoutFeedback
+			onPress={() => {
+				self.openPopup();
+			}}
+		>
+			<View
+				style={{
+					width: 30,
+					height: 30,
+					alignItems: 'center',
+					justifyContent: 'center',
+					marginRight: -10
+				}}
+			>
+				<Icon 
+					name="ios-help"
+					style={{ color: colors.alternative, fontSize: iconSize }}
+				/>
+			</View>
+		</TouchableWithoutFeedback>
+	);
+};
+
 const RouterComponent = () => (
 	<Router
 		backAndroidHandler={onBackAndroid}
@@ -104,7 +129,7 @@ const RouterComponent = () => (
 					title="Mina Hållplatser"
 					initial
 				/>
-				<Scene key="departures" component={ShowDepartures} hideDrawerButton left={renderBackButton} />
+				<Scene key="departures" component={ShowDepartures} hideDrawerButton left={renderBackButton} right={renderHelpButton} />
 			</Drawer>
 		</Scene>
 	</Router>
