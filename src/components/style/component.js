@@ -32,7 +32,7 @@ export const component = {
         heading: {
             marginTop: metrics.margin.md,
             paddingLeft: metrics.padding.md,
-            paddingRight: metrics.padding.md,
+            paddingRight: metrics.padding.sm,
             borderBottomWidth: 2,
             borderColor: colors.primary,
             fontSize: 20,
