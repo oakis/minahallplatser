@@ -11,5 +11,7 @@ export const colors = {
     darkgrey: '#dedede',
     smoothBlack: '#282828',
 
+    overlay: 'rgba(0, 0, 0, 0.4)',
+
     background: '#EAE9EF'
 };

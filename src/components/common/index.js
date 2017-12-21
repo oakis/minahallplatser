@@ -8,3 +8,4 @@ export * from './Message';
 export * from './Text';
 export * from './ListItemSeparator';
 export * from './ListHeading';
+export * from './Popup';
