@@ -1,6 +1,7 @@
 import {
     ERROR,
-    CLR_ERROR
+    CLR_ERROR,
+    RESET_ALL
 } from '../actions/types';
 
 const INIT_STATE = {
@@ -13,6 +14,8 @@ export default (state = INIT_STATE, action) => {
             return { ...state, error: action.payload };
         case CLR_ERROR:
             return { ...state, error: '' };
+        case RESET_ALL:
+            return { ...INIT_STATE };
         default:
             return state;
     }

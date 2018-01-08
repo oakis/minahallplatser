@@ -3,7 +3,7 @@ import { View, AsyncStorage, ImageBackground, Picker } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { Text, ListItem, ListHeading } from './common';
-import { LOGOUT_USER_SUCCESS } from '../actions/types';
+import { RESET_ALL } from '../actions/types';
 import { getSettings, setSetting } from '../actions';
 import { store } from '../App';
 import { colors, metrics, component } from './style';
@@ -27,7 +27,7 @@ class Menu extends Component {
     logout() {
         firebase.auth().signOut().then(() => {
             AsyncStorage.clear();
-            store.dispatch({ type: LOGOUT_USER_SUCCESS });
+            store.dispatch({ type: RESET_ALL });
             track('Logout', { Success: true });
         }, (error) => {
             track('Logout', { Success: false });

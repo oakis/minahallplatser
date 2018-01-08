@@ -43,3 +43,6 @@ export const CLR_ERROR = 'CLR_ERROR';
 
 // Settings
 export const SET_SETTING = 'SET_SETTING';
+
+// Reset
+export const RESET_ALL = 'RESET_ALL';

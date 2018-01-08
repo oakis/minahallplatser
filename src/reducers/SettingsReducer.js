@@ -1,5 +1,6 @@
 import {
-    SET_SETTING
+    SET_SETTING,
+    RESET_ALL
 } from '../actions/types';
 
 const INIT_STATE = {
@@ -11,6 +12,8 @@ export default (state = INIT_STATE, action) => {
     switch (action.type) {
         case SET_SETTING:
             return { ...state, ...action.payload };
+        case RESET_ALL:
+			return { ...INIT_STATE };
         default:
             return state;
     }
