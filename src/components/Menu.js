@@ -54,6 +54,7 @@ class Menu extends Component {
                 >
                     <Picker.Item label="Ingen sortering" value="nothing" />
                     <Picker.Item label="Mina mest använda" value="opened" />
+                    <Picker.Item label="Efter bokstav" value="busStop" />
                 </Picker>
             </View>
         );
