@@ -121,12 +121,7 @@ const returnCoords = (dispatch) => {
 		}
 		gpsCount = 0;
 		dispatch({ type: SEARCH_BY_GPS_FAIL })
-	},
-	{
-		enableHighAccuracy: false,
-		timeout: 3000,
-		maximumAge: 5000
-	});
+	}, null);
 }
 
 const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
