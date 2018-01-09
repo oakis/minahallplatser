@@ -122,7 +122,7 @@ export const component = {
             padding: metrics.padding.md
         },
         header: {
-            fontSize: 22,
+            fontSize: 18,
             fontWeight: 'bold',
             marginBottom: metrics.margin.sm
         },

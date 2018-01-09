@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Scene, Router, Actions, Drawer } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import FavoriteList from './components/FavoriteList';
@@ -42,6 +43,7 @@ const renderBackButton = () => {
 				style={{
 					width: 30,
 					height: 30,
+					alignItems: 'center',
 					justifyContent: 'center'
 				}}
 			>
@@ -57,21 +59,18 @@ const renderBackButton = () => {
 export const renderHelpButton = (self) => {
 	return (
 		<TouchableWithoutFeedback
-			onPress={() => {
-				self.openPopup();
-			}}
+			onPress={self.openPopup}
 		>
 			<View
 				style={{
 					width: 30,
 					height: 30,
 					alignItems: 'center',
-					justifyContent: 'center',
-					marginRight: -10
+					justifyContent: 'center'
 				}}
 			>
-				<Icon 
-					name="ios-help"
+				<MaterialIcons 
+					name="live-help"
 					style={{ color: colors.alternative, fontSize: iconSize }}
 				/>
 			</View>
@@ -127,9 +126,16 @@ const RouterComponent = () => (
 					key="favlist"
 					component={FavoriteList}
 					title="Mina Hållplatser"
+					right={renderHelpButton}
 					initial
 				/>
-				<Scene key="departures" component={ShowDepartures} hideDrawerButton left={renderBackButton} right={renderHelpButton} />
+				<Scene
+					key="departures"
+					component={ShowDepartures}
+					hideDrawerButton
+					right={renderHelpButton}
+					left={renderBackButton}
+				/>
 			</Drawer>
 		</Scene>
 	</Router>
