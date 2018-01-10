@@ -17,7 +17,7 @@ import {
 	RESET_PASSWORD,
 	ERROR
 } from './types';
-import { showMessage, getToken } from '../components/helpers';
+import { showMessage, getToken, track } from '../components/helpers';
 import { store } from '../App';
 
 export const resetUserPassword = (email) => {
@@ -68,6 +68,7 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 			dispatch({ type: REGISTER_USER_FAIL });
 			dispatch({ type: ERROR, payload: 'Lösenorden matchade inte.' });
 		} else if (firebase.auth().currentUser && firebase.auth().currentUser.isAnonymous) {
+			track('Register', { type: 'From Anonymous' });
 			const credential = firebase.auth.EmailAuthProvider.credential(email, password);
 			firebase.auth().currentUser.linkWithCredential(credential).then(() => {
 				dispatch({ type: LOGIN_USER });
@@ -87,6 +88,7 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 					.catch((error) => loginUserFail(dispatch, error));
 			}, (error) => loginUserFail(dispatch, error));
 		} else {
+			track('Register', { type: 'New Account' });
 			firebase.auth().createUserWithEmailAndPassword(email, password)
 				.catch((error) => {
 					dispatch({ type: REGISTER_USER_FAIL });
