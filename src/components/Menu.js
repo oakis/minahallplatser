@@ -114,8 +114,7 @@ class Menu extends Component {
                             Actions.register();
                         }}
                     />
-                    : null}
-
+                    :
                     <ListItem
                         text='Logga ut'
                         icon='ios-exit-outline'
@@ -123,7 +122,7 @@ class Menu extends Component {
                         pressItem={() => {
                             this.logout();
                         }}
-                    />
+                    />}
                 </View>
             </View>
 		);
