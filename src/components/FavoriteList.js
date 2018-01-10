@@ -43,9 +43,9 @@ class FavoriteList extends PureComponent {
 						if (fbUser.isAnonymous && (!Object.prototype.hasOwnProperty.call(settings, 'anonFirstAppStart'))) {
 							this.showRegistrationQuestion();
 						}
-						console.log(settings);
 						if (this.props.stopsNearby.length === 0 && !settings.anonFirstAppStart && settings.allowedGPS) {
 							this.props.getNearbyStops();
+							this.setState({ hasUsedGPS: true });
 						}
 					})
 					.catch(() => {

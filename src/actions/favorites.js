@@ -119,25 +119,23 @@ export const favoriteGet = (currentUser) => {
 
 export const favoriteDelete = (stopId) => {
 	window.log('favoriteDelete():', stopId);
-	return async (dispatch) => {
+	return (dispatch) => {
 		const { currentUser } = firebase.auth();
 		const ref = firebase.database().ref(`/users/${currentUser.uid}/favorites`);
-		let removeByKey;
-		await ref.on('value', async snapshot => {
-			const favorites = await snapshot.val();
+		ref.once('value', snapshot => {
+			const favorites = snapshot.val();
 			_.forEach(favorites, (item, key) => {
 				if (item.id === stopId) {
 					track('Favorite Stop Remove', { Stop: item.busStop });
-					removeByKey = ref.child(key);
+					ref.child(key).remove()
+						.then(() => {
+							window.log('Stop remove was OK');
+						})
+						.catch((error) => window.log(error));
 				}
 			});
 		});
-		removeByKey.remove()
-			.then(() => {
-				window.log('Removed entry');
-				dispatch({ type: FAVORITE_DELETE, payload: stopId });
-			})
-			.catch((error) => window.log(error));
+		dispatch({ type: FAVORITE_DELETE, payload: stopId });
 	};
 };
 
