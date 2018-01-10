@@ -23,7 +23,8 @@ class FavoriteList extends PureComponent {
 		this.state = {
 			editing: false,
 			showHelp: false,
-			init: true
+			init: true,
+			hasUsedGPS: false
 		};
 	}
 
@@ -37,23 +38,22 @@ class FavoriteList extends PureComponent {
 					if (user && user.uid === fbUser.uid) {
 						this.props.favoriteGet(user);
 					}
-					if (globals.anonFirstAppStart) {
-						AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
-							const settings = JSON.parse(settingsJson);
-							if (fbUser.isAnonymous && !Object.prototype.hasOwnProperty.call(settings, 'anonFirstAppStart')) {
-								this.showRegistrationQuestion();
-							}
-						})
-						.catch(() => {
+					AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
+						const settings = JSON.parse(settingsJson);
+						if (fbUser.isAnonymous && (!Object.prototype.hasOwnProperty.call(settings, 'anonFirstAppStart'))) {
 							this.showRegistrationQuestion();
-						});
-					}
+						}
+						console.log(settings);
+						if (this.props.stopsNearby.length === 0 && !settings.anonFirstAppStart && settings.allowedGPS) {
+							this.props.getNearbyStops();
+						}
+					})
+					.catch(() => {
+						this.showRegistrationQuestion();
+					});
 				});
 			}
 		});
-		if (this.props.stopsNearby.length === 0 && !globals.anonFirstAppStart) {
-			this.props.getNearbyStops();
-		}
 		track('Page View', { Page: 'Dashboard' });
 	}
 
@@ -115,6 +115,7 @@ class FavoriteList extends PureComponent {
 		track('Refresh NearbyStops');
 		store.dispatch({ type: SEARCH_BY_GPS_FAIL });
 		this.props.getNearbyStops();
+		this.setState({ hasUsedGPS: true });
 	}
 
 	openPopup = () => {
@@ -243,7 +244,7 @@ class FavoriteList extends PureComponent {
 					keyboardShouldPersistTaps='always'
 				/>
 				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
-				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
+				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0 && this.state.hasUsedGPS) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
 				<FlatList
 					data={this.props.stopsNearby}
 					renderItem={this.renderSearchItem}
