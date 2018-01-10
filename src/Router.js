@@ -119,6 +119,7 @@ const RouterComponent = () => (
 						component={LoginForm}
 						hideNavBar
 						hideDrawerButton
+						drawerLockMode={'locked-closed'}
 						title="Logga in"
 						left={renderBackButton}
 						onEnter={() => {
@@ -130,6 +131,7 @@ const RouterComponent = () => (
 						key="register"
 						component={RegisterForm}
 						hideDrawerButton
+						drawerLockMode={'locked-closed'}
 						title="Registrera"
 						left={renderBackButton}
 						onEnter={() => track('Page View', { Page: 'Register' })}
@@ -138,6 +140,7 @@ const RouterComponent = () => (
 						key="resetpw"
 						component={ResetPassword}
 						hideDrawerButton
+						drawerLockMode={'locked-closed'}
 						title="Glömt lösenord"
 						left={renderBackButton}
 						onEnter={() => track('Page View', { Page: 'Reset Password' })}
