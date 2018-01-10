@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon2 from 'react-native-vector-icons/Ionicons';
+import Icon3 from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
 import { Text } from './';
 import { colors } from '../style';
@@ -11,9 +13,33 @@ function formatTime(minutes) {
 }
 
 export class DepartureListItem extends PureComponent {
+
+    getDepartureTypeIcon = (type, color) => {
+		let iconName;
+		switch (type) {
+            case 'BOAT':
+                iconName = 'ios-boat';
+                break;
+            case 'BUS':
+                iconName = 'ios-bus';
+                break;
+            case 'TAXI':
+                return <Icon3 name={'local-taxi'} size={15} color={color} />;
+            case 'TRAM':
+                return <Icon3 name={'tram'} size={15} color={color} />;
+            case 'VAS':
+            case 'REG':
+                iconName = 'ios-train';
+                break;
+            default:
+                return null;
+		}
+		return <Icon2 name={iconName} size={15} color={color} />;
+	}
+
     render() {
         const { item, onPress } = this.props;
-        const shouldShowMin = (item.timeFormat == 'minutes') ? true : false;
+        const shouldShowMin = item.timeFormat === 'minutes';
         const { clockLeft, clockNext } = item;
         const timeLeft = (item.timeLeft <= 0) ? 'Nu' : formatTime(item.timeLeft);
         const timeNext = (item.timeNext <= 0 && item.timeNext !== null) ? 'Nu' : formatTime(item.timeNext);
@@ -22,10 +48,18 @@ export class DepartureListItem extends PureComponent {
         const getFontColor = () => {
             if (!item.isLive) {
                 return colors.warning;
-            } else if (timeLeft == 'Nu') {
+            } else if (timeLeft === 'Nu') {
                 return colors.danger;
             }
             return colors.default;
+        };
+        const getFontSize = () => {
+            if (!shouldShowMin) {
+                return 18;
+            } else if (item.timeLeft > 59) {
+                return 14;
+            }
+            return 24;
         };
         const height = 50;
 
@@ -76,7 +110,7 @@ export class DepartureListItem extends PureComponent {
                 fontSize: (item.sname.length > 3) ? 12 : 14,
             },
             departureStyle: {
-                fontSize: (!shouldShowMin) ? 18 : (item.timeLeft > 59) ? 14 : 24,
+                fontSize: getFontSize(),
                 color: getFontColor()
             },
             nextDepStyle: {
@@ -106,6 +140,7 @@ export class DepartureListItem extends PureComponent {
                     <View style={col1Style}>
                         <View style={stopNumStyle}>
                             <Text style={stopNumText}>{item.sname}</Text>
+                            {this.getDepartureTypeIcon(item.type, item.bgColor)}
                         </View>
                     </View>
 
@@ -113,11 +148,15 @@ export class DepartureListItem extends PureComponent {
                         <Text style={directionStyle}>{item.direction}</Text>
                         {(item.via) ? <Text style={viaStyle}>{item.via}</Text> : null}
                         <View style={{ flexDirection: 'row' }}>
-                            <Text>Läge {item.track}</Text>
+                            <Text>Läge {item.track || 'A'}</Text>
                             {(Object.prototype.hasOwnProperty.call(item, 'accessibility')) ?
-                                <Icon name={'wheelchair'} size={13} style={iconStyle}>
-                                </Icon> :
-                            null}
+                                <Icon name={'wheelchair'} size={13} style={iconStyle} />
+                                : null
+                            }
+                            {item.night === true ?
+                                <Icon2 name={'ios-moon'} size={13} style={iconStyle} />
+                                : null
+                            }
                         </View>
                     </View>
 

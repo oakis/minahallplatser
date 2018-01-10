@@ -1,4 +1,4 @@
-import { PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import {
@@ -90,6 +90,12 @@ export const getNearbyStops = () => {
 					requestLocationPermission().then(() => {
 						returnCoords(dispatch);
 					}).catch(() => {
+						AsyncStorage.getItem('minahallplatser-settings')
+							.then((json) => {
+								const settings = JSON.parse(json);
+								settings['allowedGPS'] = false;
+								AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings));
+							});
 						dispatch({ type: SEARCH_BY_GPS_FAIL })
 						dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
 					});
@@ -98,6 +104,12 @@ export const getNearbyStops = () => {
 				}
 			});
 		} catch (e) {
+			AsyncStorage.getItem('minahallplatser-settings')
+				.then((json) => {
+					const settings = JSON.parse(json);
+					settings['allowedGPS'] = false;
+					AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings));
+				});
 			dispatch({ type: SEARCH_BY_GPS_FAIL })
 			dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
 		}
@@ -106,6 +118,12 @@ export const getNearbyStops = () => {
 
 let gpsCount = 0;
 const returnCoords = (dispatch) => {
+	AsyncStorage.getItem('minahallplatser-settings')
+		.then((json) => {
+			const settings = JSON.parse(json);
+			settings['allowedGPS'] = true;
+			AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings));
+		});
 	dispatch({ type: SEARCH_BY_GPS });
 	navigator.geolocation.getCurrentPosition((position) => {
 		const { longitude, latitude } = position.coords;

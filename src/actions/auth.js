@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import moment from 'moment';
+import _ from 'lodash';
 import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
@@ -16,7 +17,8 @@ import {
 	RESET_PASSWORD,
 	ERROR
 } from './types';
-import { showMessage, getToken } from '../components/helpers';
+import { showMessage, getToken, track } from '../components/helpers';
+import { store } from '../App';
 
 export const resetUserPassword = (email) => {
 	return (dispatch) => {
@@ -24,7 +26,7 @@ export const resetUserPassword = (email) => {
 		.then(() => {
 			showMessage('long', `Ett mail för att återställa ditt lösenord har skickats till ${email}.`);
 			dispatch({ type: RESET_PASSWORD });
-			Actions.auth({ type: 'reset' });
+			Actions.login();
 		}, (error) => {
 			dispatch({ type: RESET_PASSWORD });
 			dispatch({ type: ERROR, payload: getFirebaseError(error) });
@@ -65,7 +67,28 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 		if (password !== passwordSecond) {
 			dispatch({ type: REGISTER_USER_FAIL });
 			dispatch({ type: ERROR, payload: 'Lösenorden matchade inte.' });
+		} else if (firebase.auth().currentUser && firebase.auth().currentUser.isAnonymous) {
+			track('Register', { type: 'From Anonymous' });
+			const credential = firebase.auth.EmailAuthProvider.credential(email, password);
+			firebase.auth().currentUser.linkWithCredential(credential).then(() => {
+				dispatch({ type: LOGIN_USER });
+				firebase.auth().signInWithEmailAndPassword(email, password)
+					.then(user => {
+						const { favorites, lines } = store.getState().fav;
+						const fbUser = firebase.database().ref(`/users/${user.uid}`);
+						_.forEach(favorites, (favorite) => {
+							fbUser.child('favorites').push(favorite);
+						});
+						_.forEach(lines, (line) => {
+							fbUser.child('lines').push(line);
+						});
+						fbUser.update({ lastLogin: moment().format(), isAnonymous: user.isAnonymous });
+						loginUserSuccess(dispatch, user);
+					})
+					.catch((error) => loginUserFail(dispatch, error));
+			}, (error) => loginUserFail(dispatch, error));
 		} else {
+			track('Register', { type: 'New Account' });
 			firebase.auth().createUserWithEmailAndPassword(email, password)
 				.catch((error) => {
 					dispatch({ type: REGISTER_USER_FAIL });
@@ -142,7 +165,7 @@ const loginUserFail = (dispatch, error) => {
 		dispatch({ type: ERROR, payload: getFirebaseError({ code: 'auth/network-request-failed' }) });
 	}
 	if (Actions.currentScene === 'splash') {
-		Actions.auth();
+		Actions.login();
 	}
 };
 

@@ -1,5 +1,5 @@
-import { SET_SETTING } from './types';
 import { AsyncStorage } from 'react-native';
+import { SET_SETTING } from './types';
 
 export const getSettings = () => {
     return (dispatch) => {
@@ -15,7 +15,7 @@ export const setSetting = (type, value) => {
         AsyncStorage.getItem('minahallplatser-settings').then((dataJson) => {
             const settings = JSON.parse(dataJson) || {};
             settings[type] = value;
-            dispatch({ type: SET_SETTING, payload: settings })
+            dispatch({ type: SET_SETTING, payload: settings });
             AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings))
             .catch((e) => window.log('error', e));
         })

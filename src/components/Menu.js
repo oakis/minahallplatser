@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { View, AsyncStorage, ImageBackground, Picker } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
-import { Text, ListItem, ListHeading, ListItemSeparator } from './common';
-import { LOGOUT_USER_SUCCESS } from '../actions/types';
+import { Actions } from 'react-native-router-flux';
+import { Text, ListItem, ListHeading } from './common';
+import { RESET_ALL } from '../actions/types';
 import { getSettings, setSetting } from '../actions';
 import { store } from '../App';
 import { colors, metrics, component } from './style';
-import { track } from './helpers';
+import { track, globals } from './helpers';
 
 class Menu extends Component {
 
@@ -26,19 +26,21 @@ class Menu extends Component {
     }
 
     logout() {
-        firebase.auth().signOut().then(function() {
+        globals.didLogout = true;
+        firebase.auth().signOut().then(() => {
             AsyncStorage.clear();
-            store.dispatch({ type: LOGOUT_USER_SUCCESS });
+            store.dispatch({ type: RESET_ALL });
             track('Logout', { Success: true });
-        }, function(error) {
+        }, (error) => {
             track('Logout', { Success: false });
             window.log('Sign Out Error', error);
         });
     }
 
     renderFavoriteOrder = () => {
-        if (this.state.user.isAnonymous)
+        if (this.state.user.isAnonymous) {
             return null;
+        }
         return (
             <View>
                 <Text style={component.text.menu.label}>
@@ -46,7 +48,7 @@ class Menu extends Component {
                 </Text>
                 <Picker
                     selectedValue={this.state.favoriteOrder}
-                    onValueChange={(itemValue, itemIndex) => {
+                    onValueChange={(itemValue) => {
                         this.setState({ favoriteOrder: itemValue });
                         this.props.setSetting('favoriteOrder', itemValue);
                     }}
@@ -54,6 +56,7 @@ class Menu extends Component {
                 >
                     <Picker.Item label="Ingen sortering" value="nothing" />
                     <Picker.Item label="Mina mest använda" value="opened" />
+                    <Picker.Item label="Efter bokstav" value="busStop" />
                 </Picker>
             </View>
         );
@@ -88,7 +91,7 @@ class Menu extends Component {
                     </Text>
                     <Picker
                         selectedValue={this.state.timeFormat}
-                        onValueChange={(itemValue, itemIndex) => {
+                        onValueChange={(itemValue) => {
                             this.setState({ timeFormat: itemValue });
                             this.props.setSetting('timeFormat', itemValue);
                         }}
@@ -100,8 +103,18 @@ class Menu extends Component {
 
                     {this.renderFavoriteOrder()}
 
-                    <ListHeading/>
+                    <ListHeading />
 
+                    {this.state.user && this.state.user.isAnonymous ?
+                    <ListItem
+                        text="Registrera"
+                        icon="ios-log-in-outline"
+                        iconVisible
+                        pressItem={() => {
+                            Actions.register();
+                        }}
+                    />
+                    :
                     <ListItem
                         text='Logga ut'
                         icon='ios-exit-outline'
@@ -109,7 +122,7 @@ class Menu extends Component {
                         pressItem={() => {
                             this.logout();
                         }}
-                    />
+                    />}
                 </View>
             </View>
 		);

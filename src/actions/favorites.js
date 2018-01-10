@@ -28,26 +28,25 @@ export const favoriteCreate = ({ busStop, id }) => {
 				if (!exists) {
 					favorites[generateUid()] = { busStop, id };
 				}
-				dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: favorites })
+				dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: favorites });
 				return AsyncStorage.setItem('minahallplatser-favorites', JSON.stringify(favorites));
 			});
-		} else {
-			const fbRef = firebase.database().ref(`/users/${currentUser.uid}/favorites`);
-			fbRef.orderByChild('id').equalTo(id).once('value', (snapshot) => {
-				if (snapshot.val() == null) {
-					fbRef.push({ busStop, id })
-						.then(() => {
-							track('Favorite Stop Add', { Stop: busStop });
-							dispatch({ type: FAVORITE_CREATE });
-						}, (error) => {
-							window.log('favoriteCreate error: ', error);
-							favoriteCreateFail(dispatch);
-						});
-				} else {
-					dispatch(favoriteDelete(id));
-				}
-			});
 		}
+		const fbRef = firebase.database().ref(`/users/${currentUser.uid}/favorites`);
+		fbRef.orderByChild('id').equalTo(id).once('value', (snapshot) => {
+			if (snapshot.val() == null) {
+				fbRef.push({ busStop, id })
+					.then(() => {
+						track('Favorite Stop Add', { Stop: busStop });
+						dispatch({ type: FAVORITE_CREATE });
+					}, (error) => {
+						window.log('favoriteCreate error: ', error);
+						favoriteCreateFail(dispatch);
+					});
+			} else {
+				dispatch(favoriteDelete(id));
+			}
+		});
 	};
 };
 
@@ -66,7 +65,7 @@ export const favoriteGet = (currentUser) => {
 				} else {
 					window.log('Did not find favorites locally');
 					if (currentUser.isAnonymous) {
-						return dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: [] })
+						return dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: [] });
 					}
 				}
 				if (!currentUser.isAnonymous) {
@@ -120,25 +119,23 @@ export const favoriteGet = (currentUser) => {
 
 export const favoriteDelete = (stopId) => {
 	window.log('favoriteDelete():', stopId);
-	return async (dispatch) => {
+	return (dispatch) => {
 		const { currentUser } = firebase.auth();
 		const ref = firebase.database().ref(`/users/${currentUser.uid}/favorites`);
-		let removeByKey;
-		await ref.on('value', async snapshot => {
-			const favorites = await snapshot.val();
+		ref.once('value', snapshot => {
+			const favorites = snapshot.val();
 			_.forEach(favorites, (item, key) => {
 				if (item.id === stopId) {
 					track('Favorite Stop Remove', { Stop: item.busStop });
-					removeByKey = ref.child(key);
+					ref.child(key).remove()
+						.then(() => {
+							window.log('Stop remove was OK');
+						})
+						.catch((error) => window.log(error));
 				}
 			});
 		});
-		removeByKey.remove()
-			.then(() => {
-				window.log('Removed entry');
-				dispatch({ type: FAVORITE_DELETE, payload: stopId });
-			})
-			.catch((error) => window.log(error));
+		dispatch({ type: FAVORITE_DELETE, payload: stopId });
 	};
 };
 
@@ -150,7 +147,6 @@ export const favoriteLineToggle = ({ sname, direction }) => {
 	return (dispatch) => {
 		const fbRef = firebase.database().ref(`/users/${currentUser.uid}/lines`);
 		let exists = false;
-		let fbKey;
 		if (_.includes(store.getState().fav.lines, line)) {
 			exists = true;
 			track('Favorite Line Remove', { Line: line });
@@ -166,35 +162,34 @@ export const favoriteLineToggle = ({ sname, direction }) => {
 					AsyncStorage.setItem('minahallplatser-lines', JSON.stringify(lines));
 					dispatch({ type: LINE_ADD, payload: line });
 				} else {
-					const key = _.findKey(lines, (item) => item == line);
+					const key = _.findKey(lines, (item) => item === line);
 					delete lines[key];
 					AsyncStorage.setItem('minahallplatser-lines', JSON.stringify(lines));
 					dispatch({ type: LINE_REMOVE, payload: line });
 				}
 			});
+		}
+		if (!currentUser.isAnonymous && !exists) {
+			window.log('favoriteLineToggle push:', line);
+			dispatch({ type: LINE_ADD, payload: line });
+			fbRef.push(line)
+			.catch((error) => {
+				window.log('favoriteLineToggle push error:', error);
+				favoriteCreateFail(dispatch);
+			});
 		} else {
-			if (!exists) {
-				window.log('favoriteLineToggle push:', line);
-				dispatch({ type: LINE_ADD, payload: line });
-				fbRef.push(line)
-				.catch((error) => {
-					window.log('favoriteLineToggle push error:', error);
-					favoriteCreateFail(dispatch);
+			window.log('favoriteLineToggle remove:', line);
+			dispatch({ type: LINE_REMOVE, payload: line });
+			fbRef.once('value', snapshot => {
+				const fbLines = snapshot.val();
+				_.forEach(fbLines, (item, key) => {
+					if (item === line) {
+						fbRef.child(key).remove()
+							.then(() => window.log('Line remove was OK'))
+							.catch((error) => window.log(error));
+					}
 				});
-			} else {
-				window.log('favoriteLineToggle remove:', line);
-				dispatch({ type: LINE_REMOVE, payload: line });
-				fbRef.once('value', snapshot => {
-					const fbLines = snapshot.val();
-					_.forEach(fbLines, (item, key) => {
-						if (item === line) {
-							fbKey = fbRef.child(key);
-						}
-					});
-					fbKey.remove()
-					.catch((error) => window.log(error));
-				});
-			}
+			});
 		}
 	};
 };

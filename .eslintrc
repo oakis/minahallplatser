@@ -3,7 +3,8 @@
 	"rules": {
 		"arrow-body-style": 0,
 		"max-len": 0,
-		"react/jsx-no-bind": 1
+		"react/jsx-no-bind": 1,
+		"global-require": 0
 	},
 	"globals": {
 		"navigator": false,

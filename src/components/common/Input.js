@@ -24,10 +24,10 @@ export const Input = ({ style, value, label, icon, iconRight = null, iconRightPr
                 onFocus={onFocus}
             />
             {(iconRight !== null) ?
-                <View style={{ marginLeft: metrics.margin.sm, marginRight: metrics.margin.sm }}>
+                <View style={{ marginLeft: metrics.margin.sm }}>
                     {(loading) ?
-                        <Spinner color={colors.primary} /> :
-                        <Icon onPress={iconRightPress} name={iconRight} size={iconSize} style={{ marginLeft: metrics.margin.sm, marginRight: metrics.margin.sm }} />
+                        <Spinner color={colors.primary} style={{ padding: metrics.padding.sm }} /> :
+                        <Icon onPress={iconRightPress} name={iconRight} size={iconSize} style={{ padding: metrics.padding.md }} />
                     }
                 </View>
                 : null

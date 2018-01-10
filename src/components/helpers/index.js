@@ -6,3 +6,4 @@ export * from './firebase';
 export * from './asyncstorage';
 export * from './mixpanel';
 export * from './globals';
+export * from './image';

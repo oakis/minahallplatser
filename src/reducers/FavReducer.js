@@ -2,7 +2,8 @@ import _ from 'lodash';
 import {
 	FAVORITE_CREATE, FAVORITE_CREATE_FAIL, FAVORITE_DELETE,
 	FAVORITE_FETCH_SUCCESS, FAVORITE_FETCH_FAIL,
-	LINES_FETCH, LINE_ADD, LINE_REMOVE
+	LINES_FETCH, LINE_ADD, LINE_REMOVE,
+	RESET_ALL
 } from '../actions/types';
 
 const INIT_STATE = {
@@ -34,6 +35,8 @@ export default (state = INIT_STATE, action) => {
 			return { ...state, lines: [...state.lines, action.payload] };
 		case LINE_REMOVE:
 			return { ...state, lines: state.lines.filter((e) => e !== action.payload) };
+		case RESET_ALL:
+			return { ...INIT_STATE };
 		default:
 			return state;
 	}

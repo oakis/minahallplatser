@@ -1,3 +1,4 @@
+import { Dimensions } from 'react-native';
 import { colors, metrics } from './';
 
 export const component = {
@@ -31,7 +32,7 @@ export const component = {
         heading: {
             marginTop: metrics.margin.md,
             paddingLeft: metrics.padding.md,
-            paddingRight: metrics.padding.md,
+            paddingRight: metrics.padding.sm,
             borderBottomWidth: 2,
             borderColor: colors.primary,
             fontSize: 20,
@@ -97,5 +98,39 @@ export const component = {
 			justifyContent: 'flex-end',
 			alignSelf: 'center'
 		}
+    },
+    popup: {
+        container: {
+            position: 'absolute',
+            zIndex: 1,
+            height: '100%',
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: colors.overlay
+        },
+        content: {
+            position: 'absolute',
+            width: '85%',
+            minHeight: 250,
+            maxHeight: (Dimensions.get('window').height * 0.9) / 1.3,
+            zIndex: 2,
+            backgroundColor: colors.alternative,
+            borderRadius: 5,
+            borderWidth: 2,
+            elevation: 10,
+            padding: metrics.padding.md
+        },
+        header: {
+            fontSize: 18,
+            fontWeight: 'bold',
+            marginBottom: metrics.margin.sm
+        },
+        text: {
+            marginBottom: metrics.margin.md
+        },
+        image: {
+            marginBottom: metrics.margin.xl
+        }
     }
 };
