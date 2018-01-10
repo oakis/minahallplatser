@@ -49,7 +49,9 @@ class FavoriteList extends PureComponent {
 						}
 					})
 					.catch(() => {
-						this.showRegistrationQuestion();
+						if (fbUser.isAnonymous) {
+							this.showRegistrationQuestion();
+						}
 					});
 				});
 			}
