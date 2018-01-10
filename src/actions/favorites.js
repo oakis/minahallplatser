@@ -149,7 +149,6 @@ export const favoriteLineToggle = ({ sname, direction }) => {
 	return (dispatch) => {
 		const fbRef = firebase.database().ref(`/users/${currentUser.uid}/lines`);
 		let exists = false;
-		let fbKey;
 		if (_.includes(store.getState().fav.lines, line)) {
 			exists = true;
 			track('Favorite Line Remove', { Line: line });
@@ -187,11 +186,11 @@ export const favoriteLineToggle = ({ sname, direction }) => {
 				const fbLines = snapshot.val();
 				_.forEach(fbLines, (item, key) => {
 					if (item === line) {
-						fbKey = fbRef.child(key);
+						fbRef.child(key).remove()
+							.then(() => window.log('Line remove was OK'))
+							.catch((error) => window.log(error));
 					}
 				});
-				fbKey.remove()
-				.catch((error) => window.log(error));
 			});
 		}
 	};
