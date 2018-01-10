@@ -87,15 +87,6 @@ class LoginForm extends Component {
 						Actions.resetpw();
 					}}
 				/>
-				<Button
-					loading={this.props.loadingAnon}
-					fontColor="primary"
-					label="Använd appen utan konto"
-					onPress={async () => {
-						await this.props.clearErrors();
-						this.props.loginAnonUser();
-					}}
-				/>
 
 			</View>
 		);

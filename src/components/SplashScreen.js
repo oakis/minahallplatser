@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, ImageBackground, AsyncStorage } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
-import { autoLogin } from '../actions';
+import { Actions } from 'react-native-router-flux';
+import { autoLogin, loginAnonUser } from '../actions';
 import { Spinner, Text } from './common';
 import { colors } from './style';
+import { globals } from './helpers';
 
 class SplashScreen extends Component {
 
@@ -15,14 +16,21 @@ class SplashScreen extends Component {
 			AsyncStorage.getItem('minahallplatser-user')
 			.then((dataJson) => {
 				const user = JSON.parse(dataJson);
-				if (user.uid === fbUser.uid) {
+				if (fbUser && user && user.uid === fbUser.uid) {
+					window.log('User already exists, continue to autologin.');
 					this.props.autoLogin(fbUser);
-				} else {
-					Actions.auth();
+				} else if (globals.didLogout) {
+					Actions.login();
+					globals.didLogout = false;
+				} else if (!globals.isCreatingAnonUser) {
+					window.log('New user, creating anonymous account.');
+					this.props.loginAnonUser();
+					globals.isCreatingAnonUser = true;
 				}
 			})
-			.catch(() => {
-				Actions.auth();
+			.catch((err) => {
+				window.log('New user, creating anonymous account.', fbUser, err);
+				this.props.loginAnonUser();
 			});
 		}, (err) => window.log(err));
 	}
@@ -58,4 +66,4 @@ class SplashScreen extends Component {
 
 }
 
-export default connect(null, { autoLogin })(SplashScreen);
+export default connect(null, { autoLogin, loginAnonUser })(SplashScreen);

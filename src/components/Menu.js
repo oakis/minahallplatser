@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { View, AsyncStorage, ImageBackground, Picker } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 import { Text, ListItem, ListHeading } from './common';
 import { RESET_ALL } from '../actions/types';
 import { getSettings, setSetting } from '../actions';
 import { store } from '../App';
 import { colors, metrics, component } from './style';
-import { track } from './helpers';
+import { track, globals } from './helpers';
 
 class Menu extends Component {
 
@@ -25,6 +26,7 @@ class Menu extends Component {
     }
 
     logout() {
+        globals.didLogout = true;
         firebase.auth().signOut().then(() => {
             AsyncStorage.clear();
             store.dispatch({ type: RESET_ALL });
@@ -102,6 +104,17 @@ class Menu extends Component {
                     {this.renderFavoriteOrder()}
 
                     <ListHeading />
+
+                    {this.state.user && this.state.user.isAnonymous ?
+                    <ListItem
+                        text="Registrera"
+                        icon="ios-log-in-outline"
+                        iconVisible
+                        pressItem={() => {
+                            Actions.register();
+                        }}
+                    />
+                    : null}
 
                     <ListItem
                         text='Logga ut'

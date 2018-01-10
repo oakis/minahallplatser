@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Scene, Router, Actions, Drawer } from 'react-native-router-flux';
+import { Scene, Router, Actions, Stack, Drawer } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import FavoriteList from './components/FavoriteList';
 import ShowDepartures from './components/ShowDepartures';
@@ -92,30 +92,8 @@ const RouterComponent = () => (
 		leftButtonTextStyle={{ color: colors.alternative }}
 		renderBackButton={renderBackButton}
 	>
-		<Scene key="root" hideNavBar='true'>
-			<Scene key="splash" component={SplashScreen} hideNavBar='true' />
-			<Scene key="auth">
-				<Scene
-					key="login"
-					component={LoginForm}
-					hideNavBar='true'
-					onEnter={() => {
-						track('Page View', { Page: 'Login' });
-						globals.shouldExitApp = false;
-					}}
-				/>
-				<Scene
-					key="register"
-					component={RegisterForm}
-					title="Registrera"
-					onBack={async () => {
-						await store.dispatch({ type: CLR_ERROR });
-						Actions.auth({ type: 'reset' });
-					}}
-					onEnter={() => track('Page View', { Page: 'Register' })}
-				/>
-				<Scene key="resetpw" component={ResetPassword} title="Glömt lösenord" onEnter={() => track('Page View', { Page: 'Reset Password' })} />
-			</Scene>
+		<Stack key="root" hideNavBar>
+			<Scene key="splash" component={SplashScreen} hideNavBar />
 			<Drawer
 				key="dashboard"
 				contentComponent={Menu}
@@ -127,7 +105,6 @@ const RouterComponent = () => (
 					component={FavoriteList}
 					title="Mina Hållplatser"
 					right={renderHelpButton}
-					initial
 				/>
 				<Scene
 					key="departures"
@@ -136,8 +113,38 @@ const RouterComponent = () => (
 					right={renderHelpButton}
 					left={renderBackButton}
 				/>
+				<Scene key="auth">
+					<Scene
+						key="login"
+						component={LoginForm}
+						hideNavBar
+						hideDrawerButton
+						title="Logga in"
+						left={renderBackButton}
+						onEnter={() => {
+							track('Page View', { Page: 'Login' });
+							globals.shouldExitApp = false;
+						}}
+					/>
+					<Scene
+						key="register"
+						component={RegisterForm}
+						hideDrawerButton
+						title="Registrera"
+						left={renderBackButton}
+						onEnter={() => track('Page View', { Page: 'Register' })}
+					/>
+					<Scene
+						key="resetpw"
+						component={ResetPassword}
+						hideDrawerButton
+						title="Glömt lösenord"
+						left={renderBackButton}
+						onEnter={() => track('Page View', { Page: 'Reset Password' })}
+					/>
+				</Scene>
 			</Drawer>
-		</Scene>
+		</Stack>
 	</Router>
 );
 

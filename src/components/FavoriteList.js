@@ -7,7 +7,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { favoriteGet, favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
+import { favoriteGet, favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops, setSetting } from '../actions';
 import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading, Text, Popup } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
@@ -37,10 +37,21 @@ class FavoriteList extends PureComponent {
 					if (user && user.uid === fbUser.uid) {
 						this.props.favoriteGet(user);
 					}
+					if (globals.anonFirstAppStart) {
+						AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
+							const settings = JSON.parse(settingsJson);
+							if (fbUser.isAnonymous && !Object.prototype.hasOwnProperty.call(settings, 'anonFirstAppStart')) {
+								this.showRegistrationQuestion();
+							}
+						})
+						.catch(() => {
+							this.showRegistrationQuestion();
+						});
+					}
 				});
 			}
 		});
-		if (this.props.stopsNearby.length === 0) {
+		if (this.props.stopsNearby.length === 0 && !globals.anonFirstAppStart) {
 			this.props.getNearbyStops();
 		}
 		track('Page View', { Page: 'Dashboard' });
@@ -57,11 +68,42 @@ class FavoriteList extends PureComponent {
 		fetch.abort('searchStops');
 		this.props.clearErrors();
 	}
-
+	
 	onInputChange = (busStop) => {
 		fetch.abort('searchStops');
 		this.props.searchChanged(busStop);
 		this.props.searchStops({ busStop });
+	}
+	
+	showRegistrationQuestion = () => {
+		globals.anonFirstAppStart = false;
+		this.props.setSetting('anonFirstAppStart', false);
+		Alert.alert(
+			'Få ut mer av appen',
+			'Få en bättre upplevelse genom att registrera dig i appen. Det är helt gratis!\nDina hållplatser sparas i molnet så att du alltid har dom kvar på ditt konto, även om du till exempel köper en ny telefon. Det går alltid att registrera sig vid ett annat tillfälle via menyn.',
+			[
+				{
+					text: 'Nej tack',
+					onPress: () => {
+						track('Registration Question', { answer: 'No' });
+					}
+				},
+				{
+					text: 'Logga in',
+					onPress: () => {
+						track('Registration Question', { answer: 'Login' });
+						Actions.login();
+					}
+				},
+				{
+					text: 'Registrera',
+					onPress: () => {
+						track('Registration Question', { answer: 'Register' });
+						Actions.register();
+					}
+				}
+			]
+		);
 	}
 
 	resetSearch = () => {
@@ -285,5 +327,6 @@ export default connect(mapStateToProps,
 		searchStops,
 		searchChanged,
 		favoriteCreate,
-		getNearbyStops
+		getNearbyStops,
+		setSetting
 	})(FavoriteList);
