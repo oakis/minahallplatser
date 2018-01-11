@@ -37,7 +37,6 @@ export const favoriteCreate = ({ busStop, id }) => {
 			if (snapshot.val() == null) {
 				fbRef.push({ busStop, id })
 					.then(() => {
-						track('Favorite Stop Add', { Stop: busStop });
 						dispatch({ type: FAVORITE_CREATE });
 					}, (error) => {
 						window.log('favoriteCreate error: ', error);
@@ -126,7 +125,6 @@ export const favoriteDelete = (stopId) => {
 			const favorites = snapshot.val();
 			_.forEach(favorites, (item, key) => {
 				if (item.id === stopId) {
-					track('Favorite Stop Remove', { Stop: item.busStop });
 					ref.child(key).remove()
 						.then(() => {
 							window.log('Stop remove was OK');

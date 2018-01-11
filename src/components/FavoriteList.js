@@ -121,6 +121,7 @@ class FavoriteList extends PureComponent {
 	}
 
 	openPopup = () => {
+		track('Show Help', { Page: 'Dashboard' });
 		this.setState({
 			showHelp: true
 		});
@@ -192,6 +193,7 @@ class FavoriteList extends PureComponent {
 							{
 								text: 'Ja',
 								onPress: () => {
+									track('Favorite Stop Remove', { Stop: item.busStop, Parent: 'Favorite List' });
 									this.props.favoriteDelete(item.id);
 								}
 							}
@@ -215,6 +217,12 @@ class FavoriteList extends PureComponent {
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
+					console.log(item, this);
+					if (item.icon === 'ios-star') {
+						track('Favorite Stop Remove', { Stop: item.name, Parent: item.parent });
+					} else {
+						track('Favorite Stop Add', { Stop: item.name, Parent: item.parent });
+					}
 					this.props.favoriteCreate({ busStop: item.name, id: item.id });
 				}}
 				iconVisible
@@ -313,11 +321,11 @@ const mapStateToProps = state => {
 	const favoriteIds = _.map(favorites, 'id');
 	const { busStop, stops, gpsLoading } = state.search;
 	const stopsNearby = _.map(stops, (item) => {
-		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline' };
+		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Stops Nearby' };
 	});
 	const searchLoading = state.search.loading;
 	const departureList = _.map(state.search.departureList, (item) => {
-		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline' };
+		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Search List' };
 	});
 	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading };
 };

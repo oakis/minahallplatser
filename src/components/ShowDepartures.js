@@ -89,6 +89,7 @@ class ShowDepartures extends PureComponent {
 	}
 
 	openPopup = () => {
+		track('Show Help', { Page: 'Departures' });
 		this.setState({
 			showHelp: true
 		});
