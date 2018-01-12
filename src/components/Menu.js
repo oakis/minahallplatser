@@ -19,7 +19,7 @@ class Menu extends Component {
             user: firebase.auth().currentUser,
             timeFormat: this.props.timeFormat,
             favoriteOrder: this.props.favoriteOrder,
-            feedbackVisible: true
+            feedbackVisible: false
         };
     }
 
