@@ -178,6 +178,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':react-native-device-info')
     compile project(':react-native-mixpanel')
     compile project(':react-native-fabric')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {

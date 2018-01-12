@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Text, Spinner } from './';
 import { colors, component, metrics } from '../style';
 
-export const Input = ({ style, value, label, icon, iconRight = null, iconRightPress = null, iconSize = 24, placeholder, onChangeText, autoFocus = false, returnKeyType, keyboardType, secureTextEntry = false, loading = false, underlineColorAndroid = colors.primary, onFocus }) => {
+export const Input = ({ style, value, label, icon, iconRight = null, iconRightPress = null, iconSize = 24, placeholder, onChangeText, autoFocus = false, returnKeyType, keyboardType, secureTextEntry = false, loading = false, underlineColorAndroid = colors.primary, onFocus, multiline = false }) => {
     return (
         <View style={[component.input.container, style]}>
             {(label) ? <Text>{label}</Text> : null}
@@ -22,6 +22,7 @@ export const Input = ({ style, value, label, icon, iconRight = null, iconRightPr
                 autoCorrect={false}
                 autoCapitalize={'none'}
                 onFocus={onFocus}
+                multiline={multiline}
             />
             {(iconRight !== null) ?
                 <View style={{ marginLeft: metrics.margin.sm }}>

@@ -42,13 +42,14 @@ export const component = {
             label: {
                 fontSize: 12,
                 fontWeight: 'bold',
-                paddingLeft: metrics.padding.lg,
+                paddingLeft: metrics.padding.md,
                 paddingTop: metrics.padding.md,
                 paddingBottom: 0,
                 marginBottom: 0
             },
             value: {
-                paddingLeft: metrics.padding.lg
+                paddingLeft: metrics.padding.md,
+                marginBottom: metrics.margin.md
             }
         }
     },
@@ -83,10 +84,9 @@ export const component = {
     listitem: {
         view: {
 			flexDirection: 'row',
-			justifyContent: 'space-between',
-			marginTop: metrics.margin.sm,
-			marginHorizontal: metrics.margin.md,
-			paddingBottom: metrics.padding.sm,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: metrics.padding.md,
 			height: 50
 		},
 		text: {
@@ -132,5 +132,11 @@ export const component = {
         image: {
             marginBottom: metrics.margin.xl
         }
+    },
+    picker: {
+        marginLeft: 2,
+        marginTop: -12,
+        marginBottom: -metrics.margin.sm,
+        marginRight: -metrics.margin.sm
     }
 };

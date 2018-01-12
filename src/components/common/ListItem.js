@@ -4,11 +4,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { component } from '../style';
 import { Text } from '../common';
 
-export const ListItem = ({ text, icon = null, pressItem, pressIcon = null, iconVisible = false, iconColor = '#000' }) => {
+export const ListItem = ({ text, icon = null, pressItem, pressIcon = null, iconVisible = false, iconColor = '#000', style = null }) => {
 	return (
 		<TouchableOpacity
 			onPress={pressItem}
-			style={component.listitem.view}
+			style={[component.listitem.view, style]}
 		>
 			<Text style={component.listitem.text}>
 				{text}

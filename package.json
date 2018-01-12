@@ -19,6 +19,7 @@
     "react": "^16.0.0",
     "react-native": "^0.51.0",
     "react-native-cancelable-fetch": "^0.1.1",
+    "react-native-device-info": "^0.13.0",
     "react-native-fabric": "^0.5.1",
     "react-native-mixpanel": "0.0.16",
     "react-native-router-flux": "^4.0.0-beta.27",

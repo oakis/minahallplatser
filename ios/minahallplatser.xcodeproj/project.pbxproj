@@ -34,6 +34,8 @@
 		5146D530EF134821BBB794EE /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A49D0292CB6747D3A5216FC1 /* MaterialIcons.ttf */; };
 		15AE17EC6BF2424BA2E636CC /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62CB1B9D3C0E47C9A33491AF /* SimpleLineIcons.ttf */; };
 		CE7F5B6CBEDF483AB18B7828 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C14C8E7FF404BAB992F1BAA /* Zocial.ttf */; };
+		DE934C955D334D00A8FE0AE7 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC52E3F3BA84382B5123D4C /* libRNDeviceInfo.a */; };
+		49BB464AD02B4CA6B542DD9E /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F116328FE6A482F8608EC26 /* libRNDeviceInfo-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -304,6 +306,9 @@
 		A49D0292CB6747D3A5216FC1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; name = "MaterialIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		62CB1B9D3C0E47C9A33491AF /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		7C14C8E7FF404BAB992F1BAA /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F1A977DF408F4944AF42D9BA /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; name = "RNDeviceInfo.xcodeproj"; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		8DC52E3F3BA84382B5123D4C /* libRNDeviceInfo.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo.a"; path = "libRNDeviceInfo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		4F116328FE6A482F8608EC26 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo-tvOS.a"; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -337,6 +342,8 @@
 				E13712FED6B64CF5A9F2028F /* libSMXCrashlytics.a in Frameworks */,
 				FDC66F9D84654D16AD598AB8 /* libRNMixpanel.a in Frameworks */,
 				9635248F00C942B39F5B8454 /* libRNMixpanel-tvOS.a in Frameworks */,
+				DE934C955D334D00A8FE0AE7 /* libRNDeviceInfo.a in Frameworks */,
+				49BB464AD02B4CA6B542DD9E /* libRNDeviceInfo-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,6 +522,7 @@
 				E3C48489CFCF4F29AD9B8C68 /* RNVectorIcons.xcodeproj */,
 				D1B7B4D69EA445ABB67DC273 /* SMXCrashlytics.xcodeproj */,
 				4A82550661554ECD8C7FA5F0 /* RNMixpanel.xcodeproj */,
+				F1A977DF408F4944AF42D9BA /* RNDeviceInfo.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1007,6 +1015,8 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/minahallplatser.app/minahallplatser";
@@ -1023,6 +1033,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1051,6 +1063,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics",
 					"$(SRCROOT)\..\node_modules\react-native-mixpanel\RNMixpanel",
+					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
 			};
 			name = Debug;
@@ -1074,6 +1087,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics",
 					"$(SRCROOT)\..\node_modules\react-native-mixpanel\RNMixpanel",
+					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
 			};
 			name = Release;
