@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, AppState } from 'react-native';
 import { connect } from 'react-redux';
 import {
 	emailChanged,
@@ -10,6 +10,7 @@ import {
 	clearErrors
 } from '../actions';
 import { Input, Button, Message } from './common';
+import { track } from './helpers';
 
 class RegisterForm extends Component {
 
@@ -17,9 +18,14 @@ class RegisterForm extends Component {
 		this.props.resetRoute();
 	}
 
+	componentDidMount() {
+		AppState.addEventListener('change', this.handleAppStateChange);
+	}
+
 	componentWillUnmount() {
 		this.props.resetRoute();
 		this.props.clearErrors();
+		AppState.removeEventListener('change', this.handleAppStateChange);
 	}
 
 	onEmailChange = (text) => {
@@ -38,6 +44,12 @@ class RegisterForm extends Component {
 		this.props.loading = true;
 		const { email, password, passwordSecond } = this.props;
 		this.props.registerUser({ email, password, passwordSecond });
+	}
+
+	handleAppStateChange = (nextAppState) => {
+		if (nextAppState === 'active') {
+			track('Page View', { Page: 'Register', Type: 'Reopened app from background' });
+		}
 	}
 
 	render() {

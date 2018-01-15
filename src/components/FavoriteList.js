@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView } from 'react-native';
+import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, AppState } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import firebase from 'firebase';
@@ -59,6 +59,10 @@ class FavoriteList extends PureComponent {
 		track('Page View', { Page: 'Dashboard' });
 	}
 
+	componentDidMount() {
+		AppState.addEventListener('change', this.handleAppStateChange);
+	}
+
 	componentWillReceiveProps() {
 		if (this.state.init) {
 			Actions.refresh({ right: renderHelpButton(this) });
@@ -69,12 +73,26 @@ class FavoriteList extends PureComponent {
 	componentWillUnmount() {
 		fetch.abort('searchStops');
 		this.props.clearErrors();
+		AppState.removeEventListener('change', this.handleAppStateChange);
 	}
 	
 	onInputChange = (busStop) => {
 		fetch.abort('searchStops');
 		this.props.searchChanged(busStop);
 		this.props.searchStops({ busStop });
+	}
+
+	handleAppStateChange = (nextAppState) => {
+		if (nextAppState === 'active') {
+			AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
+				const settings = JSON.parse(settingsJson);
+				if (!settings.anonFirstAppStart && settings.allowedGPS) {
+					this.props.getNearbyStops();
+					this.setState({ hasUsedGPS: true });
+				}
+			});
+			track('Page View', { Page: 'Dashboard', Type: 'Reopened app from background' });
+		}
 	}
 	
 	showRegistrationQuestion = () => {
@@ -217,7 +235,6 @@ class FavoriteList extends PureComponent {
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
-					console.log(item, this);
 					if (item.icon === 'ios-star') {
 						track('Favorite Stop Remove', { Stop: item.name, Parent: item.parent });
 					} else {

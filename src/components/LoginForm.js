@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, AppState } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser } from '../actions';
 import { Button, Input, Message } from './common';
+import { track } from './helpers';
 
 class LoginForm extends Component {
+
+	componentDidMount() {
+		AppState.addEventListener('change', this.handleAppStateChange);
+	}
 
 	componentWillUnmount() {
 		this.props.resetRoute();
 		this.props.clearErrors();
+		AppState.removeEventListener('change', this.handleAppStateChange);
 	}
 
 	onEmailChange = (text) => {
@@ -24,6 +30,12 @@ class LoginForm extends Component {
 		this.props.loading = true;
 		const { email, password } = this.props;
 		this.props.loginUser({ email, password });
+	}
+
+	handleAppStateChange = (nextAppState) => {
+		if (nextAppState === 'active') {
+			track('Page View', { Page: 'Login', Type: 'Reopened app from background' });
+		}
 	}
 
 	render() {

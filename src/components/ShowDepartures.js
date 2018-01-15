@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import React, { PureComponent } from 'react';
-import { View, ScrollView, FlatList } from 'react-native';
+import { View, ScrollView, FlatList, AppState } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import firebase from 'firebase';
@@ -33,6 +33,7 @@ class ShowDepartures extends PureComponent {
 
 	componentDidMount() {
 		this.startRefresh();
+		AppState.addEventListener('change', this.handleAppStateChange);
 	}
 
 	componentWillReceiveProps({ favorites, departures, timestamp }) {
@@ -55,6 +56,20 @@ class ShowDepartures extends PureComponent {
 		this.props.clearDepartures();
 		this.props.clearErrors();
 		fetch.abort('getDepartures');
+		AppState.removeEventListener('change', this.handleAppStateChange);
+	}
+
+	handleAppStateChange = (nextAppState) => {
+		clearInterval(this.interval);
+		this.interval = null;
+		this.props.clearDepartures();
+		this.props.clearErrors();
+		fetch.abort('getDepartures');
+		if (nextAppState === 'active') {
+			this.props.getDepartures({ id: this.props.id });
+			this.startRefresh();
+			track('Page View', { Page: 'Departures', Stop: this.props.busStop, Type: 'Reopened app from background' });
+		}
 	}
 
 	startRefresh() {
