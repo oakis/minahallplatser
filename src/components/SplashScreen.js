@@ -3,7 +3,7 @@ import { View, ImageBackground, AsyncStorage } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { autoLogin, loginAnonUser, getSettings } from '../actions';
+import { autoLogin, loginAnonUser } from '../actions';
 import { Spinner, Text } from './common';
 import { colors } from './style';
 import { globals } from './helpers';
@@ -18,9 +18,7 @@ class SplashScreen extends Component {
 				const user = JSON.parse(dataJson);
 				if (fbUser && user && user.uid === fbUser.uid) {
 					window.log('User already exists, continue to autologin.');
-					this.props.getSettings().then(() => {
-						this.props.autoLogin(fbUser);
-					});
+					this.props.autoLogin(fbUser);
 				} else if (globals.didLogout) {
 					Actions.login();
 					globals.didLogout = false;
@@ -68,4 +66,4 @@ class SplashScreen extends Component {
 
 }
 
-export default connect(null, { autoLogin, loginAnonUser, getSettings })(SplashScreen);
+export default connect(null, { autoLogin, loginAnonUser })(SplashScreen);

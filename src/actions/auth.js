@@ -19,6 +19,7 @@ import {
 } from './types';
 import { showMessage, getToken, track } from '../components/helpers';
 import { store } from '../App';
+import { getSettings } from './';
 
 export const resetUserPassword = (email) => {
 	return (dispatch) => {
@@ -110,9 +111,13 @@ export const loginUser = ({ email, password }) => {
 	return (dispatch) => {
 		dispatch({ type: LOGIN_USER });
 		if (email && password) {
-			firebase.auth().signInWithEmailAndPassword(email, password)
-			.then(user => loginUserSuccess(dispatch, user))
-			.catch(error => loginUserFail(dispatch, error));
+			firebase.auth().signOut()
+			.then(() => {
+				firebase.auth().signInWithEmailAndPassword(email, password)
+				.then(user => loginUserSuccess(dispatch, user))
+				.catch(error => loginUserFail(dispatch, error));
+			})
+			.catch((e) => window.log('signOut() failed:', e));
 		} else if (email && !password) {
 			dispatch({ type: LOGIN_USER_FAIL });
 			dispatch({ type: ERROR, payload: 'Du måste fylla i ditt lösenord.' });
@@ -151,7 +156,7 @@ const loginUserSuccess = (dispatch, user) => {
 		fbUser.update({ lastLogin: moment().format(), isAnonymous: user.isAnonymous });
 		AsyncStorage.setItem('minahallplatser-user', JSON.stringify(user), () => {
 			dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
-			Actions.dashboard({ type: 'reset' });
+			getSettings(dispatch).then(() => Actions.dashboard({ type: 'reset' }));
 		});
 	});
 };

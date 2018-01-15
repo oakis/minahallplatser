@@ -1,16 +1,14 @@
 import { AsyncStorage } from 'react-native';
 import { SET_SETTING } from './types';
 
-export const getSettings = () => {
-    return (dispatch) => {
-        return new Promise((resolve) => {
-            AsyncStorage.getItem('minahallplatser-settings').then((dataJson) => {
-                const settings = JSON.parse(dataJson);
-                window.log('getSettings():', settings);
-                resolve(dispatch({ type: SET_SETTING, payload: settings }));
-            });
+export const getSettings = (dispatch) => {
+    return new Promise((resolve) => {
+        AsyncStorage.getItem('minahallplatser-settings').then((dataJson) => {
+            const settings = JSON.parse(dataJson);
+            window.log('getSettings():', settings);
+            resolve(dispatch({ type: SET_SETTING, payload: settings }));
         });
-    };
+    });
 };
 
 export const setSetting = (type, value) => {

@@ -26,9 +26,10 @@ class Menu extends Component {
     logout() {
         globals.didLogout = true;
         firebase.auth().signOut().then(() => {
-            AsyncStorage.clear();
-            store.dispatch({ type: RESET_ALL });
-            track('Logout', { Success: true });
+            AsyncStorage.clear().then(() => {
+                store.dispatch({ type: RESET_ALL });
+                track('Logout', { Success: true });
+            });
         }, (error) => {
             track('Logout', { Success: false });
             window.log('Sign Out Error', error);
