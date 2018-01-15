@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 import { Text, ListItem, ListHeading } from './common';
 import { RESET_ALL } from '../actions/types';
-import { getSettings, setSetting } from '../actions';
+import { setSetting } from '../actions';
 import { store } from '../App';
 import { colors, metrics, component } from './style';
 import { track, globals } from './helpers';
@@ -21,10 +21,6 @@ class Menu extends Component {
             favoriteOrder: this.props.favoriteOrder,
             feedbackVisible: false
         };
-    }
-
-    componentWillMount() {
-        this.props.getSettings();
     }
 
     logout() {
@@ -162,4 +158,4 @@ const mapStateToProps = state => {
 	return { favoriteOrder, timeFormat };
 };
 
-export default connect(mapStateToProps, { getSettings, setSetting })(Menu);
+export default connect(mapStateToProps, { setSetting })(Menu);
