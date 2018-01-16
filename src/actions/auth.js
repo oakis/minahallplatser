@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import moment from 'moment';
 import _ from 'lodash';
+import Mixpanel from 'react-native-mixpanel';
 import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
@@ -181,6 +182,10 @@ export const autoLogin = (user) => {
 
 const loginUserSuccess = (dispatch, user) => {
 	getToken().finally(() => {
+		Mixpanel.identify(user.uid);
+		if (!user.isAnonymous) {
+			Mixpanel.set({ $email: user.email });
+		}
 		const fbUser = firebase.database().ref(`/users/${user.uid}`);
 		fbUser.update({ lastLogin: moment().format(), isAnonymous: user.isAnonymous });
 		AsyncStorage.setItem('minahallplatser-user', JSON.stringify(user), () => {
