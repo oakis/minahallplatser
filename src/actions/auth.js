@@ -15,7 +15,8 @@ import {
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
 	RESET_PASSWORD,
-	ERROR
+	ERROR,
+	REGISTER_FACEBOOK
 } from './types';
 import { showMessage, getToken, track, globals } from '../components/helpers';
 import { store } from '../App';
@@ -103,6 +104,37 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 							.catch((error) => loginUserFail(dispatch, error));
 					}
 				});
+		}
+	};
+};
+
+export const registerFacebook = (credential) => {
+	return (dispatch) => {
+		dispatch({ type: REGISTER_FACEBOOK });
+		if (firebase.auth().currentUser && firebase.auth().currentUser.isAnonymous) {
+			track('Register', { type: 'From Anonymous' });
+			firebase.auth().currentUser.linkWithCredential(credential).then(() => {
+				globals.isLoggingIn = true;
+				firebase.auth().signInWithCredential(credential)
+					.then(user => {
+						const { favorites, lines } = store.getState().fav;
+						const fbUser = firebase.database().ref(`/users/${user.uid}`);
+						_.forEach(favorites, (favorite) => {
+							fbUser.child('favorites').push(favorite);
+						});
+						_.forEach(lines, (line) => {
+							fbUser.child('lines').push(line);
+						});
+						fbUser.update({ lastLogin: moment().format(), isAnonymous: user.isAnonymous });
+						loginUserSuccess(dispatch, user);
+					})
+					.catch((error) => loginUserFail(dispatch, error));
+			}, (error) => loginUserFail(dispatch, error));
+		} else {
+			track('Register', { type: 'New Account' });
+			firebase.auth().signInWithCredential(credential)
+			.then(user => window.log(`Facebook account ${user.email} was successfully logged in.`))
+			.catch(error => window.log('Facebook account failed:', error));
 		}
 	};
 };

@@ -15,7 +15,8 @@ class LoginForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			fbPopupVisible: false
+			fbPopupVisible: false,
+			fbLoading: false
 		};
 	}
 
@@ -52,6 +53,7 @@ class LoginForm extends Component {
 				window.log('Login cancelled:', result);
 				track('Login Facebook Cancel');
 			} else {
+				this.setState({ fbLoading: true });
 				window.log('Login success:', result);
 				track('Login Facebook Success');
 				AccessToken.getCurrentAccessToken().then(
@@ -125,6 +127,7 @@ class LoginForm extends Component {
 				/>
 
 				<Button
+					loading={this.state.fbLoading}
 					color="facebook"
 					uppercase
 					label="Logga in med Facebook"
