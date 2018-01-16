@@ -71,11 +71,12 @@ export const favoriteGet = (currentUser) => {
 					firebase.database().ref(`/users/${currentUser.uid}/favorites`)
 					.on('value', snapshot => {
 						AsyncStorage.setItem('minahallplatser-favorites', JSON.stringify(snapshot.val()));
+						window.log('favoriteGet() OK');
 						dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: snapshot.val() });
 					}, (error) => {
 						const isLoggedIn = firebase.auth().currentUser;
 						if (isLoggedIn) {
-							window.log('favoriteGet error: ', error);
+							window.log('favoriteGet() Error: ', error);
 							dispatch({
 								type: FAVORITE_FETCH_FAIL,
 								payload: { loading: false }

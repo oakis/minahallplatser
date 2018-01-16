@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, ImageBackground, Picker, ScrollView } from 'react-native';
+import { View, AsyncStorage, ImageBackground, Picker, ScrollView, Switch } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
@@ -19,7 +19,8 @@ class Menu extends Component {
             user: firebase.auth().currentUser || { email: null },
             timeFormat: this.props.timeFormat,
             favoriteOrder: this.props.favoriteOrder,
-            feedbackVisible: false
+            feedbackVisible: false,
+            allowedGPS: this.props.allowedGPS
         };
     }
 
@@ -115,6 +116,23 @@ class Menu extends Component {
 
                     {this.renderFavoriteOrder()}
 
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Text style={[component.text.menu.label, { paddingTop: 0 }]}>
+                            {'Hållplatser nära dig'.toUpperCase()}
+                        </Text>
+                        <Switch 
+                            onValueChange={(value) => {
+                                this.setState({ allowedGPS: value });
+                                this.props.setSetting('allowedGPS', value);
+                            }} 
+                            value={this.state.allowedGPS}
+                            tintColor={colors.darkergrey}
+                            onTintColor={colors.primaryRGBA}
+                            thumbTintColor={colors.primary}
+                            style={{ paddingRight: metrics.padding.md }}
+                        />
+                    </View>
+
                     <View style={{ marginBottom: metrics.margin.md }} />
 
                     <ListHeading text="Åtgärder" />
@@ -156,8 +174,8 @@ class Menu extends Component {
 }
 
 const mapStateToProps = state => {
-    const { timeFormat, favoriteOrder } = state.settings;
-	return { favoriteOrder, timeFormat };
+    const { timeFormat, favoriteOrder, allowedGPS } = state.settings;
+	return { favoriteOrder, timeFormat, allowedGPS };
 };
 
 export default connect(mapStateToProps, { setSetting })(Menu);

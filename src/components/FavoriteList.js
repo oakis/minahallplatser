@@ -247,6 +247,26 @@ class FavoriteList extends PureComponent {
 		);
 	}
 
+	renderNearbyStops = () => {
+		if (!this.props.allowedGPS) {
+			return null;
+		}
+		return (
+			<View>
+				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
+				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0 && this.state.hasUsedGPS) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
+				<FlatList
+					data={this.props.stopsNearby}
+					renderItem={this.renderSearchItem}
+					keyExtractor={item => item.id}
+					ItemSeparatorComponent={ListItemSeparator}
+					scrollEnabled={false}
+					keyboardShouldPersistTaps='always'
+				/>
+			</View>
+		);
+	}
+
 	renderSectionList() {
 		if (this.props.favoritesLoading) {
 			return (
@@ -269,16 +289,7 @@ class FavoriteList extends PureComponent {
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
-				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
-				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0 && this.state.hasUsedGPS) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
-				<FlatList
-					data={this.props.stopsNearby}
-					renderItem={this.renderSearchItem}
-					keyExtractor={item => item.id}
-					ItemSeparatorComponent={ListItemSeparator}
-					scrollEnabled={false}
-					keyboardShouldPersistTaps='always'
-				/>
+				{this.renderNearbyStops()}
 				<ListHeading text={'Mina hållplatser'} icon={this.props.favorites.length > 0 ? 'edit' : null} iconSize={16} onPress={() => { track('Edit Stops Toggle', { On: !this.state.editing }); this.setState({ editing: !this.state.editing }); }} />
 				<FlatList
 					data={this.props.favorites}
@@ -330,7 +341,7 @@ class FavoriteList extends PureComponent {
 }
 
 const mapStateToProps = state => {
-	const { favoriteOrder } = state.settings;
+	const { favoriteOrder, allowedGPS } = state.settings;
 	const favorites = _.orderBy(state.fav.favorites, (o) => o[favoriteOrder] || 0, favoriteOrder === 'busStop' ? 'asc' : 'desc');
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
@@ -343,7 +354,7 @@ const mapStateToProps = state => {
 	const departureList = _.map(state.search.departureList, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Search List' };
 	});
-	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading };
+	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS };
 };
 
 export default connect(mapStateToProps,
