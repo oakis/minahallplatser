@@ -106,9 +106,13 @@ export const getNearbyStops = () => {
 		} catch (e) {
 			AsyncStorage.getItem('minahallplatser-settings')
 				.then((json) => {
-					const settings = JSON.parse(json);
+					const settings = JSON.parse(json) || {};
+					window.log(settings);
 					settings['allowedGPS'] = false;
 					AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings));
+				})
+				.catch((e) => {
+					window.log(e);
 				});
 			dispatch({ type: SEARCH_BY_GPS_FAIL })
 			dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });

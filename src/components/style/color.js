@@ -11,6 +11,8 @@ export const colors = {
     darkgrey: '#dedede',
     smoothBlack: '#282828',
 
+    facebook: '#3b5998',
+
     overlay: 'rgba(0, 0, 0, 0.4)',
 
     background: '#EAE9EF'

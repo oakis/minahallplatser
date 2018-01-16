@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { View, AppState } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser } from '../actions';
+import firebase from 'firebase';
+import facebook from 'react-native-fbsdk';
+import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser, loginFacebook } from '../actions';
 import { Button, Input, Message } from './common';
-import { track } from './helpers';
+import { track, globals } from './helpers';
+
+const { LoginManager, AccessToken } = facebook;
 
 class LoginForm extends Component {
 
@@ -30,6 +34,30 @@ class LoginForm extends Component {
 		this.props.loading = true;
 		const { email, password } = this.props;
 		this.props.loginUser({ email, password });
+	}
+
+	loginFacebook = () => {
+		LoginManager.logInWithReadPermissions(['email'])
+		.then((result) => {
+			if (result.isCancelled) {
+				window.log('Login cancelled:', result);
+			} else {
+				window.log('Login success:', result);
+				AccessToken.getCurrentAccessToken().then(
+					(data) => {
+						globals.isLoggingIn = true;
+						const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+						firebase.auth().signInWithCredential(credential)
+						.then(user => window.log(`Facebook account ${user.email} was successfully logged in.`))
+						.catch(error => window.log('Facebook account failed:', error));
+					}
+				);
+			}
+		},
+		(error) => {
+			window.log(`Login fail with error: ${error}`);
+		})
+		.catch((e) => window.log(e));
 	}
 
 	handleAppStateChange = (nextAppState) => {
@@ -84,6 +112,13 @@ class LoginForm extends Component {
 				/>
 
 				<Button
+					color="facebook"
+					uppercase
+					label="Logga in med Facebook"
+					onPress={this.loginFacebook}
+				/>
+
+				<Button
 					fontColor="primary"
 					label="Registrera"
 					onPress={async () => {
@@ -113,5 +148,5 @@ const mapStateToProps = ({ auth, errors }) => {
 };
 
 export default connect(mapStateToProps, {
-	emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser
+	emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser, loginFacebook
 })(LoginForm);

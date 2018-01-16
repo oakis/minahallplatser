@@ -14,7 +14,7 @@ export class Feedback extends PureComponent {
         this.state = {
             loading: false,
             name: '',
-            email: firebase.auth().currentUser.email || '',
+            email: (firebase.auth().currentUser) ? firebase.auth().currentUser.email : '',
             message: '',
             validated: true
         };

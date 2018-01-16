@@ -15,8 +15,8 @@ export const setSetting = (type, value) => {
     return (dispatch) => {
         AsyncStorage.getItem('minahallplatser-settings').then((dataJson) => {
             const settings = JSON.parse(dataJson) || {};
+            window.log(`setSetting: ${type} = ${value}`);
             settings[type] = value;
-            window.log('setSetting:', settings[type]);
             dispatch({ type: SET_SETTING, payload: settings });
             AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings))
             .then(() => window.log('Settings updated.'))

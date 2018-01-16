@@ -31,31 +31,30 @@ class FavoriteList extends PureComponent {
 	componentWillMount() {
 		globals.shouldExitApp = false;
 		Keyboard.dismiss();
-		firebase.auth().onAuthStateChanged((fbUser) => {
-			if (fbUser && fbUser.uid) {
-				AsyncStorage.getItem('minahallplatser-user').then((dataJson) => {
-					const user = JSON.parse(dataJson);
-					if (user && user.uid === fbUser.uid) {
-						this.props.favoriteGet(user);
+		const fbUser = firebase.auth().currentUser;
+		if (fbUser && fbUser.uid) {
+			AsyncStorage.getItem('minahallplatser-user').then((dataJson) => {
+				const user = JSON.parse(dataJson);
+				if (user && user.uid === fbUser.uid) {
+					this.props.favoriteGet(fbUser);
+				}
+				AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
+					const settings = JSON.parse(settingsJson);
+					if (fbUser.isAnonymous && (!Object.prototype.hasOwnProperty.call(settings, 'anonFirstAppStart'))) {
+						this.showRegistrationQuestion();
 					}
-					AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
-						const settings = JSON.parse(settingsJson);
-						if (fbUser.isAnonymous && (!Object.prototype.hasOwnProperty.call(settings, 'anonFirstAppStart'))) {
-							this.showRegistrationQuestion();
-						}
-						if (this.props.stopsNearby.length === 0 && !settings.anonFirstAppStart && settings.allowedGPS) {
-							this.props.getNearbyStops();
-							this.setState({ hasUsedGPS: true });
-						}
-					})
-					.catch(() => {
-						if (fbUser.isAnonymous) {
-							this.showRegistrationQuestion();
-						}
-					});
+					if (this.props.stopsNearby.length === 0 && !settings.anonFirstAppStart && settings.allowedGPS) {
+						this.props.getNearbyStops();
+						this.setState({ hasUsedGPS: true });
+					}
+				})
+				.catch(() => {
+					if (fbUser.isAnonymous) {
+						this.showRegistrationQuestion();
+					}
 				});
-			}
-		});
+			});
+		}
 		track('Page View', { Page: 'Dashboard' });
 	}
 
@@ -85,8 +84,8 @@ class FavoriteList extends PureComponent {
 	handleAppStateChange = (nextAppState) => {
 		if (nextAppState === 'active') {
 			AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
-				const settings = JSON.parse(settingsJson);
-				if (!settings.anonFirstAppStart && settings.allowedGPS) {
+				const settings = JSON.parse(settingsJson) || {};
+				if (Object.prototype.hasOwnProperty.call(settings, 'allowedGPS') && settings.allowedGPS) {
 					this.props.getNearbyStops();
 					this.setState({ hasUsedGPS: true });
 				}

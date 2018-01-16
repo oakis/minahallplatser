@@ -16,7 +16,7 @@ class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: firebase.auth().currentUser,
+            user: firebase.auth().currentUser || { email: null },
             timeFormat: this.props.timeFormat,
             favoriteOrder: this.props.favoriteOrder,
             feedbackVisible: false
@@ -25,6 +25,7 @@ class Menu extends Component {
 
     logout() {
         globals.didLogout = true;
+        globals.isLoggingIn = false;
         firebase.auth().signOut().then(() => {
             AsyncStorage.clear().then(() => {
                 store.dispatch({ type: RESET_ALL });
