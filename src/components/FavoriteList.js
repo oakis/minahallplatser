@@ -23,8 +23,7 @@ class FavoriteList extends PureComponent {
 		this.state = {
 			editing: false,
 			showHelp: false,
-			init: true,
-			hasUsedGPS: false
+			init: true
 		};
 	}
 
@@ -38,20 +37,23 @@ class FavoriteList extends PureComponent {
 				if (user && user.uid === fbUser.uid) {
 					this.props.favoriteGet(fbUser);
 				}
-				AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
+				AsyncStorage.getItem('minahallplatser-settings')
+				.then((settingsJson) => {
 					const settings = JSON.parse(settingsJson);
 					if (fbUser.isAnonymous && (!Object.prototype.hasOwnProperty.call(settings, 'anonFirstAppStart'))) {
 						this.showRegistrationQuestion();
 					}
-					if (this.props.stopsNearby.length === 0 && !settings.anonFirstAppStart && settings.allowedGPS) {
+					if (this.props.hasUsedGPS && this.props.allowedGPS) {
 						this.props.getNearbyStops();
-						this.setState({ hasUsedGPS: true });
 					}
 				})
 				.catch(() => {
+					window.log('Could not find settings, setting default settings.');
 					if (fbUser.isAnonymous) {
 						this.showRegistrationQuestion();
 					}
+					this.props.setSetting('allowedGPS', true);
+					this.props.setSetting('hasUsedGPS', false);
 				});
 			});
 		}
@@ -85,9 +87,8 @@ class FavoriteList extends PureComponent {
 		if (nextAppState === 'active') {
 			AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
 				const settings = JSON.parse(settingsJson) || {};
-				if (Object.prototype.hasOwnProperty.call(settings, 'allowedGPS') && settings.allowedGPS) {
+				if (settings.hasUsedGPS && settings.allowedGPS) {
 					this.props.getNearbyStops();
-					this.setState({ hasUsedGPS: true });
 				}
 			});
 			track('Page View', { Page: 'Dashboard', Type: 'Reopened app from background' });
@@ -132,9 +133,9 @@ class FavoriteList extends PureComponent {
 
 	refreshNearbyStops = () => {
 		track('Refresh NearbyStops');
+		this.props.setSetting('hasUsedGPS', true);
 		store.dispatch({ type: SEARCH_BY_GPS_FAIL });
 		this.props.getNearbyStops();
-		this.setState({ hasUsedGPS: true });
 	}
 
 	openPopup = () => {
@@ -341,7 +342,7 @@ class FavoriteList extends PureComponent {
 }
 
 const mapStateToProps = state => {
-	const { favoriteOrder, allowedGPS } = state.settings;
+	const { favoriteOrder, allowedGPS, hasUsedGPS } = state.settings;
 	const favorites = _.orderBy(state.fav.favorites, (o) => o[favoriteOrder] || 0, favoriteOrder === 'busStop' ? 'asc' : 'desc');
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
@@ -354,7 +355,7 @@ const mapStateToProps = state => {
 	const departureList = _.map(state.search.departureList, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Search List' };
 	});
-	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS };
+	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS, hasUsedGPS };
 };
 
 export default connect(mapStateToProps,
