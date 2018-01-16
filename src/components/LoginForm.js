@@ -12,6 +12,13 @@ const { LoginManager, AccessToken } = facebook;
 
 class LoginForm extends Component {
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			fbPopupVisible: false
+		};
+	}
+
 	componentDidMount() {
 		AppState.addEventListener('change', this.handleAppStateChange);
 	}
@@ -37,12 +44,16 @@ class LoginForm extends Component {
 	}
 
 	loginFacebook = () => {
+		track('Login Facebook Start');
+		this.setState({ fbPopupVisible: true });
 		LoginManager.logInWithReadPermissions(['email'])
 		.then((result) => {
 			if (result.isCancelled) {
 				window.log('Login cancelled:', result);
+				track('Login Facebook Cancel');
 			} else {
 				window.log('Login success:', result);
+				track('Login Facebook Success');
 				AccessToken.getCurrentAccessToken().then(
 					(data) => {
 						globals.isLoggingIn = true;
@@ -52,16 +63,18 @@ class LoginForm extends Component {
 						.catch(error => window.log('Facebook account failed:', error));
 					}
 				);
+				this.setState({ fbPopupVisible: false });
 			}
 		},
 		(error) => {
 			window.log(`Login fail with error: ${error}`);
 		})
+		.then(() => setTimeout(() => this.setState({ fbPopupVisible: false }), 1500))
 		.catch((e) => window.log(e));
 	}
 
 	handleAppStateChange = (nextAppState) => {
-		if (nextAppState === 'active') {
+		if (nextAppState === 'active' && !this.state.fbPopupVisible) {
 			track('Page View', { Page: 'Login', Type: 'Reopened app from background' });
 		}
 	}
