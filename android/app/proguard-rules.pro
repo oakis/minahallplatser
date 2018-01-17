@@ -66,3 +66,6 @@
 -dontwarn okio.**
 
 -dontwarn com.facebook.fbui.textlayoutbuilder.proxy.StaticLayoutProxy
+
+-keep class com.google.android.gms.** { *; }
+-dontwarn com.google.android.gms.**
