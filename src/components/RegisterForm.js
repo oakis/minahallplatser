@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, AppState } from 'react-native';
 import { connect } from 'react-redux';
+import firebase from 'firebase';
+import facebook from 'react-native-fbsdk';
 import {
 	emailChanged,
 	passwordChanged,
 	passwordSecondChanged,
 	registerUser,
 	resetRoute,
-	clearErrors
+	clearErrors,
+	registerFacebook
 } from '../actions';
 import { Input, Button, Message } from './common';
+import { track } from './helpers';
+
+const { LoginManager, AccessToken } = facebook;
 
 class RegisterForm extends Component {
 
@@ -17,9 +23,14 @@ class RegisterForm extends Component {
 		this.props.resetRoute();
 	}
 
+	componentDidMount() {
+		AppState.addEventListener('change', this.handleAppStateChange);
+	}
+
 	componentWillUnmount() {
 		this.props.resetRoute();
 		this.props.clearErrors();
+		AppState.removeEventListener('change', this.handleAppStateChange);
 	}
 
 	onEmailChange = (text) => {
@@ -38,6 +49,39 @@ class RegisterForm extends Component {
 		this.props.loading = true;
 		const { email, password, passwordSecond } = this.props;
 		this.props.registerUser({ email, password, passwordSecond });
+	}
+
+	registerFacebook = () => {
+		track('Register Facebook Start');
+		this.setState({ fbPopupVisible: true });
+		LoginManager.logInWithReadPermissions(['email'])
+		.then((result) => {
+			if (result.isCancelled) {
+				window.log('Login cancelled:', result);
+				track('Register Facebook Cancel');
+			} else {
+				window.log('Login success:', result);
+				track('Register Facebook Success');
+				AccessToken.getCurrentAccessToken().then(
+					(data) => {
+						const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+						this.props.registerFacebook(credential);
+					}
+				);
+				// this.setState({ fbPopupVisible: false });
+			}
+		},
+		(error) => {
+			window.log(`Register fail with error: ${error}`);
+		})
+		// .then(() => setTimeout(() => this.setState({ fbPopupVisible: false }), 1500))
+		.catch((e) => window.log(e));
+	}
+
+	handleAppStateChange = (nextAppState) => {
+		if (nextAppState === 'active') {
+			track('Page View', { Page: 'Register', Type: 'Reopened app from background' });
+		}
 	}
 
 	render() {
@@ -89,6 +133,13 @@ class RegisterForm extends Component {
 					label="Registrera"
 					onPress={this.onButtonPress}
 				/>
+				<Button
+					loading={this.props.loadingFacebook}
+					uppercase
+					color="facebook"
+					label="Registrera med facebook"
+					onPress={this.registerFacebook}
+				/>
 			</View>
 		);
 	}
@@ -96,11 +147,11 @@ class RegisterForm extends Component {
 }
 
 const MapStateToProps = (state) => {
-	const { loading, email, password, passwordSecond } = state.auth;
+	const { loading, email, password, passwordSecond, loadingFacebook } = state.auth;
 	const { error } = state.errors;
-	return { error, loading, email, password, passwordSecond };
+	return { error, loading, email, password, passwordSecond, loadingFacebook };
 };
 
 export default connect(MapStateToProps,
-	{ emailChanged, passwordChanged, passwordSecondChanged, registerUser, resetRoute, clearErrors }
+	{ emailChanged, passwordChanged, passwordSecondChanged, registerUser, resetRoute, clearErrors, registerFacebook }
 )(RegisterForm);

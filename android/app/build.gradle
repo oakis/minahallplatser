@@ -162,6 +162,16 @@ android {
     }
 }
 
+allprojects {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+    }
+}
+
 buildscript {
   repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -178,6 +188,8 @@ repositories {
 }
 
 dependencies {
+    compile project(':react-native-fbsdk')
+    compile project(':react-native-device-info')
     compile project(':react-native-mixpanel')
     compile project(':react-native-fabric')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {

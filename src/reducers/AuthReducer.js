@@ -9,6 +9,7 @@ import {
 	RESET_ALL,
 	REGISTER_USER,
 	REGISTER_USER_FAIL,
+	REGISTER_FACEBOOK,
 	CHANGE_ROUTE,
 	RESET_PASSWORD
 } from '../actions/types';
@@ -19,7 +20,8 @@ const INIT_STATE = {
 	passwordSecond: '',
 	user: {},
 	loading: false,
-	loadingAnon: false
+	loadingAnon: false,
+	loadingFacebook: false
 };
 
 export default (state = INIT_STATE, action) => {
@@ -38,7 +40,8 @@ export default (state = INIT_STATE, action) => {
 				passwordSecond: '',
 				loading: false,
 				loadingAnon: false,
-				user: action.payload
+				user: action.payload,
+				loadingFacebook: false
 			};
 		case LOGIN_USER_FAIL:
 			return { ...state, password: '', loading: false, loadingAnon: false };
@@ -47,8 +50,10 @@ export default (state = INIT_STATE, action) => {
 		case REGISTER_USER:
 		case LOGIN_USER:
 			return { ...state, loading: true };
+		case REGISTER_FACEBOOK:
+			return { ...state, loadingFacebook: true };
 		case REGISTER_USER_FAIL:
-			return { ...state, loading: false };
+			return { ...state, loading: false, loadingFacebook: false };
 		case RESET_ALL:
 		case CHANGE_ROUTE:
 		case RESET_PASSWORD:

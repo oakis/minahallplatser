@@ -12,27 +12,34 @@ class SplashScreen extends Component {
 
 	componentDidMount() {
 		// Try to automaticly login
+		globals.isLoggingIn = true;
 		firebase.auth().onAuthStateChanged((fbUser) => {
 			AsyncStorage.getItem('minahallplatser-user')
 			.then((dataJson) => {
 				const user = JSON.parse(dataJson);
-				if (fbUser && user && user.uid === fbUser.uid) {
+				window.log('Localstorage user:', user, 'Firebase user:', fbUser);
+				if (fbUser && fbUser.uid && globals.isLoggingIn) {
 					window.log('User already exists, continue to autologin.');
+					globals.isLoggingIn = false;
 					this.props.autoLogin(fbUser);
-				} else if (globals.didLogout) {
+				} else if (globals.didLogout && !globals.isLoggingIn) {
 					Actions.login();
 					globals.didLogout = false;
-				} else if (!globals.isCreatingAnonUser) {
+					globals.isLoggingIn = true;
+				} else if (globals.isLoggingIn) {
 					window.log('New user, creating anonymous account.');
 					this.props.loginAnonUser();
-					globals.isCreatingAnonUser = true;
+					globals.isLoggingIn = false;
 				}
 			})
 			.catch((err) => {
-				window.log('New user, creating anonymous account.', fbUser, err);
-				this.props.loginAnonUser();
+				window.log('Something went wrong:', err);
+				this.props.login();
 			});
-		}, (err) => window.log(err));
+		}, (err) => {
+			window.log('Something went wrong:', err);
+			this.props.login();
+		});
 	}
 
 	render() {

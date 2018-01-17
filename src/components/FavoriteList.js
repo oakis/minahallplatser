@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView } from 'react-native';
+import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, AppState } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import firebase from 'firebase';
@@ -23,40 +23,43 @@ class FavoriteList extends PureComponent {
 		this.state = {
 			editing: false,
 			showHelp: false,
-			init: true,
-			hasUsedGPS: false
+			init: true
 		};
 	}
 
 	componentWillMount() {
 		globals.shouldExitApp = false;
 		Keyboard.dismiss();
-		firebase.auth().onAuthStateChanged((fbUser) => {
-			if (fbUser && fbUser.uid) {
-				AsyncStorage.getItem('minahallplatser-user').then((dataJson) => {
-					const user = JSON.parse(dataJson);
-					if (user && user.uid === fbUser.uid) {
-						this.props.favoriteGet(user);
+		const fbUser = firebase.auth().currentUser;
+		if (fbUser && fbUser.uid) {
+			AsyncStorage.getItem('minahallplatser-user').then((dataJson) => {
+				const user = JSON.parse(dataJson);
+				if (user && user.uid === fbUser.uid) {
+					this.props.favoriteGet(fbUser);
+				}
+				AsyncStorage.getItem('minahallplatser-settings')
+				.then((settings) => {
+					window.log('Got settings:', JSON.parse(settings));
+					if (fbUser.isAnonymous && this.props.anonFirstAppStart) {
+						this.showRegistrationQuestion();
 					}
-					AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
-						const settings = JSON.parse(settingsJson);
-						if (fbUser.isAnonymous && (!Object.prototype.hasOwnProperty.call(settings, 'anonFirstAppStart'))) {
-							this.showRegistrationQuestion();
-						}
-						if (this.props.stopsNearby.length === 0 && !settings.anonFirstAppStart && settings.allowedGPS) {
-							this.props.getNearbyStops();
-							this.setState({ hasUsedGPS: true });
-						}
-					})
-					.catch(() => {
-						if (fbUser.isAnonymous) {
-							this.showRegistrationQuestion();
-						}
-					});
+					if (this.props.hasUsedGPS && this.props.allowedGPS) {
+						this.props.getNearbyStops();
+					}
+				})
+				.catch(() => {
+					window.log('Could not find settings, setting default settings.');
+					if (fbUser.isAnonymous) {
+						this.showRegistrationQuestion();
+					}
 				});
-			}
-		});
+			});
+		}
 		track('Page View', { Page: 'Dashboard' });
+	}
+
+	componentDidMount() {
+		AppState.addEventListener('change', this.handleAppStateChange);
 	}
 
 	componentWillReceiveProps() {
@@ -69,12 +72,25 @@ class FavoriteList extends PureComponent {
 	componentWillUnmount() {
 		fetch.abort('searchStops');
 		this.props.clearErrors();
+		AppState.removeEventListener('change', this.handleAppStateChange);
 	}
 	
 	onInputChange = (busStop) => {
 		fetch.abort('searchStops');
 		this.props.searchChanged(busStop);
 		this.props.searchStops({ busStop });
+	}
+
+	handleAppStateChange = (nextAppState) => {
+		if (nextAppState === 'active') {
+			AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
+				const settings = JSON.parse(settingsJson) || {};
+				if (settings.hasUsedGPS && settings.allowedGPS) {
+					this.props.getNearbyStops();
+				}
+			});
+			track('Page View', { Page: 'Dashboard', Type: 'Reopened app from background' });
+		}
 	}
 	
 	showRegistrationQuestion = () => {
@@ -104,7 +120,8 @@ class FavoriteList extends PureComponent {
 						Actions.register();
 					}
 				}
-			]
+			],
+			{ cancelable: false }
 		);
 	}
 
@@ -115,12 +132,13 @@ class FavoriteList extends PureComponent {
 
 	refreshNearbyStops = () => {
 		track('Refresh NearbyStops');
+		this.props.setSetting('hasUsedGPS', true);
 		store.dispatch({ type: SEARCH_BY_GPS_FAIL });
 		this.props.getNearbyStops();
-		this.setState({ hasUsedGPS: true });
 	}
 
 	openPopup = () => {
+		track('Show Help', { Page: 'Dashboard' });
 		this.setState({
 			showHelp: true
 		});
@@ -192,6 +210,7 @@ class FavoriteList extends PureComponent {
 							{
 								text: 'Ja',
 								onPress: () => {
+									track('Favorite Stop Remove', { Stop: item.busStop, Parent: 'Favorite List' });
 									this.props.favoriteDelete(item.id);
 								}
 							}
@@ -215,11 +234,36 @@ class FavoriteList extends PureComponent {
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
+					if (item.icon === 'ios-star') {
+						track('Favorite Stop Remove', { Stop: item.name, Parent: item.parent });
+					} else {
+						track('Favorite Stop Add', { Stop: item.name, Parent: item.parent });
+					}
 					this.props.favoriteCreate({ busStop: item.name, id: item.id });
 				}}
 				iconVisible
 				iconColor={colors.warning}
 			/>
+		);
+	}
+
+	renderNearbyStops = () => {
+		if (!this.props.allowedGPS) {
+			return null;
+		}
+		return (
+			<View>
+				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
+				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0 && this.state.hasUsedGPS) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
+				<FlatList
+					data={this.props.stopsNearby}
+					renderItem={this.renderSearchItem}
+					keyExtractor={item => item.id}
+					ItemSeparatorComponent={ListItemSeparator}
+					scrollEnabled={false}
+					keyboardShouldPersistTaps='always'
+				/>
+			</View>
 		);
 	}
 
@@ -245,16 +289,7 @@ class FavoriteList extends PureComponent {
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
-				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
-				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0 && this.state.hasUsedGPS) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
-				<FlatList
-					data={this.props.stopsNearby}
-					renderItem={this.renderSearchItem}
-					keyExtractor={item => item.id}
-					ItemSeparatorComponent={ListItemSeparator}
-					scrollEnabled={false}
-					keyboardShouldPersistTaps='always'
-				/>
+				{this.renderNearbyStops()}
 				<ListHeading text={'Mina hållplatser'} icon={this.props.favorites.length > 0 ? 'edit' : null} iconSize={16} onPress={() => { track('Edit Stops Toggle', { On: !this.state.editing }); this.setState({ editing: !this.state.editing }); }} />
 				<FlatList
 					data={this.props.favorites}
@@ -306,20 +341,20 @@ class FavoriteList extends PureComponent {
 }
 
 const mapStateToProps = state => {
-	const { favoriteOrder } = state.settings;
+	const { favoriteOrder, allowedGPS, hasUsedGPS, anonFirstAppStart } = state.settings;
 	const favorites = _.orderBy(state.fav.favorites, (o) => o[favoriteOrder] || 0, favoriteOrder === 'busStop' ? 'asc' : 'desc');
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
 	const favoriteIds = _.map(favorites, 'id');
 	const { busStop, stops, gpsLoading } = state.search;
 	const stopsNearby = _.map(stops, (item) => {
-		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline' };
+		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Stops Nearby' };
 	});
 	const searchLoading = state.search.loading;
 	const departureList = _.map(state.search.departureList, (item) => {
-		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline' };
+		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Search List' };
 	});
-	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading };
+	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS, hasUsedGPS, anonFirstAppStart };
 };
 
 export default connect(mapStateToProps,

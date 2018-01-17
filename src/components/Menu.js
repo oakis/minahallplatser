@@ -1,40 +1,49 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, ImageBackground, Picker } from 'react-native';
+import { View, AsyncStorage, ImageBackground, Picker, ScrollView, Switch } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 import { Text, ListItem, ListHeading } from './common';
 import { RESET_ALL } from '../actions/types';
-import { getSettings, setSetting } from '../actions';
+import { setSetting } from '../actions';
 import { store } from '../App';
 import { colors, metrics, component } from './style';
 import { track, globals } from './helpers';
+import { Feedback } from './modals';
 
 class Menu extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            user: firebase.auth().currentUser,
+            user: firebase.auth().currentUser || { email: null },
             timeFormat: this.props.timeFormat,
-            favoriteOrder: this.props.favoriteOrder
+            favoriteOrder: this.props.favoriteOrder,
+            feedbackVisible: false,
+            allowedGPS: this.props.allowedGPS
         };
-    }
-
-    componentWillMount() {
-        this.props.getSettings();
     }
 
     logout() {
         globals.didLogout = true;
+        globals.isLoggingIn = false;
         firebase.auth().signOut().then(() => {
-            AsyncStorage.clear();
-            store.dispatch({ type: RESET_ALL });
-            track('Logout', { Success: true });
+            AsyncStorage.clear().then(() => {
+                store.dispatch({ type: RESET_ALL });
+                track('Logout', { Success: true });
+            });
         }, (error) => {
             track('Logout', { Success: false });
             window.log('Sign Out Error', error);
         });
+    }
+
+    openFeedback() {
+        this.setState({ feedbackVisible: true });
+    }
+
+    closeFeedback() {
+        this.setState({ feedbackVisible: false });
     }
 
     renderFavoriteOrder = () => {
@@ -52,7 +61,7 @@ class Menu extends Component {
                         this.setState({ favoriteOrder: itemValue });
                         this.props.setSetting('favoriteOrder', itemValue);
                     }}
-                    style={{ marginLeft: metrics.margin.md + 2, marginTop: -12, marginBottom: -12, marginRight: -5 }}
+                    style={component.picker}
                 >
                     <Picker.Item label="Ingen sortering" value="nothing" />
                     <Picker.Item label="Mina mest använda" value="opened" />
@@ -65,8 +74,12 @@ class Menu extends Component {
 	render() {
 		return (
 			<View style={{ flexDirection: 'column', backgroundColor: colors.background, flex: 1 }}>
-                <View>
-                    <ImageBackground source={{ uri: 'https://www.w3schools.com/css/img_fjords.jpg' }} style={{ width: 225, height: 150 }}>
+                <Feedback
+                    visible={this.state.feedbackVisible}
+                    close={() => this.closeFeedback()}
+                />
+                <ScrollView>
+                    <ImageBackground source={{ uri: 'https://www.w3schools.com/css/img_fjords.jpg' }} style={{ width: 225, height: 120 }}>
                         <View
                             style={{
                                 backgroundColor: 'rgba(255,255,255,0.7)',
@@ -75,7 +88,7 @@ class Menu extends Component {
                         />
                     </ImageBackground>
 
-                    <ListHeading text="Ditt konto" />
+                    <ListHeading text="Konto" />
 
                     <Text style={component.text.menu.label}>
                         {'e-mail'.toUpperCase()}
@@ -84,7 +97,7 @@ class Menu extends Component {
                         {this.state.user && this.state.user.isAnonymous ? 'Anonym' : this.state.user.email}
                     </Text>
 
-                    <ListHeading text="Dina inställningar" />
+                    <ListHeading text="Inställningar" />
 
                     <Text style={component.text.menu.label}>
                         {'tidsformat'.toUpperCase()}
@@ -95,7 +108,7 @@ class Menu extends Component {
                             this.setState({ timeFormat: itemValue });
                             this.props.setSetting('timeFormat', itemValue);
                         }}
-                        style={{ marginLeft: metrics.margin.md + 2, marginTop: -12, marginBottom: -12, marginRight: -5 }}
+                        style={component.picker}
                     >
                         <Picker.Item label="Minuter" value="minutes" />
                         <Picker.Item label="Klockslag" value="clock" />
@@ -103,7 +116,37 @@ class Menu extends Component {
 
                     {this.renderFavoriteOrder()}
 
-                    <ListHeading />
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Text style={[component.text.menu.label, { paddingTop: 0 }]}>
+                            {'Hållplatser nära dig'.toUpperCase()}
+                        </Text>
+                        <Switch 
+                            onValueChange={(value) => {
+                                this.setState({ allowedGPS: value });
+                                this.props.setSetting('allowedGPS', value);
+                            }} 
+                            value={this.state.allowedGPS}
+                            tintColor={colors.darkergrey}
+                            onTintColor={colors.primaryRGBA}
+                            thumbTintColor={colors.primary}
+                            style={{ paddingRight: metrics.padding.md }}
+                        />
+                    </View>
+
+                    <View style={{ marginBottom: metrics.margin.md }} />
+
+                    <ListHeading text="Åtgärder" />
+
+                    <ListItem
+                        text="Lämna feedback"
+                        icon="ios-mail-outline"
+                        iconVisible
+                        pressItem={() => {
+                            track('Feedback Open');
+                            this.openFeedback();
+                        }}
+                        style={{ marginTop: metrics.margin.md }} // Första ListItem ska ha en marginTop för att få ett jämnt mellanrum mellan ListItem's
+                    />
 
                     {this.state.user && this.state.user.isAnonymous ?
                     <ListItem
@@ -123,7 +166,7 @@ class Menu extends Component {
                             this.logout();
                         }}
                     />}
-                </View>
+                </ScrollView>
             </View>
 		);
 	}
@@ -131,8 +174,8 @@ class Menu extends Component {
 }
 
 const mapStateToProps = state => {
-    const { timeFormat, favoriteOrder } = state.settings;
-	return { favoriteOrder, timeFormat };
+    const { timeFormat, favoriteOrder, allowedGPS } = state.settings;
+	return { favoriteOrder, timeFormat, allowedGPS };
 };
 
-export default connect(mapStateToProps, { getSettings, setSetting })(Menu);
+export default connect(mapStateToProps, { setSetting })(Menu);

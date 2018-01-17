@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableWithoutFeedback, View } from 'react-native';
+import { TouchableWithoutFeedback, View, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Scene, Router, Actions, Stack, Drawer } from 'react-native-router-flux';
@@ -79,76 +79,82 @@ export const renderHelpButton = (self) => {
 };
 
 const RouterComponent = () => (
-	<Router
-		backAndroidHandler={onBackAndroid}
-		headerTitleStyle={{
-			color: colors.alternative,
-			alignSelf: 'center',
-			fontSize: 14,
-			fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
-		}}
-		navigationBarStyle={{ backgroundColor: colors.primary, paddingHorizontal: 10 }}
-		rightButtonTextStyle={{ color: colors.alternative }}
-		leftButtonTextStyle={{ color: colors.alternative }}
-		renderBackButton={renderBackButton}
-	>
-		<Stack key="root" hideNavBar>
-			<Scene key="splash" component={SplashScreen} hideNavBar />
-			<Drawer
-				key="dashboard"
-				contentComponent={Menu}
-				drawerIcon={<Icon name="ios-menu" size={iconSize} style={{ color: colors.alternative }} />}
-				drawerWidth={225}
-			>
-				<Scene
-					key="favlist"
-					component={FavoriteList}
-					title="Mina Hållplatser"
-					right={renderHelpButton}
-				/>
-				<Scene
-					key="departures"
-					component={ShowDepartures}
-					hideDrawerButton
-					right={renderHelpButton}
-					left={renderBackButton}
-				/>
-				<Scene key="auth">
+	<View style={{ flex: 1 }}>
+		<StatusBar
+			backgroundColor={colors.primary}
+			barStyle="light-content"
+		/>
+		<Router
+			backAndroidHandler={onBackAndroid}
+			headerTitleStyle={{
+				color: colors.alternative,
+				alignSelf: 'center',
+				fontSize: 14,
+				fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
+			}}
+			navigationBarStyle={{ backgroundColor: colors.primary, paddingHorizontal: 10 }}
+			rightButtonTextStyle={{ color: colors.alternative }}
+			leftButtonTextStyle={{ color: colors.alternative }}
+			renderBackButton={renderBackButton}
+		>
+			<Stack key="root" hideNavBar>
+				<Scene key="splash" component={SplashScreen} hideNavBar />
+				<Drawer
+					key="dashboard"
+					contentComponent={Menu}
+					drawerIcon={<Icon name="ios-menu" size={iconSize} style={{ color: colors.alternative }} />}
+					drawerWidth={225}
+				>
 					<Scene
-						key="login"
-						component={LoginForm}
-						hideNavBar
-						hideDrawerButton
-						drawerLockMode={'locked-closed'}
-						title="Logga in"
-						left={renderBackButton}
-						onEnter={() => {
-							track('Page View', { Page: 'Login' });
-							globals.shouldExitApp = false;
-						}}
+						key="favlist"
+						component={FavoriteList}
+						title="Mina Hållplatser"
+						right={renderHelpButton}
 					/>
 					<Scene
-						key="register"
-						component={RegisterForm}
+						key="departures"
+						component={ShowDepartures}
 						hideDrawerButton
-						drawerLockMode={'locked-closed'}
-						title="Registrera"
+						right={renderHelpButton}
 						left={renderBackButton}
-						onEnter={() => track('Page View', { Page: 'Register' })}
 					/>
-					<Scene
-						key="resetpw"
-						component={ResetPassword}
-						hideDrawerButton
-						drawerLockMode={'locked-closed'}
-						title="Glömt lösenord"
-						left={renderBackButton}
-						onEnter={() => track('Page View', { Page: 'Reset Password' })}
-					/>
-				</Scene>
-			</Drawer>
-		</Stack>
-	</Router>
+					<Scene key="auth">
+						<Scene
+							key="login"
+							component={LoginForm}
+							hideNavBar
+							hideDrawerButton
+							drawerLockMode={'locked-closed'}
+							title="Logga in"
+							left={renderBackButton}
+							onEnter={() => {
+								track('Page View', { Page: 'Login' });
+								globals.shouldExitApp = false;
+							}}
+						/>
+						<Scene
+							key="register"
+							component={RegisterForm}
+							hideDrawerButton
+							drawerLockMode={'locked-closed'}
+							title="Registrera"
+							left={renderBackButton}
+							onEnter={() => track('Page View', { Page: 'Register' })}
+						/>
+						<Scene
+							key="resetpw"
+							component={ResetPassword}
+							hideDrawerButton
+							drawerLockMode={'locked-closed'}
+							title="Glömt lösenord"
+							left={renderBackButton}
+							onEnter={() => track('Page View', { Page: 'Reset Password' })}
+						/>
+					</Scene>
+				</Drawer>
+			</Stack>
+		</Router>
+	</View>
 );
 
 export default RouterComponent;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, TouchableWithoutFeedback, Keyboard, AppState } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, resetUserPassword, resetRoute, clearErrors } from '../actions';
 import { Input, Button, Message } from './common';
+import { track } from './helpers';
 
 class ResetPassword extends Component {
 
@@ -10,9 +11,14 @@ class ResetPassword extends Component {
 		this.props.resetRoute();
 	}
 
+	componentDidMount() {
+		AppState.addEventListener('change', this.handleAppStateChange);
+	}
+
 	componentWillUnmount() {
 		this.props.resetRoute();
 		this.props.clearErrors();
+		AppState.removeEventListener('change', this.handleAppStateChange);
 	}
 
 	onEmailChange = (text) => {
@@ -23,6 +29,12 @@ class ResetPassword extends Component {
 		this.props.loading = true;
 		const { email } = this.props;
 		this.props.resetUserPassword(email);
+	}
+
+	handleAppStateChange = (nextAppState) => {
+		if (nextAppState === 'active') {
+			track('Page View', { Page: 'Reset Password', Type: 'Reopened app from background' });
+		}
 	}
 
 	render() {

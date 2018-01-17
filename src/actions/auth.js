@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import moment from 'moment';
 import _ from 'lodash';
+import Mixpanel from 'react-native-mixpanel';
 import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
@@ -15,10 +16,12 @@ import {
 	REGISTER_USER_FAIL,
 	CHANGE_ROUTE,
 	RESET_PASSWORD,
-	ERROR
+	ERROR,
+	REGISTER_FACEBOOK
 } from './types';
-import { showMessage, getToken, track } from '../components/helpers';
+import { showMessage, getToken, track, globals } from '../components/helpers';
 import { store } from '../App';
+import { getSettings } from './';
 
 export const resetUserPassword = (email) => {
 	return (dispatch) => {
@@ -106,13 +109,48 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 	};
 };
 
+export const registerFacebook = (credential) => {
+	return (dispatch) => {
+		dispatch({ type: REGISTER_FACEBOOK });
+		if (firebase.auth().currentUser && firebase.auth().currentUser.isAnonymous) {
+			track('Register', { type: 'From Anonymous' });
+			firebase.auth().currentUser.linkWithCredential(credential).then(() => {
+				globals.isLoggingIn = true;
+				firebase.auth().signInWithCredential(credential)
+					.then(user => {
+						const { favorites, lines } = store.getState().fav;
+						const fbUser = firebase.database().ref(`/users/${user.uid}`);
+						_.forEach(favorites, (favorite) => {
+							fbUser.child('favorites').push(favorite);
+						});
+						_.forEach(lines, (line) => {
+							fbUser.child('lines').push(line);
+						});
+						fbUser.update({ lastLogin: moment().format(), isAnonymous: user.isAnonymous });
+						loginUserSuccess(dispatch, user);
+					})
+					.catch((error) => loginUserFail(dispatch, error));
+			}, (error) => {
+				dispatch({ type: REGISTER_USER_FAIL });
+				loginUserFail(dispatch, error);
+			});
+		} else {
+			track('Register', { type: 'New Account' });
+			firebase.auth().signInWithCredential(credential)
+			.then(user => window.log(`Facebook account ${user.email} was successfully logged in.`))
+			.catch(error => window.log('Facebook account failed:', error));
+		}
+	};
+};
+
 export const loginUser = ({ email, password }) => {
 	return (dispatch) => {
 		dispatch({ type: LOGIN_USER });
 		if (email && password) {
+			globals.isLoggingIn = true;
 			firebase.auth().signInWithEmailAndPassword(email, password)
-			.then(user => loginUserSuccess(dispatch, user))
-			.catch(error => loginUserFail(dispatch, error));
+			.then(user => window.log(`Email account ${user.email} was successfully logged in.`))
+			.catch(error => window.log('Email account failed:', error));
 		} else if (email && !password) {
 			dispatch({ type: LOGIN_USER_FAIL });
 			dispatch({ type: ERROR, payload: 'Du måste fylla i ditt lösenord.' });
@@ -147,11 +185,18 @@ export const autoLogin = (user) => {
 
 const loginUserSuccess = (dispatch, user) => {
 	getToken().finally(() => {
+		Mixpanel.identify(user.uid);
+		if (!user.isAnonymous) {
+			Mixpanel.set({ $email: user.email });
+		}
 		const fbUser = firebase.database().ref(`/users/${user.uid}`);
 		fbUser.update({ lastLogin: moment().format(), isAnonymous: user.isAnonymous });
 		AsyncStorage.setItem('minahallplatser-user', JSON.stringify(user), () => {
 			dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
-			Actions.dashboard({ type: 'reset' });
+			getSettings(dispatch).then(() => {
+				globals.isLoggingIn = false;
+				Actions.dashboard({ type: 'reset' });
+			});
 		});
 	});
 };
@@ -170,6 +215,7 @@ const loginUserFail = (dispatch, error) => {
 };
 
 const getFirebaseError = (error) => {
+	window.log('Firebase Error:', error);
 	switch (error.code) {
 		case 'auth/network-request-failed':
 			return 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
@@ -185,6 +231,8 @@ const getFirebaseError = (error) => {
 			return 'Det finns ingen användare registrerad med denna email.';
 		case 'auth/wrong-password':
 			return 'Du fyllde i fel lösenord, var god försök igen.';
+		case 'auth/credential-already-in-use':
+			return `${error.email} är redan registrerad med en annan typ av konto.`;
 		default:
 			return 'Något gick snett, kontakta gärna oakismen@gmail.com och berätta vad du gjorde när detta hände. Tack på förhand! :)';
 	}

@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
-const admin = require("firebase-admin");
+const admin = require('firebase-admin');
+
 admin.initializeApp(functions.config().firebase);
 
 exports.getUsersCount = functions.https.onRequest((request, response) => {
@@ -67,22 +68,30 @@ exports.addStopsCount = functions.https.onRequest((request, response) => {
 });
 
 exports.incrementStopsOpen = functions.https.onRequest((request, response) => {
-  const ref = admin.database().ref('/users/' + request.query.user + '/favorites/')
-    ref.orderByChild('id').equalTo(request.query.stopId).once('value', snapshot => {
-      snapshot.forEach(data => {
-        const opened = data.child('opened');
-        if (opened.exists()) {
-          const updated = data.val();
-          updated.opened += 1;
-          ref.child(data.key).update(updated);
-        } else {
-          const updated = data.val();
-          updated.opened = 1;
-          ref.child(data.key).update(updated);
-        }
-      });
-      response.json({
-        message: 'Updated'
-      });
+  const ref = admin.database().ref('/users/' + request.query.user + '/favorites/');
+  ref.orderByChild('id').equalTo(request.query.stopId).once('value', snapshot => {
+    snapshot.forEach(data => {
+      const opened = data.child('opened');
+      if (opened.exists()) {
+        const updated = data.val();
+        updated.opened += 1;
+        ref.child(data.key).update(updated);
+      } else {
+        const updated = data.val();
+        updated.opened = 1;
+        ref.child(data.key).update(updated);
+      }
     });
+    response.json({
+      message: 'Updated'
+    });
+  });
+});
+
+exports.sendFeedback = functions.https.onRequest((request, response) => {
+  const { name, email, message, device, os, appVersion } = request.query;
+  const ref = admin.database().ref('/feedback');
+  ref.push({ name, email, message, device, os, appVersion })
+  .then(() => response.send())
+  .catch(() => response.statusCode(500).send());
 });

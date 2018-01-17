@@ -1,15 +1,33 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, AppState } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser } from '../actions';
+import firebase from 'firebase';
+import facebook from 'react-native-fbsdk';
+import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser, loginFacebook } from '../actions';
 import { Button, Input, Message } from './common';
+import { track, globals } from './helpers';
+
+const { LoginManager, AccessToken } = facebook;
 
 class LoginForm extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			fbPopupVisible: false,
+			fbLoading: false
+		};
+	}
+
+	componentDidMount() {
+		AppState.addEventListener('change', this.handleAppStateChange);
+	}
 
 	componentWillUnmount() {
 		this.props.resetRoute();
 		this.props.clearErrors();
+		AppState.removeEventListener('change', this.handleAppStateChange);
 	}
 
 	onEmailChange = (text) => {
@@ -24,6 +42,42 @@ class LoginForm extends Component {
 		this.props.loading = true;
 		const { email, password } = this.props;
 		this.props.loginUser({ email, password });
+	}
+
+	loginFacebook = () => {
+		track('Login Facebook Start');
+		this.setState({ fbPopupVisible: true });
+		LoginManager.logInWithReadPermissions(['email'])
+		.then((result) => {
+			if (result.isCancelled) {
+				window.log('Login cancelled:', result);
+				track('Login Facebook Cancel');
+			} else {
+				this.setState({ fbLoading: true });
+				window.log('Login success:', result);
+				track('Login Facebook Success');
+				AccessToken.getCurrentAccessToken().then(
+					(data) => {
+						globals.isLoggingIn = true;
+						const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+						firebase.auth().signInWithCredential(credential)
+						.then(user => window.log(`Facebook account ${user.email} was successfully logged in.`))
+						.catch(error => window.log('Facebook account failed:', error));
+					}
+				);
+				this.setState({ fbPopupVisible: false });
+			}
+		},
+		(error) => {
+			window.log(`Login fail with error: ${error}`);
+		})
+		.catch((e) => window.log(e));
+	}
+
+	handleAppStateChange = (nextAppState) => {
+		if (nextAppState === 'active' && !this.state.fbPopupVisible) {
+			track('Page View', { Page: 'Login', Type: 'Reopened app from background' });
+		}
 	}
 
 	render() {
@@ -72,6 +126,14 @@ class LoginForm extends Component {
 				/>
 
 				<Button
+					loading={this.state.fbLoading}
+					color="facebook"
+					uppercase
+					label="Logga in med Facebook"
+					onPress={this.loginFacebook}
+				/>
+
+				<Button
 					fontColor="primary"
 					label="Registrera"
 					onPress={async () => {
@@ -101,5 +163,5 @@ const mapStateToProps = ({ auth, errors }) => {
 };
 
 export default connect(mapStateToProps, {
-	emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser
+	emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser, loginFacebook
 })(LoginForm);

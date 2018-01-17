@@ -5,7 +5,10 @@ import {
 
 const INIT_STATE = {
     timeFormat: 'minutes',
-    favoriteOrder: 'nothing'
+    favoriteOrder: 'nothing',
+    allowedGPS: true,
+    hasUsedGPS: false,
+    anonFirstAppStart: true
 };
 
 export default (state = INIT_STATE, action) => {
