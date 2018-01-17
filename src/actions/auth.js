@@ -130,7 +130,10 @@ export const registerFacebook = (credential) => {
 						loginUserSuccess(dispatch, user);
 					})
 					.catch((error) => loginUserFail(dispatch, error));
-			}, (error) => loginUserFail(dispatch, error));
+			}, (error) => {
+				dispatch({ type: REGISTER_USER_FAIL });
+				loginUserFail(dispatch, error);
+			});
 		} else {
 			track('Register', { type: 'New Account' });
 			firebase.auth().signInWithCredential(credential)
@@ -212,6 +215,7 @@ const loginUserFail = (dispatch, error) => {
 };
 
 const getFirebaseError = (error) => {
+	window.log('Firebase Error:', error);
 	switch (error.code) {
 		case 'auth/network-request-failed':
 			return 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
@@ -227,6 +231,8 @@ const getFirebaseError = (error) => {
 			return 'Det finns ingen användare registrerad med denna email.';
 		case 'auth/wrong-password':
 			return 'Du fyllde i fel lösenord, var god försök igen.';
+		case 'auth/credential-already-in-use':
+			return `${error.email} är redan registrerad med en annan typ av konto.`;
 		default:
 			return 'Något gick snett, kontakta gärna oakismen@gmail.com och berätta vad du gjorde när detta hände. Tack på förhand! :)';
 	}

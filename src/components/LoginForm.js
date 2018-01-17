@@ -71,7 +71,6 @@ class LoginForm extends Component {
 		(error) => {
 			window.log(`Login fail with error: ${error}`);
 		})
-		.then(() => setTimeout(() => this.setState({ fbPopupVisible: false }), 1500))
 		.catch((e) => window.log(e));
 	}
 

@@ -53,7 +53,7 @@ export default (state = INIT_STATE, action) => {
 		case REGISTER_FACEBOOK:
 			return { ...state, loadingFacebook: true };
 		case REGISTER_USER_FAIL:
-			return { ...state, loading: false };
+			return { ...state, loading: false, loadingFacebook: false };
 		case RESET_ALL:
 		case CHANGE_ROUTE:
 		case RESET_PASSWORD:
