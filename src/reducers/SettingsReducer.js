@@ -7,7 +7,8 @@ const INIT_STATE = {
     timeFormat: 'minutes',
     favoriteOrder: 'nothing',
     allowedGPS: true,
-    hasUsedGPS: false
+    hasUsedGPS: false,
+    anonFirstAppStart: true
 };
 
 export default (state = INIT_STATE, action) => {

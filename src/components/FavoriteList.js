@@ -38,9 +38,9 @@ class FavoriteList extends PureComponent {
 					this.props.favoriteGet(fbUser);
 				}
 				AsyncStorage.getItem('minahallplatser-settings')
-				.then((settingsJson) => {
-					const settings = JSON.parse(settingsJson);
-					if (fbUser.isAnonymous && (!Object.prototype.hasOwnProperty.call(settings, 'anonFirstAppStart'))) {
+				.then((settings) => {
+					window.log('Got settings:', JSON.parse(settings));
+					if (fbUser.isAnonymous && this.props.anonFirstAppStart) {
 						this.showRegistrationQuestion();
 					}
 					if (this.props.hasUsedGPS && this.props.allowedGPS) {
@@ -52,8 +52,6 @@ class FavoriteList extends PureComponent {
 					if (fbUser.isAnonymous) {
 						this.showRegistrationQuestion();
 					}
-					this.props.setSetting('allowedGPS', true);
-					this.props.setSetting('hasUsedGPS', false);
 				});
 			});
 		}
@@ -122,7 +120,8 @@ class FavoriteList extends PureComponent {
 						Actions.register();
 					}
 				}
-			]
+			],
+			{ cancelable: false }
 		);
 	}
 
@@ -342,7 +341,7 @@ class FavoriteList extends PureComponent {
 }
 
 const mapStateToProps = state => {
-	const { favoriteOrder, allowedGPS, hasUsedGPS } = state.settings;
+	const { favoriteOrder, allowedGPS, hasUsedGPS, anonFirstAppStart } = state.settings;
 	const favorites = _.orderBy(state.fav.favorites, (o) => o[favoriteOrder] || 0, favoriteOrder === 'busStop' ? 'asc' : 'desc');
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
@@ -355,7 +354,7 @@ const mapStateToProps = state => {
 	const departureList = _.map(state.search.departureList, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Search List' };
 	});
-	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS, hasUsedGPS };
+	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS, hasUsedGPS, anonFirstAppStart };
 };
 
 export default connect(mapStateToProps,
