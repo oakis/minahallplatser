@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const moment = require('moment');
 
 admin.initializeApp(functions.config().firebase);
 
@@ -94,4 +95,24 @@ exports.sendFeedback = functions.https.onRequest((request, response) => {
   ref.push({ name, email, message, device, os, appVersion })
   .then(() => response.send())
   .catch(() => response.statusCode(500).send());
+});
+
+exports.accountCleanup = functions.https.onRequest((request, response) => {
+  const ref = admin.database().ref('/users');
+  const now = moment();
+  const inactiveUsers = [];
+  ref.once('value', snapshot => {
+    snapshot.forEach(data => {
+      const lastLogin = moment(data.child('lastLogin').val());
+      const isOld = now.diff(lastLogin, 'days') > 30;
+      const isAnonymous = data.child('isAnonymous').val();
+      if ((!data.child('lastLogin').exists() || isOld) && isAnonymous) {
+        inactiveUsers.push({ key: data.key, data: data.val() });
+        ref.child(data.key).remove().then(() => {
+          admin.auth().deleteUser(data.key);
+        });
+      }
+    });
+    response.json({ users: inactiveUsers, message: `Deleted ${inactiveUsers.length} users.` });
+  });
 });
