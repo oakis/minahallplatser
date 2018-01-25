@@ -113,6 +113,7 @@ exports.accountCleanup = functions.https.onRequest((request, response) => {
         });
       }
     });
+    console.log(`Deleted ${inactiveUsers.length} users.`);
     response.json({ users: inactiveUsers, message: `Deleted ${inactiveUsers.length} users.` });
   });
 });
