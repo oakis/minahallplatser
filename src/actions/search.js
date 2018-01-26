@@ -50,6 +50,7 @@ export const searchStops = ({ busStop }) => {
 				payload: []
 			});
 		}
+		track('Search', { SearchWord: busStop });
 		getToken().finally(({ access_token }) => {
 			window.timeStart('searchStops');
 			const url = `${serverUrl}/api/vasttrafik/stops`;
