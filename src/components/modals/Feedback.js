@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Modal, ScrollView } from 'react-native';
+import { View, Modal, ScrollView, Alert } from 'react-native';
 import fetch from 'react-native-cancelable-fetch';
 import firebase from 'firebase';
 import { Button, ListHeading, Input, Text } from '../common';
@@ -46,11 +46,15 @@ export class Feedback extends PureComponent {
                 <View style={{ flex: 1, backgroundColor: colors.background }}>
                     <ScrollView
                         contentContainerStyle={{ flex: 0 }}
+                        keyboardShouldPersistTaps="always"
                     >
                         <ListHeading
                             text={'Skicka feedback'}
+                            style={{ marginTop: metrics.margin.lg }}
                         />
-                        <View style={{ padding: metrics.padding.md, width: '100%' }}>
+                        <View
+                            style={{ padding: metrics.padding.md, width: '100%' }}
+                        >
                             <Text>Namn <Text style={{ color: colors.danger }}>*</Text></Text>
                             <Input
                                 value={this.state.name}
@@ -87,16 +91,16 @@ export class Feedback extends PureComponent {
                                         .then(() => {
                                             track('Feedback Send');
                                             window.log('sendFeedback(): OK');
-                                            showMessage('short', 'Tack för din feedback!');
+                                            Alert.alert('', 'Tack för din feedback!');
                                             this.reset();
                                         })
                                         .catch((err) => {
                                             track('Feedback Failed', { Error: err });
                                             window.log('sendFeedback(): FAILED', err);
-                                            showMessage('short', 'Något gick snett, försök igen senare.');
+                                            Alert.alert('', 'Något gick snett, försök igen senare.');
                                             this.setState({ loading: false });
-                                        });
-                                        this.props.close();
+                                        })
+                                        .finally(() => this.props.close());
                                     } else {
                                         this.setState({ validated: false });
                                     }
