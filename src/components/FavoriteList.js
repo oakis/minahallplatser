@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, AsyncStorage, FlatList, View, ScrollView, AppState } from 'react-native';
+import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import firebase from 'firebase';
@@ -13,7 +13,7 @@ import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { renderHelpButton } from '../Router';
 import { store } from '../App';
-import { track, globals } from './helpers';
+import { track, globals, getStorage } from './helpers';
 
 
 class FavoriteList extends PureComponent {
@@ -32,14 +32,13 @@ class FavoriteList extends PureComponent {
 		Keyboard.dismiss();
 		const fbUser = firebase.auth().currentUser;
 		if (fbUser && fbUser.uid) {
-			AsyncStorage.getItem('minahallplatser-user').then((dataJson) => {
-				const user = JSON.parse(dataJson);
+			getStorage('minahallplatser-user').then((user) => {
 				if (user && user.uid === fbUser.uid) {
 					this.props.favoriteGet(fbUser);
 				}
-				AsyncStorage.getItem('minahallplatser-settings')
+				getStorage('minahallplatser-settings')
 				.then((settings) => {
-					window.log('Got settings:', JSON.parse(settings));
+					window.log('Got settings:', settings);
 					if (fbUser.isAnonymous && this.props.anonFirstAppStart) {
 						this.showRegistrationQuestion();
 					}
@@ -83,8 +82,7 @@ class FavoriteList extends PureComponent {
 
 	handleAppStateChange = (nextAppState) => {
 		if (nextAppState === 'active') {
-			AsyncStorage.getItem('minahallplatser-settings').then((settingsJson) => {
-				const settings = JSON.parse(settingsJson) || {};
+			getStorage('minahallplatser-settings').then((settings) => {
 				if (settings.hasUsedGPS && settings.allowedGPS) {
 					this.props.getNearbyStops();
 				}

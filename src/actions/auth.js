@@ -2,7 +2,6 @@ import firebase from 'firebase';
 import moment from 'moment';
 import _ from 'lodash';
 import Mixpanel from 'react-native-mixpanel';
-import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
 	EMAIL_CHANGED,
@@ -19,7 +18,7 @@ import {
 	ERROR,
 	REGISTER_FACEBOOK
 } from './types';
-import { showMessage, getToken, track, globals } from '../components/helpers';
+import { showMessage, getToken, track, globals, setStorage } from '../components/helpers';
 import { store } from '../App';
 import { getSettings } from './';
 
@@ -191,7 +190,7 @@ const loginUserSuccess = (dispatch, user) => {
 		}
 		const fbUser = firebase.database().ref(`/users/${user.uid}`);
 		fbUser.update({ lastLogin: moment().format(), isAnonymous: user.isAnonymous });
-		AsyncStorage.setItem('minahallplatser-user', JSON.stringify(user), () => {
+		setStorage('minahallplatser-user', user).then(() => {
 			dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
 			getSettings(dispatch).then(() => {
 				globals.isLoggingIn = false;

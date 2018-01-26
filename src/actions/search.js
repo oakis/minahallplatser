@@ -1,4 +1,4 @@
-import { PermissionsAndroid, AsyncStorage } from 'react-native';
+import { PermissionsAndroid } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import {
@@ -11,7 +11,7 @@ import {
 	CLR_SEARCH,
 	ERROR, CLR_ERROR
 } from './types';
-import { handleJsonFetch, getToken, track } from '../components/helpers';
+import { handleJsonFetch, getToken, track, getStorage, setStorage } from '../components/helpers';
 import { serverUrl } from '../Server';
 
 async function checkLocationPermission() {
@@ -90,11 +90,11 @@ export const getNearbyStops = () => {
 					requestLocationPermission().then(() => {
 						returnCoords(dispatch);
 					}).catch(() => {
-						AsyncStorage.getItem('minahallplatser-settings')
-							.then((json) => {
-								const settings = JSON.parse(json);
+						getStorage('minahallplatser-settings')
+							.then((data) => {
+								const settings = data;
 								settings['allowedGPS'] = false;
-								AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings));
+								setStorage('minahallplatser-settings', settings);
 							});
 						dispatch({ type: SEARCH_BY_GPS_FAIL })
 						dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
@@ -104,12 +104,11 @@ export const getNearbyStops = () => {
 				}
 			});
 		} catch (e) {
-			AsyncStorage.getItem('minahallplatser-settings')
-				.then((json) => {
-					const settings = JSON.parse(json) || {};
-					window.log(settings);
+			getStorage('minahallplatser-settings')
+				.then((data) => {
+					const settings = data || {};
 					settings['allowedGPS'] = false;
-					AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings));
+					setStorage('minahallplatser-settings', settings);
 				})
 				.catch((e) => {
 					window.log(e);
@@ -122,11 +121,11 @@ export const getNearbyStops = () => {
 
 let gpsCount = 0;
 const returnCoords = (dispatch) => {
-	AsyncStorage.getItem('minahallplatser-settings')
-		.then((json) => {
-			const settings = JSON.parse(json);
+	getStorage('minahallplatser-settings')
+		.then((data) => {
+			const settings = data;
 			settings['allowedGPS'] = true;
-			AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings));
+			setStorage('minahallplatser-settings', settings);
 		});
 	dispatch({ type: SEARCH_BY_GPS });
 	navigator.geolocation.getCurrentPosition((position) => {
