@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "clean": "cd android && gradlew clean",
+    "clean": "cd android && ./gradlew clean",
     "build-debug": "curl http://localhost:8081/index.android.bundle?platform=android -o android/app/src/main/assets/index.android.bundle && cd android && gradlew clean && gradlew assembleDebug && gdrive upload --name minahallplatser-debug-${npm_package_version}.apk app/build/outputs/apk/app-debug.apk",
-    "build-release": "npm run clean && cd android && gradlew assembleRelease && gdrive upload --name minahallplatser-release-${npm_package_version}.apk app/build/outputs/apk/app-release.apk",
+    "build-release": "npm run clean && cd android && ./gradlew assembleRelease && gdrive upload --name minahallplatser-release-${npm_package_version}.apk app/build/outputs/apk/app-release.apk",
     "debug": "react-native run-android --appIdSuffix dev"
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "react-native-device-info": "^0.13.0",
     "react-native-fabric": "^0.5.1",
     "react-native-fbsdk": "^0.7.0",
+    "react-native-geolocation-service": "^1.0.0",
     "react-native-mixpanel": "0.0.16",
     "react-native-router-flux": "^4.0.0-beta.27",
     "react-native-vector-icons": "^4.3.0",

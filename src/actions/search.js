@@ -1,4 +1,5 @@
 import { PermissionsAndroid } from 'react-native';
+import geolocation from 'react-native-geolocation-service';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import {
@@ -129,7 +130,7 @@ const returnCoords = (dispatch) => {
 			setStorage('minahallplatser-settings', settings);
 		});
 	dispatch({ type: SEARCH_BY_GPS });
-	navigator.geolocation.getCurrentPosition((position) => {
+	geolocation.getCurrentPosition((position) => {
 		const { longitude, latitude } = position.coords;
 		getCoordsSuccess({ dispatch, longitude, latitude });
 	},
@@ -145,7 +146,7 @@ const returnCoords = (dispatch) => {
 		dispatch({ type: SEARCH_BY_GPS_FAIL })
 	},
 	{
-		enableHighAccuracy: false,
+		enableHighAccuracy: true,
 		timeout: 3000,
 		maximumAge: 5000
 	});

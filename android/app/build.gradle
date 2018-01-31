@@ -188,6 +188,10 @@ repositories {
 }
 
 dependencies {
+    compile(project(':react-native-geolocation-service')) {
+        exclude group: 'com.google.android.gms', module: 'play-services-location'
+    }
+    compile 'com.google.android.gms:play-services-location:11.8.0'
     compile project(':react-native-fbsdk')
     compile project(':react-native-device-info')
     compile project(':react-native-mixpanel')
