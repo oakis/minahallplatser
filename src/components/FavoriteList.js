@@ -13,7 +13,7 @@ import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { renderHelpButton } from '../Router';
 import { store } from '../App';
-import { track, globals, getStorage } from './helpers';
+import { track, globals, getStorage, isAndroid } from './helpers';
 
 
 class FavoriteList extends PureComponent {
@@ -321,7 +321,7 @@ class FavoriteList extends PureComponent {
 						iconRightPress={this.resetSearch}
 						underlineColorAndroid={'#fff'}
 						onFocus={() => track('Search Focused')}
-						style={{ borderRadius: 15, paddingLeft: metrics.margin.sm, paddingRight: metrics.margin.sm, marginTop: metrics.margin.md, marginLeft: metrics.margin.md, marginRight: metrics.margin.md, marginBottom: metrics.margin.md, backgroundColor: '#fff' }}
+						style={[{ borderRadius: 15, paddingLeft: metrics.padding.sm, paddingRight: metrics.padding.sm, margin: metrics.margin.md, backgroundColor: '#fff' }, !isAndroid() ? { paddingTop: metrics.padding.md, paddingBottom: metrics.padding.md } : null]}
 					/>
 					{(this.props.error) ?
 						<Message
