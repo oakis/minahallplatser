@@ -12,7 +12,7 @@ import {
 	CLR_SEARCH,
 	ERROR, CLR_ERROR
 } from './types';
-import { handleJsonFetch, getToken, track, getStorage, setStorage } from '../components/helpers';
+import { handleJsonFetch, getToken, track, getStorage, setStorage, isAndroid } from '../components/helpers';
 import { serverUrl } from '../Server';
 
 async function checkLocationPermission() {
@@ -87,24 +87,28 @@ export const getNearbyStops = () => {
 	return (dispatch) => {
 		try {
 			dispatch({ type: CLR_ERROR });
-			checkLocationPermission().then(ok => {
-				if (!ok) {
-					requestLocationPermission().then(() => {
-						returnCoords(dispatch);
-					}).catch(() => {
-						getStorage('minahallplatser-settings')
+			if (isAndroid()) {
+				checkLocationPermission().then(ok => {
+					if (!ok) {
+						requestLocationPermission().then(() => {
+							returnCoords(dispatch);
+						}).catch(() => {
+							getStorage('minahallplatser-settings')
 							.then((data) => {
 								const settings = data;
 								settings['allowedGPS'] = false;
 								setStorage('minahallplatser-settings', settings);
 							});
-						dispatch({ type: SEARCH_BY_GPS_FAIL })
-						dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
-					});
-				} else {
-					returnCoords(dispatch);
-				}
-			});
+							dispatch({ type: SEARCH_BY_GPS_FAIL })
+							dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
+						});
+					} else {
+						returnCoords(dispatch);
+					}
+				});
+			} else {
+				returnCoords(dispatch);
+			}
 		} catch (e) {
 			getStorage('minahallplatser-settings')
 				.then((data) => {
@@ -131,11 +135,15 @@ const returnCoords = (dispatch) => {
 		});
 	dispatch({ type: SEARCH_BY_GPS });
 	geolocation.getCurrentPosition((position) => {
+		window.log('Got coords:', position.coords);
 		const { longitude, latitude } = position.coords;
 		getCoordsSuccess({ dispatch, longitude, latitude });
 	},
 	(err) => {
 		window.log('Error:', err);
+		if (err.code === 4) {
+			return tryOldGeolocation(dispatch);
+		}
 		if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
 			dispatch({ type: SEARCH_BY_GPS_FAIL });
 		} else if (gpsCount < 5) {
@@ -147,6 +155,31 @@ const returnCoords = (dispatch) => {
 	},
 	{
 		enableHighAccuracy: true,
+		timeout: 3000,
+		maximumAge: 5000
+	});
+}
+
+const tryOldGeolocation = (dispatch) => {
+	dispatch({ type: SEARCH_BY_GPS });
+	navigator.geolocation.getCurrentPosition((position) => {
+		window.log('Got coords:', position.coords);
+		const { longitude, latitude } = position.coords;
+		getCoordsSuccess({ dispatch, longitude, latitude });
+	},
+	(err) => {
+		window.log('Error:', err);
+		if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
+			dispatch({ type: SEARCH_BY_GPS_FAIL });
+		} else if (gpsCount < 5) {
+			gpsCount++;
+			return tryOldGeolocation(dispatch);
+		}
+		gpsCount = 0;
+		dispatch({ type: SEARCH_BY_GPS_FAIL })
+	},
+	{
+		enableHighAccuracy: false,
 		timeout: 3000,
 		maximumAge: 5000
 	});
