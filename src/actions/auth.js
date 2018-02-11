@@ -149,7 +149,7 @@ export const loginUser = ({ email, password }) => {
 			globals.isLoggingIn = true;
 			firebase.auth().signInWithEmailAndPassword(email, password)
 			.then(user => window.log(`Email account ${user.email} was successfully logged in.`))
-			.catch(error => window.log('Email account failed:', error));
+			.catch(error => loginUserFail(dispatch, error));
 		} else if (email && !password) {
 			dispatch({ type: LOGIN_USER_FAIL });
 			dispatch({ type: ERROR, payload: 'Du måste fylla i ditt lösenord.' });
