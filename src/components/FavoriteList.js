@@ -282,7 +282,7 @@ class FavoriteList extends PureComponent {
 		}
 		return (
 			<View>
-				{(this.props.departureList.length > 0) ? <Text style={component.text.heading}>Sökresultat</Text> : null}
+				{(this.props.departureList.length > 0) ? <ListHeading text={'Sökresultat'} /> : null}
 				<FlatList
 					data={this.props.departureList}
 					renderItem={this.renderSearchItem}
