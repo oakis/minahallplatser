@@ -84,7 +84,6 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 						_.forEach(lines, (line) => {
 							fbUser.child('lines').push(line);
 						});
-						fbUser.update({ lastLogin: moment().format(), isAnonymous: user.isAnonymous });
 						loginUserSuccess(dispatch, user);
 					})
 					.catch((error) => loginUserFail(dispatch, error));
@@ -125,7 +124,6 @@ export const registerFacebook = (credential) => {
 						_.forEach(lines, (line) => {
 							fbUser.child('lines').push(line);
 						});
-						fbUser.update({ lastLogin: moment().format(), isAnonymous: user.isAnonymous });
 						loginUserSuccess(dispatch, user);
 					})
 					.catch((error) => loginUserFail(dispatch, error));
@@ -175,8 +173,7 @@ export const loginAnonUser = () => {
 export const autoLogin = (user) => {
 	return (dispatch) => {
 		if (user.uid === firebase.auth().currentUser.uid) {
-			loginUserSuccess(dispatch, user);
-			return;
+			return loginUserSuccess(dispatch, user);
 		}
 		loginUserFail(dispatch, user);
 	};
@@ -189,7 +186,13 @@ const loginUserSuccess = (dispatch, user) => {
 			Mixpanel.set({ $email: user.email });
 		}
 		const fbUser = firebase.database().ref(`/users/${user.uid}`);
-		fbUser.update({ lastLogin: moment().format(), isAnonymous: user.isAnonymous });
+		fbUser.update({
+			lastLogin: moment().format(),
+			isAnonymous: user.isAnonymous,
+			email: user.isAnonymous ? '-' : user.email,
+			created: moment(user.metadata.creationTime).format('YYYY-MM-DDThh:mm:ssZZ'),
+			provider: user.isAnonymous ? 'Anonymous' : user.providerData[0].providerId
+		});
 		setStorage('minahallplatser-user', user).then(() => {
 			dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
 			getSettings(dispatch).then(() => {
