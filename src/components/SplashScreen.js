@@ -6,13 +6,14 @@ import { Actions } from 'react-native-router-flux';
 import { autoLogin, loginAnonUser } from '../actions';
 import { Spinner, Text } from './common';
 import { colors } from './style';
-import { globals, getStorage } from './helpers';
+import { globals, getStorage, track } from './helpers';
 
 class SplashScreen extends Component {
 
 	componentDidMount() {
 		// Try to automaticly login
 		globals.isLoggingIn = true;
+		track('App Start');
 		firebase.auth().onAuthStateChanged((fbUser) => {
 			getStorage('minahallplatser-user')
 			.then((user) => {
