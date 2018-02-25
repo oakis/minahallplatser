@@ -1,4 +1,5 @@
-import { PermissionsAndroid, AsyncStorage } from 'react-native';
+import { PermissionsAndroid } from 'react-native';
+import geolocation from 'react-native-geolocation-service';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import {
@@ -11,7 +12,7 @@ import {
 	CLR_SEARCH,
 	ERROR, CLR_ERROR
 } from './types';
-import { handleJsonFetch, getToken, track } from '../components/helpers';
+import { handleJsonFetch, getToken, track, getStorage, setStorage, isAndroid } from '../components/helpers';
 import { serverUrl } from '../Server';
 
 async function checkLocationPermission() {
@@ -50,6 +51,7 @@ export const searchStops = ({ busStop }) => {
 				payload: []
 			});
 		}
+		track('Search', { SearchWord: busStop });
 		getToken().finally(({ access_token }) => {
 			window.timeStart('searchStops');
 			const url = `${serverUrl}/api/vasttrafik/stops`;
@@ -85,31 +87,34 @@ export const getNearbyStops = () => {
 	return (dispatch) => {
 		try {
 			dispatch({ type: CLR_ERROR });
-			checkLocationPermission().then(ok => {
-				if (!ok) {
-					requestLocationPermission().then(() => {
-						returnCoords(dispatch);
-					}).catch(() => {
-						AsyncStorage.getItem('minahallplatser-settings')
-							.then((json) => {
-								const settings = JSON.parse(json);
+			if (isAndroid()) {
+				checkLocationPermission().then(ok => {
+					if (!ok) {
+						requestLocationPermission().then(() => {
+							returnCoords(dispatch);
+						}).catch(() => {
+							getStorage('minahallplatser-settings')
+							.then((data) => {
+								const settings = data;
 								settings['allowedGPS'] = false;
-								AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings));
+								setStorage('minahallplatser-settings', settings);
 							});
-						dispatch({ type: SEARCH_BY_GPS_FAIL })
-						dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
-					});
-				} else {
-					returnCoords(dispatch);
-				}
-			});
+							dispatch({ type: SEARCH_BY_GPS_FAIL })
+							dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
+						});
+					} else {
+						returnCoords(dispatch);
+					}
+				});
+			} else {
+				returnCoords(dispatch);
+			}
 		} catch (e) {
-			AsyncStorage.getItem('minahallplatser-settings')
-				.then((json) => {
-					const settings = JSON.parse(json) || {};
-					window.log(settings);
+			getStorage('minahallplatser-settings')
+				.then((data) => {
+					const settings = data || {};
 					settings['allowedGPS'] = false;
-					AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings));
+					setStorage('minahallplatser-settings', settings);
 				})
 				.catch((e) => {
 					window.log(e);
@@ -122,14 +127,43 @@ export const getNearbyStops = () => {
 
 let gpsCount = 0;
 const returnCoords = (dispatch) => {
-	AsyncStorage.getItem('minahallplatser-settings')
-		.then((json) => {
-			const settings = JSON.parse(json);
+	getStorage('minahallplatser-settings')
+		.then((data) => {
+			const settings = data;
 			settings['allowedGPS'] = true;
-			AsyncStorage.setItem('minahallplatser-settings', JSON.stringify(settings));
+			setStorage('minahallplatser-settings', settings);
 		});
 	dispatch({ type: SEARCH_BY_GPS });
+	geolocation.getCurrentPosition((position) => {
+		window.log('Got coords:', position.coords);
+		const { longitude, latitude } = position.coords;
+		getCoordsSuccess({ dispatch, longitude, latitude });
+	},
+	(err) => {
+		window.log('Error:', err);
+		if (err.code === 4) {
+			return tryOldGeolocation(dispatch);
+		}
+		if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
+			dispatch({ type: SEARCH_BY_GPS_FAIL });
+		} else if (gpsCount < 5) {
+			gpsCount++;
+			return returnCoords(dispatch);
+		}
+		gpsCount = 0;
+		dispatch({ type: SEARCH_BY_GPS_FAIL })
+	},
+	{
+		enableHighAccuracy: true,
+		timeout: 3000,
+		maximumAge: 5000
+	});
+}
+
+const tryOldGeolocation = (dispatch) => {
+	dispatch({ type: SEARCH_BY_GPS });
 	navigator.geolocation.getCurrentPosition((position) => {
+		window.log('Got coords:', position.coords);
 		const { longitude, latitude } = position.coords;
 		getCoordsSuccess({ dispatch, longitude, latitude });
 	},
@@ -139,7 +173,7 @@ const returnCoords = (dispatch) => {
 			dispatch({ type: SEARCH_BY_GPS_FAIL });
 		} else if (gpsCount < 5) {
 			gpsCount++;
-			return returnCoords(dispatch);
+			return tryOldGeolocation(dispatch);
 		}
 		gpsCount = 0;
 		dispatch({ type: SEARCH_BY_GPS_FAIL })

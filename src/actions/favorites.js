@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 import _ from 'lodash';
-import { AsyncStorage } from 'react-native';
 import { store } from '../App';
 import {
 	FAVORITE_CREATE, FAVORITE_CREATE_FAIL, FAVORITE_DELETE,
@@ -8,7 +7,7 @@ import {
 	ERROR,
 	LINES_FETCH, LINE_ADD, LINE_REMOVE
 } from './types';
-import { generateUid, track } from '../components/helpers';
+import { generateUid, track, getStorage, setStorage } from '../components/helpers';
 
 // Stops
 
@@ -16,8 +15,8 @@ export const favoriteCreate = ({ busStop, id }) => {
 	const { currentUser } = firebase.auth();
 	return (dispatch) => {
 		if (currentUser.isAnonymous) {
-			return AsyncStorage.getItem('minahallplatser-favorites').then((dataJson) => {
-				const favorites = JSON.parse(dataJson) || {};
+			return getStorage('minahallplatser-favorites').then((data) => {
+				const favorites = data || {};
 				let exists = false;
 				_.forEach(favorites, (item, key) => {
 					if (item.id === id) {
@@ -29,7 +28,7 @@ export const favoriteCreate = ({ busStop, id }) => {
 					favorites[generateUid()] = { busStop, id };
 				}
 				dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: favorites });
-				return AsyncStorage.setItem('minahallplatser-favorites', JSON.stringify(favorites));
+				return setStorage('minahallplatser-favorites', favorites);
 			});
 		}
 		const fbRef = firebase.database().ref(`/users/${currentUser.uid}/favorites`);
@@ -57,8 +56,7 @@ const favoriteCreateFail = (dispatch) => {
 export const favoriteGet = (currentUser) => {
 	if (currentUser) {
 		return (dispatch) => {
-			AsyncStorage.getItem('minahallplatser-favorites').then((dataJson) => {
-				const favorites = JSON.parse(dataJson);
+			getStorage('minahallplatser-favorites').then((favorites) => {
 				if (favorites) {
 					dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: favorites });
 				} else {
@@ -70,7 +68,7 @@ export const favoriteGet = (currentUser) => {
 				if (!currentUser.isAnonymous) {
 					firebase.database().ref(`/users/${currentUser.uid}/favorites`)
 					.on('value', snapshot => {
-						AsyncStorage.setItem('minahallplatser-favorites', JSON.stringify(snapshot.val()));
+						setStorage('minahallplatser-favorites', snapshot.val());
 						window.log('favoriteGet() OK');
 						dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: snapshot.val() });
 					}, (error) => {
@@ -85,8 +83,7 @@ export const favoriteGet = (currentUser) => {
 						}
 					});
 				}
-				AsyncStorage.getItem('minahallplatser-lines').then((localLines) => {
-					const lines = JSON.parse(localLines);
+				getStorage('minahallplatser-lines').then((lines) => {
 					if (lines) {
 						dispatch({ type: LINES_FETCH, payload: lines });
 					} else {
@@ -96,7 +93,7 @@ export const favoriteGet = (currentUser) => {
 				if (!currentUser.isAnonymous) {
 					firebase.database().ref(`/users/${currentUser.uid}/lines`)
 					.once('value', snapshot => {
-						AsyncStorage.setItem('minahallplatser-lines', JSON.stringify(snapshot.val()));
+						setStorage('minahallplatser-lines', snapshot.val());
 						dispatch({ type: LINES_FETCH, payload: snapshot.val() });
 					}, (error) => {
 						window.log('lines error: ', error);
@@ -154,16 +151,16 @@ export const favoriteLineToggle = ({ sname, direction }) => {
 			track('Favorite Line Add', { Line: line });
 		}
 		if (currentUser.isAnonymous) {
-			AsyncStorage.getItem('minahallplatser-lines').then((localLines) => {
-				const lines = JSON.parse(localLines) || {};
+			getStorage('minahallplatser-lines').then((storage) => {
+				const lines = storage || {};
 				if (!exists || !lines) {
 					lines[generateUid()] = line;
-					AsyncStorage.setItem('minahallplatser-lines', JSON.stringify(lines));
+					setStorage('minahallplatser-lines', lines);
 					dispatch({ type: LINE_ADD, payload: line });
 				} else {
 					const key = _.findKey(lines, (item) => item === line);
 					delete lines[key];
-					AsyncStorage.setItem('minahallplatser-lines', JSON.stringify(lines));
+					setStorage('minahallplatser-lines', lines);
 					dispatch({ type: LINE_REMOVE, payload: line });
 				}
 			});

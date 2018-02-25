@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
-import { View, ImageBackground, AsyncStorage } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { autoLogin, loginAnonUser } from '../actions';
 import { Spinner, Text } from './common';
 import { colors } from './style';
-import { globals } from './helpers';
+import { globals, getStorage, track } from './helpers';
 
 class SplashScreen extends Component {
 
 	componentDidMount() {
 		// Try to automaticly login
 		globals.isLoggingIn = true;
+		track('App Start');
 		firebase.auth().onAuthStateChanged((fbUser) => {
-			AsyncStorage.getItem('minahallplatser-user')
-			.then((dataJson) => {
-				const user = JSON.parse(dataJson);
+			getStorage('minahallplatser-user')
+			.then((user) => {
 				window.log('Localstorage user:', user, 'Firebase user:', fbUser);
 				if (fbUser && fbUser.uid && globals.isLoggingIn) {
 					window.log('User already exists, continue to autologin.');

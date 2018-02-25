@@ -149,7 +149,7 @@ export class DepartureListItem extends PureComponent {
                         {(item.via) ? <Text style={viaStyle}>{item.via}</Text> : null}
                         <View style={{ flexDirection: 'row' }}>
                             <Text>Läge {item.track || 'A'}</Text>
-                            {(Object.prototype.hasOwnProperty.call(item, 'accessibility')) ?
+                            {(Object.prototype.hasOwnProperty.call(item, 'accessibility') && item.accessibility === 'wheelChair') ?
                                 <Icon name={'wheelchair'} size={13} style={iconStyle} />
                                 : null
                             }

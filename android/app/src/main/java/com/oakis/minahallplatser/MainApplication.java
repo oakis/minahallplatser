@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.kevinejohn.RNMixpanel.*;
 import com.facebook.react.ReactApplication;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.smixx.fabric.FabricPackage;
 import com.crashlytics.android.Crashlytics;
@@ -41,6 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new RNFusedLocationPackage(),
           new FBSDKPackage(mCallbackManager),
           new RNDeviceInfo(),
           new RNMixpanel(),

@@ -8,7 +8,7 @@ import { RESET_ALL } from '../actions/types';
 import { setSetting } from '../actions';
 import { store } from '../App';
 import { colors, metrics, component } from './style';
-import { track, globals } from './helpers';
+import { track, globals, isAndroid } from './helpers';
 import { Feedback } from './modals';
 
 class Menu extends Component {
@@ -61,7 +61,8 @@ class Menu extends Component {
                         this.setState({ favoriteOrder: itemValue });
                         this.props.setSetting('favoriteOrder', itemValue);
                     }}
-                    style={component.picker}
+                    style={[isAndroid() ? component.picker : {}]}
+                    itemStyle={{ fontSize: 16, height: 90, marginTop: -10 }}
                 >
                     <Picker.Item label="Ingen sortering" value="nothing" />
                     <Picker.Item label="Mina mest använda" value="opened" />
@@ -108,7 +109,8 @@ class Menu extends Component {
                             this.setState({ timeFormat: itemValue });
                             this.props.setSetting('timeFormat', itemValue);
                         }}
-                        style={component.picker}
+                        style={[isAndroid() ? component.picker : {}]}
+                        itemStyle={{ fontSize: 16, height: 90, marginTop: -10 }}
                     >
                         <Picker.Item label="Minuter" value="minutes" />
                         <Picker.Item label="Klockslag" value="clock" />
@@ -129,7 +131,7 @@ class Menu extends Component {
                             tintColor={colors.darkergrey}
                             onTintColor={colors.primaryRGBA}
                             thumbTintColor={colors.primary}
-                            style={{ paddingRight: metrics.padding.md }}
+                            style={{ marginRight: metrics.margin.md }}
                         />
                     </View>
 

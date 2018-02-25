@@ -1,7 +1,17 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const moment = require('moment');
+const nodemailer = require('nodemailer');
 
 admin.initializeApp(functions.config().firebase);
+
+const mailer = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: functions.config().gmail.email,
+    pass: functions.config().gmail.password
+  }
+});
 
 exports.getUsersCount = functions.https.onRequest((request, response) => {
   admin.database().ref('/users').once('value').then(snapshot => {
@@ -94,4 +104,51 @@ exports.sendFeedback = functions.https.onRequest((request, response) => {
   ref.push({ name, email, message, device, os, appVersion })
   .then(() => response.send())
   .catch(() => response.statusCode(500).send());
+});
+
+exports.alertNewFeedback = functions.database.ref('/feedback/{key}').onCreate(e => {
+  const { name, appVersion, email, message, os } = e.data.val();
+  console.log('Data:', e);
+  const options = {
+    from: functions.config().gmail.email,
+    to: functions.config().gmail.email,
+    subject: 'Ny feedback i Mina Hållplatser',
+    html: `
+      <h1>Ny feedback</h1>
+      <p>Namn: ${name}</p>
+      <p>Email: ${email}</p>
+      <p>Meddelande: ${message}</p>
+      <p>Appversion: ${appVersion}</p>
+      <p>OSversion: ${os}</p>
+    `
+  };
+  return mailer.sendMail(options).then((err, info) => {
+    if (err) {
+      console.log(err);
+      return false;
+    }
+    console.log(info);
+    return true;
+ });
+});
+
+exports.accountCleanup = functions.https.onRequest((request, response) => {
+  const ref = admin.database().ref('/users');
+  const now = moment();
+  const inactiveUsers = [];
+  ref.once('value', snapshot => {
+    snapshot.forEach(data => {
+      const lastLogin = moment(data.child('lastLogin').val());
+      const isOld = now.diff(lastLogin, 'days') > 30;
+      const isAnonymous = data.child('isAnonymous').val();
+      if ((!data.child('lastLogin').exists() || isOld) && isAnonymous) {
+        inactiveUsers.push({ key: data.key, data: data.val() });
+        ref.child(data.key).remove().then(() => {
+          admin.auth().deleteUser(data.key);
+        });
+      }
+    });
+    console.log(`Deleted ${inactiveUsers.length} users.`);
+    response.json({ users: inactiveUsers, message: `Deleted ${inactiveUsers.length} users.` });
+  });
 });
