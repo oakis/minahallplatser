@@ -155,7 +155,10 @@ class LoginForm extends Component {
 						uppercase
 						color="danger"
 						label="Avbryt registering"
-						onPress={() => Actions.dashboard()}
+						onPress={() => {
+							track('Cancel Login');
+							Actions.dashboard();
+						}}
 					/> : null
 				}
 

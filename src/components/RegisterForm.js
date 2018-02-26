@@ -147,7 +147,10 @@ class RegisterForm extends Component {
 						uppercase
 						color="danger"
 						label="Avbryt registering"
-						onPress={() => Actions.dashboard()}
+						onPress={() => {
+							track('Cancel Register');
+							Actions.dashboard();
+						}}
 					/> : null
 				}
 			</View>
