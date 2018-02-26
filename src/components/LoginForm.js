@@ -81,6 +81,7 @@ class LoginForm extends Component {
 	}
 
 	render() {
+		const { currentUser } = firebase.auth();
 		return (
 			<View
 				style={{
@@ -149,6 +150,14 @@ class LoginForm extends Component {
 						Actions.resetpw();
 					}}
 				/>
+				{currentUser && currentUser.isAnonymous ?
+					<Button
+						uppercase
+						color="danger"
+						label="Avbryt registering"
+						onPress={() => Actions.dashboard()}
+					/> : null
+				}
 
 			</View>
 		);

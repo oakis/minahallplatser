@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, AppState } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 import facebook from 'react-native-fbsdk';
 import {
 	emailChanged,
@@ -85,6 +86,7 @@ class RegisterForm extends Component {
 	}
 
 	render() {
+		const { currentUser } = firebase.auth();
 		return (
 			<View
 				style={{
@@ -140,6 +142,14 @@ class RegisterForm extends Component {
 					label="Registrera med facebook"
 					onPress={this.registerFacebook}
 				/>
+				{currentUser && currentUser.isAnonymous ?
+					<Button
+						uppercase
+						color="danger"
+						label="Avbryt registering"
+						onPress={() => Actions.dashboard()}
+					/> : null
+				}
 			</View>
 		);
 	}
