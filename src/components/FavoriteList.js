@@ -103,16 +103,16 @@ class FavoriteList extends PureComponent {
 			'Få en bättre upplevelse genom att registrera dig i appen. Det är helt gratis!\nDina hållplatser sparas i molnet så att du alltid har dom kvar på ditt konto, även om du till exempel köper en ny telefon. Det går alltid att registrera sig vid ett annat tillfälle via menyn.',
 			[
 				{
-					text: 'Nej tack',
-					onPress: () => {
-						track('Registration Question', { answer: 'No' });
-					}
-				},
-				{
 					text: 'Logga in',
 					onPress: () => {
 						track('Registration Question', { answer: 'Login' });
 						Actions.login();
+					}
+				},
+				{
+					text: 'Nej tack',
+					onPress: () => {
+						track('Registration Question', { answer: 'No' });
 					}
 				},
 				{
