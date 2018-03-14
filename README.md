@@ -1,32 +1,25 @@
 # Mina Hållplatser
 
+This started out as a small school project for a frontend course.
+Now it is a project I am working with on my spare time.
+
 ## What is this?
 
-This is a small school project for a frontend course.
-It's an mobile app used to check departures from the local public transportation company (bus, tram).
-Technologies used are React Native, Redux, redux-thunk, Firebase, base-64, lodash, moment, native-base, react-native-router-flux and react-native-vector-icons.
+It is a mobile app used to check departures from the local public transit company (Västtrafik).
 
-## Setup for development
+## Technologies used
 
-* Open a new terminal window and type `git clone https://github.com/oakis/minahallplatser.git`
+React Native, Redux, react-native-router-flux and react-native-vector-icons.
+The project also uses fabric.io to track usage over time and retention mostly.
+For tracking user behavior it uses Mixpanel.
 
-* Follow this guide up until "Testing your React Native Installation".
-https://facebook.github.io/react-native/docs/getting-started.html
+## Download from Google Play
 
-* In terminal type `npm install`.
+https://play.google.com/store/apps/details?id=com.oakis.minahallplatser
 
-* Create an account at http://developer.vasttrafik.se
-and then create a new file src/Vasttrafik.js
+## Next steps
 
-##### src/Vasttrafik.js
-```
-export const key = '<YOUR-KEY>';
-export const secret = '<YOUR-SECRET>';
-export const url = 'https://api.vasttrafik.se/token';
-```
-
-* In terminal type `react-native start`.
-
-* Open up a new terminal and type `react-native run-android`.
-
-The app should now start in your Android emulator.
+* Write tests with Jest
+* Create logo, icon and other graphics
+* Release version 1.0 on Google Play
+* Release app for iOS
