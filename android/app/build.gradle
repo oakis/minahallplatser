@@ -107,7 +107,7 @@ def userVersionCode = getNpmVersionCode()
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.oakis.minahallplatser"
@@ -115,17 +115,17 @@ android {
         targetSdkVersion 26
         versionCode userVersionCode
         versionName userVersionName
-        ndk {
-            abiFilters "armeabi-v7a", "x86"
-        }
+        // ndk {
+        //     abiFilters "armeabi-v7a", "x86"
+        // }
     }
     signingConfigs {
-        release {
-            storeFile file(MYAPP_RELEASE_STORE_FILE)
-            storePassword MYAPP_RELEASE_STORE_PASSWORD
-            keyAlias MYAPP_RELEASE_KEY_ALIAS
-            keyPassword MYAPP_RELEASE_KEY_PASSWORD
-        }
+        // release {
+        //     storeFile file(MYAPP_RELEASE_STORE_FILE)
+        //     storePassword MYAPP_RELEASE_STORE_PASSWORD
+        //     keyAlias MYAPP_RELEASE_KEY_ALIAS
+        //     keyPassword MYAPP_RELEASE_KEY_PASSWORD
+        // }
     }
     splits {
         abi {
@@ -136,12 +136,12 @@ android {
         }
     }
     buildTypes {
-        release {
-            manifestPlaceholders = [excludeSystemAlertWindowPermission: "true"]
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.release
-        }
+        // release {
+        //     manifestPlaceholders = [excludeSystemAlertWindowPermission: "true"]
+        //     minifyEnabled enableProguardInReleaseBuilds
+        //     proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        //     signingConfig signingConfigs.release
+        // }
         debug {
             manifestPlaceholders = [excludeSystemAlertWindowPermission: "false"]
             applicationIdSuffix ".dev"
@@ -191,7 +191,7 @@ dependencies {
     compile(project(':react-native-geolocation-service')) {
         exclude group: 'com.google.android.gms', module: 'play-services-location'
     }
-    compile 'com.google.android.gms:play-services-location:11.8.0'
+    compile 'com.google.android.gms:play-services-location:15.0.0'
     compile project(':react-native-fbsdk')
     compile project(':react-native-device-info')
     compile project(':react-native-mixpanel')
