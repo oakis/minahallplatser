@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AppState } from 'react-native';
+import { View, AppState, Text } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
@@ -15,6 +15,7 @@ import {
 } from '../actions';
 import { Input, Button, Message } from './common';
 import { track } from './helpers';
+import { metrics } from './style';
 
 const { LoginManager, AccessToken } = facebook;
 
@@ -143,15 +144,15 @@ class RegisterForm extends Component {
 					onPress={this.registerFacebook}
 				/>
 				{currentUser && currentUser.isAnonymous ?
-					<Button
-						uppercase
-						color="danger"
-						label="Avbryt registering"
+					<Text
+						style={{ padding: metrics.padding.md }}
 						onPress={() => {
 							track('Cancel Register');
 							Actions.dashboard();
 						}}
-					/> : null
+					>
+						Gå till startsidan
+					</Text> : null
 				}
 			</View>
 		);
