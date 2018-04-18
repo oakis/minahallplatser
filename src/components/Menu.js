@@ -151,14 +151,24 @@ class Menu extends Component {
                     />
 
                     {this.state.user && this.state.user.isAnonymous ?
-                    <ListItem
-                        text="Registrera"
-                        icon="ios-log-in-outline"
-                        iconVisible
-                        pressItem={() => {
-                            Actions.register();
-                        }}
-                    />
+                    <View>
+                        <ListItem
+                            text="Logga in"
+                            icon="ios-log-in-outline"
+                            iconVisible
+                            pressItem={() => {
+                                Actions.login();
+                            }}
+                        />
+                        <ListItem
+                            text="Registrera"
+                            icon="ios-log-in-outline"
+                            iconVisible
+                            pressItem={() => {
+                                Actions.register();
+                            }}
+                        />
+                    </View>
                     :
                     <ListItem
                         text='Logga ut'
