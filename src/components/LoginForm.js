@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AppState } from 'react-native';
+import { View, AppState, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
@@ -7,6 +7,7 @@ import facebook from 'react-native-fbsdk';
 import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser, loginFacebook } from '../actions';
 import { Button, Input, Message } from './common';
 import { track, globals } from './helpers';
+import { metrics } from './style';
 
 const { LoginManager, AccessToken } = facebook;
 
@@ -151,15 +152,15 @@ class LoginForm extends Component {
 					}}
 				/>
 				{currentUser && currentUser.isAnonymous ?
-					<Button
-						uppercase
-						color="danger"
-						label="Avbryt registering"
+					<Text
+						style={{ padding: metrics.padding.md }}
 						onPress={() => {
 							track('Cancel Login');
 							Actions.dashboard();
 						}}
-					/> : null
+					>
+						Gå till startsidan
+					</Text> : null
 				}
 
 			</View>
