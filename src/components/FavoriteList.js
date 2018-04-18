@@ -40,18 +40,12 @@ class FavoriteList extends PureComponent {
 				getStorage('minahallplatser-settings')
 				.then((settings) => {
 					window.log('Got settings:', settings);
-					if (fbUser.isAnonymous && this.props.anonFirstAppStart) {
-						this.showRegistrationQuestion();
-					}
 					if (this.props.hasUsedGPS && this.props.allowedGPS) {
 						this.props.getNearbyStops();
 					}
 				})
 				.catch(() => {
-					window.log('Could not find settings, setting default settings.');
-					if (fbUser.isAnonymous) {
-						this.showRegistrationQuestion();
-					}
+					window.log('Could not find settings.');
 				});
 			});
 		}
@@ -93,38 +87,6 @@ class FavoriteList extends PureComponent {
 			});
 			track('Page View', { Page: 'Dashboard', Type: 'Reopened app from background' });
 		}
-	}
-	
-	showRegistrationQuestion = () => {
-		globals.anonFirstAppStart = false;
-		this.props.setSetting('anonFirstAppStart', false);
-		Alert.alert(
-			'Få ut mer av appen',
-			'Få en bättre upplevelse genom att registrera dig i appen. Det är helt gratis!\nDina hållplatser sparas i molnet så att du alltid har dom kvar på ditt konto, även om du till exempel köper en ny telefon. Det går alltid att registrera sig vid ett annat tillfälle via menyn.',
-			[
-				{
-					text: 'Logga in',
-					onPress: () => {
-						track('Registration Question', { answer: 'Login' });
-						Actions.login();
-					}
-				},
-				{
-					text: 'Nej tack',
-					onPress: () => {
-						track('Registration Question', { answer: 'No' });
-					}
-				},
-				{
-					text: 'Registrera',
-					onPress: () => {
-						track('Registration Question', { answer: 'Register' });
-						Actions.register();
-					}
-				}
-			],
-			{ cancelable: false }
-		);
 	}
 
 	resetSearch = () => {
@@ -343,7 +305,7 @@ class FavoriteList extends PureComponent {
 }
 
 const mapStateToProps = state => {
-	const { favoriteOrder, allowedGPS, hasUsedGPS, anonFirstAppStart } = state.settings;
+	const { favoriteOrder, allowedGPS, hasUsedGPS } = state.settings;
 	const favorites = _.orderBy(state.fav.favorites, (o) => o[favoriteOrder] || 0, favoriteOrder === 'busStop' ? 'asc' : 'desc');
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
@@ -356,7 +318,7 @@ const mapStateToProps = state => {
 	const departureList = _.map(state.search.departureList, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Search List' };
 	});
-	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS, hasUsedGPS, anonFirstAppStart };
+	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS, hasUsedGPS };
 };
 
 export default connect(mapStateToProps,
