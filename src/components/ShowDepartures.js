@@ -200,13 +200,13 @@ class ShowDepartures extends PureComponent {
 }
 
 const MapStateToProps = (state) => {
-	const { lines } = state.fav;
+	const lines = _.map(state.fav.lines, (line) => line.replace('X', ''));
 	const { loading, timestamp } = state.departures;
 	let favorites = [];
 	let departures = [];
 	_.forEach(state.departures.departures, item => {
 		const { sname, direction } = item;
-		const departure = `${sname} ${direction}`;
+		const departure = `${sname} ${direction}`.replace('X', '');
 		if (_.includes(lines, departure)) {
 			favorites = [...favorites, item];
 		} else {
