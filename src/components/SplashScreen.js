@@ -34,11 +34,11 @@ class SplashScreen extends Component {
 			})
 			.catch((err) => {
 				window.log('Something went wrong:', err);
-				this.props.login();
+				Actions.login();
 			});
 		}, (err) => {
 			window.log('Something went wrong:', err);
-			this.props.login();
+			Actions.login();
 		});
 	}
 
