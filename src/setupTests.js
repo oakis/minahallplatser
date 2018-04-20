@@ -321,7 +321,13 @@ jest.mock('react-native-router-flux', () => {});
 jest.mock('react-native-vector-icons/Ionicons', () => {});
 jest.mock('react-native-vector-icons/MaterialIcons', () => {});
 jest.mock('react-native-device-info', () => {});
-jest.mock('react-native-fabric', () => {});
+jest.mock('react-native-fabric', () => (
+    {
+        Answers: {
+            logCustom: jest.fn()
+        }
+    }
+));
 jest.mock('react-native-fbsdk', () => (
     {
         Loginmanager: jest.fn(),
@@ -330,11 +336,17 @@ jest.mock('react-native-fbsdk', () => (
 ));
 jest.mock('react-native-mixpanel', () => (
     {
-        sharedInstanceWithToken: jest.fn()
+        sharedInstanceWithToken: jest.fn(),
+        track: jest.fn()
     }
 ));
 jest.mock('react-native-geolocation-service', () => {});
 jest.mock('react-native-vector-icons/FontAwesome', () => {});
 jest.mock('react-native-vector-icons/Entypo', () => {});
+
+if (typeof window !== 'object') {
+    global.window = global;
+    global.window.log = (msg) => console.log(msg);
+}
 
 configure({ adapter: new Adapter() });
