@@ -33,10 +33,10 @@ describe('SplashScreen', () => {
     });
     describe('autoLogin', () => {
         it('should be called once', async () => {
-            const autoLogin = jest.fn();
+            const autoLogin = stub();
             const wrapper = shallow(<SplashScreen store={mockStore()} autoLogin={autoLogin} />);
             await wrapper.dive();
-            expect(autoLogin.mock.calls.length).toBe(1);
+            expect(autoLogin.callCount).toBe(1);
         });
     });
 });
