@@ -9,4 +9,12 @@ target 'minahallplatser' do
   pod 'Mixpanel'
 
 
+
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'react-native-mixpanel', :path => '../node_modules/react-native-mixpanel'
+
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+
 end
