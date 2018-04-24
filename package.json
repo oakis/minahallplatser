@@ -9,7 +9,7 @@
     "clean": "cd android && gradlew clean",
     "build-debug": "curl http://localhost:8081/index.android.bundle?platform=android -o android/app/src/main/assets/index.android.bundle && cd android && gradlew clean && gradlew assembleDebug",
     "build-release": "npm run clean && cd android && ./gradlew assembleRelease",
-    "debug": "react-native run-android --appIdSuffix dev"
+    "debug": "npm run clean && react-native run-android --appIdSuffix dev"
   },
   "dependencies": {
     "base-64": "^0.1.0",

@@ -4,18 +4,46 @@ exports[`SplashScreen should match snapshot 1`] = `
 ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <SplashScreen
-    store={
+  Symbol(enzyme.__unrendered__): <ImageBackground
+    source={
       Object {
-        "clearActions": [Function],
-        "dispatch": [Function],
-        "getActions": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
+        "uri": "https://www.w3schools.com/css/img_fjords.jpg",
       }
     }
-  />,
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "rgba(255,255,255,0.7)",
+          "flex": 1,
+          "flexDirection": "column",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <DefaultFont
+        style={
+          Object {
+            "marginBottom": 10,
+            "opacity": 1,
+          }
+        }
+      >
+        Mina Hållplatser
+      </DefaultFont>
+      <Spinner
+        color="#779ECB"
+        noFlex={true}
+        size="large"
+      />
+    </View>
+  </ImageBackground>,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],
@@ -26,7 +54,7 @@ ShallowWrapper {
   Symbol(enzyme.__node__): Object {
     "instance": null,
     "key": undefined,
-    "nodeType": "function",
+    "nodeType": "host",
     "props": Object {
       "children": <View
         style={
@@ -55,12 +83,6 @@ ShallowWrapper {
           size="large"
         />
       </View>,
-      "source": Object {
-        "uri": "https://www.w3schools.com/css/img_fjords.jpg",
-      },
-      "style": Object {
-        "flex": 1,
-      },
     },
     "ref": null,
     "rendered": Object {
@@ -126,13 +148,13 @@ ShallowWrapper {
       ],
       "type": [Function],
     },
-    "type": [Function],
+    "type": "div",
   },
   Symbol(enzyme.__nodes__): Array [
     Object {
       "instance": null,
       "key": undefined,
-      "nodeType": "function",
+      "nodeType": "host",
       "props": Object {
         "children": <View
           style={
@@ -161,12 +183,6 @@ ShallowWrapper {
             size="large"
           />
         </View>,
-        "source": Object {
-          "uri": "https://www.w3schools.com/css/img_fjords.jpg",
-        },
-        "style": Object {
-          "flex": 1,
-        },
       },
       "ref": null,
       "rendered": Object {
@@ -232,7 +248,7 @@ ShallowWrapper {
         ],
         "type": [Function],
       },
-      "type": [Function],
+      "type": "div",
     },
   ],
   Symbol(enzyme.__options__): Object {
