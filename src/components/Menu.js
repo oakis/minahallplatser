@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, AsyncStorage, ImageBackground, Picker, ScrollView, Switch } from 'react-native';
 import { connect } from 'react-redux';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { Actions } from 'react-native-router-flux';
 import { Text, ListItem, ListHeading } from './common';
 import { RESET_ALL } from '../actions/types';

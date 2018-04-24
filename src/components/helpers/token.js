@@ -1,6 +1,6 @@
 import moment from 'moment';
 import base64 from 'base-64';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import fetch from 'react-native-cancelable-fetch';
 import { handleJsonFetch } from './';
 import { key, secret, url } from '../../Vasttrafik';

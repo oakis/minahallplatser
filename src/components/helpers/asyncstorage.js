@@ -10,7 +10,7 @@ function s4() {
 
 /**
  * @param {string} item 
- * @returns {Promise}
+ * @returns {Promise} Loaded storage
  */
 export const getStorage = (item) => {
     return new Promise((resolve, reject) => {
@@ -29,7 +29,7 @@ export const getStorage = (item) => {
 /**
  * @param {string} item 
  * @param {JSON} json 
- * @returns {Promise}
+ * @returns {Promise} -
  */
 export const setStorage = (item, json) => {
     return new Promise((resolve, reject) => {

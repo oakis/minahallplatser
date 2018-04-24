@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import moment from 'moment';
 import _ from 'lodash';
 import Mixpanel from 'react-native-mixpanel';
@@ -74,7 +74,7 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 			const credential = firebase.auth.EmailAuthProvider.credential(email, password);
 			firebase.auth().currentUser.linkWithCredential(credential).then(() => {
 				dispatch({ type: LOGIN_USER });
-				firebase.auth().signInWithEmailAndPassword(email, password)
+				firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
 					.then(user => {
 						const { favorites, lines } = store.getState().fav;
 						const fbUser = firebase.database().ref(`/users/${user.uid}`);
@@ -98,7 +98,7 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 				.then((registered) => {
 					if (registered) {
 						dispatch({ type: LOGIN_USER });
-						firebase.auth().signInWithEmailAndPassword(email, password)
+						firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
 							.then(user => loginUserSuccess(dispatch, user))
 							.catch((error) => loginUserFail(dispatch, error));
 					}
@@ -114,7 +114,7 @@ export const registerFacebook = (credential) => {
 			track('Register', { type: 'From Anonymous' });
 			firebase.auth().currentUser.linkWithCredential(credential).then(() => {
 				globals.isLoggingIn = true;
-				firebase.auth().signInWithCredential(credential)
+				firebase.auth().signInAndRetrieveDataWithCredential(credential)
 					.then(user => {
 						const { favorites, lines } = store.getState().fav;
 						const fbUser = firebase.database().ref(`/users/${user.uid}`);
@@ -133,7 +133,7 @@ export const registerFacebook = (credential) => {
 			});
 		} else {
 			track('Register', { type: 'New Account' });
-			firebase.auth().signInWithCredential(credential)
+			firebase.auth().signInAndRetrieveDataWithCredential(credential)
 			.then(user => window.log(`Facebook account ${user.email} was successfully logged in.`))
 			.catch(error => window.log('Facebook account failed:', error));
 		}
@@ -145,7 +145,7 @@ export const loginUser = ({ email, password }) => {
 		dispatch({ type: LOGIN_USER });
 		if (email && password) {
 			globals.isLoggingIn = true;
-			firebase.auth().signInWithEmailAndPassword(email, password)
+			firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
 			.then(user => window.log(`Email account ${user.email} was successfully logged in.`))
 			.catch(error => loginUserFail(dispatch, error));
 		} else if (email && !password) {
@@ -164,7 +164,7 @@ export const loginUser = ({ email, password }) => {
 export const loginAnonUser = () => {
 	return (dispatch) => {
 		dispatch({ type: LOGIN_ANON_USER });
-		firebase.auth().signInAnonymously()
+		firebase.auth().signInAnonymouslyAndRetrieveData()
 		.then(user => loginUserSuccess(dispatch, user))
 		.catch(error => loginUserFail(dispatch, error));
 	};
@@ -180,21 +180,22 @@ export const autoLogin = (user) => {
 };
 
 const loginUserSuccess = (dispatch, user) => {
+	const actualUser = user && user.additionalUserInfo && user.additionalUserInfo.isNewUser ? user.user : user;
 	getToken().finally(() => {
-		Mixpanel.identify(user.uid);
+		Mixpanel.identify(actualUser.uid);
 		if (!user.isAnonymous) {
-			Mixpanel.set({ $email: user.email });
+			Mixpanel.set({ $email: actualUser.email });
 		}
-		const fbUser = firebase.database().ref(`/users/${user.uid}`);
+		const fbUser = firebase.database().ref(`/users/${actualUser.uid}`);
 		fbUser.update({
 			lastLogin: moment().format(),
-			isAnonymous: user.isAnonymous,
-			email: user.isAnonymous ? '-' : user.email,
-			created: moment(user.metadata.creationTime).format('YYYY-MM-DDThh:mm:ssZZ'),
-			provider: user.isAnonymous ? 'Anonymous' : user.providerData[0].providerId
+			isAnonymous: actualUser.isAnonymous,
+			email: actualUser.isAnonymous ? '-' : actualUser.email,
+			created: moment(actualUser.metadata.creationTime).format(),
+			provider: actualUser.isAnonymous ? 'Anonymous' : actualUser.providerId
 		});
-		setStorage('minahallplatser-user', user).then(() => {
-			dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
+		setStorage('minahallplatser-user', actualUser).then(() => {
+			dispatch({ type: LOGIN_USER_SUCCESS, payload: actualUser });
 			getSettings(dispatch).then(() => {
 				globals.isLoggingIn = false;
 				Actions.dashboard({ type: 'reset' });

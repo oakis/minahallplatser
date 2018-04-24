@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, AppState, Text } from 'react-native';
 import { connect } from 'react-redux';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { Actions } from 'react-native-router-flux';
 import facebook from 'react-native-fbsdk';
 import {

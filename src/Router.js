@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { TouchableWithoutFeedback, View, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Scene, Router, Actions, Stack, Drawer } from 'react-native-router-flux';
+import firebase from 'react-native-firebase';
+import { connect } from 'react-redux';
 import LoginForm from './components/LoginForm';
 import FavoriteList from './components/FavoriteList';
 import ShowDepartures from './components/ShowDepartures';
@@ -11,9 +13,11 @@ import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
 import Menu from './components/Menu';
 import { colors } from './components/style';
-import { isAndroid, track, showMessage, globals } from './components/helpers';
+import { isAndroid, track, showMessage, globals, getStorage } from './components/helpers';
 import { store } from './App';
 import { CLR_ERROR } from './actions/types';
+import { autoLogin, loginAnonUser } from './actions';
+
 
 const iconSize = 24;
 
@@ -78,83 +82,120 @@ export const renderHelpButton = (self) => {
 	);
 };
 
-const RouterComponent = () => (
-	<View style={{ flex: 1 }}>
-		<StatusBar
-			backgroundColor={colors.primary}
-			barStyle="light-content"
-		/>
-		<Router
-			backAndroidHandler={onBackAndroid}
-			headerTitleStyle={{
-				color: colors.alternative,
-				alignSelf: 'center',
-				fontSize: 14,
-				fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
-			}}
-			navigationBarStyle={{ backgroundColor: colors.primary, paddingHorizontal: 10 }}
-			rightButtonTextStyle={{ color: colors.alternative }}
-			leftButtonTextStyle={{ color: colors.alternative }}
-			renderBackButton={renderBackButton}
-		>
-			<Stack key="root" hideNavBar>
-				<Scene key="splash" component={SplashScreen} hideNavBar />
-				<Drawer
-					key="dashboard"
-					contentComponent={Menu}
-					drawerIcon={<Icon name="ios-menu" size={iconSize} style={{ color: colors.alternative }} />}
-					drawerWidth={225}
-				>
-					<Scene
-						key="favlist"
-						component={FavoriteList}
-						title="Mina Hållplatser"
-						right={renderHelpButton}
-					/>
-					<Scene
-						key="departures"
-						component={ShowDepartures}
-						hideDrawerButton
-						right={renderHelpButton}
-						left={renderBackButton}
-					/>
-					<Scene key="auth">
-						<Scene
-							key="login"
-							component={LoginForm}
-							hideNavBar
-							hideDrawerButton
-							drawerLockMode={'locked-closed'}
-							title="Logga in"
-							left={renderBackButton}
-							onEnter={() => {
-								track('Page View', { Page: 'Login' });
-								globals.shouldExitApp = false;
-							}}
-						/>
-						<Scene
-							key="register"
-							component={RegisterForm}
-							hideDrawerButton
-							drawerLockMode={'locked-closed'}
-							title="Registrera"
-							left={renderBackButton}
-							onEnter={() => track('Page View', { Page: 'Register' })}
-						/>
-						<Scene
-							key="resetpw"
-							component={ResetPassword}
-							hideDrawerButton
-							drawerLockMode={'locked-closed'}
-							title="Glömt lösenord"
-							left={renderBackButton}
-							onEnter={() => track('Page View', { Page: 'Reset Password' })}
-						/>
-					</Scene>
-				</Drawer>
-			</Stack>
-		</Router>
-	</View>
-);
+class RouterComponent extends Component {
+	
+	componentDidMount() {
+		// Try to automaticly login
+		globals.isLoggingIn = true;
+		track('App Start');
+		firebase.auth().onAuthStateChanged((fbUser) => {
+			getStorage('minahallplatser-user')
+			.then((user) => {
+				window.log('Localstorage user:', user, 'Firebase user:', fbUser);
+				if (fbUser && fbUser.uid === user.uid && globals.isLoggingIn) {
+					window.log('User already exists, continue to autologin.');
+					globals.isLoggingIn = false;
+					this.props.autoLogin(fbUser);
+				} else if (globals.didLogout && !globals.isLoggingIn) {
+					Actions.login();
+					globals.didLogout = false;
+					globals.isLoggingIn = true;
+				} else if (globals.isLoggingIn) {
+					window.log('New user, creating anonymous account.');
+					this.props.loginAnonUser();
+					globals.isLoggingIn = false;
+				}
+			})
+			.catch((err) => {
+				window.log('Something went wrong:', err);
+				Actions.login();
+			});
+		}, (err) => {
+			window.log('Something went wrong:', err);
+			Actions.login();
+		});
+	}
 
-export default RouterComponent;
+	render() {
+		return (
+			<View style={{ flex: 1 }}>
+				<StatusBar
+					backgroundColor={colors.primary}
+					barStyle="light-content"
+				/>
+				<Router
+					backAndroidHandler={onBackAndroid}
+					headerTitleStyle={{
+						color: colors.alternative,
+						alignSelf: 'center',
+						fontSize: 14,
+						fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
+					}}
+					navigationBarStyle={{ backgroundColor: colors.primary, paddingHorizontal: 10 }}
+					rightButtonTextStyle={{ color: colors.alternative }}
+					leftButtonTextStyle={{ color: colors.alternative }}
+					renderBackButton={renderBackButton}
+				>
+					<Stack key="root" hideNavBar>
+						<Scene key="splash" component={SplashScreen} hideNavBar />
+						<Drawer
+							key="dashboard"
+							contentComponent={Menu}
+							drawerIcon={<Icon name="ios-menu" size={iconSize} style={{ color: colors.alternative }} />}
+							drawerWidth={225}
+						>
+							<Scene
+								key="favlist"
+								component={FavoriteList}
+								title="Mina Hållplatser"
+								right={renderHelpButton}
+							/>
+							<Scene
+								key="departures"
+								component={ShowDepartures}
+								hideDrawerButton
+								right={renderHelpButton}
+								left={renderBackButton}
+							/>
+							<Scene key="auth">
+								<Scene
+									key="login"
+									component={LoginForm}
+									hideNavBar
+									hideDrawerButton
+									drawerLockMode={'locked-closed'}
+									title="Logga in"
+									left={renderBackButton}
+									onEnter={() => {
+										track('Page View', { Page: 'Login' });
+										globals.shouldExitApp = false;
+									}}
+								/>
+								<Scene
+									key="register"
+									component={RegisterForm}
+									hideDrawerButton
+									drawerLockMode={'locked-closed'}
+									title="Registrera"
+									left={renderBackButton}
+									onEnter={() => track('Page View', { Page: 'Register' })}
+								/>
+								<Scene
+									key="resetpw"
+									component={ResetPassword}
+									hideDrawerButton
+									drawerLockMode={'locked-closed'}
+									title="Glömt lösenord"
+									left={renderBackButton}
+									onEnter={() => track('Page View', { Page: 'Reset Password' })}
+								/>
+							</Scene>
+						</Drawer>
+					</Stack>
+				</Router>
+			</View>
+		);
+	}
+}
+
+export default connect(null, { autoLogin, loginAnonUser })(RouterComponent);

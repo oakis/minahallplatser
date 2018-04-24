@@ -64,3 +64,9 @@ index.android.bundle
 ios/Crashlytics*
 ios/Fabric*
 ios/Pods*
+
+# Bundle artifact
+*.jsbundle
+
+google-services.json
+coverage/
