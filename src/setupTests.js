@@ -278,8 +278,7 @@ jest.mock('react-native', () => {
             setStyleAttributePreprocessor: jest.fn(),
             create: jest.fn((styles) => {
                 return Object.keys(styles).reduce((acc, styleKey) => {
-
-                    return Object.assign(acc, { [styleKey]: styleKey })
+                    return Object.assign(acc, { [styleKey]: styleKey });
                 }, {});
             }),
         },
@@ -343,6 +342,13 @@ jest.mock('react-native-mixpanel', () => (
 jest.mock('react-native-geolocation-service', () => {});
 jest.mock('react-native-vector-icons/FontAwesome', () => {});
 jest.mock('react-native-vector-icons/Entypo', () => {});
+jest.mock('react-native-firebase', () => ({
+    auth: () => ({
+        onAuthStateChanged: (fn) => {
+            fn({ uid: 123 });
+        }
+    })
+}));
 
 if (typeof window !== 'object') {
     global.window = global;

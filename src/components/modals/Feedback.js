@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import { View, Modal, ScrollView, Alert } from 'react-native';
 import fetch from 'react-native-cancelable-fetch';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { Button, ListHeading, Input, Text } from '../common';
 import { metrics, colors } from '../style';
-import { track, getDeviceModel, getOsVersion, getAppVersion, handleJsonFetch, showMessage } from '../helpers';
+import { track, getDeviceModel, getOsVersion, getAppVersion, handleJsonFetch } from '../helpers';
 import { firebaseFunctionsUrl } from '../../Server';
 
 export class Feedback extends PureComponent {

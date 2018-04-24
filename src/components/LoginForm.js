@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, AppState, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import facebook from 'react-native-fbsdk';
 import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser, loginFacebook } from '../actions';
 import { Button, Input, Message } from './common';
@@ -61,7 +61,7 @@ class LoginForm extends Component {
 					(data) => {
 						globals.isLoggingIn = true;
 						const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
-						firebase.auth().signInWithCredential(credential)
+						firebase.auth().signInAndRetrieveDataWithCredential(credential)
 						.then(user => window.log(`Facebook account ${user.email} was successfully logged in.`))
 						.catch(error => window.log('Facebook account failed:', error));
 					}

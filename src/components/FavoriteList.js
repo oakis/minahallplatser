@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops, setSetting } from '../actions';

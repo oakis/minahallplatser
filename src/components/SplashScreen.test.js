@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
-import firebase from 'firebase';
 import thunk from 'redux-thunk';
 import { stub } from 'sinon';
 import SplashScreen from './SplashScreen';
@@ -19,10 +18,6 @@ jest.mock('../actions', () => ({
 }));
 
 const mockStore = configureMockStore([thunk]);
-
-firebase.auth().onAuthStateChanged = (fn) => {
-    fn({ uid: 123 });
-};
 
 global.window.log = () => {};
 

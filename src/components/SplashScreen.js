@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ImageBackground } from 'react-native';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { autoLogin, loginAnonUser } from '../actions';

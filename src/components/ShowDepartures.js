@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { View, ScrollView, FlatList, AppState } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { renderHelpButton } from '../Router';
 import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle } from '../actions';
 import { DepartureListItem, Spinner, Message, ListItemSeparator, Popup, Text } from './common';

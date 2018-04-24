@@ -16,7 +16,7 @@ export const handleJsonFetch = (response) => {
             Crashlytics.logException(data.StackTraceString);
             throw data.Message;
         });
-     } else if (response.status === 404) {
+    } else if (response.status === 404) {
         return response.json()
         .then((data) => {
             window.log('handleJsonFetch(): Error', data);
