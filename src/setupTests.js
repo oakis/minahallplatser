@@ -355,4 +355,6 @@ if (typeof window !== 'object') {
     global.window.log = (msg) => console.log(msg);
 }
 
+console.error = () => {};
+
 configure({ adapter: new Adapter() });
