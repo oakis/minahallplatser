@@ -69,3 +69,4 @@ ios/Pods*
 *.jsbundle
 
 google-services.json
+coverage/
