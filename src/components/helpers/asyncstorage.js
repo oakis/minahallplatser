@@ -16,12 +16,13 @@ export const getStorage = (item) => {
     return new Promise((resolve, reject) => {
         AsyncStorage.getItem(item)
         .then((json) => {
+            const data = json === null ? {} : JSON.parse(json);
             window.log(`getStorage() ${item}: OK`);
-            return resolve(JSON.parse(json));
+            resolve(data);
         })
         .catch((e) => {
             window.log(`getStorage() ${item}: FAIL`, e);
-            return reject(e);
+            reject(e);
         });
     });
 };
@@ -36,11 +37,11 @@ export const setStorage = (item, json) => {
         AsyncStorage.setItem(item, JSON.stringify(json))
         .then(() => {
             window.log(`setStorage() ${item}: OK`);
-            return resolve();
+            resolve();
         })
         .catch((e) => {
             window.log(`setStorage() ${item}: FAIL`, e);
-            return reject(e);
+            reject(e);
         });
     });
 };
