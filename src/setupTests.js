@@ -1,5 +1,6 @@
 import React from 'react';
 import { configure } from 'enzyme';
+import { stub } from 'sinon';
 import Adapter from 'enzyme-adapter-react-16';
 
 jest.mock('react-native', () => {
@@ -348,6 +349,32 @@ jest.mock('react-native-firebase', () => ({
             fn({ uid: 123 });
         }
     })
+}));
+
+jest.mock('react-native-router-flux', () => ({
+    Router: jest.fn(),
+    Stack: jest.fn(),
+    Scene: jest.fn(),
+    Drawer: jest.fn(),
+    Actions: {
+        login: stub(),
+        pop: stub(),
+    },
+}));
+
+jest.mock('./components/helpers', () => ({
+    getStorage: jest.fn(),
+    globals: {},
+    track: jest.fn(),
+    isAndroid: jest.fn(),
+    showMessage: jest.fn(),
+}));
+
+jest.mock('./actions', () => ({
+    auth: {
+        autoLogin: stub(),
+        loginAnonUser: stub(),
+    }
 }));
 
 if (typeof window !== 'object') {

@@ -21,7 +21,7 @@ import { autoLogin, loginAnonUser } from './actions';
 
 const iconSize = 24;
 
-const onBackAndroid = () => {
+export const onBackAndroid = () => {
 	if (Actions.currentScene === 'login' || Actions.currentScene === '_favlist') {
 		if (globals.shouldExitApp === false) {
 			showMessage('short', 'Backa en gång till för att stänga appen');
@@ -35,7 +35,7 @@ const onBackAndroid = () => {
 	return true;
 };
 
-const renderBackButton = () => {
+export const BackButton = () => {
 	return (
 		<TouchableWithoutFeedback
 			onPress={async () => {
@@ -60,7 +60,7 @@ const renderBackButton = () => {
 	);
 };
 
-export const renderHelpButton = (self) => {
+export const HelpButton = (self) => {
 	return (
 		<TouchableWithoutFeedback
 			onPress={self.openPopup}
@@ -86,17 +86,17 @@ class RouterComponent extends Component {
 	
 	componentDidMount() {
 		// Try to automaticly login
-		globals.isLoggingIn = true;
 		track('App Start');
 		firebase.auth().onAuthStateChanged((fbUser) => {
 			getStorage('minahallplatser-user')
 			.then((user) => {
 				window.log('Localstorage user:', user, 'Firebase user:', fbUser);
-				if (fbUser && fbUser.uid === user.uid && globals.isLoggingIn) {
+				if (fbUser && fbUser.uid && globals.isLoggingIn) {
 					window.log('User already exists, continue to autologin.');
 					globals.isLoggingIn = false;
 					this.props.autoLogin(fbUser);
 				} else if (globals.didLogout && !globals.isLoggingIn) {
+					window.log('User logged out.');
 					Actions.login();
 					globals.didLogout = false;
 					globals.isLoggingIn = true;
@@ -134,7 +134,7 @@ class RouterComponent extends Component {
 					navigationBarStyle={{ backgroundColor: colors.primary, paddingHorizontal: 10 }}
 					rightButtonTextStyle={{ color: colors.alternative }}
 					leftButtonTextStyle={{ color: colors.alternative }}
-					renderBackButton={renderBackButton}
+					renderBackButton={BackButton}
 				>
 					<Stack key="root" hideNavBar>
 						<Scene key="splash" component={SplashScreen} hideNavBar />
@@ -148,14 +148,14 @@ class RouterComponent extends Component {
 								key="favlist"
 								component={FavoriteList}
 								title="Mina Hållplatser"
-								right={renderHelpButton}
+								right={HelpButton}
 							/>
 							<Scene
 								key="departures"
 								component={ShowDepartures}
 								hideDrawerButton
-								right={renderHelpButton}
-								left={renderBackButton}
+								right={HelpButton}
+								left={BackButton}
 							/>
 							<Scene key="auth">
 								<Scene
@@ -165,7 +165,7 @@ class RouterComponent extends Component {
 									hideDrawerButton
 									drawerLockMode={'locked-closed'}
 									title="Logga in"
-									left={renderBackButton}
+									left={BackButton}
 									onEnter={() => {
 										track('Page View', { Page: 'Login' });
 										globals.shouldExitApp = false;
@@ -177,7 +177,7 @@ class RouterComponent extends Component {
 									hideDrawerButton
 									drawerLockMode={'locked-closed'}
 									title="Registrera"
-									left={renderBackButton}
+									left={BackButton}
 									onEnter={() => track('Page View', { Page: 'Register' })}
 								/>
 								<Scene
@@ -186,7 +186,7 @@ class RouterComponent extends Component {
 									hideDrawerButton
 									drawerLockMode={'locked-closed'}
 									title="Glömt lösenord"
-									left={renderBackButton}
+									left={BackButton}
 									onEnter={() => track('Page View', { Page: 'Reset Password' })}
 								/>
 							</Scene>

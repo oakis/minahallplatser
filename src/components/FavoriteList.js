@@ -11,7 +11,7 @@ import { favoriteGet, favoriteDelete, clearErrors, searchStops, searchChanged, f
 import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading, Text, Popup } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
-import { renderHelpButton } from '../Router';
+import { HelpButton } from '../Router';
 import { store } from '../App';
 import { track, globals, getStorage, isAndroid } from './helpers';
 
@@ -58,7 +58,7 @@ class FavoriteList extends PureComponent {
 
 	componentWillReceiveProps() {
 		if (this.state.init) {
-			Actions.refresh({ right: renderHelpButton(this) });
+			Actions.refresh({ right: HelpButton(this) });
 			this.setState({ init: false });
 		}
 	}
