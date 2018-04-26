@@ -79,11 +79,9 @@ class FavoriteList extends PureComponent {
 
 	handleAppStateChange = (nextAppState) => {
 		if (nextAppState === 'active') {
-			getStorage('minahallplatser-settings').then((settings) => {
-				if (settings && settings.hasUsedGPS && settings.allowedGPS) {
-					this.props.getNearbyStops();
-				}
-			});
+			if (this.props.hasUsedGPS && this.props.allowedGPS) {
+				this.props.getNearbyStops();
+			}
 			track('Page View', { Page: 'Dashboard', Type: 'Reopened app from background' });
 		}
 	}
