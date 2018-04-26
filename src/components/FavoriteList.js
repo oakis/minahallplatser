@@ -33,20 +33,19 @@ class FavoriteList extends PureComponent {
 		Keyboard.dismiss();
 		const fbUser = firebase.auth().currentUser;
 		if (fbUser && fbUser.uid) {
-			getStorage('minahallplatser-user').then((user) => {
+			Promise.all([getStorage('minahallplatser-user'), getStorage('minahallplatser-settings')])
+			.then(([user, settings]) => {
+				window.log('Got user:', user, 'with settings:', settings);
 				if (user && user.uid === fbUser.uid) {
 					this.props.favoriteGet(fbUser);
 				}
-				getStorage('minahallplatser-settings')
-				.then((settings) => {
-					window.log('Got settings:', settings);
-					if (this.props.hasUsedGPS && this.props.allowedGPS) {
-						this.props.getNearbyStops();
-					}
-				})
-				.catch(() => {
-					window.log('Could not find settings.');
-				});
+				if (this.props.hasUsedGPS && this.props.allowedGPS) {
+					window.log('Refreshing nearby stops');
+					this.props.getNearbyStops();
+				}
+			})
+			.catch((e) => {
+				window.log('Something went wrong', e);
 			});
 		}
 		track('Page View', { Page: 'Dashboard' });

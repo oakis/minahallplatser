@@ -347,7 +347,8 @@ jest.mock('react-native-firebase', () => ({
     auth: () => ({
         onAuthStateChanged: (fn) => {
             fn({ uid: 123 });
-        }
+        },
+        currentUser: { uid: 123 }
     })
 }));
 
@@ -363,7 +364,7 @@ jest.mock('react-native-router-flux', () => ({
 }));
 
 jest.mock('./components/helpers', () => ({
-    getStorage: jest.fn(),
+    getStorage: jest.fn(() => {}),
     globals: {},
     track: jest.fn(),
     isAndroid: jest.fn(),
