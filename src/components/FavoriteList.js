@@ -25,7 +25,8 @@ class FavoriteList extends PureComponent {
 			showHelp: false,
 			init: true
 		};
-		this.searchTimeout = null;
+		this.searchTimeout = undefined;
+		this.clearTimeout = undefined;
 	}
 
 	componentWillMount() {
@@ -70,7 +71,7 @@ class FavoriteList extends PureComponent {
 	
 	onInputChange = (busStop) => {
 		fetch.abort('searchStops');
-		clearTimeout(this.searchTimeout);
+		this.clearTimeout = clearTimeout(this.searchTimeout);
 		this.props.searchChanged(busStop);
 		this.searchTimeout = setTimeout(() => {
 			this.props.searchStops({ busStop });
