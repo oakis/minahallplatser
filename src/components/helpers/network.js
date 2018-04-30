@@ -1,4 +1,4 @@
-import { Crashlytics } from 'react-native-fabric';
+import firebase from 'react-native-firebase';
 
 export const handleJsonFetch = (response) => {
     window.log(`handleJsonFetch() - Status: ${response.status} - ok: ${response.ok}`);
@@ -13,7 +13,7 @@ export const handleJsonFetch = (response) => {
         return response.json()
         .then((data) => {
             window.log('handleJsonFetch(): Error', data);
-            Crashlytics.logException(data.StackTraceString);
+            firebase.crashlytics().recordError(data.StackTraceString);
             throw data.Message;
         });
     } else if (response.status === 404) {

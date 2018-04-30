@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import { Crashlytics } from 'react-native-fabric';
+import firebase from 'react-native-firebase';
 import ReduxThunk from 'redux-thunk';
 import fbPerformanceNow from 'fbjs/lib/performanceNow';
 import reducers from './reducers';
@@ -39,11 +39,11 @@ const defaultHandler = (ErrorUtils.getGlobalHandler && ErrorUtils.getGlobalHandl
 
 ErrorUtils.setGlobalHandler(({ stack }) => {
     const { uid, email, displayName } = store.getState().auth.user;
-    Crashlytics.setUserName(displayName);
-    Crashlytics.setUserEmail(email);
-    Crashlytics.setUserIdentifier(uid);
+    firebase.crashlytics().setStringValue('Name', displayName);
+    firebase.crashlytics().setStringValue('Email', email);
+    firebase.crashlytics().setUserIdentifier(uid);
     window.log('Sending error to Crashlytics:', stack);
-    Crashlytics.logException(stack);
+    firebase.crashlytics().log(stack);
     defaultHandler.apply(this, arguments);
 });
 

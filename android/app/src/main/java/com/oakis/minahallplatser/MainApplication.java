@@ -15,11 +15,9 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.smixx.fabric.FabricPackage;
-import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
+import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,10 +43,10 @@ public class MainApplication extends Application implements ReactApplication {
             new FBSDKPackage(mCallbackManager),
             new RNDeviceInfo(),
             new RNMixpanel(),
-            new FabricPackage(),
             new RNFirebasePackage(),
             new RNFirebaseAuthPackage(),
             new RNFirebaseDatabasePackage(),
+            new RNFirebaseCrashlyticsPackage(),
             new VectorIconsPackage(),
             new RNFusedLocationPackage()
       );
@@ -69,7 +67,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-    Fabric.with(this, new Crashlytics());
     FacebookSdk.sdkInitialize(getApplicationContext());
   }
 }

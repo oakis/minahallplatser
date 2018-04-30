@@ -323,13 +323,6 @@ jest.mock('react-native-vector-icons/MaterialIcons', () => 'MaterialIcon');
 jest.mock('react-native-vector-icons/FontAwesome', () => 'FontAwesomeIcon');
 jest.mock('react-native-vector-icons/Entypo', () => 'EntypoIcon');
 jest.mock('react-native-device-info', () => {});
-jest.mock('react-native-fabric', () => (
-    {
-        Answers: {
-            logCustom: jest.fn()
-        }
-    }
-));
 jest.mock('react-native-fbsdk', () => (
     {
         Loginmanager: jest.fn(),

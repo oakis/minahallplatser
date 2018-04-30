@@ -55,14 +55,14 @@ class FavoriteList extends PureComponent {
 	componentDidMount() {
 		AppState.addEventListener('change', this.handleAppStateChange);
 	}
-
+	
 	componentWillReceiveProps() {
 		if (this.state.init) {
 			Actions.refresh({ right: HelpButton(this) });
 			this.setState({ init: false });
 		}
 	}
-
+	
 	componentWillUnmount() {
 		fetch.abort('searchStops');
 		this.props.clearErrors();

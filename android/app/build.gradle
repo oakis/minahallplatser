@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: 'io.fabric'
 
 import com.android.build.OutputFile
 import groovy.json.JsonSlurper
@@ -71,20 +72,6 @@ android {
     }
 }
 
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
-    dependencies {
-        // The Fabric Gradle plugin uses an open ended version to react
-        // quickly to Android tooling updates
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
-}
-apply plugin: 'io.fabric'
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
 
 dependencies {
     implementation project(':react-native-fbsdk')
@@ -100,15 +87,11 @@ dependencies {
     implementation "com.google.firebase:firebase-core:12.0.1"
     implementation "com.google.firebase:firebase-auth:12.0.1"
     implementation "com.google.firebase:firebase-database:12.0.1"
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.1'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:23.0.1"
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
-    implementation project(':react-native-fabric')
-    implementation('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
-        transitive = true;
-    }
 
     implementation project(':react-native-vector-icons')
 
