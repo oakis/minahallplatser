@@ -15,5 +15,5 @@ it('timeEnd should return 100 - 115', async () => {
     await wait();
     const actual = window.timeEnd('test');
     expect(actual).toBeGreaterThanOrEqual(100);
-    expect(actual).toBeLessThanOrEqual(115);
+    expect(actual).toBeLessThanOrEqual(180);
 });
