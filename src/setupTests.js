@@ -325,8 +325,12 @@ jest.mock('react-native-vector-icons/Entypo', () => 'EntypoIcon');
 jest.mock('react-native-device-info', () => {});
 jest.mock('react-native-fbsdk', () => (
     {
-        Loginmanager: jest.fn(),
-        AccessToken: jest.fn()
+        LoginManager: {
+            logInWithReadPermissions: () => Promise.resolve({}),
+        },
+        AccessToken: {
+            getCurrentAccessToken: () => Promise.resolve({ accessToken: 123 }),
+        }
     }
 ));
 jest.mock('react-native-mixpanel', () => (
@@ -341,7 +345,8 @@ jest.mock('react-native-firebase', () => ({
         onAuthStateChanged: (fn) => {
             fn({ uid: 123 });
         },
-        currentUser: { uid: 123 }
+        currentUser: { uid: 123 },
+        signInAndRetrieveDataWithCredential: stub().resolves({ email: 'abc@123.com' }),
     })
 }));
 
