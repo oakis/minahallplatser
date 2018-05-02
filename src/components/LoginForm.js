@@ -40,7 +40,6 @@ class LoginForm extends Component {
 	}
 
 	onButtonPress = () => {
-		this.props.loading = true;
 		const { email, password } = this.props;
 		this.props.loginUser({ email, password });
 	}
@@ -62,7 +61,7 @@ class LoginForm extends Component {
 						globals.isLoggingIn = true;
 						const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
 						firebase.auth().signInAndRetrieveDataWithCredential(credential)
-						.then(user => window.log(`Facebook account ${user.email} was successfully logged in.`))
+						.then(user => window.log(`Facebook account ${user.user.email} was successfully logged in.`))
 						.catch(error => window.log('Facebook account failed:', error));
 					}
 				);
