@@ -1,0 +1,1457 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match snapshot 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Popup />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": Array [
+        <TouchableOpacity
+          activeOpacity={1}
+          disabled={false}
+          onPress={undefined}
+          style={
+            Object {
+              "height": 0,
+              "position": "absolute",
+              "width": 0,
+              "zIndex": 1,
+            }
+          }
+        >
+          <Animated.View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                  "height": "100%",
+                  "justifyContent": "center",
+                  "position": "absolute",
+                  "width": "100%",
+                  "zIndex": 1,
+                },
+                Object {
+                  "opacity": Object {},
+                },
+              ]
+            }
+          />
+        </TouchableOpacity>,
+        <Animated.View
+          style={
+            Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderRadius": 5,
+                "borderWidth": 2,
+                "elevation": 10,
+                "maxHeight": 1329.2307692307693,
+                "minHeight": 250,
+                "padding": 10,
+                "position": "absolute",
+                "width": "85%",
+                "zIndex": 2,
+              },
+              Object {
+                "opacity": Object {},
+                "transform": Array [
+                  Object {
+                    "scale": Object {},
+                  },
+                ],
+              },
+            ]
+          }
+        >
+          <ScrollView>
+            <Button
+              color="primary"
+              label="Stäng"
+              onPress={undefined}
+              uppercase={true}
+            />
+          </ScrollView>
+        </Animated.View>,
+      ],
+      "style": Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "rgba(0, 0, 0, 0.4)",
+          "height": "100%",
+          "justifyContent": "center",
+          "position": "absolute",
+          "width": "100%",
+          "zIndex": 1,
+        },
+        Object {
+          "backgroundColor": "transparent",
+          "height": 0,
+          "width": 0,
+        },
+      ],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "activeOpacity": 1,
+          "children": <Animated.View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                  "height": "100%",
+                  "justifyContent": "center",
+                  "position": "absolute",
+                  "width": "100%",
+                  "zIndex": 1,
+                },
+                Object {
+                  "opacity": Object {},
+                },
+              ]
+            }
+          />,
+          "disabled": false,
+          "onPress": undefined,
+          "style": Object {
+            "height": 0,
+            "position": "absolute",
+            "width": 0,
+            "zIndex": 1,
+          },
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "style": Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                "height": "100%",
+                "justifyContent": "center",
+                "position": "absolute",
+                "width": "100%",
+                "zIndex": 1,
+              },
+              Object {
+                "opacity": Object {},
+              },
+            ],
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "Animated.View",
+        },
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <ScrollView>
+            <Button
+              color="primary"
+              label="Stäng"
+              onPress={undefined}
+              uppercase={true}
+            />
+          </ScrollView>,
+          "style": Array [
+            Object {
+              "backgroundColor": "#fff",
+              "borderRadius": 5,
+              "borderWidth": 2,
+              "elevation": 10,
+              "maxHeight": 1329.2307692307693,
+              "minHeight": 250,
+              "padding": 10,
+              "position": "absolute",
+              "width": "85%",
+              "zIndex": 2,
+            },
+            Object {
+              "opacity": Object {},
+              "transform": Array [
+                Object {
+                  "scale": Object {},
+                },
+              ],
+            },
+          ],
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              undefined,
+              <Button
+                color="primary"
+                label="Stäng"
+                onPress={undefined}
+                uppercase={true}
+              />,
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            undefined,
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "color": "primary",
+                "label": "Stäng",
+                "onPress": undefined,
+                "uppercase": true,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        "type": "Animated.View",
+      },
+    ],
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": Array [
+          <TouchableOpacity
+            activeOpacity={1}
+            disabled={false}
+            onPress={undefined}
+            style={
+              Object {
+                "height": 0,
+                "position": "absolute",
+                "width": 0,
+                "zIndex": 1,
+              }
+            }
+          >
+            <Animated.View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                    "height": "100%",
+                    "justifyContent": "center",
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 1,
+                  },
+                  Object {
+                    "opacity": Object {},
+                  },
+                ]
+              }
+            />
+          </TouchableOpacity>,
+          <Animated.View
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 5,
+                  "borderWidth": 2,
+                  "elevation": 10,
+                  "maxHeight": 1329.2307692307693,
+                  "minHeight": 250,
+                  "padding": 10,
+                  "position": "absolute",
+                  "width": "85%",
+                  "zIndex": 2,
+                },
+                Object {
+                  "opacity": Object {},
+                  "transform": Array [
+                    Object {
+                      "scale": Object {},
+                    },
+                  ],
+                },
+              ]
+            }
+          >
+            <ScrollView>
+              <Button
+                color="primary"
+                label="Stäng"
+                onPress={undefined}
+                uppercase={true}
+              />
+            </ScrollView>
+          </Animated.View>,
+        ],
+        "style": Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "rgba(0, 0, 0, 0.4)",
+            "height": "100%",
+            "justifyContent": "center",
+            "position": "absolute",
+            "width": "100%",
+            "zIndex": 1,
+          },
+          Object {
+            "backgroundColor": "transparent",
+            "height": 0,
+            "width": 0,
+          },
+        ],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "activeOpacity": 1,
+            "children": <Animated.View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                    "height": "100%",
+                    "justifyContent": "center",
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 1,
+                  },
+                  Object {
+                    "opacity": Object {},
+                  },
+                ]
+              }
+            />,
+            "disabled": false,
+            "onPress": undefined,
+            "style": Object {
+              "height": 0,
+              "position": "absolute",
+              "width": 0,
+              "zIndex": 1,
+            },
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "style": Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                  "height": "100%",
+                  "justifyContent": "center",
+                  "position": "absolute",
+                  "width": "100%",
+                  "zIndex": 1,
+                },
+                Object {
+                  "opacity": Object {},
+                },
+              ],
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "Animated.View",
+          },
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <ScrollView>
+              <Button
+                color="primary"
+                label="Stäng"
+                onPress={undefined}
+                uppercase={true}
+              />
+            </ScrollView>,
+            "style": Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderRadius": 5,
+                "borderWidth": 2,
+                "elevation": 10,
+                "maxHeight": 1329.2307692307693,
+                "minHeight": 250,
+                "padding": 10,
+                "position": "absolute",
+                "width": "85%",
+                "zIndex": 2,
+              },
+              Object {
+                "opacity": Object {},
+                "transform": Array [
+                  Object {
+                    "scale": Object {},
+                  },
+                ],
+              },
+            ],
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                undefined,
+                <Button
+                  color="primary"
+                  label="Stäng"
+                  onPress={undefined}
+                  uppercase={true}
+                />,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              undefined,
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "color": "primary",
+                  "label": "Stäng",
+                  "onPress": undefined,
+                  "uppercase": true,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+          "type": "Animated.View",
+        },
+      ],
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`should match snapshot 2`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Popup
+    isVisible={true}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": Array [
+        <TouchableOpacity
+          activeOpacity={1}
+          disabled={true}
+          onPress={undefined}
+          style={
+            Object {
+              "height": "100%",
+              "position": "absolute",
+              "width": "100%",
+              "zIndex": 1,
+            }
+          }
+        >
+          <Animated.View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                  "height": "100%",
+                  "justifyContent": "center",
+                  "position": "absolute",
+                  "width": "100%",
+                  "zIndex": 1,
+                },
+                Object {
+                  "opacity": Object {},
+                },
+              ]
+            }
+          />
+        </TouchableOpacity>,
+        <Animated.View
+          style={
+            Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderRadius": 5,
+                "borderWidth": 2,
+                "elevation": 10,
+                "maxHeight": 1329.2307692307693,
+                "minHeight": 250,
+                "padding": 10,
+                "position": "absolute",
+                "width": "85%",
+                "zIndex": 2,
+              },
+              Object {
+                "opacity": Object {},
+                "transform": Array [
+                  Object {
+                    "scale": Object {},
+                  },
+                ],
+              },
+            ]
+          }
+        >
+          <ScrollView>
+            <Button
+              color="primary"
+              label="Stäng"
+              onPress={undefined}
+              uppercase={true}
+            />
+          </ScrollView>
+        </Animated.View>,
+      ],
+      "style": Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "rgba(0, 0, 0, 0.4)",
+          "height": "100%",
+          "justifyContent": "center",
+          "position": "absolute",
+          "width": "100%",
+          "zIndex": 1,
+        },
+        Object {
+          "backgroundColor": "transparent",
+          "height": "100%",
+          "width": "100%",
+        },
+      ],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "activeOpacity": 1,
+          "children": <Animated.View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                  "height": "100%",
+                  "justifyContent": "center",
+                  "position": "absolute",
+                  "width": "100%",
+                  "zIndex": 1,
+                },
+                Object {
+                  "opacity": Object {},
+                },
+              ]
+            }
+          />,
+          "disabled": true,
+          "onPress": undefined,
+          "style": Object {
+            "height": "100%",
+            "position": "absolute",
+            "width": "100%",
+            "zIndex": 1,
+          },
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "style": Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                "height": "100%",
+                "justifyContent": "center",
+                "position": "absolute",
+                "width": "100%",
+                "zIndex": 1,
+              },
+              Object {
+                "opacity": Object {},
+              },
+            ],
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "Animated.View",
+        },
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <ScrollView>
+            <Button
+              color="primary"
+              label="Stäng"
+              onPress={undefined}
+              uppercase={true}
+            />
+          </ScrollView>,
+          "style": Array [
+            Object {
+              "backgroundColor": "#fff",
+              "borderRadius": 5,
+              "borderWidth": 2,
+              "elevation": 10,
+              "maxHeight": 1329.2307692307693,
+              "minHeight": 250,
+              "padding": 10,
+              "position": "absolute",
+              "width": "85%",
+              "zIndex": 2,
+            },
+            Object {
+              "opacity": Object {},
+              "transform": Array [
+                Object {
+                  "scale": Object {},
+                },
+              ],
+            },
+          ],
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              undefined,
+              <Button
+                color="primary"
+                label="Stäng"
+                onPress={undefined}
+                uppercase={true}
+              />,
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            undefined,
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "color": "primary",
+                "label": "Stäng",
+                "onPress": undefined,
+                "uppercase": true,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        "type": "Animated.View",
+      },
+    ],
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": Array [
+          <TouchableOpacity
+            activeOpacity={1}
+            disabled={true}
+            onPress={undefined}
+            style={
+              Object {
+                "height": "100%",
+                "position": "absolute",
+                "width": "100%",
+                "zIndex": 1,
+              }
+            }
+          >
+            <Animated.View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                    "height": "100%",
+                    "justifyContent": "center",
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 1,
+                  },
+                  Object {
+                    "opacity": Object {},
+                  },
+                ]
+              }
+            />
+          </TouchableOpacity>,
+          <Animated.View
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 5,
+                  "borderWidth": 2,
+                  "elevation": 10,
+                  "maxHeight": 1329.2307692307693,
+                  "minHeight": 250,
+                  "padding": 10,
+                  "position": "absolute",
+                  "width": "85%",
+                  "zIndex": 2,
+                },
+                Object {
+                  "opacity": Object {},
+                  "transform": Array [
+                    Object {
+                      "scale": Object {},
+                    },
+                  ],
+                },
+              ]
+            }
+          >
+            <ScrollView>
+              <Button
+                color="primary"
+                label="Stäng"
+                onPress={undefined}
+                uppercase={true}
+              />
+            </ScrollView>
+          </Animated.View>,
+        ],
+        "style": Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "rgba(0, 0, 0, 0.4)",
+            "height": "100%",
+            "justifyContent": "center",
+            "position": "absolute",
+            "width": "100%",
+            "zIndex": 1,
+          },
+          Object {
+            "backgroundColor": "transparent",
+            "height": "100%",
+            "width": "100%",
+          },
+        ],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "activeOpacity": 1,
+            "children": <Animated.View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                    "height": "100%",
+                    "justifyContent": "center",
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 1,
+                  },
+                  Object {
+                    "opacity": Object {},
+                  },
+                ]
+              }
+            />,
+            "disabled": true,
+            "onPress": undefined,
+            "style": Object {
+              "height": "100%",
+              "position": "absolute",
+              "width": "100%",
+              "zIndex": 1,
+            },
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "style": Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                  "height": "100%",
+                  "justifyContent": "center",
+                  "position": "absolute",
+                  "width": "100%",
+                  "zIndex": 1,
+                },
+                Object {
+                  "opacity": Object {},
+                },
+              ],
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "Animated.View",
+          },
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <ScrollView>
+              <Button
+                color="primary"
+                label="Stäng"
+                onPress={undefined}
+                uppercase={true}
+              />
+            </ScrollView>,
+            "style": Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderRadius": 5,
+                "borderWidth": 2,
+                "elevation": 10,
+                "maxHeight": 1329.2307692307693,
+                "minHeight": 250,
+                "padding": 10,
+                "position": "absolute",
+                "width": "85%",
+                "zIndex": 2,
+              },
+              Object {
+                "opacity": Object {},
+                "transform": Array [
+                  Object {
+                    "scale": Object {},
+                  },
+                ],
+              },
+            ],
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                undefined,
+                <Button
+                  color="primary"
+                  label="Stäng"
+                  onPress={undefined}
+                  uppercase={true}
+                />,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              undefined,
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "color": "primary",
+                  "label": "Stäng",
+                  "onPress": undefined,
+                  "uppercase": true,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+          "type": "Animated.View",
+        },
+      ],
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`should match snapshot 3`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Popup
+    isVisible={false}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": Array [
+        <TouchableOpacity
+          activeOpacity={1}
+          disabled={true}
+          onPress={undefined}
+          style={
+            Object {
+              "height": 0,
+              "position": "absolute",
+              "width": 0,
+              "zIndex": 1,
+            }
+          }
+        >
+          <Animated.View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                  "height": "100%",
+                  "justifyContent": "center",
+                  "position": "absolute",
+                  "width": "100%",
+                  "zIndex": 1,
+                },
+                Object {
+                  "opacity": Object {},
+                },
+              ]
+            }
+          />
+        </TouchableOpacity>,
+        <Animated.View
+          style={
+            Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderRadius": 5,
+                "borderWidth": 2,
+                "elevation": 10,
+                "maxHeight": 1329.2307692307693,
+                "minHeight": 250,
+                "padding": 10,
+                "position": "absolute",
+                "width": "85%",
+                "zIndex": 2,
+              },
+              Object {
+                "opacity": Object {},
+                "transform": Array [
+                  Object {
+                    "scale": Object {},
+                  },
+                ],
+              },
+            ]
+          }
+        >
+          <ScrollView>
+            <Button
+              color="primary"
+              label="Stäng"
+              onPress={undefined}
+              uppercase={true}
+            />
+          </ScrollView>
+        </Animated.View>,
+      ],
+      "style": Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "rgba(0, 0, 0, 0.4)",
+          "height": "100%",
+          "justifyContent": "center",
+          "position": "absolute",
+          "width": "100%",
+          "zIndex": 1,
+        },
+        Object {
+          "backgroundColor": "transparent",
+          "height": 0,
+          "width": 0,
+        },
+      ],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "activeOpacity": 1,
+          "children": <Animated.View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                  "height": "100%",
+                  "justifyContent": "center",
+                  "position": "absolute",
+                  "width": "100%",
+                  "zIndex": 1,
+                },
+                Object {
+                  "opacity": Object {},
+                },
+              ]
+            }
+          />,
+          "disabled": true,
+          "onPress": undefined,
+          "style": Object {
+            "height": 0,
+            "position": "absolute",
+            "width": 0,
+            "zIndex": 1,
+          },
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "style": Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                "height": "100%",
+                "justifyContent": "center",
+                "position": "absolute",
+                "width": "100%",
+                "zIndex": 1,
+              },
+              Object {
+                "opacity": Object {},
+              },
+            ],
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "Animated.View",
+        },
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <ScrollView>
+            <Button
+              color="primary"
+              label="Stäng"
+              onPress={undefined}
+              uppercase={true}
+            />
+          </ScrollView>,
+          "style": Array [
+            Object {
+              "backgroundColor": "#fff",
+              "borderRadius": 5,
+              "borderWidth": 2,
+              "elevation": 10,
+              "maxHeight": 1329.2307692307693,
+              "minHeight": 250,
+              "padding": 10,
+              "position": "absolute",
+              "width": "85%",
+              "zIndex": 2,
+            },
+            Object {
+              "opacity": Object {},
+              "transform": Array [
+                Object {
+                  "scale": Object {},
+                },
+              ],
+            },
+          ],
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              undefined,
+              <Button
+                color="primary"
+                label="Stäng"
+                onPress={undefined}
+                uppercase={true}
+              />,
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            undefined,
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "color": "primary",
+                "label": "Stäng",
+                "onPress": undefined,
+                "uppercase": true,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        "type": "Animated.View",
+      },
+    ],
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": Array [
+          <TouchableOpacity
+            activeOpacity={1}
+            disabled={true}
+            onPress={undefined}
+            style={
+              Object {
+                "height": 0,
+                "position": "absolute",
+                "width": 0,
+                "zIndex": 1,
+              }
+            }
+          >
+            <Animated.View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                    "height": "100%",
+                    "justifyContent": "center",
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 1,
+                  },
+                  Object {
+                    "opacity": Object {},
+                  },
+                ]
+              }
+            />
+          </TouchableOpacity>,
+          <Animated.View
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 5,
+                  "borderWidth": 2,
+                  "elevation": 10,
+                  "maxHeight": 1329.2307692307693,
+                  "minHeight": 250,
+                  "padding": 10,
+                  "position": "absolute",
+                  "width": "85%",
+                  "zIndex": 2,
+                },
+                Object {
+                  "opacity": Object {},
+                  "transform": Array [
+                    Object {
+                      "scale": Object {},
+                    },
+                  ],
+                },
+              ]
+            }
+          >
+            <ScrollView>
+              <Button
+                color="primary"
+                label="Stäng"
+                onPress={undefined}
+                uppercase={true}
+              />
+            </ScrollView>
+          </Animated.View>,
+        ],
+        "style": Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "rgba(0, 0, 0, 0.4)",
+            "height": "100%",
+            "justifyContent": "center",
+            "position": "absolute",
+            "width": "100%",
+            "zIndex": 1,
+          },
+          Object {
+            "backgroundColor": "transparent",
+            "height": 0,
+            "width": 0,
+          },
+        ],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "activeOpacity": 1,
+            "children": <Animated.View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                    "height": "100%",
+                    "justifyContent": "center",
+                    "position": "absolute",
+                    "width": "100%",
+                    "zIndex": 1,
+                  },
+                  Object {
+                    "opacity": Object {},
+                  },
+                ]
+              }
+            />,
+            "disabled": true,
+            "onPress": undefined,
+            "style": Object {
+              "height": 0,
+              "position": "absolute",
+              "width": 0,
+              "zIndex": 1,
+            },
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "style": Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                  "height": "100%",
+                  "justifyContent": "center",
+                  "position": "absolute",
+                  "width": "100%",
+                  "zIndex": 1,
+                },
+                Object {
+                  "opacity": Object {},
+                },
+              ],
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "Animated.View",
+          },
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <ScrollView>
+              <Button
+                color="primary"
+                label="Stäng"
+                onPress={undefined}
+                uppercase={true}
+              />
+            </ScrollView>,
+            "style": Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderRadius": 5,
+                "borderWidth": 2,
+                "elevation": 10,
+                "maxHeight": 1329.2307692307693,
+                "minHeight": 250,
+                "padding": 10,
+                "position": "absolute",
+                "width": "85%",
+                "zIndex": 2,
+              },
+              Object {
+                "opacity": Object {},
+                "transform": Array [
+                  Object {
+                    "scale": Object {},
+                  },
+                ],
+              },
+            ],
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                undefined,
+                <Button
+                  color="primary"
+                  label="Stäng"
+                  onPress={undefined}
+                  uppercase={true}
+                />,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              undefined,
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "color": "primary",
+                  "label": "Stäng",
+                  "onPress": undefined,
+                  "uppercase": true,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+          "type": "Animated.View",
+        },
+      ],
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;

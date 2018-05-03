@@ -79,7 +79,7 @@ jest.mock('react-native', () => {
         }),
         Animated: ({
             decay: jest.fn(),
-            timing: jest.fn(),
+            timing: () => ({ start: jest.fn(), }),
             spring: jest.fn(),
             add: jest.fn(),
             divide: jest.fn(),
@@ -94,6 +94,7 @@ jest.mock('react-native', () => {
             event: jest.fn(),
             forkEvent: jest.fn(),
             unforkEvent: jest.fn(),
+            View: 'Animated.View'
         }),
         AppRegistry: ({
             setWrapperComponentProvider: jest.fn(),
