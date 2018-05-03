@@ -121,7 +121,7 @@ jest.mock('react-native', () => {
             setItem: jest.fn(),
             removeItem: jest.fn(),
             mergeItem: jest.fn(),
-            clear: jest.fn(),
+            clear: jest.fn(() => Promise.resolve()),
             getAllKeys: jest.fn(),
             flushGetRequests: jest.fn(),
             multiGet: jest.fn(),
@@ -347,6 +347,7 @@ jest.mock('react-native-firebase', () => ({
         },
         currentUser: { uid: 123 },
         signInAndRetrieveDataWithCredential: stub().resolves({ email: 'abc@123.com' }),
+        signOut: stub(),
     })
 }));
 
