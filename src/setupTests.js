@@ -359,6 +359,7 @@ jest.mock('react-native-router-flux', () => ({
     Actions: {
         login: stub(),
         pop: stub(),
+        refresh: stub(),
     },
 }));
 
@@ -368,6 +369,7 @@ jest.mock('./components/helpers', () => ({
     track: jest.fn(),
     isAndroid: jest.fn(),
     showMessage: jest.fn(),
+    updateStopsCount: jest.fn(),
 }));
 
 jest.mock('./actions', () => ({
