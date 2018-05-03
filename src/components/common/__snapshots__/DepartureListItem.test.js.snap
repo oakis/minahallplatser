@@ -1,0 +1,3714 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match snapshot 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <DepartureListItem
+    item={
+      Object {
+        "accessibility": "wheelChair",
+        "bgColor": "#000",
+        "clockLeft": "16:00",
+        "clockNext": "16:05",
+        "direction": "Högsbo",
+        "fgColor": "#eee",
+        "isLive": true,
+        "journeyid": "123",
+        "night": false,
+        "sname": "16X",
+        "timeLeft": "3",
+        "timeNext": "8",
+        "track": "A",
+        "type": "BUS",
+        "via": "via Centralstationen",
+      }
+    }
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#efefef",
+            "flex": 1,
+            "flexDirection": "row",
+            "marginLeft": 0,
+            "paddingBottom": 5,
+            "paddingTop": 5,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "height": 40,
+              "justifyContent": "center",
+              "paddingLeft": 7,
+              "width": 50,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#eee",
+                "borderRadius": 3,
+                "borderWidth": 2,
+                "flex": 1,
+                "height": 40,
+                "justifyContent": "center",
+                "width": 40,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
+                }
+              }
+            >
+              16X
+            </DefaultFont>
+            <IonIcon
+              color="#000"
+              name="ios-bus"
+              size={15}
+            />
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingLeft": 10,
+            }
+          }
+        >
+          <DefaultFont
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Högsbo
+          </DefaultFont>
+          <DefaultFont
+            style={
+              Object {
+                "fontSize": 10,
+                "marginTop": -5,
+              }
+            }
+          >
+            via Centralstationen
+          </DefaultFont>
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+              }
+            }
+          >
+            <DefaultFont>
+              Läge 
+              A
+            </DefaultFont>
+            <FontAwesomeIcon
+              name="wheelchair"
+              size={13}
+              style={
+                Object {
+                  "alignSelf": "center",
+                  "marginLeft": 5,
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "height": 50,
+              "justifyContent": "center",
+              "marginRight": 5,
+              "width": 56,
+            }
+          }
+        >
+          <DefaultFont
+            style={
+              Object {
+                "color": "#000",
+                "fontSize": 18,
+              }
+            }
+          >
+            16:00
+          </DefaultFont>
+          <DefaultFont
+            style={
+              Object {
+                "fontSize": 12,
+              }
+            }
+          >
+            16:05
+          </DefaultFont>
+        </View>
+      </View>,
+      "delayLongPress": 500,
+      "onPress": undefined,
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": Array [
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 40,
+                "justifyContent": "center",
+                "paddingLeft": 7,
+                "width": 50,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#000",
+                    "fontSize": 14,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  }
+                }
+              >
+                16X
+              </DefaultFont>
+              <IonIcon
+                color="#000"
+                name="ios-bus"
+                size={15}
+              />
+            </View>
+          </View>,
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingLeft": 10,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Högsbo
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 10,
+                  "marginTop": -5,
+                }
+              }
+            >
+              via Centralstationen
+            </DefaultFont>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <DefaultFont>
+                Läge 
+                A
+              </DefaultFont>
+              <FontAwesomeIcon
+                name="wheelchair"
+                size={13}
+                style={
+                  Object {
+                    "alignSelf": "center",
+                    "marginLeft": 5,
+                  }
+                }
+              />
+            </View>
+          </View>,
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 50,
+                "justifyContent": "center",
+                "marginRight": 5,
+                "width": 56,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 18,
+                }
+              }
+            >
+              16:00
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 12,
+                }
+              }
+            >
+              16:05
+            </DefaultFont>
+          </View>,
+        ],
+        "style": Object {
+          "alignItems": "center",
+          "backgroundColor": "#efefef",
+          "flex": 1,
+          "flexDirection": "row",
+          "marginLeft": 0,
+          "paddingBottom": 5,
+          "paddingTop": 5,
+        },
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#000",
+                    "fontSize": 14,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  }
+                }
+              >
+                16X
+              </DefaultFont>
+              <IonIcon
+                color="#000"
+                name="ios-bus"
+                size={15}
+              />
+            </View>,
+            "style": Object {
+              "alignItems": "center",
+              "height": 40,
+              "justifyContent": "center",
+              "paddingLeft": 7,
+              "width": 50,
+            },
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#000",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    }
+                  }
+                >
+                  16X
+                </DefaultFont>,
+                <IonIcon
+                  color="#000"
+                  name="ios-bus"
+                  size={15}
+                />,
+              ],
+              "style": Object {
+                "alignItems": "center",
+                "backgroundColor": "#eee",
+                "borderRadius": 3,
+                "borderWidth": 2,
+                "flex": 1,
+                "height": 40,
+                "justifyContent": "center",
+                "width": 40,
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "16X",
+                  "style": Object {
+                    "color": "#000",
+                    "fontSize": 14,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  },
+                },
+                "ref": null,
+                "rendered": "16X",
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "color": "#000",
+                  "name": "ios-bus",
+                  "size": 15,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "IonIcon",
+              },
+            ],
+            "type": [Function],
+          },
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              <DefaultFont
+                style={
+                  Object {
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                Högsbo
+              </DefaultFont>,
+              <DefaultFont
+                style={
+                  Object {
+                    "fontSize": 10,
+                    "marginTop": -5,
+                  }
+                }
+              >
+                via Centralstationen
+              </DefaultFont>,
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <DefaultFont>
+                  Läge 
+                  A
+                </DefaultFont>
+                <FontAwesomeIcon
+                  name="wheelchair"
+                  size={13}
+                  style={
+                    Object {
+                      "alignSelf": "center",
+                      "marginLeft": 5,
+                    }
+                  }
+                />
+              </View>,
+            ],
+            "style": Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingLeft": 10,
+            },
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Högsbo",
+                "style": Object {
+                  "fontWeight": "bold",
+                },
+              },
+              "ref": null,
+              "rendered": "Högsbo",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "via Centralstationen",
+                "style": Object {
+                  "fontSize": 10,
+                  "marginTop": -5,
+                },
+              },
+              "ref": null,
+              "rendered": "via Centralstationen",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": Array [
+                  <DefaultFont>
+                    Läge 
+                    A
+                  </DefaultFont>,
+                  <FontAwesomeIcon
+                    name="wheelchair"
+                    size={13}
+                    style={
+                      Object {
+                        "alignSelf": "center",
+                        "marginLeft": 5,
+                      }
+                    }
+                  />,
+                  null,
+                ],
+                "style": Object {
+                  "flexDirection": "row",
+                },
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": Array [
+                      "Läge ",
+                      "A",
+                    ],
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "Läge ",
+                    "A",
+                  ],
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "name": "wheelchair",
+                    "size": 13,
+                    "style": Object {
+                      "alignSelf": "center",
+                      "marginLeft": 5,
+                    },
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "FontAwesomeIcon",
+                },
+                null,
+              ],
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#000",
+                    "fontSize": 18,
+                  }
+                }
+              >
+                16:00
+              </DefaultFont>,
+              <DefaultFont
+                style={
+                  Object {
+                    "fontSize": 12,
+                  }
+                }
+              >
+                16:05
+              </DefaultFont>,
+            ],
+            "style": Object {
+              "alignItems": "center",
+              "height": 50,
+              "justifyContent": "center",
+              "marginRight": 5,
+              "width": 56,
+            },
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "16:00",
+                "style": Object {
+                  "color": "#000",
+                  "fontSize": 18,
+                },
+              },
+              "ref": null,
+              "rendered": "16:00",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "16:05",
+                "style": Object {
+                  "fontSize": 12,
+                },
+              },
+              "ref": null,
+              "rendered": "16:05",
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+      ],
+      "type": [Function],
+    },
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#efefef",
+              "flex": 1,
+              "flexDirection": "row",
+              "marginLeft": 0,
+              "paddingBottom": 5,
+              "paddingTop": 5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 40,
+                "justifyContent": "center",
+                "paddingLeft": 7,
+                "width": 50,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#000",
+                    "fontSize": 14,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  }
+                }
+              >
+                16X
+              </DefaultFont>
+              <IonIcon
+                color="#000"
+                name="ios-bus"
+                size={15}
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingLeft": 10,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Högsbo
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 10,
+                  "marginTop": -5,
+                }
+              }
+            >
+              via Centralstationen
+            </DefaultFont>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <DefaultFont>
+                Läge 
+                A
+              </DefaultFont>
+              <FontAwesomeIcon
+                name="wheelchair"
+                size={13}
+                style={
+                  Object {
+                    "alignSelf": "center",
+                    "marginLeft": 5,
+                  }
+                }
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 50,
+                "justifyContent": "center",
+                "marginRight": 5,
+                "width": 56,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 18,
+                }
+              }
+            >
+              16:00
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 12,
+                }
+              }
+            >
+              16:05
+            </DefaultFont>
+          </View>
+        </View>,
+        "delayLongPress": 500,
+        "onPress": undefined,
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": Array [
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "height": 40,
+                  "justifyContent": "center",
+                  "paddingLeft": 7,
+                  "width": 50,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#eee",
+                    "borderRadius": 3,
+                    "borderWidth": 2,
+                    "flex": 1,
+                    "height": 40,
+                    "justifyContent": "center",
+                    "width": 40,
+                  }
+                }
+              >
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#000",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    }
+                  }
+                >
+                  16X
+                </DefaultFont>
+                <IonIcon
+                  color="#000"
+                  name="ios-bus"
+                  size={15}
+                />
+              </View>
+            </View>,
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                  "justifyContent": "center",
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                Högsbo
+              </DefaultFont>
+              <DefaultFont
+                style={
+                  Object {
+                    "fontSize": 10,
+                    "marginTop": -5,
+                  }
+                }
+              >
+                via Centralstationen
+              </DefaultFont>
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <DefaultFont>
+                  Läge 
+                  A
+                </DefaultFont>
+                <FontAwesomeIcon
+                  name="wheelchair"
+                  size={13}
+                  style={
+                    Object {
+                      "alignSelf": "center",
+                      "marginLeft": 5,
+                    }
+                  }
+                />
+              </View>
+            </View>,
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "height": 50,
+                  "justifyContent": "center",
+                  "marginRight": 5,
+                  "width": 56,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#000",
+                    "fontSize": 18,
+                  }
+                }
+              >
+                16:00
+              </DefaultFont>
+              <DefaultFont
+                style={
+                  Object {
+                    "fontSize": 12,
+                  }
+                }
+              >
+                16:05
+              </DefaultFont>
+            </View>,
+          ],
+          "style": Object {
+            "alignItems": "center",
+            "backgroundColor": "#efefef",
+            "flex": 1,
+            "flexDirection": "row",
+            "marginLeft": 0,
+            "paddingBottom": 5,
+            "paddingTop": 5,
+          },
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#eee",
+                    "borderRadius": 3,
+                    "borderWidth": 2,
+                    "flex": 1,
+                    "height": 40,
+                    "justifyContent": "center",
+                    "width": 40,
+                  }
+                }
+              >
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#000",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    }
+                  }
+                >
+                  16X
+                </DefaultFont>
+                <IonIcon
+                  color="#000"
+                  name="ios-bus"
+                  size={15}
+                />
+              </View>,
+              "style": Object {
+                "alignItems": "center",
+                "height": 40,
+                "justifyContent": "center",
+                "paddingLeft": 7,
+                "width": 50,
+              },
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": Array [
+                  <DefaultFont
+                    style={
+                      Object {
+                        "color": "#000",
+                        "fontSize": 14,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                        "textAlignVertical": "center",
+                      }
+                    }
+                  >
+                    16X
+                  </DefaultFont>,
+                  <IonIcon
+                    color="#000"
+                    name="ios-bus"
+                    size={15}
+                  />,
+                ],
+                "style": Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                },
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": "16X",
+                    "style": Object {
+                      "color": "#000",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    },
+                  },
+                  "ref": null,
+                  "rendered": "16X",
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "color": "#000",
+                    "name": "ios-bus",
+                    "size": 15,
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "IonIcon",
+                },
+              ],
+              "type": [Function],
+            },
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <DefaultFont
+                  style={
+                    Object {
+                      "fontWeight": "bold",
+                    }
+                  }
+                >
+                  Högsbo
+                </DefaultFont>,
+                <DefaultFont
+                  style={
+                    Object {
+                      "fontSize": 10,
+                      "marginTop": -5,
+                    }
+                  }
+                >
+                  via Centralstationen
+                </DefaultFont>,
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                    }
+                  }
+                >
+                  <DefaultFont>
+                    Läge 
+                    A
+                  </DefaultFont>
+                  <FontAwesomeIcon
+                    name="wheelchair"
+                    size={13}
+                    style={
+                      Object {
+                        "alignSelf": "center",
+                        "marginLeft": 5,
+                      }
+                    }
+                  />
+                </View>,
+              ],
+              "style": Object {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingLeft": 10,
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "Högsbo",
+                  "style": Object {
+                    "fontWeight": "bold",
+                  },
+                },
+                "ref": null,
+                "rendered": "Högsbo",
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "via Centralstationen",
+                  "style": Object {
+                    "fontSize": 10,
+                    "marginTop": -5,
+                  },
+                },
+                "ref": null,
+                "rendered": "via Centralstationen",
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": Array [
+                    <DefaultFont>
+                      Läge 
+                      A
+                    </DefaultFont>,
+                    <FontAwesomeIcon
+                      name="wheelchair"
+                      size={13}
+                      style={
+                        Object {
+                          "alignSelf": "center",
+                          "marginLeft": 5,
+                        }
+                      }
+                    />,
+                    null,
+                  ],
+                  "style": Object {
+                    "flexDirection": "row",
+                  },
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "children": Array [
+                        "Läge ",
+                        "A",
+                      ],
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      "Läge ",
+                      "A",
+                    ],
+                    "type": [Function],
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "name": "wheelchair",
+                      "size": 13,
+                      "style": Object {
+                        "alignSelf": "center",
+                        "marginLeft": 5,
+                      },
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": "FontAwesomeIcon",
+                  },
+                  null,
+                ],
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#000",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  16:00
+                </DefaultFont>,
+                <DefaultFont
+                  style={
+                    Object {
+                      "fontSize": 12,
+                    }
+                  }
+                >
+                  16:05
+                </DefaultFont>,
+              ],
+              "style": Object {
+                "alignItems": "center",
+                "height": 50,
+                "justifyContent": "center",
+                "marginRight": 5,
+                "width": 56,
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "16:00",
+                  "style": Object {
+                    "color": "#000",
+                    "fontSize": 18,
+                  },
+                },
+                "ref": null,
+                "rendered": "16:00",
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "16:05",
+                  "style": Object {
+                    "fontSize": 12,
+                  },
+                },
+                "ref": null,
+                "rendered": "16:05",
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`should match snapshot 2`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <DepartureListItem
+    item={
+      Object {
+        "accessibility": null,
+        "bgColor": "#000",
+        "clockLeft": "16:00",
+        "clockNext": "16:05",
+        "direction": "Högsbo",
+        "fgColor": "#eee",
+        "index": 1,
+        "isLive": true,
+        "journeyid": "123",
+        "night": true,
+        "sname": "SVART",
+        "timeFormat": "",
+        "timeLeft": "0",
+        "timeNext": "8",
+        "track": "",
+        "type": "BOAT",
+        "via": "",
+      }
+    }
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#fff",
+            "flex": 1,
+            "flexDirection": "row",
+            "marginLeft": 0,
+            "paddingBottom": 5,
+            "paddingTop": 5,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "height": 40,
+              "justifyContent": "center",
+              "paddingLeft": 7,
+              "width": 50,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#eee",
+                "borderRadius": 3,
+                "borderWidth": 2,
+                "flex": 1,
+                "height": 40,
+                "justifyContent": "center",
+                "width": 40,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 12,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
+                }
+              }
+            >
+              SVART
+            </DefaultFont>
+            <IonIcon
+              color="#000"
+              name="ios-boat"
+              size={15}
+            />
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingLeft": 10,
+            }
+          }
+        >
+          <DefaultFont
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Högsbo
+          </DefaultFont>
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+              }
+            }
+          >
+            <DefaultFont>
+              Läge 
+              A
+            </DefaultFont>
+            <IonIcon
+              name="ios-moon"
+              size={13}
+              style={
+                Object {
+                  "alignSelf": "center",
+                  "marginLeft": 5,
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "height": 50,
+              "justifyContent": "center",
+              "marginRight": 5,
+              "width": 56,
+            }
+          }
+        >
+          <DefaultFont
+            style={
+              Object {
+                "color": "#FF6961",
+                "fontSize": 18,
+              }
+            }
+          >
+            16:00
+          </DefaultFont>
+          <DefaultFont
+            style={
+              Object {
+                "fontSize": 12,
+              }
+            }
+          >
+            16:05
+          </DefaultFont>
+        </View>
+      </View>,
+      "delayLongPress": 500,
+      "onPress": undefined,
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": Array [
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 40,
+                "justifyContent": "center",
+                "paddingLeft": 7,
+                "width": 50,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#000",
+                    "fontSize": 12,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  }
+                }
+              >
+                SVART
+              </DefaultFont>
+              <IonIcon
+                color="#000"
+                name="ios-boat"
+                size={15}
+              />
+            </View>
+          </View>,
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingLeft": 10,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Högsbo
+            </DefaultFont>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <DefaultFont>
+                Läge 
+                A
+              </DefaultFont>
+              <IonIcon
+                name="ios-moon"
+                size={13}
+                style={
+                  Object {
+                    "alignSelf": "center",
+                    "marginLeft": 5,
+                  }
+                }
+              />
+            </View>
+          </View>,
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 50,
+                "justifyContent": "center",
+                "marginRight": 5,
+                "width": 56,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "color": "#FF6961",
+                  "fontSize": 18,
+                }
+              }
+            >
+              16:00
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 12,
+                }
+              }
+            >
+              16:05
+            </DefaultFont>
+          </View>,
+        ],
+        "style": Object {
+          "alignItems": "center",
+          "backgroundColor": "#fff",
+          "flex": 1,
+          "flexDirection": "row",
+          "marginLeft": 0,
+          "paddingBottom": 5,
+          "paddingTop": 5,
+        },
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#000",
+                    "fontSize": 12,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  }
+                }
+              >
+                SVART
+              </DefaultFont>
+              <IonIcon
+                color="#000"
+                name="ios-boat"
+                size={15}
+              />
+            </View>,
+            "style": Object {
+              "alignItems": "center",
+              "height": 40,
+              "justifyContent": "center",
+              "paddingLeft": 7,
+              "width": 50,
+            },
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#000",
+                      "fontSize": 12,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    }
+                  }
+                >
+                  SVART
+                </DefaultFont>,
+                <IonIcon
+                  color="#000"
+                  name="ios-boat"
+                  size={15}
+                />,
+              ],
+              "style": Object {
+                "alignItems": "center",
+                "backgroundColor": "#eee",
+                "borderRadius": 3,
+                "borderWidth": 2,
+                "flex": 1,
+                "height": 40,
+                "justifyContent": "center",
+                "width": 40,
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "SVART",
+                  "style": Object {
+                    "color": "#000",
+                    "fontSize": 12,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  },
+                },
+                "ref": null,
+                "rendered": "SVART",
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "color": "#000",
+                  "name": "ios-boat",
+                  "size": 15,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "IonIcon",
+              },
+            ],
+            "type": [Function],
+          },
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              <DefaultFont
+                style={
+                  Object {
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                Högsbo
+              </DefaultFont>,
+              null,
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <DefaultFont>
+                  Läge 
+                  A
+                </DefaultFont>
+                <IonIcon
+                  name="ios-moon"
+                  size={13}
+                  style={
+                    Object {
+                      "alignSelf": "center",
+                      "marginLeft": 5,
+                    }
+                  }
+                />
+              </View>,
+            ],
+            "style": Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingLeft": 10,
+            },
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Högsbo",
+                "style": Object {
+                  "fontWeight": "bold",
+                },
+              },
+              "ref": null,
+              "rendered": "Högsbo",
+              "type": [Function],
+            },
+            null,
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": Array [
+                  <DefaultFont>
+                    Läge 
+                    A
+                  </DefaultFont>,
+                  null,
+                  <IonIcon
+                    name="ios-moon"
+                    size={13}
+                    style={
+                      Object {
+                        "alignSelf": "center",
+                        "marginLeft": 5,
+                      }
+                    }
+                  />,
+                ],
+                "style": Object {
+                  "flexDirection": "row",
+                },
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": Array [
+                      "Läge ",
+                      "A",
+                    ],
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "Läge ",
+                    "A",
+                  ],
+                  "type": [Function],
+                },
+                null,
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "name": "ios-moon",
+                    "size": 13,
+                    "style": Object {
+                      "alignSelf": "center",
+                      "marginLeft": 5,
+                    },
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "IonIcon",
+                },
+              ],
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FF6961",
+                    "fontSize": 18,
+                  }
+                }
+              >
+                16:00
+              </DefaultFont>,
+              <DefaultFont
+                style={
+                  Object {
+                    "fontSize": 12,
+                  }
+                }
+              >
+                16:05
+              </DefaultFont>,
+            ],
+            "style": Object {
+              "alignItems": "center",
+              "height": 50,
+              "justifyContent": "center",
+              "marginRight": 5,
+              "width": 56,
+            },
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "16:00",
+                "style": Object {
+                  "color": "#FF6961",
+                  "fontSize": 18,
+                },
+              },
+              "ref": null,
+              "rendered": "16:00",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "16:05",
+                "style": Object {
+                  "fontSize": 12,
+                },
+              },
+              "ref": null,
+              "rendered": "16:05",
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+      ],
+      "type": [Function],
+    },
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#fff",
+              "flex": 1,
+              "flexDirection": "row",
+              "marginLeft": 0,
+              "paddingBottom": 5,
+              "paddingTop": 5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 40,
+                "justifyContent": "center",
+                "paddingLeft": 7,
+                "width": 50,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#000",
+                    "fontSize": 12,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  }
+                }
+              >
+                SVART
+              </DefaultFont>
+              <IonIcon
+                color="#000"
+                name="ios-boat"
+                size={15}
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingLeft": 10,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Högsbo
+            </DefaultFont>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <DefaultFont>
+                Läge 
+                A
+              </DefaultFont>
+              <IonIcon
+                name="ios-moon"
+                size={13}
+                style={
+                  Object {
+                    "alignSelf": "center",
+                    "marginLeft": 5,
+                  }
+                }
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 50,
+                "justifyContent": "center",
+                "marginRight": 5,
+                "width": 56,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "color": "#FF6961",
+                  "fontSize": 18,
+                }
+              }
+            >
+              16:00
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 12,
+                }
+              }
+            >
+              16:05
+            </DefaultFont>
+          </View>
+        </View>,
+        "delayLongPress": 500,
+        "onPress": undefined,
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": Array [
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "height": 40,
+                  "justifyContent": "center",
+                  "paddingLeft": 7,
+                  "width": 50,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#eee",
+                    "borderRadius": 3,
+                    "borderWidth": 2,
+                    "flex": 1,
+                    "height": 40,
+                    "justifyContent": "center",
+                    "width": 40,
+                  }
+                }
+              >
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#000",
+                      "fontSize": 12,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    }
+                  }
+                >
+                  SVART
+                </DefaultFont>
+                <IonIcon
+                  color="#000"
+                  name="ios-boat"
+                  size={15}
+                />
+              </View>
+            </View>,
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                  "justifyContent": "center",
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                Högsbo
+              </DefaultFont>
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <DefaultFont>
+                  Läge 
+                  A
+                </DefaultFont>
+                <IonIcon
+                  name="ios-moon"
+                  size={13}
+                  style={
+                    Object {
+                      "alignSelf": "center",
+                      "marginLeft": 5,
+                    }
+                  }
+                />
+              </View>
+            </View>,
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "height": 50,
+                  "justifyContent": "center",
+                  "marginRight": 5,
+                  "width": 56,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FF6961",
+                    "fontSize": 18,
+                  }
+                }
+              >
+                16:00
+              </DefaultFont>
+              <DefaultFont
+                style={
+                  Object {
+                    "fontSize": 12,
+                  }
+                }
+              >
+                16:05
+              </DefaultFont>
+            </View>,
+          ],
+          "style": Object {
+            "alignItems": "center",
+            "backgroundColor": "#fff",
+            "flex": 1,
+            "flexDirection": "row",
+            "marginLeft": 0,
+            "paddingBottom": 5,
+            "paddingTop": 5,
+          },
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#eee",
+                    "borderRadius": 3,
+                    "borderWidth": 2,
+                    "flex": 1,
+                    "height": 40,
+                    "justifyContent": "center",
+                    "width": 40,
+                  }
+                }
+              >
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#000",
+                      "fontSize": 12,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    }
+                  }
+                >
+                  SVART
+                </DefaultFont>
+                <IonIcon
+                  color="#000"
+                  name="ios-boat"
+                  size={15}
+                />
+              </View>,
+              "style": Object {
+                "alignItems": "center",
+                "height": 40,
+                "justifyContent": "center",
+                "paddingLeft": 7,
+                "width": 50,
+              },
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": Array [
+                  <DefaultFont
+                    style={
+                      Object {
+                        "color": "#000",
+                        "fontSize": 12,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                        "textAlignVertical": "center",
+                      }
+                    }
+                  >
+                    SVART
+                  </DefaultFont>,
+                  <IonIcon
+                    color="#000"
+                    name="ios-boat"
+                    size={15}
+                  />,
+                ],
+                "style": Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                },
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": "SVART",
+                    "style": Object {
+                      "color": "#000",
+                      "fontSize": 12,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    },
+                  },
+                  "ref": null,
+                  "rendered": "SVART",
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "color": "#000",
+                    "name": "ios-boat",
+                    "size": 15,
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "IonIcon",
+                },
+              ],
+              "type": [Function],
+            },
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <DefaultFont
+                  style={
+                    Object {
+                      "fontWeight": "bold",
+                    }
+                  }
+                >
+                  Högsbo
+                </DefaultFont>,
+                null,
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                    }
+                  }
+                >
+                  <DefaultFont>
+                    Läge 
+                    A
+                  </DefaultFont>
+                  <IonIcon
+                    name="ios-moon"
+                    size={13}
+                    style={
+                      Object {
+                        "alignSelf": "center",
+                        "marginLeft": 5,
+                      }
+                    }
+                  />
+                </View>,
+              ],
+              "style": Object {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingLeft": 10,
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "Högsbo",
+                  "style": Object {
+                    "fontWeight": "bold",
+                  },
+                },
+                "ref": null,
+                "rendered": "Högsbo",
+                "type": [Function],
+              },
+              null,
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": Array [
+                    <DefaultFont>
+                      Läge 
+                      A
+                    </DefaultFont>,
+                    null,
+                    <IonIcon
+                      name="ios-moon"
+                      size={13}
+                      style={
+                        Object {
+                          "alignSelf": "center",
+                          "marginLeft": 5,
+                        }
+                      }
+                    />,
+                  ],
+                  "style": Object {
+                    "flexDirection": "row",
+                  },
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "children": Array [
+                        "Läge ",
+                        "A",
+                      ],
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      "Läge ",
+                      "A",
+                    ],
+                    "type": [Function],
+                  },
+                  null,
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "name": "ios-moon",
+                      "size": 13,
+                      "style": Object {
+                        "alignSelf": "center",
+                        "marginLeft": 5,
+                      },
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": "IonIcon",
+                  },
+                ],
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  16:00
+                </DefaultFont>,
+                <DefaultFont
+                  style={
+                    Object {
+                      "fontSize": 12,
+                    }
+                  }
+                >
+                  16:05
+                </DefaultFont>,
+              ],
+              "style": Object {
+                "alignItems": "center",
+                "height": 50,
+                "justifyContent": "center",
+                "marginRight": 5,
+                "width": 56,
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "16:00",
+                  "style": Object {
+                    "color": "#FF6961",
+                    "fontSize": 18,
+                  },
+                },
+                "ref": null,
+                "rendered": "16:00",
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "16:05",
+                  "style": Object {
+                    "fontSize": 12,
+                  },
+                },
+                "ref": null,
+                "rendered": "16:05",
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`should match snapshot 3`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <DepartureListItem
+    item={
+      Object {
+        "accessibility": null,
+        "bgColor": "#000",
+        "clockLeft": "16:00",
+        "clockNext": "16:05",
+        "direction": "Centralstationen",
+        "fgColor": "#eee",
+        "isLive": false,
+        "journeyid": "123",
+        "night": false,
+        "sname": "1",
+        "timeFormat": "minutes",
+        "timeLeft": "60",
+        "timeNext": "8",
+        "track": "",
+        "type": "VAS",
+        "via": "",
+      }
+    }
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#efefef",
+            "flex": 1,
+            "flexDirection": "row",
+            "marginLeft": 0,
+            "paddingBottom": 5,
+            "paddingTop": 5,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "height": 40,
+              "justifyContent": "center",
+              "paddingLeft": 7,
+              "width": 50,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#eee",
+                "borderRadius": 3,
+                "borderWidth": 2,
+                "flex": 1,
+                "height": 40,
+                "justifyContent": "center",
+                "width": 40,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
+                }
+              }
+            >
+              1
+            </DefaultFont>
+            <IonIcon
+              color="#000"
+              name="ios-train"
+              size={15}
+            />
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingLeft": 10,
+            }
+          }
+        >
+          <DefaultFont
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Centralstationen
+          </DefaultFont>
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+              }
+            }
+          >
+            <DefaultFont>
+              Läge 
+              A
+            </DefaultFont>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "height": 50,
+              "justifyContent": "center",
+              "marginRight": 5,
+              "width": 56,
+            }
+          }
+        >
+          <DefaultFont
+            style={
+              Object {
+                "color": "#FFB347",
+                "fontSize": 14,
+              }
+            }
+          >
+            0h 0m
+          </DefaultFont>
+          <DefaultFont
+            style={
+              Object {
+                "fontSize": 12,
+              }
+            }
+          >
+            8
+          </DefaultFont>
+        </View>
+      </View>,
+      "delayLongPress": 500,
+      "onPress": undefined,
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": Array [
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 40,
+                "justifyContent": "center",
+                "paddingLeft": 7,
+                "width": 50,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#000",
+                    "fontSize": 14,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  }
+                }
+              >
+                1
+              </DefaultFont>
+              <IonIcon
+                color="#000"
+                name="ios-train"
+                size={15}
+              />
+            </View>
+          </View>,
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingLeft": 10,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Centralstationen
+            </DefaultFont>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <DefaultFont>
+                Läge 
+                A
+              </DefaultFont>
+            </View>
+          </View>,
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 50,
+                "justifyContent": "center",
+                "marginRight": 5,
+                "width": 56,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "color": "#FFB347",
+                  "fontSize": 14,
+                }
+              }
+            >
+              0h 0m
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 12,
+                }
+              }
+            >
+              8
+            </DefaultFont>
+          </View>,
+        ],
+        "style": Object {
+          "alignItems": "center",
+          "backgroundColor": "#efefef",
+          "flex": 1,
+          "flexDirection": "row",
+          "marginLeft": 0,
+          "paddingBottom": 5,
+          "paddingTop": 5,
+        },
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#000",
+                    "fontSize": 14,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  }
+                }
+              >
+                1
+              </DefaultFont>
+              <IonIcon
+                color="#000"
+                name="ios-train"
+                size={15}
+              />
+            </View>,
+            "style": Object {
+              "alignItems": "center",
+              "height": 40,
+              "justifyContent": "center",
+              "paddingLeft": 7,
+              "width": 50,
+            },
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#000",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    }
+                  }
+                >
+                  1
+                </DefaultFont>,
+                <IonIcon
+                  color="#000"
+                  name="ios-train"
+                  size={15}
+                />,
+              ],
+              "style": Object {
+                "alignItems": "center",
+                "backgroundColor": "#eee",
+                "borderRadius": 3,
+                "borderWidth": 2,
+                "flex": 1,
+                "height": 40,
+                "justifyContent": "center",
+                "width": 40,
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "1",
+                  "style": Object {
+                    "color": "#000",
+                    "fontSize": 14,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  },
+                },
+                "ref": null,
+                "rendered": "1",
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "color": "#000",
+                  "name": "ios-train",
+                  "size": 15,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "IonIcon",
+              },
+            ],
+            "type": [Function],
+          },
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              <DefaultFont
+                style={
+                  Object {
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                Centralstationen
+              </DefaultFont>,
+              null,
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <DefaultFont>
+                  Läge 
+                  A
+                </DefaultFont>
+              </View>,
+            ],
+            "style": Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingLeft": 10,
+            },
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Centralstationen",
+                "style": Object {
+                  "fontWeight": "bold",
+                },
+              },
+              "ref": null,
+              "rendered": "Centralstationen",
+              "type": [Function],
+            },
+            null,
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": Array [
+                  <DefaultFont>
+                    Läge 
+                    A
+                  </DefaultFont>,
+                  null,
+                  null,
+                ],
+                "style": Object {
+                  "flexDirection": "row",
+                },
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": Array [
+                      "Läge ",
+                      "A",
+                    ],
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "Läge ",
+                    "A",
+                  ],
+                  "type": [Function],
+                },
+                null,
+                null,
+              ],
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FFB347",
+                    "fontSize": 14,
+                  }
+                }
+              >
+                0h 0m
+              </DefaultFont>,
+              <DefaultFont
+                style={
+                  Object {
+                    "fontSize": 12,
+                  }
+                }
+              >
+                8
+              </DefaultFont>,
+            ],
+            "style": Object {
+              "alignItems": "center",
+              "height": 50,
+              "justifyContent": "center",
+              "marginRight": 5,
+              "width": 56,
+            },
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "0h 0m",
+                "style": Object {
+                  "color": "#FFB347",
+                  "fontSize": 14,
+                },
+              },
+              "ref": null,
+              "rendered": "0h 0m",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "8",
+                "style": Object {
+                  "fontSize": 12,
+                },
+              },
+              "ref": null,
+              "rendered": "8",
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+      ],
+      "type": [Function],
+    },
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#efefef",
+              "flex": 1,
+              "flexDirection": "row",
+              "marginLeft": 0,
+              "paddingBottom": 5,
+              "paddingTop": 5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 40,
+                "justifyContent": "center",
+                "paddingLeft": 7,
+                "width": 50,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#000",
+                    "fontSize": 14,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                  }
+                }
+              >
+                1
+              </DefaultFont>
+              <IonIcon
+                color="#000"
+                name="ios-train"
+                size={15}
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingLeft": 10,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Centralstationen
+            </DefaultFont>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <DefaultFont>
+                Läge 
+                A
+              </DefaultFont>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 50,
+                "justifyContent": "center",
+                "marginRight": 5,
+                "width": 56,
+              }
+            }
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "color": "#FFB347",
+                  "fontSize": 14,
+                }
+              }
+            >
+              0h 0m
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 12,
+                }
+              }
+            >
+              8
+            </DefaultFont>
+          </View>
+        </View>,
+        "delayLongPress": 500,
+        "onPress": undefined,
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": Array [
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "height": 40,
+                  "justifyContent": "center",
+                  "paddingLeft": 7,
+                  "width": 50,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#eee",
+                    "borderRadius": 3,
+                    "borderWidth": 2,
+                    "flex": 1,
+                    "height": 40,
+                    "justifyContent": "center",
+                    "width": 40,
+                  }
+                }
+              >
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#000",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    }
+                  }
+                >
+                  1
+                </DefaultFont>
+                <IonIcon
+                  color="#000"
+                  name="ios-train"
+                  size={15}
+                />
+              </View>
+            </View>,
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                  "justifyContent": "center",
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                Centralstationen
+              </DefaultFont>
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <DefaultFont>
+                  Läge 
+                  A
+                </DefaultFont>
+              </View>
+            </View>,
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "height": 50,
+                  "justifyContent": "center",
+                  "marginRight": 5,
+                  "width": 56,
+                }
+              }
+            >
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FFB347",
+                    "fontSize": 14,
+                  }
+                }
+              >
+                0h 0m
+              </DefaultFont>
+              <DefaultFont
+                style={
+                  Object {
+                    "fontSize": 12,
+                  }
+                }
+              >
+                8
+              </DefaultFont>
+            </View>,
+          ],
+          "style": Object {
+            "alignItems": "center",
+            "backgroundColor": "#efefef",
+            "flex": 1,
+            "flexDirection": "row",
+            "marginLeft": 0,
+            "paddingBottom": 5,
+            "paddingTop": 5,
+          },
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#eee",
+                    "borderRadius": 3,
+                    "borderWidth": 2,
+                    "flex": 1,
+                    "height": 40,
+                    "justifyContent": "center",
+                    "width": 40,
+                  }
+                }
+              >
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#000",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    }
+                  }
+                >
+                  1
+                </DefaultFont>
+                <IonIcon
+                  color="#000"
+                  name="ios-train"
+                  size={15}
+                />
+              </View>,
+              "style": Object {
+                "alignItems": "center",
+                "height": 40,
+                "justifyContent": "center",
+                "paddingLeft": 7,
+                "width": 50,
+              },
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": Array [
+                  <DefaultFont
+                    style={
+                      Object {
+                        "color": "#000",
+                        "fontSize": 14,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                        "textAlignVertical": "center",
+                      }
+                    }
+                  >
+                    1
+                  </DefaultFont>,
+                  <IonIcon
+                    color="#000"
+                    name="ios-train"
+                    size={15}
+                  />,
+                ],
+                "style": Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#eee",
+                  "borderRadius": 3,
+                  "borderWidth": 2,
+                  "flex": 1,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                },
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": "1",
+                    "style": Object {
+                      "color": "#000",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                      "textAlignVertical": "center",
+                    },
+                  },
+                  "ref": null,
+                  "rendered": "1",
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "color": "#000",
+                    "name": "ios-train",
+                    "size": 15,
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "IonIcon",
+                },
+              ],
+              "type": [Function],
+            },
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <DefaultFont
+                  style={
+                    Object {
+                      "fontWeight": "bold",
+                    }
+                  }
+                >
+                  Centralstationen
+                </DefaultFont>,
+                null,
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                    }
+                  }
+                >
+                  <DefaultFont>
+                    Läge 
+                    A
+                  </DefaultFont>
+                </View>,
+              ],
+              "style": Object {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingLeft": 10,
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "Centralstationen",
+                  "style": Object {
+                    "fontWeight": "bold",
+                  },
+                },
+                "ref": null,
+                "rendered": "Centralstationen",
+                "type": [Function],
+              },
+              null,
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": Array [
+                    <DefaultFont>
+                      Läge 
+                      A
+                    </DefaultFont>,
+                    null,
+                    null,
+                  ],
+                  "style": Object {
+                    "flexDirection": "row",
+                  },
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "children": Array [
+                        "Läge ",
+                        "A",
+                      ],
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      "Läge ",
+                      "A",
+                    ],
+                    "type": [Function],
+                  },
+                  null,
+                  null,
+                ],
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FFB347",
+                      "fontSize": 14,
+                    }
+                  }
+                >
+                  0h 0m
+                </DefaultFont>,
+                <DefaultFont
+                  style={
+                    Object {
+                      "fontSize": 12,
+                    }
+                  }
+                >
+                  8
+                </DefaultFont>,
+              ],
+              "style": Object {
+                "alignItems": "center",
+                "height": 50,
+                "justifyContent": "center",
+                "marginRight": 5,
+                "width": 56,
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "0h 0m",
+                  "style": Object {
+                    "color": "#FFB347",
+                    "fontSize": 14,
+                  },
+                },
+                "ref": null,
+                "rendered": "0h 0m",
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "8",
+                  "style": Object {
+                    "fontSize": 12,
+                  },
+                },
+                "ref": null,
+                "rendered": "8",
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
