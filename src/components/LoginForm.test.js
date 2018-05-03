@@ -5,7 +5,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { stub } from 'sinon';
 import { LoginManager } from 'react-native-fbsdk';
-import firebase from 'react-native-firebase';
 import LoginForm from './LoginForm';
 import { track } from './helpers';
 
@@ -17,7 +16,6 @@ const initialState = {
         password: 'abc123',
         loading: false,
         token: '',
-        loadingAnon: '',
     },
     errors: {
         error: 'Some login error'

@@ -20,7 +20,6 @@ const INIT_STATE = {
 	passwordSecond: '',
 	user: {},
 	loading: false,
-	loadingAnon: false,
 	loadingFacebook: false
 };
 
@@ -39,14 +38,13 @@ export default (state = INIT_STATE, action) => {
 				password: '',
 				passwordSecond: '',
 				loading: false,
-				loadingAnon: false,
 				user: action.payload,
 				loadingFacebook: false
 			};
 		case LOGIN_USER_FAIL:
-			return { ...state, password: '', loading: false, loadingAnon: false };
+			return { ...state, password: '', loading: false };
 		case LOGIN_ANON_USER:
-			return { ...state, loadingAnon: true };
+			return { ...state };
 		case REGISTER_USER:
 		case LOGIN_USER:
 			return { ...state, loading: true };

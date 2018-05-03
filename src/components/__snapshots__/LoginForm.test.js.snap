@@ -8,7 +8,6 @@ ShallowWrapper {
     email="abc@123.com"
     error="Some login error"
     loading={false}
-    loadingAnon=""
     password="abc123"
     store={
       Object {
