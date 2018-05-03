@@ -1,0 +1,1525 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match snapshot 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Feedback />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "animationType": "slide",
+      "children": <View
+        style={
+          Object {
+            "backgroundColor": "#EAE9EF",
+            "flex": 1,
+          }
+        }
+      >
+        <ScrollView
+          contentContainerStyle={
+            Object {
+              "flex": 0,
+            }
+          }
+          keyboardShouldPersistTaps="always"
+        >
+          <ListHeading
+            style={
+              Object {
+                "marginTop": 20,
+              }
+            }
+            text="Skicka feedback"
+          />
+          <View
+            style={
+              Object {
+                "padding": 10,
+                "width": "100%",
+              }
+            }
+          >
+            <DefaultFont>
+              Namn 
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FF6961",
+                  }
+                }
+              >
+                *
+              </DefaultFont>
+            </DefaultFont>
+            <Input
+              onChangeText={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 15,
+                  "marginBottom": 10,
+                  "marginTop": 10,
+                  "paddingLeft": 5,
+                  "paddingRight": 5,
+                }
+              }
+              underlineColorAndroid="#fff"
+              value=""
+            />
+            <DefaultFont>
+              E-mail 
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FF6961",
+                  }
+                }
+              >
+                *
+              </DefaultFont>
+            </DefaultFont>
+            <Input
+              onChangeText={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 15,
+                  "marginBottom": 10,
+                  "marginTop": 10,
+                  "paddingLeft": 5,
+                  "paddingRight": 5,
+                }
+              }
+              underlineColorAndroid="#fff"
+              value={undefined}
+            />
+            <DefaultFont>
+              Meddelande 
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FF6961",
+                  }
+                }
+              >
+                *
+              </DefaultFont>
+            </DefaultFont>
+            <Input
+              multiline={true}
+              onChangeText={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 15,
+                  "marginBottom": 10,
+                  "marginTop": 10,
+                  "paddingLeft": 5,
+                  "paddingRight": 5,
+                }
+              }
+              underlineColorAndroid="#fff"
+              value=""
+            />
+            <Button
+              color="primary"
+              fontColor="alternative"
+              label="Skicka feedback"
+              loading={false}
+              onPress={[Function]}
+              uppercase={true}
+            />
+            <Button
+              color="danger"
+              fontColor="alternative"
+              label="Avbryt"
+              onPress={[Function]}
+              uppercase={true}
+            />
+          </View>
+        </ScrollView>
+      </View>,
+      "onRequestClose": undefined,
+      "visible": undefined,
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": <ScrollView
+          contentContainerStyle={
+            Object {
+              "flex": 0,
+            }
+          }
+          keyboardShouldPersistTaps="always"
+        >
+          <ListHeading
+            style={
+              Object {
+                "marginTop": 20,
+              }
+            }
+            text="Skicka feedback"
+          />
+          <View
+            style={
+              Object {
+                "padding": 10,
+                "width": "100%",
+              }
+            }
+          >
+            <DefaultFont>
+              Namn 
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FF6961",
+                  }
+                }
+              >
+                *
+              </DefaultFont>
+            </DefaultFont>
+            <Input
+              onChangeText={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 15,
+                  "marginBottom": 10,
+                  "marginTop": 10,
+                  "paddingLeft": 5,
+                  "paddingRight": 5,
+                }
+              }
+              underlineColorAndroid="#fff"
+              value=""
+            />
+            <DefaultFont>
+              E-mail 
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FF6961",
+                  }
+                }
+              >
+                *
+              </DefaultFont>
+            </DefaultFont>
+            <Input
+              onChangeText={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 15,
+                  "marginBottom": 10,
+                  "marginTop": 10,
+                  "paddingLeft": 5,
+                  "paddingRight": 5,
+                }
+              }
+              underlineColorAndroid="#fff"
+              value={undefined}
+            />
+            <DefaultFont>
+              Meddelande 
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FF6961",
+                  }
+                }
+              >
+                *
+              </DefaultFont>
+            </DefaultFont>
+            <Input
+              multiline={true}
+              onChangeText={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 15,
+                  "marginBottom": 10,
+                  "marginTop": 10,
+                  "paddingLeft": 5,
+                  "paddingRight": 5,
+                }
+              }
+              underlineColorAndroid="#fff"
+              value=""
+            />
+            <Button
+              color="primary"
+              fontColor="alternative"
+              label="Skicka feedback"
+              loading={false}
+              onPress={[Function]}
+              uppercase={true}
+            />
+            <Button
+              color="danger"
+              fontColor="alternative"
+              label="Avbryt"
+              onPress={[Function]}
+              uppercase={true}
+            />
+          </View>
+        </ScrollView>,
+        "style": Object {
+          "backgroundColor": "#EAE9EF",
+          "flex": 1,
+        },
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": Array [
+            <ListHeading
+              style={
+                Object {
+                  "marginTop": 20,
+                }
+              }
+              text="Skicka feedback"
+            />,
+            <View
+              style={
+                Object {
+                  "padding": 10,
+                  "width": "100%",
+                }
+              }
+            >
+              <DefaultFont>
+                Namn 
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                    }
+                  }
+                >
+                  *
+                </DefaultFont>
+              </DefaultFont>
+              <Input
+                onChangeText={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+                underlineColorAndroid="#fff"
+                value=""
+              />
+              <DefaultFont>
+                E-mail 
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                    }
+                  }
+                >
+                  *
+                </DefaultFont>
+              </DefaultFont>
+              <Input
+                onChangeText={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+                underlineColorAndroid="#fff"
+                value={undefined}
+              />
+              <DefaultFont>
+                Meddelande 
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                    }
+                  }
+                >
+                  *
+                </DefaultFont>
+              </DefaultFont>
+              <Input
+                multiline={true}
+                onChangeText={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+                underlineColorAndroid="#fff"
+                value=""
+              />
+              <Button
+                color="primary"
+                fontColor="alternative"
+                label="Skicka feedback"
+                loading={false}
+                onPress={[Function]}
+                uppercase={true}
+              />
+              <Button
+                color="danger"
+                fontColor="alternative"
+                label="Avbryt"
+                onPress={[Function]}
+                uppercase={true}
+              />
+            </View>,
+          ],
+          "contentContainerStyle": Object {
+            "flex": 0,
+          },
+          "keyboardShouldPersistTaps": "always",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "style": Object {
+                "marginTop": 20,
+              },
+              "text": "Skicka feedback",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <DefaultFont>
+                  Namn 
+                  <DefaultFont
+                    style={
+                      Object {
+                        "color": "#FF6961",
+                      }
+                    }
+                  >
+                    *
+                  </DefaultFont>
+                </DefaultFont>,
+                <Input
+                  onChangeText={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "#fff",
+                      "borderRadius": 15,
+                      "marginBottom": 10,
+                      "marginTop": 10,
+                      "paddingLeft": 5,
+                      "paddingRight": 5,
+                    }
+                  }
+                  underlineColorAndroid="#fff"
+                  value=""
+                />,
+                <DefaultFont>
+                  E-mail 
+                  <DefaultFont
+                    style={
+                      Object {
+                        "color": "#FF6961",
+                      }
+                    }
+                  >
+                    *
+                  </DefaultFont>
+                </DefaultFont>,
+                <Input
+                  onChangeText={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "#fff",
+                      "borderRadius": 15,
+                      "marginBottom": 10,
+                      "marginTop": 10,
+                      "paddingLeft": 5,
+                      "paddingRight": 5,
+                    }
+                  }
+                  underlineColorAndroid="#fff"
+                  value={undefined}
+                />,
+                <DefaultFont>
+                  Meddelande 
+                  <DefaultFont
+                    style={
+                      Object {
+                        "color": "#FF6961",
+                      }
+                    }
+                  >
+                    *
+                  </DefaultFont>
+                </DefaultFont>,
+                <Input
+                  multiline={true}
+                  onChangeText={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "#fff",
+                      "borderRadius": 15,
+                      "marginBottom": 10,
+                      "marginTop": 10,
+                      "paddingLeft": 5,
+                      "paddingRight": 5,
+                    }
+                  }
+                  underlineColorAndroid="#fff"
+                  value=""
+                />,
+                null,
+                <Button
+                  color="primary"
+                  fontColor="alternative"
+                  label="Skicka feedback"
+                  loading={false}
+                  onPress={[Function]}
+                  uppercase={true}
+                />,
+                <Button
+                  color="danger"
+                  fontColor="alternative"
+                  label="Avbryt"
+                  onPress={[Function]}
+                  uppercase={true}
+                />,
+              ],
+              "style": Object {
+                "padding": 10,
+                "width": "100%",
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": Array [
+                    "Namn ",
+                    <DefaultFont
+                      style={
+                        Object {
+                          "color": "#FF6961",
+                        }
+                      }
+                    >
+                      *
+                    </DefaultFont>,
+                  ],
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Namn ",
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "children": "*",
+                      "style": Object {
+                        "color": "#FF6961",
+                      },
+                    },
+                    "ref": null,
+                    "rendered": "*",
+                    "type": [Function],
+                  },
+                ],
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "onChangeText": [Function],
+                  "style": Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  },
+                  "underlineColorAndroid": "#fff",
+                  "value": "",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": Array [
+                    "E-mail ",
+                    <DefaultFont
+                      style={
+                        Object {
+                          "color": "#FF6961",
+                        }
+                      }
+                    >
+                      *
+                    </DefaultFont>,
+                  ],
+                },
+                "ref": null,
+                "rendered": Array [
+                  "E-mail ",
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "children": "*",
+                      "style": Object {
+                        "color": "#FF6961",
+                      },
+                    },
+                    "ref": null,
+                    "rendered": "*",
+                    "type": [Function],
+                  },
+                ],
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "onChangeText": [Function],
+                  "style": Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  },
+                  "underlineColorAndroid": "#fff",
+                  "value": undefined,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": Array [
+                    "Meddelande ",
+                    <DefaultFont
+                      style={
+                        Object {
+                          "color": "#FF6961",
+                        }
+                      }
+                    >
+                      *
+                    </DefaultFont>,
+                  ],
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Meddelande ",
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "children": "*",
+                      "style": Object {
+                        "color": "#FF6961",
+                      },
+                    },
+                    "ref": null,
+                    "rendered": "*",
+                    "type": [Function],
+                  },
+                ],
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "multiline": true,
+                  "onChangeText": [Function],
+                  "style": Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  },
+                  "underlineColorAndroid": "#fff",
+                  "value": "",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              null,
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "color": "primary",
+                  "fontColor": "alternative",
+                  "label": "Skicka feedback",
+                  "loading": false,
+                  "onPress": [Function],
+                  "uppercase": true,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "color": "danger",
+                  "fontColor": "alternative",
+                  "label": "Avbryt",
+                  "onPress": [Function],
+                  "uppercase": true,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "animationType": "slide",
+        "children": <View
+          style={
+            Object {
+              "backgroundColor": "#EAE9EF",
+              "flex": 1,
+            }
+          }
+        >
+          <ScrollView
+            contentContainerStyle={
+              Object {
+                "flex": 0,
+              }
+            }
+            keyboardShouldPersistTaps="always"
+          >
+            <ListHeading
+              style={
+                Object {
+                  "marginTop": 20,
+                }
+              }
+              text="Skicka feedback"
+            />
+            <View
+              style={
+                Object {
+                  "padding": 10,
+                  "width": "100%",
+                }
+              }
+            >
+              <DefaultFont>
+                Namn 
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                    }
+                  }
+                >
+                  *
+                </DefaultFont>
+              </DefaultFont>
+              <Input
+                onChangeText={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+                underlineColorAndroid="#fff"
+                value=""
+              />
+              <DefaultFont>
+                E-mail 
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                    }
+                  }
+                >
+                  *
+                </DefaultFont>
+              </DefaultFont>
+              <Input
+                onChangeText={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+                underlineColorAndroid="#fff"
+                value={undefined}
+              />
+              <DefaultFont>
+                Meddelande 
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                    }
+                  }
+                >
+                  *
+                </DefaultFont>
+              </DefaultFont>
+              <Input
+                multiline={true}
+                onChangeText={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+                underlineColorAndroid="#fff"
+                value=""
+              />
+              <Button
+                color="primary"
+                fontColor="alternative"
+                label="Skicka feedback"
+                loading={false}
+                onPress={[Function]}
+                uppercase={true}
+              />
+              <Button
+                color="danger"
+                fontColor="alternative"
+                label="Avbryt"
+                onPress={[Function]}
+                uppercase={true}
+              />
+            </View>
+          </ScrollView>
+        </View>,
+        "onRequestClose": undefined,
+        "visible": undefined,
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": <ScrollView
+            contentContainerStyle={
+              Object {
+                "flex": 0,
+              }
+            }
+            keyboardShouldPersistTaps="always"
+          >
+            <ListHeading
+              style={
+                Object {
+                  "marginTop": 20,
+                }
+              }
+              text="Skicka feedback"
+            />
+            <View
+              style={
+                Object {
+                  "padding": 10,
+                  "width": "100%",
+                }
+              }
+            >
+              <DefaultFont>
+                Namn 
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                    }
+                  }
+                >
+                  *
+                </DefaultFont>
+              </DefaultFont>
+              <Input
+                onChangeText={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+                underlineColorAndroid="#fff"
+                value=""
+              />
+              <DefaultFont>
+                E-mail 
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                    }
+                  }
+                >
+                  *
+                </DefaultFont>
+              </DefaultFont>
+              <Input
+                onChangeText={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+                underlineColorAndroid="#fff"
+                value={undefined}
+              />
+              <DefaultFont>
+                Meddelande 
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                    }
+                  }
+                >
+                  *
+                </DefaultFont>
+              </DefaultFont>
+              <Input
+                multiline={true}
+                onChangeText={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": 15,
+                    "marginBottom": 10,
+                    "marginTop": 10,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+                underlineColorAndroid="#fff"
+                value=""
+              />
+              <Button
+                color="primary"
+                fontColor="alternative"
+                label="Skicka feedback"
+                loading={false}
+                onPress={[Function]}
+                uppercase={true}
+              />
+              <Button
+                color="danger"
+                fontColor="alternative"
+                label="Avbryt"
+                onPress={[Function]}
+                uppercase={true}
+              />
+            </View>
+          </ScrollView>,
+          "style": Object {
+            "backgroundColor": "#EAE9EF",
+            "flex": 1,
+          },
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              <ListHeading
+                style={
+                  Object {
+                    "marginTop": 20,
+                  }
+                }
+                text="Skicka feedback"
+              />,
+              <View
+                style={
+                  Object {
+                    "padding": 10,
+                    "width": "100%",
+                  }
+                }
+              >
+                <DefaultFont>
+                  Namn 
+                  <DefaultFont
+                    style={
+                      Object {
+                        "color": "#FF6961",
+                      }
+                    }
+                  >
+                    *
+                  </DefaultFont>
+                </DefaultFont>
+                <Input
+                  onChangeText={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "#fff",
+                      "borderRadius": 15,
+                      "marginBottom": 10,
+                      "marginTop": 10,
+                      "paddingLeft": 5,
+                      "paddingRight": 5,
+                    }
+                  }
+                  underlineColorAndroid="#fff"
+                  value=""
+                />
+                <DefaultFont>
+                  E-mail 
+                  <DefaultFont
+                    style={
+                      Object {
+                        "color": "#FF6961",
+                      }
+                    }
+                  >
+                    *
+                  </DefaultFont>
+                </DefaultFont>
+                <Input
+                  onChangeText={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "#fff",
+                      "borderRadius": 15,
+                      "marginBottom": 10,
+                      "marginTop": 10,
+                      "paddingLeft": 5,
+                      "paddingRight": 5,
+                    }
+                  }
+                  underlineColorAndroid="#fff"
+                  value={undefined}
+                />
+                <DefaultFont>
+                  Meddelande 
+                  <DefaultFont
+                    style={
+                      Object {
+                        "color": "#FF6961",
+                      }
+                    }
+                  >
+                    *
+                  </DefaultFont>
+                </DefaultFont>
+                <Input
+                  multiline={true}
+                  onChangeText={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "#fff",
+                      "borderRadius": 15,
+                      "marginBottom": 10,
+                      "marginTop": 10,
+                      "paddingLeft": 5,
+                      "paddingRight": 5,
+                    }
+                  }
+                  underlineColorAndroid="#fff"
+                  value=""
+                />
+                <Button
+                  color="primary"
+                  fontColor="alternative"
+                  label="Skicka feedback"
+                  loading={false}
+                  onPress={[Function]}
+                  uppercase={true}
+                />
+                <Button
+                  color="danger"
+                  fontColor="alternative"
+                  label="Avbryt"
+                  onPress={[Function]}
+                  uppercase={true}
+                />
+              </View>,
+            ],
+            "contentContainerStyle": Object {
+              "flex": 0,
+            },
+            "keyboardShouldPersistTaps": "always",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "style": Object {
+                  "marginTop": 20,
+                },
+                "text": "Skicka feedback",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": Array [
+                  <DefaultFont>
+                    Namn 
+                    <DefaultFont
+                      style={
+                        Object {
+                          "color": "#FF6961",
+                        }
+                      }
+                    >
+                      *
+                    </DefaultFont>
+                  </DefaultFont>,
+                  <Input
+                    onChangeText={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#fff",
+                        "borderRadius": 15,
+                        "marginBottom": 10,
+                        "marginTop": 10,
+                        "paddingLeft": 5,
+                        "paddingRight": 5,
+                      }
+                    }
+                    underlineColorAndroid="#fff"
+                    value=""
+                  />,
+                  <DefaultFont>
+                    E-mail 
+                    <DefaultFont
+                      style={
+                        Object {
+                          "color": "#FF6961",
+                        }
+                      }
+                    >
+                      *
+                    </DefaultFont>
+                  </DefaultFont>,
+                  <Input
+                    onChangeText={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#fff",
+                        "borderRadius": 15,
+                        "marginBottom": 10,
+                        "marginTop": 10,
+                        "paddingLeft": 5,
+                        "paddingRight": 5,
+                      }
+                    }
+                    underlineColorAndroid="#fff"
+                    value={undefined}
+                  />,
+                  <DefaultFont>
+                    Meddelande 
+                    <DefaultFont
+                      style={
+                        Object {
+                          "color": "#FF6961",
+                        }
+                      }
+                    >
+                      *
+                    </DefaultFont>
+                  </DefaultFont>,
+                  <Input
+                    multiline={true}
+                    onChangeText={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#fff",
+                        "borderRadius": 15,
+                        "marginBottom": 10,
+                        "marginTop": 10,
+                        "paddingLeft": 5,
+                        "paddingRight": 5,
+                      }
+                    }
+                    underlineColorAndroid="#fff"
+                    value=""
+                  />,
+                  null,
+                  <Button
+                    color="primary"
+                    fontColor="alternative"
+                    label="Skicka feedback"
+                    loading={false}
+                    onPress={[Function]}
+                    uppercase={true}
+                  />,
+                  <Button
+                    color="danger"
+                    fontColor="alternative"
+                    label="Avbryt"
+                    onPress={[Function]}
+                    uppercase={true}
+                  />,
+                ],
+                "style": Object {
+                  "padding": 10,
+                  "width": "100%",
+                },
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": Array [
+                      "Namn ",
+                      <DefaultFont
+                        style={
+                          Object {
+                            "color": "#FF6961",
+                          }
+                        }
+                      >
+                        *
+                      </DefaultFont>,
+                    ],
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "Namn ",
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "function",
+                      "props": Object {
+                        "children": "*",
+                        "style": Object {
+                          "color": "#FF6961",
+                        },
+                      },
+                      "ref": null,
+                      "rendered": "*",
+                      "type": [Function],
+                    },
+                  ],
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "onChangeText": [Function],
+                    "style": Object {
+                      "backgroundColor": "#fff",
+                      "borderRadius": 15,
+                      "marginBottom": 10,
+                      "marginTop": 10,
+                      "paddingLeft": 5,
+                      "paddingRight": 5,
+                    },
+                    "underlineColorAndroid": "#fff",
+                    "value": "",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": Array [
+                      "E-mail ",
+                      <DefaultFont
+                        style={
+                          Object {
+                            "color": "#FF6961",
+                          }
+                        }
+                      >
+                        *
+                      </DefaultFont>,
+                    ],
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "E-mail ",
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "function",
+                      "props": Object {
+                        "children": "*",
+                        "style": Object {
+                          "color": "#FF6961",
+                        },
+                      },
+                      "ref": null,
+                      "rendered": "*",
+                      "type": [Function],
+                    },
+                  ],
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "onChangeText": [Function],
+                    "style": Object {
+                      "backgroundColor": "#fff",
+                      "borderRadius": 15,
+                      "marginBottom": 10,
+                      "marginTop": 10,
+                      "paddingLeft": 5,
+                      "paddingRight": 5,
+                    },
+                    "underlineColorAndroid": "#fff",
+                    "value": undefined,
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": Array [
+                      "Meddelande ",
+                      <DefaultFont
+                        style={
+                          Object {
+                            "color": "#FF6961",
+                          }
+                        }
+                      >
+                        *
+                      </DefaultFont>,
+                    ],
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "Meddelande ",
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "function",
+                      "props": Object {
+                        "children": "*",
+                        "style": Object {
+                          "color": "#FF6961",
+                        },
+                      },
+                      "ref": null,
+                      "rendered": "*",
+                      "type": [Function],
+                    },
+                  ],
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "multiline": true,
+                    "onChangeText": [Function],
+                    "style": Object {
+                      "backgroundColor": "#fff",
+                      "borderRadius": 15,
+                      "marginBottom": 10,
+                      "marginTop": 10,
+                      "paddingLeft": 5,
+                      "paddingRight": 5,
+                    },
+                    "underlineColorAndroid": "#fff",
+                    "value": "",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+                null,
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "color": "primary",
+                    "fontColor": "alternative",
+                    "label": "Skicka feedback",
+                    "loading": false,
+                    "onPress": [Function],
+                    "uppercase": true,
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "color": "danger",
+                    "fontColor": "alternative",
+                    "label": "Avbryt",
+                    "onPress": [Function],
+                    "uppercase": true,
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+              ],
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
