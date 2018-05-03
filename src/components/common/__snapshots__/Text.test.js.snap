@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match snapshot with array styles 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <DefaultFont
+    style={
+      Array [
+        Object {
+          "color": "#abc",
+        },
+        Object {
+          "backgroundColor": "#def",
+        },
+      ]
+    }
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": undefined,
+      "style": Array [
+        Object {
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        Object {
+          "color": "#abc",
+        },
+        Object {
+          "backgroundColor": "#def",
+        },
+      ],
+    },
+    "ref": null,
+    "rendered": null,
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": undefined,
+        "style": Array [
+          Object {
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#abc",
+          },
+          Object {
+            "backgroundColor": "#def",
+          },
+        ],
+      },
+      "ref": null,
+      "rendered": null,
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`should match snapshot without styles 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <DefaultFont />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": undefined,
+      "style": Array [
+        Object {
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        undefined,
+      ],
+    },
+    "ref": null,
+    "rendered": null,
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": undefined,
+        "style": Array [
+          Object {
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          undefined,
+        ],
+      },
+      "ref": null,
+      "rendered": null,
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
