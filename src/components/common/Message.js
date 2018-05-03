@@ -6,7 +6,7 @@ import { CLR_ERROR } from '../../actions/types';
 import { Text } from '../common';
 import { colors, component } from '../style';
 
-export const Message = ({ type, message }) => {
+export const Message = ({ type, message = '' }) => {
     const getIcon = (iconType) => {
         switch (iconType) {
             case 'info':
