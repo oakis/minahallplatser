@@ -371,6 +371,9 @@ jest.mock('./components/helpers', () => ({
     isAndroid: jest.fn(),
     showMessage: jest.fn(),
     updateStopsCount: jest.fn(),
+    getDeviceModel: jest.fn(),
+    getOsVersion: jest.fn(),
+    getAppVersion: jest.fn(),
 }));
 
 jest.mock('./actions', () => ({
@@ -379,6 +382,12 @@ jest.mock('./actions', () => ({
         loginAnonUser: stub(),
     }
 }));
+
+jest.mock('react-native-cancelable-fetch', () => jest.fn().mockImplementation(() => ({
+    finally: stub().resolves({}),
+    then: stub().resolves({}),
+    catch: stub().rejects({}),
+})));
 
 if (typeof window !== 'object') {
     global.window = global;
