@@ -23,13 +23,19 @@ import { store } from '../App';
 import { getSettings } from './';
 
 export const resetUserPassword = (email) => {
+	if (email.length === 0) {
+		return { 
+			type: ERROR,
+			payload: getFirebaseError({ code: 'auth/invalid-email' }),
+		};
+	}
 	return (dispatch) => {
-		firebase.auth().sendPasswordResetEmail(email)
+		return firebase.auth().sendPasswordResetEmail(email)
 		.then(() => {
 			showMessage('long', `Ett mail för att återställa ditt lösenord har skickats till ${email}.`);
 			dispatch({ type: RESET_PASSWORD });
 			Actions.login();
-		}, (error) => {
+		}).catch((error) => {
 			dispatch({ type: RESET_PASSWORD });
 			dispatch({ type: ERROR, payload: getFirebaseError(error) });
 		});
@@ -217,7 +223,7 @@ const loginUserFail = (dispatch, error) => {
 	}
 };
 
-const getFirebaseError = (error) => {
+export const getFirebaseError = (error) => {
 	window.log('Firebase Error:', error);
 	switch (error.code) {
 		case 'auth/network-request-failed':
