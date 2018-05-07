@@ -1,8 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import firebase from 'react-native-firebase';
+import fetch from 'react-native-cancelable-fetch';
+import { Alert } from 'react-native';
+import { stub } from 'sinon';
 import { Feedback } from './Feedback';
 import { track } from '../helpers';
+
+window.log = () => {};
 
 it('should match snapshot', () => {
     const wrapper = shallow(<Feedback />);
@@ -77,14 +82,62 @@ describe('press avbryt button', () => {
 
 describe('press skicka feedback button', () => {
     let wrapper;
-    beforeEach(() => {
-        track.mockClear();
-        wrapper = shallow(<Feedback />).setState({ name: 'A', email: 'B', message: 'C' });
-        wrapper.instance().setState = jest.fn();
-        wrapper.find('Button').at(0).simulate('press');
+    describe('validated + then', () => {
+        beforeEach(async () => {
+            track.mockClear();
+            wrapper = await shallow(<Feedback />).setState({ name: 'A', email: 'B', message: 'C' });
+            wrapper.instance().reset = jest.fn();
+            wrapper.instance().setState = jest.fn();
+            wrapper.find('Button').at(0).simulate('press');
+        });
+    
+        it('should indicate loading', () => {
+            expect(wrapper.instance().setState).toBeCalledWith({ loading: true });
+        });
+    
+        it('should be tracked on success', () => {
+            expect(track).toBeCalledWith('Feedback Send');
+        });
+    
+        it('should alert user that it was successful', () => {
+            expect(Alert.alert).toBeCalledWith('', 'Tack för din feedback!');
+        });
+    
+        it('should reset state', () => {
+            expect(wrapper.instance().reset).toHaveBeenCalledTimes(1);
+        });
     });
 
-    it('should indicate loading', () => {
-        expect(wrapper.instance().setState).toBeCalledWith({ loading: true });
+    describe('not validated', () => {
+        beforeEach(async () => {
+            fetch.mockImplementationOnce(() => ({
+                finally: stub().rejects({ err: 'err' }),
+            }));
+            track.mockClear();
+            wrapper = await shallow(<Feedback />).setState({ name: 'A', email: 'B', message: 'C' });
+            wrapper.instance().reset = jest.fn();
+            wrapper.instance().setState = jest.fn();
+            wrapper.find('Button').at(0).simulate('press');
+        });
+        
+        it('should be tracked on fail', () => {
+            expect(track).toBeCalledWith('Feedback Failed', { Error: { err: 'err' } });
+        });
+    
+        it('should alert the user about the error', () => {
+            expect(Alert.alert).toBeCalledWith('', 'Något gick snett, försök igen senare.');
+        });
+    
+        it('should stop indicating load', () => {
+            expect(wrapper.instance().setState).toBeCalledWith({ loading: false });
+        });
+    });
+
+
+    it('if not validated: set validated to false', async () => {
+        wrapper = await shallow(<Feedback />);
+        wrapper.instance().setState = jest.fn();
+        wrapper.find('Button').at(0).simulate('press');
+        expect(wrapper.instance().setState).toBeCalledWith({ validated: false });
     });
 });
