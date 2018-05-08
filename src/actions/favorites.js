@@ -53,7 +53,7 @@ const favoriteCreateFail = (dispatch) => {
 	dispatch({ type: ERROR, payload: 'Kunde inte spara favorit, försök igen senare.' });
 };
 
-export const favoriteGet = (currentUser) => {
+export const favoriteGet = (currentUser, shouldStartListen) => {
 	if (currentUser) {
 		return (dispatch) => {
 			getStorage('minahallplatser-favorites').then((favorites) => {
@@ -65,7 +65,7 @@ export const favoriteGet = (currentUser) => {
 						return dispatch({ type: FAVORITE_FETCH_SUCCESS, payload: [] });
 					}
 				}
-				if (!currentUser.isAnonymous) {
+				if (!currentUser.isAnonymous && shouldStartListen) {
 					firebase.database().ref(`/users/${currentUser.uid}/favorites`)
 					.on('value', snapshot => {
 						setStorage('minahallplatser-favorites', snapshot.val());

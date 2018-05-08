@@ -38,7 +38,7 @@ class FavoriteList extends PureComponent {
 			.then(([user, settings]) => {
 				window.log('Got user:', user, 'with settings:', settings);
 				if (user && user.uid === fbUser.uid) {
-					this.props.favoriteGet(fbUser);
+					this.props.favoriteGet(fbUser, this.state.init);
 				}
 				if (this.props.hasUsedGPS && this.props.allowedGPS) {
 					window.log('Refreshing nearby stops');
