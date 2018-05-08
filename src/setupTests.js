@@ -350,6 +350,7 @@ jest.mock('react-native-firebase', () => ({
         signInAndRetrieveDataWithCredential: stub().resolves({ email: 'abc@123.com' }),
         signOut: stub(),
         sendPasswordResetEmail: stub(),
+        createUserWithEmailAndPassword: stub(),
     })
 }));
 
