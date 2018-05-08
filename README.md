@@ -1,4 +1,5 @@
 # Mina Hållplatser
+Master: [![Build Status](https://travis-ci.com/oakis/minahallplatser.svg?branch=master)](https://travis-ci.com/oakis/minahallplatser) - Development: [![Build Status](https://travis-ci.com/oakis/minahallplatser.svg?branch=development)](https://travis-ci.com/oakis/minahallplatser)
 
 This started out as a small school project for a frontend course.
 Now it is a project I am working with on my spare time.
