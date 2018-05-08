@@ -51,7 +51,7 @@ const logToFirebase = async (stack, uid = null, email = null, displayName = null
     firebase.crashlytics().setStringValue('Name', displayName);
     firebase.crashlytics().setStringValue('Email', email);
     firebase.crashlytics().setUserIdentifier(uid);
-    await firebase.crashlytics().log(stack);
+    await firebase.crashlytics().recordError(1, stack);
     window.log('Sent stack to Firebase Crashlytics');
 };
 
