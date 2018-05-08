@@ -10,10 +10,9 @@ const wait = () => {
     });
 };
 
-it('timeEnd should return 100 - 115', async () => {
+it('timeEnd should return at least 100', async () => {
     window.timeStart('test');
     await wait();
     const actual = window.timeEnd('test');
     expect(actual).toBeGreaterThanOrEqual(100);
-    expect(actual).toBeLessThanOrEqual(180);
 });
