@@ -390,6 +390,8 @@ jest.mock('react-native-cancelable-fetch', () => jest.fn().mockImplementation(()
     catch: stub().rejects({}),
 })));
 
+jest.mock('react-native-fabric', () => {});
+
 if (typeof window !== 'object') {
     global.window = global;
     global.window.log = (msg) => console.log(msg);
