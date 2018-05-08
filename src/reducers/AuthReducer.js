@@ -18,7 +18,6 @@ const INIT_STATE = {
 	email: '',
 	password: '',
 	passwordSecond: '',
-	user: {},
 	loading: false,
 	loadingFacebook: false
 };
@@ -38,7 +37,6 @@ export default (state = INIT_STATE, action) => {
 				password: '',
 				passwordSecond: '',
 				loading: false,
-				user: action.payload,
 				loadingFacebook: false
 			};
 		case LOGIN_USER_FAIL:

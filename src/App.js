@@ -34,11 +34,11 @@ if (__DEV__) {
   window.timeEnd = () => {};
 }
 
-/*eslint no-underscore-dangle: ["error", { "allow": ["_globalHandler"] }]*/
+/* eslint-disable no-underscore-dangle */
 const defaultHandler = (ErrorUtils.getGlobalHandler && ErrorUtils.getGlobalHandler()) || ErrorUtils._globalHandler;
 
 ErrorUtils.setGlobalHandler(({ stack }) => {
-    const { uid, email, displayName } = store.getState().auth.user;
+    const { uid, email, displayName } = firebase.auth().currentUser;
     firebase.crashlytics().setStringValue('Name', displayName);
     firebase.crashlytics().setStringValue('Email', email);
     firebase.crashlytics().setUserIdentifier(uid);
