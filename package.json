@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
+    "test:watch": "jest --watch --verbose",
+    "test:coverage": "jest --coverage",
     "clean": "cd android && gradlew clean",
     "build-debug": "curl http://localhost:8081/index.android.bundle?platform=android -o android/app/src/main/assets/index.android.bundle && cd android && gradlew clean && gradlew assembleDebug",
     "build-release": "npm run clean && cd android && ./gradlew assembleRelease",
