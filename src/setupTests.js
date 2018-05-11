@@ -337,7 +337,9 @@ jest.mock('react-native-fbsdk', () => (
 jest.mock('react-native-mixpanel', () => (
     {
         sharedInstanceWithToken: jest.fn(),
-        track: jest.fn()
+        track: jest.fn(),
+        identify: jest.fn(),
+        set: jest.fn(),
     }
 ));
 jest.mock('react-native-geolocation-service', () => {});
@@ -351,7 +353,16 @@ jest.mock('react-native-firebase', () => ({
         signOut: stub(),
         sendPasswordResetEmail: stub(),
         createUserWithEmailAndPassword: stub(),
-    })
+        signInAndRetrieveDataWithEmailAndPassword: stub().resolves(),
+    }),
+    database: () => ({
+        ref: () => ({
+            child: () => ({
+                push: jest.fn(),
+            }),
+            update: jest.fn(),
+        }),
+    }),
 }));
 
 jest.mock('react-native-router-flux', () => ({
@@ -368,6 +379,7 @@ jest.mock('react-native-router-flux', () => ({
 
 jest.mock('./components/helpers', () => ({
     getStorage: jest.fn(() => {}),
+    setStorage: jest.fn().mockImplementation(() => Promise.resolve()),
     globals: {},
     track: jest.fn(),
     isAndroid: jest.fn(),
@@ -376,6 +388,11 @@ jest.mock('./components/helpers', () => ({
     getDeviceModel: jest.fn(),
     getOsVersion: jest.fn(),
     getAppVersion: jest.fn(),
+    getToken: jest.fn().mockImplementation(() => ({
+        finally: (fn) => {
+            fn();
+        },
+    })),
 }));
 
 jest.mock('./actions', () => ({
