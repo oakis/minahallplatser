@@ -344,25 +344,26 @@ jest.mock('react-native-mixpanel', () => (
 ));
 jest.mock('react-native-geolocation-service', () => {});
 jest.mock('react-native-firebase', () => ({
-    auth: () => ({
-        onAuthStateChanged: (fn) => {
-            fn({ uid: 123 });
-        },
-        currentUser: { uid: 123 },
-        signInAndRetrieveDataWithCredential: stub().resolves({ email: 'abc@123.com' }),
-        signOut: stub(),
-        sendPasswordResetEmail: stub(),
-        createUserWithEmailAndPassword: stub(),
-        signInAndRetrieveDataWithEmailAndPassword: stub().resolves(),
-    }),
-    database: () => ({
-        ref: () => ({
-            child: () => ({
-                push: jest.fn(),
-            }),
-            update: jest.fn(),
-        }),
-    }),
+    auth: jest.fn().mockReturnThis(),
+    onAuthStateChanged: (fn) => {
+        fn({ uid: 123 });
+    },
+    currentUser: {
+        uid: 123,
+        isAnonymous: false,
+        linkWithCredential: jest.fn().mockReturnThis(),
+    },
+    signInAndRetrieveDataWithCredential: stub().resolves({ email: 'abc@123.com' }),
+    signOut: stub(),
+    sendPasswordResetEmail: stub().resolves(),
+    createUserWithEmailAndPassword: stub(),
+    signInAndRetrieveDataWithEmailAndPassword: stub().resolves(),
+
+    database: jest.fn().mockReturnThis(),
+    ref: jest.fn().mockReturnThis(),
+    child: jest.fn().mockReturnThis(),
+    push: jest.fn().mockReturnThis(),
+    update: jest.fn().mockReturnThis(),
 }));
 
 jest.mock('react-native-router-flux', () => ({

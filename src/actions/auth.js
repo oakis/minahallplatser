@@ -70,30 +70,30 @@ export const passwordSecondChanged = (text) => {
 };
 
 export const registerUser = ({ email, password, passwordSecond }) => {
-	return (dispatch) => {
+	return async (dispatch) => {
 		dispatch({ type: REGISTER_USER });
 		if (password !== passwordSecond) {
 			dispatch({ type: REGISTER_USER_FAIL });
 			dispatch({ type: ERROR, payload: 'Lösenorden matchade inte.' });
 		} else if (firebase.auth().currentUser && firebase.auth().currentUser.isAnonymous) {
-			track('Register', { type: 'From Anonymous' });
-			const credential = firebase.auth.EmailAuthProvider.credential(email, password);
-			firebase.auth().currentUser.linkWithCredential(credential).then(() => {
+			try {
+				track('Register', { type: 'From Anonymous' });
+				const credential = firebase.auth.EmailAuthProvider.credential(email, password);
+				await firebase.auth().currentUser.linkWithCredential(credential);
 				dispatch({ type: LOGIN_USER });
-				firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
-					.then(user => {
-						const { favorites, lines } = store.getState().fav;
-						const fbUser = firebase.database().ref(`/users/${user.uid}`);
-						_.forEach(favorites, (favorite) => {
-							fbUser.child('favorites').push(favorite);
-						});
-						_.forEach(lines, (line) => {
-							fbUser.child('lines').push(line);
-						});
-						loginUserSuccess(dispatch, user);
-					})
-					.catch((error) => loginUserFail(dispatch, error));
-			}, (error) => loginUserFail(dispatch, error));
+				const user = await firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password);
+				const { favorites, lines } = store.getState().fav;
+				const fbUser = firebase.database().ref(`/users/${user.uid}`);
+				_.forEach(favorites, (favorite) => {
+					fbUser.child('favorites').push(favorite);
+				});
+				_.forEach(lines, (line) => {
+					fbUser.child('lines').push(line);
+				});
+				loginUserSuccess(dispatch, user);
+			} catch (error) {
+				loginUserFail(dispatch, error);
+			}
 		} else {
 			track('Register', { type: 'New Account' });
 			firebase.auth().createUserWithEmailAndPassword(email, password)

@@ -9,27 +9,32 @@ import { track } from '../components/helpers';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-const initialState = {
-    fav: {
-        favorites: [
-            { id: '9021014007900000', busStop: 'Överåsvallen, Göteborg' },
-            { id: '9021014016323000', busStop: 'Älmhult, Ale' },
-        ],
-        lines: [
-            '16 Högsbo',
-            '60 Redbergsplatsen',
-        ]
-    }
-};
+// const initialState = {
+//     fav: {
+//         favorites: [
+//             { id: '9021014007900000', busStop: 'Överåsvallen, Göteborg' },
+//             { id: '9021014016323000', busStop: 'Älmhult, Ale' },
+//         ],
+//         lines: [
+//             '16 Högsbo',
+//             '60 Redbergsplatsen',
+//         ]
+//     }
+// };
 
 describe('resetUserPassword', () => {
+    beforeEach(() => {
+        firebase.auth().sendPasswordResetEmail = stub().resolves();
+    });
+
+    afterEach(() => {
+        firebase.auth().sendPasswordResetEmail.reset();
+    });
+
     it('should dispatch RESET_PASSWORD on success', () => {
         const expectedActions = [
             { type: 'RESET_PASSWORD' }
         ];
-        firebase.auth = () => ({
-            sendPasswordResetEmail: stub().resolves(),
-        });
         const store = mockStore({});
         return store.dispatch(resetUserPassword('abc@123.com')).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
@@ -41,10 +46,8 @@ describe('resetUserPassword', () => {
             { type: 'RESET_PASSWORD' },
             { type: 'ERROR', payload: getFirebaseError({ code: 'auth/network-request-failed' }) },
         ];
-        firebase.auth = () => ({
-            sendPasswordResetEmail: stub().rejects({ code: 'auth/network-request-failed' }),
-        });
         const store = mockStore({});
+        firebase.auth().sendPasswordResetEmail = stub().rejects({ code: 'auth/network-request-failed' });
         return store.dispatch(resetUserPassword('abc@123.com')).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
         });
@@ -52,9 +55,6 @@ describe('resetUserPassword', () => {
 
     it('should send user back to login', () => {
         Actions.login.reset();
-        firebase.auth = () => ({
-            sendPasswordResetEmail: stub().resolves(),
-        });
         const store = mockStore({});
         return store.dispatch(resetUserPassword('abc@123.com')).then(() => {
             expect(Actions.login.callCount).toBe(1);
@@ -86,36 +86,27 @@ describe('registerUser', () => {
     });
 
     describe('else if block', () => {
-        const store = mockStore();
+        const store = mockStore();        
         
-        beforeEach(async () => {
-            firebase.auth = () => ({
-                currentUser: {
-                    isAnonymous: true,
-                    linkWithCredential: jest.fn().mockResolvedValue(),
-                },
-                signInAndRetrieveDataWithEmailAndPassword: stub().resolves({
-                    uid: 123,
-                    metadata: {
-                        creationTime: 1
-                    },
-                }),
-            });
-            firebase.database = () => ({
-                ref: () => ({
-                    child: () => ({
-                        push: jest.fn(),
-                    }),
-                    update: jest.fn(),
-                }),
-            });
+        beforeAll(() => {
+            firebase.auth().currentUser.isAnonymous = true;            
             firebase.auth.EmailAuthProvider = { credential: () => ({ providerId: 123, signInMethod: 'password' }) };            
-            store.clearActions();
-            await store.dispatch(registerUser({ email: 'abc@123.com', password: '123', passwordSecond: '123', favorites: initialState.fav.favorites, lines: initialState.fav.lines }));
+        });
+
+        afterEach(() => {
+            firebase.auth().signInAndRetrieveDataWithEmailAndPassword.reset();
         });
 
         it('Register should be tracked with type', () => {
-            expect(track).toBeCalledWith('Register', { type: 'From Anonymous' });
+            return store.dispatch(registerUser({ email: 'abc@123.com', password: '123', passwordSecond: '123' })).then(() => {
+                expect(track).toBeCalledWith('Register', { type: 'From Anonymous' });
+            });
+        });
+
+        it('user should be signed in', () => {
+            return store.dispatch(registerUser({ email: 'abc@123.com', password: '123', passwordSecond: '123' })).then(() => {
+                expect(firebase.auth().signInAndRetrieveDataWithEmailAndPassword.callCount).toBe(1);
+            });
         });
     });
 
