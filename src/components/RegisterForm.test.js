@@ -19,6 +19,10 @@ const initialState = {
     errors: {
         error: 'An error message',
     },
+    fav: {
+        favorites: [],
+        lines: [],
+    }
 };
 
 it('should match snapshot', () => {

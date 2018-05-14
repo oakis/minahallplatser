@@ -49,8 +49,8 @@ class RegisterForm extends Component {
 
 	onButtonPress = () => {
 		this.props.loading = true;
-		const { email, password, passwordSecond } = this.props;
-		this.props.registerUser({ email, password, passwordSecond });
+		const { email, password, passwordSecond, favorites, lines } = this.props;
+		this.props.registerUser({ email, password, passwordSecond, favorites, lines });
 	}
 
 	registerFacebook = () => {
@@ -162,8 +162,9 @@ class RegisterForm extends Component {
 
 const MapStateToProps = (state) => {
 	const { loading, email, password, passwordSecond, loadingFacebook } = state.auth;
+	const { favorites, lines } = state.fav;
 	const { error } = state.errors;
-	return { error, loading, email, password, passwordSecond, loadingFacebook };
+	return { error, loading, email, password, passwordSecond, loadingFacebook, favorites, lines };
 };
 
 export default connect(MapStateToProps,

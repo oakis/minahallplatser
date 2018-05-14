@@ -7,6 +7,8 @@ ShallowWrapper {
   Symbol(enzyme.__unrendered__): <RegisterForm
     email="abc@123.com"
     error="An error message"
+    favorites={Array []}
+    lines={Array []}
     loading={false}
     loadingFacebook={false}
     password="abc123"

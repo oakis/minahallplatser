@@ -9,18 +9,14 @@ import { track } from '../components/helpers';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-// const initialState = {
-//     fav: {
-//         favorites: [
-//             { id: '9021014007900000', busStop: 'Överåsvallen, Göteborg' },
-//             { id: '9021014016323000', busStop: 'Älmhult, Ale' },
-//         ],
-//         lines: [
-//             '16 Högsbo',
-//             '60 Redbergsplatsen',
-//         ]
-//     }
-// };
+const favorites = [
+    { id: '9021014007900000', busStop: 'Överåsvallen, Göteborg' },
+    { id: '9021014016323000', busStop: 'Älmhult, Ale' },
+];
+const lines = [
+    '16 Högsbo',
+    '60 Redbergsplatsen',
+];
 
 describe('resetUserPassword', () => {
     beforeEach(() => {
@@ -106,6 +102,16 @@ describe('registerUser', () => {
         it('user should be signed in', () => {
             return store.dispatch(registerUser({ email: 'abc@123.com', password: '123', passwordSecond: '123' })).then(() => {
                 expect(firebase.auth().signInAndRetrieveDataWithEmailAndPassword.callCount).toBe(1);
+            });
+        });
+        
+        it('should save favorites and lines to new email account', () => {
+            firebase.auth().signInAndRetrieveDataWithEmailAndPassword.resolves({ uid: 123 });
+            return store.dispatch(registerUser({ email: 'abc@123.com', password: '123', passwordSecond: '123', favorites, lines })).then(() => {
+                expect(firebase.push).toBeCalledWith(favorites[0]);
+                expect(firebase.push).toBeCalledWith(favorites[1]);
+                expect(firebase.push).toBeCalledWith(lines[0]);
+                expect(firebase.push).toBeCalledWith(lines[1]);
             });
         });
     });

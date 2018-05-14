@@ -69,7 +69,7 @@ export const passwordSecondChanged = (text) => {
 	};
 };
 
-export const registerUser = ({ email, password, passwordSecond }) => {
+export const registerUser = ({ email, password, passwordSecond, favorites, lines }) => {
 	return async (dispatch) => {
 		dispatch({ type: REGISTER_USER });
 		if (password !== passwordSecond) {
@@ -82,7 +82,6 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 				await firebase.auth().currentUser.linkWithCredential(credential);
 				dispatch({ type: LOGIN_USER });
 				const user = await firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password);
-				const { favorites, lines } = store.getState().fav;
 				const fbUser = firebase.database().ref(`/users/${user.uid}`);
 				_.forEach(favorites, (favorite) => {
 					fbUser.child('favorites').push(favorite);
