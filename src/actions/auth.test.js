@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { stub } from 'sinon';
 import firebase from 'react-native-firebase';
 import { Actions } from 'react-native-router-flux';
-import { resetUserPassword, getFirebaseError, registerUser } from './auth';
+import { resetUserPassword, getFirebaseError, registerUser, resetRoute, emailChanged, passwordChanged, passwordSecondChanged } from './auth';
 import { track } from '../components/helpers';
 
 const middlewares = [thunk];
@@ -17,6 +17,30 @@ const lines = [
     '16 Högsbo',
     '60 Redbergsplatsen',
 ];
+
+it('resetRoute should dispatch CHANGE_ROUTE', () => {
+    const store = mockStore();
+    store.dispatch(resetRoute());
+    expect(store.getActions()).toEqual([{ type: 'CHANGE_ROUTE' }]);
+});
+
+it('emailChanged should dispatch EMAIL_CHANGED with payload', () => {
+    const store = mockStore();
+    store.dispatch(emailChanged('e@mail.com'));
+    expect(store.getActions()).toEqual([{ type: 'EMAIL_CHANGED', payload: 'e@mail.com' }]);
+});
+
+it('passwordChanged should dispatch PASSWORD_CHANGED with payload', () => {
+    const store = mockStore();
+    store.dispatch(passwordChanged('password'));
+    expect(store.getActions()).toEqual([{ type: 'PASSWORD_CHANGED', payload: 'password' }]);
+});
+
+it('passwordSecondChanged should dispatch PASSWORD_CHANGED_SECOND with payload', () => {
+    const store = mockStore();
+    store.dispatch(passwordSecondChanged('passwordSecond'));
+    expect(store.getActions()).toEqual([{ type: 'PASSWORD_CHANGED_SECOND', payload: 'passwordSecond' }]);
+});
 
 describe('resetUserPassword', () => {
     beforeEach(() => {
