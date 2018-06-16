@@ -76,7 +76,10 @@ ShallowWrapper {
             ]
           }
         >
-          <ScrollView>
+          <ScrollView
+            keyboardShouldPersistTaps="always"
+            scrollEnabled={true}
+          >
             <Button
               color="primary"
               label="Stäng"
@@ -170,7 +173,10 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": <ScrollView>
+          "children": <ScrollView
+            keyboardShouldPersistTaps="always"
+            scrollEnabled={true}
+          >
             <Button
               color="primary"
               label="Stäng"
@@ -216,6 +222,8 @@ ShallowWrapper {
                 uppercase={true}
               />,
             ],
+            "keyboardShouldPersistTaps": "always",
+            "scrollEnabled": true,
           },
           "ref": null,
           "rendered": Array [
@@ -307,7 +315,10 @@ ShallowWrapper {
               ]
             }
           >
-            <ScrollView>
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              scrollEnabled={true}
+            >
               <Button
                 color="primary"
                 label="Stäng"
@@ -401,7 +412,10 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": <ScrollView>
+            "children": <ScrollView
+              keyboardShouldPersistTaps="always"
+              scrollEnabled={true}
+            >
               <Button
                 color="primary"
                 label="Stäng"
@@ -447,6 +461,8 @@ ShallowWrapper {
                   uppercase={true}
                 />,
               ],
+              "keyboardShouldPersistTaps": "always",
+              "scrollEnabled": true,
             },
             "ref": null,
             "rendered": Array [
@@ -562,7 +578,10 @@ ShallowWrapper {
             ]
           }
         >
-          <ScrollView>
+          <ScrollView
+            keyboardShouldPersistTaps="always"
+            scrollEnabled={true}
+          >
             <Button
               color="primary"
               label="Stäng"
@@ -656,7 +675,10 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": <ScrollView>
+          "children": <ScrollView
+            keyboardShouldPersistTaps="always"
+            scrollEnabled={true}
+          >
             <Button
               color="primary"
               label="Stäng"
@@ -702,6 +724,8 @@ ShallowWrapper {
                 uppercase={true}
               />,
             ],
+            "keyboardShouldPersistTaps": "always",
+            "scrollEnabled": true,
           },
           "ref": null,
           "rendered": Array [
@@ -793,7 +817,10 @@ ShallowWrapper {
               ]
             }
           >
-            <ScrollView>
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              scrollEnabled={true}
+            >
               <Button
                 color="primary"
                 label="Stäng"
@@ -887,7 +914,10 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": <ScrollView>
+            "children": <ScrollView
+              keyboardShouldPersistTaps="always"
+              scrollEnabled={true}
+            >
               <Button
                 color="primary"
                 label="Stäng"
@@ -933,6 +963,8 @@ ShallowWrapper {
                   uppercase={true}
                 />,
               ],
+              "keyboardShouldPersistTaps": "always",
+              "scrollEnabled": true,
             },
             "ref": null,
             "rendered": Array [
@@ -1048,7 +1080,10 @@ ShallowWrapper {
             ]
           }
         >
-          <ScrollView>
+          <ScrollView
+            keyboardShouldPersistTaps="always"
+            scrollEnabled={true}
+          >
             <Button
               color="primary"
               label="Stäng"
@@ -1142,7 +1177,10 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": <ScrollView>
+          "children": <ScrollView
+            keyboardShouldPersistTaps="always"
+            scrollEnabled={true}
+          >
             <Button
               color="primary"
               label="Stäng"
@@ -1188,6 +1226,8 @@ ShallowWrapper {
                 uppercase={true}
               />,
             ],
+            "keyboardShouldPersistTaps": "always",
+            "scrollEnabled": true,
           },
           "ref": null,
           "rendered": Array [
@@ -1279,7 +1319,10 @@ ShallowWrapper {
               ]
             }
           >
-            <ScrollView>
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              scrollEnabled={true}
+            >
               <Button
                 color="primary"
                 label="Stäng"
@@ -1373,7 +1416,10 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": <ScrollView>
+            "children": <ScrollView
+              keyboardShouldPersistTaps="always"
+              scrollEnabled={true}
+            >
               <Button
                 color="primary"
                 label="Stäng"
@@ -1419,6 +1465,8 @@ ShallowWrapper {
                   uppercase={true}
                 />,
               ],
+              "keyboardShouldPersistTaps": "always",
+              "scrollEnabled": true,
             },
             "ref": null,
             "rendered": Array [
