@@ -17,7 +17,7 @@ export const getStorage = (item) => {
         AsyncStorage.getItem(item)
         .then((json) => {
             const data = json === null ? {} : JSON.parse(json);
-            window.log(`getStorage() ${item}: OK`);
+            window.log(`getStorage() ${item}: OK`, data);
             resolve(data);
         })
         .catch((e) => {
