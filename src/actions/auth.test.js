@@ -143,7 +143,7 @@ describe('registerUser', () => {
     describe('else block', () => {
         beforeAll(() => {
             firebase.auth = () => ({
-                createUserWithEmailAndPassword: stub().resolves(),
+                createUserAndRetrieveDataWithEmailAndPassword: stub().resolves(),
             });
         });
     

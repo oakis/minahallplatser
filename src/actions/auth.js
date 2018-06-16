@@ -79,7 +79,7 @@ export const registerUser = ({ email, password, passwordSecond, favorites, lines
 			try {
 				track('Register', { type: 'From Anonymous' });
 				const credential = firebase.auth.EmailAuthProvider.credential(email, password);
-				await firebase.auth().currentUser.linkWithCredential(credential);
+				await firebase.auth().currentUser.linkAndRetrieveDataWithCredential(credential);
 				dispatch({ type: LOGIN_USER });
 				const user = await firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password);
 				const fbUser = firebase.database().ref(`/users/${user.uid}`);
@@ -95,7 +95,7 @@ export const registerUser = ({ email, password, passwordSecond, favorites, lines
 			}
 		} else {
 			track('Register', { type: 'New Account' });
-			firebase.auth().createUserWithEmailAndPassword(email, password)
+			firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
 				.catch((error) => {
 					dispatch({ type: REGISTER_USER_FAIL });
 					dispatch({ type: ERROR, payload: getFirebaseError(error) });
@@ -117,7 +117,7 @@ export const registerFacebook = (credential) => {
 		dispatch({ type: REGISTER_FACEBOOK });
 		if (firebase.auth().currentUser && firebase.auth().currentUser.isAnonymous) {
 			track('Register', { type: 'From Anonymous' });
-			firebase.auth().currentUser.linkWithCredential(credential).then(() => {
+			firebase.auth().currentUser.linkAndRetrieveDataWithCredential(credential).then(() => {
 				globals.isLoggingIn = true;
 				firebase.auth().signInAndRetrieveDataWithCredential(credential)
 					.then(user => {
@@ -185,7 +185,7 @@ export const autoLogin = (user) => {
 };
 
 const loginUserSuccess = (dispatch, user) => {
-	const actualUser = user && user.additionalUserInfo && user.additionalUserInfo.isNewUser ? user.user : user;
+	const actualUser = user && user.additionalUserInfo ? user.user : user;
 	getToken().finally(() => {
 		Mixpanel.identify(actualUser.uid);
 		if (!user.isAnonymous) {
