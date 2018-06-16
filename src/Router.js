@@ -12,6 +12,7 @@ import RegisterForm from './components/RegisterForm';
 import ResetPassword from './components/ResetPassword';
 import SplashScreen from './components/SplashScreen';
 import Menu from './components/Menu';
+import Settings from './components/Settings';
 import { colors } from './components/style';
 import { isAndroid, track, showMessage, globals, getStorage } from './components/helpers';
 import { store } from './App';
@@ -155,6 +156,13 @@ class RouterComponent extends Component {
 								component={ShowDepartures}
 								hideDrawerButton
 								right={HelpButton}
+								left={BackButton}
+							/>
+							<Scene
+								key="settings"
+								component={Settings}
+								title="Inställningar"
+								hideDrawerButton
 								left={BackButton}
 							/>
 							<Scene key="auth">
