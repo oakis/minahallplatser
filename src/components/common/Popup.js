@@ -61,7 +61,7 @@ export class Popup extends PureComponent {
                     <Animated.View style={[component.popup.container, { opacity }]} />
                 </TouchableOpacity>
                 <Animated.View style={[component.popup.content, { opacity, transform: [{ scale }] }]}>
-                    <ScrollView>
+                    <ScrollView scrollEnabled keyboardShouldPersistTaps="always">
                         {children}
                         <Button label="Stäng" uppercase color={'primary'} onPress={onPress} />
                     </ScrollView>
