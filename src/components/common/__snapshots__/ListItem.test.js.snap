@@ -27,7 +27,15 @@ ShallowWrapper {
             }
           }
         />,
-        null,
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "width": 24,
+            }
+          }
+        />,
       ],
       "onPress": undefined,
       "style": Array [
@@ -59,7 +67,28 @@ ShallowWrapper {
         "rendered": null,
         "type": [Function],
       },
-      null,
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": Array [
+            null,
+            null,
+          ],
+          "style": Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "width": 24,
+          },
+        },
+        "ref": null,
+        "rendered": Array [
+          null,
+          null,
+        ],
+        "type": [Function],
+      },
     ],
     "type": [Function],
   },
@@ -79,7 +108,15 @@ ShallowWrapper {
               }
             }
           />,
-          null,
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "width": 24,
+              }
+            }
+          />,
         ],
         "onPress": undefined,
         "style": Array [
@@ -111,7 +148,28 @@ ShallowWrapper {
           "rendered": null,
           "type": [Function],
         },
-        null,
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              null,
+              null,
+            ],
+            "style": Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "width": 24,
+            },
+          },
+          "ref": null,
+          "rendered": Array [
+            null,
+            null,
+          ],
+          "type": [Function],
+        },
       ],
       "type": [Function],
     },
