@@ -90,12 +90,13 @@ export const component = {
 		text: {
 			justifyContent: 'flex-start',
             alignSelf: 'center',
-            fontSize: 18
+            fontSize: 18,
 		},
 		icon: {
-			justifyContent: 'flex-end',
-			alignSelf: 'center'
-		}
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 24,
+		},
     },
     popup: {
         container: {

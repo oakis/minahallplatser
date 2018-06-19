@@ -83,27 +83,11 @@ ShallowWrapper {
           <ListHeading
             text="Konto"
           />
-          <DefaultFont
-            style={
-              Object {
-                "fontSize": 12,
-                "fontWeight": "bold",
-                "marginBottom": 0,
-                "paddingBottom": 0,
-                "paddingLeft": 10,
-                "paddingTop": 10,
-              }
-            }
-          >
-            E-MAIL
-          </DefaultFont>
-          <DefaultFont
-            style={
-              Object {
-                "marginBottom": 10,
-                "paddingLeft": 10,
-              }
-            }
+          <ListItem
+            icon="ios-person"
+            iconVisible={true}
+            pressItem={[Function]}
+            text="Profil"
           />
           <ListItem
             icon="ios-settings"
@@ -191,27 +175,11 @@ ShallowWrapper {
             <ListHeading
               text="Konto"
             />,
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 12,
-                  "fontWeight": "bold",
-                  "marginBottom": 0,
-                  "paddingBottom": 0,
-                  "paddingLeft": 10,
-                  "paddingTop": 10,
-                }
-              }
-            >
-              E-MAIL
-            </DefaultFont>,
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                  "paddingLeft": 10,
-                }
-              }
+            <ListItem
+              icon="ios-person"
+              iconVisible={true}
+              pressItem={[Function]}
+              text="Profil"
             />,
             <ListItem
               icon="ios-settings"
@@ -304,30 +272,10 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "function",
             "props": Object {
-              "children": "E-MAIL",
-              "style": Object {
-                "fontSize": 12,
-                "fontWeight": "bold",
-                "marginBottom": 0,
-                "paddingBottom": 0,
-                "paddingLeft": 10,
-                "paddingTop": 10,
-              },
-            },
-            "ref": null,
-            "rendered": "E-MAIL",
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": undefined,
-              "style": Object {
-                "marginBottom": 10,
-                "paddingLeft": 10,
-              },
+              "icon": "ios-person",
+              "iconVisible": true,
+              "pressItem": [Function],
+              "text": "Profil",
             },
             "ref": null,
             "rendered": null,
@@ -445,27 +393,11 @@ ShallowWrapper {
             <ListHeading
               text="Konto"
             />
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 12,
-                  "fontWeight": "bold",
-                  "marginBottom": 0,
-                  "paddingBottom": 0,
-                  "paddingLeft": 10,
-                  "paddingTop": 10,
-                }
-              }
-            >
-              E-MAIL
-            </DefaultFont>
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                  "paddingLeft": 10,
-                }
-              }
+            <ListItem
+              icon="ios-person"
+              iconVisible={true}
+              pressItem={[Function]}
+              text="Profil"
             />
             <ListItem
               icon="ios-settings"
@@ -553,27 +485,11 @@ ShallowWrapper {
               <ListHeading
                 text="Konto"
               />,
-              <DefaultFont
-                style={
-                  Object {
-                    "fontSize": 12,
-                    "fontWeight": "bold",
-                    "marginBottom": 0,
-                    "paddingBottom": 0,
-                    "paddingLeft": 10,
-                    "paddingTop": 10,
-                  }
-                }
-              >
-                E-MAIL
-              </DefaultFont>,
-              <DefaultFont
-                style={
-                  Object {
-                    "marginBottom": 10,
-                    "paddingLeft": 10,
-                  }
-                }
+              <ListItem
+                icon="ios-person"
+                iconVisible={true}
+                pressItem={[Function]}
+                text="Profil"
               />,
               <ListItem
                 icon="ios-settings"
@@ -666,30 +582,10 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "function",
               "props": Object {
-                "children": "E-MAIL",
-                "style": Object {
-                  "fontSize": 12,
-                  "fontWeight": "bold",
-                  "marginBottom": 0,
-                  "paddingBottom": 0,
-                  "paddingLeft": 10,
-                  "paddingTop": 10,
-                },
-              },
-              "ref": null,
-              "rendered": "E-MAIL",
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": undefined,
-                "style": Object {
-                  "marginBottom": 10,
-                  "paddingLeft": 10,
-                },
+                "icon": "ios-person",
+                "iconVisible": true,
+                "pressItem": [Function],
+                "text": "Profil",
               },
               "ref": null,
               "rendered": null,
@@ -864,30 +760,6 @@ ShallowWrapper {
           <ListHeading
             text="Konto"
           />
-          <DefaultFont
-            style={
-              Object {
-                "fontSize": 12,
-                "fontWeight": "bold",
-                "marginBottom": 0,
-                "paddingBottom": 0,
-                "paddingLeft": 10,
-                "paddingTop": 10,
-              }
-            }
-          >
-            E-MAIL
-          </DefaultFont>
-          <DefaultFont
-            style={
-              Object {
-                "marginBottom": 10,
-                "paddingLeft": 10,
-              }
-            }
-          >
-            Anonym
-          </DefaultFont>
           <ListItem
             icon="ios-settings"
             iconVisible={true}
@@ -982,30 +854,7 @@ ShallowWrapper {
             <ListHeading
               text="Konto"
             />,
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 12,
-                  "fontWeight": "bold",
-                  "marginBottom": 0,
-                  "paddingBottom": 0,
-                  "paddingLeft": 10,
-                  "paddingTop": 10,
-                }
-              }
-            >
-              E-MAIL
-            </DefaultFont>,
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                  "paddingLeft": 10,
-                }
-              }
-            >
-              Anonym
-            </DefaultFont>,
+            null,
             <ListItem
               icon="ios-settings"
               iconVisible={true}
@@ -1100,40 +949,7 @@ ShallowWrapper {
             "rendered": null,
             "type": [Function],
           },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": "E-MAIL",
-              "style": Object {
-                "fontSize": 12,
-                "fontWeight": "bold",
-                "marginBottom": 0,
-                "paddingBottom": 0,
-                "paddingLeft": 10,
-                "paddingTop": 10,
-              },
-            },
-            "ref": null,
-            "rendered": "E-MAIL",
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": "Anonym",
-              "style": Object {
-                "marginBottom": 10,
-                "paddingLeft": 10,
-              },
-            },
-            "ref": null,
-            "rendered": "Anonym",
-            "type": [Function],
-          },
+          null,
           Object {
             "instance": null,
             "key": undefined,
@@ -1285,30 +1101,6 @@ ShallowWrapper {
             <ListHeading
               text="Konto"
             />
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 12,
-                  "fontWeight": "bold",
-                  "marginBottom": 0,
-                  "paddingBottom": 0,
-                  "paddingLeft": 10,
-                  "paddingTop": 10,
-                }
-              }
-            >
-              E-MAIL
-            </DefaultFont>
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                  "paddingLeft": 10,
-                }
-              }
-            >
-              Anonym
-            </DefaultFont>
             <ListItem
               icon="ios-settings"
               iconVisible={true}
@@ -1403,30 +1195,7 @@ ShallowWrapper {
               <ListHeading
                 text="Konto"
               />,
-              <DefaultFont
-                style={
-                  Object {
-                    "fontSize": 12,
-                    "fontWeight": "bold",
-                    "marginBottom": 0,
-                    "paddingBottom": 0,
-                    "paddingLeft": 10,
-                    "paddingTop": 10,
-                  }
-                }
-              >
-                E-MAIL
-              </DefaultFont>,
-              <DefaultFont
-                style={
-                  Object {
-                    "marginBottom": 10,
-                    "paddingLeft": 10,
-                  }
-                }
-              >
-                Anonym
-              </DefaultFont>,
+              null,
               <ListItem
                 icon="ios-settings"
                 iconVisible={true}
@@ -1521,40 +1290,7 @@ ShallowWrapper {
               "rendered": null,
               "type": [Function],
             },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": "E-MAIL",
-                "style": Object {
-                  "fontSize": 12,
-                  "fontWeight": "bold",
-                  "marginBottom": 0,
-                  "paddingBottom": 0,
-                  "paddingLeft": 10,
-                  "paddingTop": 10,
-                },
-              },
-              "ref": null,
-              "rendered": "E-MAIL",
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": "Anonym",
-                "style": Object {
-                  "marginBottom": 10,
-                  "paddingLeft": 10,
-                },
-              },
-              "ref": null,
-              "rendered": "Anonym",
-              "type": [Function],
-            },
+            null,
             Object {
               "instance": null,
               "key": undefined,

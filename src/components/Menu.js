@@ -3,11 +3,11 @@ import { View, AsyncStorage, ImageBackground, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import { Actions } from 'react-native-router-flux';
-import { Text, ListItem, ListHeading } from './common';
+import { ListItem, ListHeading } from './common';
 import { RESET_ALL } from '../actions/types';
 import { setSetting } from '../actions';
 import { store } from '../App';
-import { colors, metrics, component } from './style';
+import { colors, metrics } from './style';
 import { track, globals } from './helpers';
 import { Feedback } from './modals';
 
@@ -59,12 +59,16 @@ class Menu extends Component {
 
                     <ListHeading text="Konto" />
 
-                    <Text style={component.text.menu.label}>
-                        {'e-mail'.toUpperCase()}
-                    </Text>
-                    <Text style={component.text.menu.value}>
-                        {this.state.user && this.state.user.isAnonymous ? 'Anonym' : this.state.user.email}
-                    </Text>
+                    {this.state.user && !this.state.user.isAnonymous ?
+                        <ListItem
+                            text="Profil"
+                            icon="ios-person"
+                            iconVisible
+                            pressItem={() => {
+                                Actions.profile();
+                            }}
+                        />
+                    : null}
 
                     <ListItem
                         text="Inställningar"
