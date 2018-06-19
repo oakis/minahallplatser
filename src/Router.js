@@ -89,13 +89,21 @@ class RouterComponent extends Component {
 		// Try to automaticly login
 		track('App Start');
 		firebase.auth().onAuthStateChanged((fbUser) => {
+			const actualUser = fbUser === null
+				? null
+				: { email: fbUser.email,
+					isAnonymous: fbUser.isAnonymous,
+					metadata: fbUser.metadata,
+					providerId: fbUser.providerId,
+					uid: fbUser.uid,
+				};
 			getStorage('minahallplatser-user')
 			.then((user) => {
-				window.log('Localstorage user:', user, 'Firebase user:', fbUser);
-				if (fbUser && fbUser.uid && globals.isLoggingIn) {
+				window.log('onAuthStateChanged(): Localstorage user:', user, 'Firebase user:', actualUser);
+				if (actualUser && actualUser.uid && globals.isLoggingIn) {
 					window.log('User already exists, continue to autologin.');
 					globals.isLoggingIn = false;
-					this.props.autoLogin(fbUser);
+					this.props.autoLogin(actualUser);
 				} else if (globals.didLogout && !globals.isLoggingIn) {
 					window.log('User logged out.');
 					Actions.login();

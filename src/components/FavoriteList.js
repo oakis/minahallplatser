@@ -23,7 +23,7 @@ class FavoriteList extends PureComponent {
 		this.state = {
 			editing: false,
 			showHelp: false,
-			init: true
+			init: true,
 		};
 		this.searchTimeout = undefined;
 		this.clearTimeout = undefined;
@@ -33,12 +33,20 @@ class FavoriteList extends PureComponent {
 		globals.shouldExitApp = false;
 		Keyboard.dismiss();
 		const fbUser = firebase.auth().currentUser;
-		if (fbUser && fbUser.uid) {
+		const actualUser = fbUser === null
+			? null
+			: { email: fbUser.email,
+				isAnonymous: fbUser.isAnonymous,
+				metadata: fbUser.metadata,
+				providerId: fbUser.providerId,
+				uid: fbUser.uid,
+			};
+		if (actualUser && actualUser.uid) {
 			Promise.all([getStorage('minahallplatser-user'), getStorage('minahallplatser-settings')])
 			.then(([user, settings]) => {
-				window.log('Got user:', user, 'with settings:', settings);
-				if (user && user.uid === fbUser.uid) {
-					this.props.favoriteGet(fbUser, this.state.init);
+				window.log('Localstorage user:', user, 'Firebase user', actualUser, 'with settings:', settings);
+				if (user !== null && (user.uid === actualUser.uid)) {
+					this.props.favoriteGet(actualUser);
 				}
 				if (this.props.hasUsedGPS && this.props.allowedGPS) {
 					window.log('Refreshing nearby stops');
@@ -64,9 +72,18 @@ class FavoriteList extends PureComponent {
 	}
 	
 	componentWillUnmount() {
+		const { currentUser } = firebase.auth();
 		fetch.abort('searchStops');
 		this.props.clearErrors();
 		AppState.removeEventListener('change', this.handleAppStateChange);
+		if (currentUser) {
+			firebase.database().ref('.info/connected')
+				.once('value', (snap) => {
+					if (snap.val() === true) {
+						firebase.database().ref(`/users/${currentUser.uid}/favorites`).off();
+					}
+				});
+		}
 	}
 	
 	onInputChange = (busStop) => {

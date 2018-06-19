@@ -364,6 +364,8 @@ jest.mock('react-native-firebase', () => ({
     child: jest.fn().mockReturnThis(),
     push: jest.fn().mockReturnThis(),
     update: jest.fn().mockReturnThis(),
+    on: jest.fn().mockReturnThis(),
+    once: jest.fn().mockReturnThis(),
 }));
 
 jest.mock('react-native-router-flux', () => ({
