@@ -247,7 +247,14 @@ describe('renderFavoriteItem', () => {
         });
 
         it('should change view to departures', () => {
-            expect(Actions.departures).toBeCalledWith({ busStop: 'Centralstationen', id: '1', title: 'Centralstationen' });
+            expect(Actions.departures).toBeCalledWith(
+                {
+                    busStop: 'Centralstationen',
+                    id: '1',
+                    title: 'Centralstationen',
+                    parent: 'favorites',
+                }
+            );
         });
     });
 

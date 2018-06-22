@@ -177,7 +177,7 @@ class FavoriteList extends PureComponent {
 				pressItem={async () => {
 					Keyboard.dismiss();
 					await this.props.clearErrors();
-					Actions.departures({ busStop: item.busStop, id: item.id, title: item.busStop });
+					Actions.departures({ busStop: item.busStop, id: item.id, title: item.busStop, parent: 'favorites' });
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -202,14 +202,14 @@ class FavoriteList extends PureComponent {
 		);
 	}
 
-	renderSearchItem = ({ item }) => {
+	renderSearchItem = ({ item }, parent) => {
 		return (
 			<ListItem
 				text={item.name}
 				icon={item.icon}
 				pressItem={() => {
 					Keyboard.dismiss();
-					Actions.departures({ busStop: item.name, id: item.id, title: item.name });
+					Actions.departures({ busStop: item.name, id: item.id, title: item.name, parent });
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -236,7 +236,7 @@ class FavoriteList extends PureComponent {
 				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0 && this.state.hasUsedGPS) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
 				<FlatList
 					data={this.props.stopsNearby}
-					renderItem={this.renderSearchItem}
+					renderItem={item => this.renderSearchItem(item, 'nearby stops')}
 					keyExtractor={item => item.id}
 					ItemSeparatorComponent={ListItemSeparator}
 					scrollEnabled={false}
@@ -262,7 +262,7 @@ class FavoriteList extends PureComponent {
 				{(this.props.departureList.length > 0) ? <ListHeading text={'Sökresultat'} /> : null}
 				<FlatList
 					data={this.props.departureList}
-					renderItem={this.renderSearchItem}
+					renderItem={item => this.renderSearchItem(item, 'search')}
 					keyExtractor={item => item.id}
 					ItemSeparatorComponent={ListItemSeparator}
 					scrollEnabled={false}
