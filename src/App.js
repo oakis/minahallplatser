@@ -40,25 +40,21 @@ const defaultHandler = (ErrorUtils.getGlobalHandler && ErrorUtils.getGlobalHandl
 
 ErrorUtils.setGlobalHandler(async ({ stack }) => {
     window.log('Oops, something went wrong:', stack);
-    const { uid, email, displayName } = firebase.auth().currentUser;
-    await logToFirebase(stack, uid, email, displayName);
-    await logToFabric(stack, uid, email, displayName);
+    const { uid } = firebase.auth().currentUser;
+    await logToFirebase(stack, uid);
+    await logToFabric(stack, uid);
     defaultHandler.apply(this, arguments);
 });
 
-const logToFirebase = async (stack, uid = null, email = null, displayName = null) => {
+const logToFirebase = async (stack, uid) => {
     window.log('Sending stack to Firebase Crashlytics');
-    firebase.crashlytics().setStringValue('Name', displayName);
-    firebase.crashlytics().setStringValue('Email', email);
     firebase.crashlytics().setUserIdentifier(uid);
     await firebase.crashlytics().recordError(1, stack);
     window.log('Sent stack to Firebase Crashlytics');
 };
 
-const logToFabric = async (stack, uid = null, email = null, displayName = null) => {
+const logToFabric = async (stack, uid) => {
   window.log('Sending stack to Fabric Crashlytics');
-  Crashlytics.setUserName(displayName);
-  Crashlytics.setUserEmail(email);
   Crashlytics.setUserIdentifier(uid);
   await Crashlytics.logException(stack);
   window.log('Sent stack to Fabric Crashlytics');
