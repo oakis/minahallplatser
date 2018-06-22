@@ -190,7 +190,7 @@ class FavoriteList extends PureComponent {
 								text: 'Ja',
 								onPress: () => {
 									track('Favorite Stop Remove', { Stop: item.busStop, Parent: 'Favorite List' });
-									this.props.favoriteDelete(item.id);
+									this.props.favoriteCreate({ busStop: item.name, id: item.id });
 								}
 							}
 						]
