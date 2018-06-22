@@ -188,9 +188,6 @@ const loginUserSuccess = (dispatch, user) => {
 	const actualUser = user && user.additionalUserInfo ? user.user : user;
 	getToken().finally(() => {
 		Mixpanel.identify(actualUser.uid);
-		if (!user.isAnonymous) {
-			Mixpanel.set({ $email: actualUser.email });
-		}
 		const fbUser = firebase.database().ref(`/users/${actualUser.uid}`);
 		fbUser.update({
 			lastLogin: moment().format(),
