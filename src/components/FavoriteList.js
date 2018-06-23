@@ -232,7 +232,7 @@ class FavoriteList extends PureComponent {
 		}
 		return (
 			<View>
-				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
+				<ListHeading text="Hållplatser nära dig" icon="md-refresh" onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
 				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0 && this.state.hasUsedGPS) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
 				<FlatList
 					data={this.props.stopsNearby}
@@ -259,7 +259,7 @@ class FavoriteList extends PureComponent {
 		}
 		return (
 			<View>
-				{(this.props.departureList.length > 0) ? <ListHeading text={'Sökresultat'} /> : null}
+				{(this.props.departureList.length > 0) ? <ListHeading text="Sökresultat" /> : null}
 				<FlatList
 					data={this.props.departureList}
 					renderItem={item => this.renderSearchItem(item, 'search')}
@@ -269,7 +269,7 @@ class FavoriteList extends PureComponent {
 					keyboardShouldPersistTaps='always'
 				/>
 				{this.renderNearbyStops()}
-				<ListHeading text={'Mina hållplatser'} icon={this.props.favorites.length > 0 ? 'edit' : null} iconSize={16} onPress={() => { track('Edit Stops Toggle', { On: !this.state.editing }); this.setState({ editing: !this.state.editing }); }} />
+				<ListHeading text="Mina hållplatser" icon={this.props.favorites.length > 0 ? 'edit' : null} iconSize={16} onPress={() => { track('Edit Stops Toggle', { On: !this.state.editing }); this.setState({ editing: !this.state.editing }); }} />
 				<FlatList
 					data={this.props.favorites}
 					renderItem={this.renderFavoriteItem}
@@ -287,7 +287,7 @@ class FavoriteList extends PureComponent {
 		return (
 			<View style={{ flex: 1 }}>
 				{this.renderPopup()}
-				<ScrollView scrollEnabled keyboardShouldPersistTaps={'always'}>
+				<ScrollView scrollEnabled keyboardShouldPersistTaps="always">
 					<Input
 						placeholder="Sök hållplats.."
 						onChangeText={this.onInputChange}
@@ -296,7 +296,7 @@ class FavoriteList extends PureComponent {
 						loading={this.props.searchLoading && this.props.busStop.length > 0}
 						iconRight={this.props.busStop.length > 0 ? 'ios-close' : null}
 						iconRightPress={this.resetSearch}
-						underlineColorAndroid={'#fff'}
+						underlineColorAndroid="#fff"
 						onFocus={() => track('Search Focused')}
 						style={[{ borderRadius: 15, paddingLeft: metrics.padding.sm, paddingRight: metrics.padding.sm, margin: metrics.margin.md, backgroundColor: '#fff' }, !isAndroid() ? { paddingTop: metrics.padding.md, paddingBottom: metrics.padding.md } : null]}
 					/>

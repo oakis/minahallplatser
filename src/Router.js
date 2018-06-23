@@ -187,7 +187,7 @@ class RouterComponent extends Component {
 									component={LoginForm}
 									hideNavBar
 									hideDrawerButton
-									drawerLockMode={'locked-closed'}
+									drawerLockMode="locked-closed"
 									title="Logga in"
 									left={BackButton}
 									onEnter={() => {
@@ -199,7 +199,7 @@ class RouterComponent extends Component {
 									key="register"
 									component={RegisterForm}
 									hideDrawerButton
-									drawerLockMode={'locked-closed'}
+									drawerLockMode="locked-closed"
 									title="Registrera"
 									left={BackButton}
 									onEnter={() => track('Page View', { Page: 'Register' })}
@@ -208,7 +208,7 @@ class RouterComponent extends Component {
 									key="resetpw"
 									component={ResetPassword}
 									hideDrawerButton
-									drawerLockMode={'locked-closed'}
+									drawerLockMode="locked-closed"
 									title="Glömt lösenord"
 									left={BackButton}
 									onEnter={() => track('Page View', { Page: 'Reset Password' })}

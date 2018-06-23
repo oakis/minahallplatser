@@ -234,7 +234,6 @@ ShallowWrapper {
             maxToRenderPerBatch={11}
             renderItem={[Function]}
             scrollEnabled={false}
-            title="departures"
           />
         </ScrollView>,
       ],
@@ -576,7 +575,6 @@ ShallowWrapper {
               maxToRenderPerBatch={11}
               renderItem={[Function]}
               scrollEnabled={false}
-              title="departures"
             />,
           ],
         },
@@ -639,7 +637,6 @@ ShallowWrapper {
               "maxToRenderPerBatch": 11,
               "renderItem": [Function],
               "scrollEnabled": false,
-              "title": "departures",
             },
             "ref": null,
             "rendered": null,
@@ -804,7 +801,6 @@ ShallowWrapper {
               maxToRenderPerBatch={11}
               renderItem={[Function]}
               scrollEnabled={false}
-              title="departures"
             />
           </ScrollView>,
         ],
@@ -1146,7 +1142,6 @@ ShallowWrapper {
                 maxToRenderPerBatch={11}
                 renderItem={[Function]}
                 scrollEnabled={false}
-                title="departures"
               />,
             ],
           },
@@ -1209,7 +1204,6 @@ ShallowWrapper {
                 "maxToRenderPerBatch": 11,
                 "renderItem": [Function],
                 "scrollEnabled": false,
-                "title": "departures",
               },
               "ref": null,
               "rendered": null,

@@ -24,9 +24,9 @@ export class DepartureListItem extends PureComponent {
                 iconName = 'ios-bus';
                 break;
             case 'TAXI':
-                return <Icon3 name={'local-taxi'} size={15} color={color} />;
+                return <Icon3 name="local-taxi" size={15} color={color} />;
             case 'TRAM':
-                return <Icon3 name={'tram'} size={15} color={color} />;
+                return <Icon3 name="tram" size={15} color={color} />;
             case 'VAS':
             case 'REG':
                 iconName = 'ios-train';
@@ -150,11 +150,11 @@ export class DepartureListItem extends PureComponent {
                         <View style={{ flexDirection: 'row' }}>
                             <Text>Läge {item.track || 'A'}</Text>
                             {(Object.prototype.hasOwnProperty.call(item, 'accessibility') && item.accessibility === 'wheelChair') ?
-                                <Icon name={'wheelchair'} size={13} style={iconStyle} />
+                                <Icon name="wheelchair" size={13} style={iconStyle} />
                                 : null
                             }
                             {item.night === true ?
-                                <Icon2 name={'ios-moon'} size={13} style={iconStyle} />
+                                <Icon2 name="ios-moon" size={13} style={iconStyle} />
                                 : null
                             }
                         </View>

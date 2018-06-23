@@ -78,7 +78,7 @@ export class Feedback extends PureComponent {
             <Modal
                 visible={this.props.visible}
                 onRequestClose={this.props.close}
-                animationType={'slide'}
+                animationType="slide"
             >
                 <View style={{ flex: 1, backgroundColor: colors.background }}>
                     <ScrollView
@@ -86,7 +86,7 @@ export class Feedback extends PureComponent {
                         keyboardShouldPersistTaps="always"
                     >
                         <ListHeading
-                            text={'Skicka feedback'}
+                            text="Skicka feedback"
                             style={{ marginTop: metrics.margin.lg }}
                         />
                         <View
@@ -97,21 +97,21 @@ export class Feedback extends PureComponent {
                                 value={this.state.name}
                                 onChangeText={this.onChangeName}
                                 style={inputStyle}
-                                underlineColorAndroid={'#fff'}
+                                underlineColorAndroid="#fff"
                             />
                             <Text>E-mail <Text style={{ color: colors.danger }}>*</Text></Text>
                             <Input
                                 value={this.state.email}
                                 onChangeText={this.onChangeEmail}
                                 style={inputStyle}
-                                underlineColorAndroid={'#fff'}
+                                underlineColorAndroid="#fff"
                             />
                             <Text>Meddelande <Text style={{ color: colors.danger }}>*</Text></Text>
                             <Input
                                 value={this.state.message}
                                 onChangeText={this.onChangeMessage}
                                 style={inputStyle}
-                                underlineColorAndroid={'#fff'}
+                                underlineColorAndroid="#fff"
                                 multiline
                             />
                             {this.state.validated ? null : <Text style={{ color: colors.danger, marginBottom: metrics.margin.md }}>Var god fyll i ditt namn, en giltig e-mail och ett meddelande.</Text>}
@@ -120,15 +120,15 @@ export class Feedback extends PureComponent {
                                 onPress={this.sendFeedback}
                                 uppercase
                                 loading={this.state.loading}
-                                color={'primary'}
-                                fontColor={'alternative'}
+                                color="primary"
+                                fontColor="alternative"
                             />
                             <Button
                                 label="Avbryt"
                                 onPress={this.cancel}
                                 uppercase
-                                color={'danger'}
-                                fontColor={'alternative'}
+                                color="danger"
+                                fontColor="alternative"
                             />
                         </View>
                     </ScrollView>
