@@ -16,7 +16,6 @@ class ShowDepartures extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
-			addFavorite: false,
 			showHelp: false
 		};
 	}
@@ -118,7 +117,6 @@ class ShowDepartures extends PureComponent {
 				item={itemWithNewIndex}
 				onPress={() => {
 					this.props.favoriteLineToggle(item);
-					this.setState({ addFavorite: !this.state.addFavorite });
 				}}
 			/>
 		);

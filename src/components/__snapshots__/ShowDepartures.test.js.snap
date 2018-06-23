@@ -209,7 +209,6 @@ ShallowWrapper {
             }
             extraData={
               Object {
-                "addFavorite": false,
                 "showHelp": false,
               }
             }
@@ -224,7 +223,6 @@ ShallowWrapper {
             data={Array []}
             extraData={
               Object {
-                "addFavorite": false,
                 "showHelp": false,
               }
             }
@@ -550,7 +548,6 @@ ShallowWrapper {
               }
               extraData={
                 Object {
-                  "addFavorite": false,
                   "showHelp": false,
                 }
               }
@@ -565,7 +562,6 @@ ShallowWrapper {
               data={Array []}
               extraData={
                 Object {
-                  "addFavorite": false,
                   "showHelp": false,
                 }
               }
@@ -607,7 +603,6 @@ ShallowWrapper {
                 },
               ],
               "extraData": Object {
-                "addFavorite": false,
                 "showHelp": false,
               },
               "initialNumToRender": 11,
@@ -628,7 +623,6 @@ ShallowWrapper {
               "ItemSeparatorComponent": [Function],
               "data": Array [],
               "extraData": Object {
-                "addFavorite": false,
                 "showHelp": false,
               },
               "getItemLayout": [Function],
@@ -776,7 +770,6 @@ ShallowWrapper {
               }
               extraData={
                 Object {
-                  "addFavorite": false,
                   "showHelp": false,
                 }
               }
@@ -791,7 +784,6 @@ ShallowWrapper {
               data={Array []}
               extraData={
                 Object {
-                  "addFavorite": false,
                   "showHelp": false,
                 }
               }
@@ -1117,7 +1109,6 @@ ShallowWrapper {
                 }
                 extraData={
                   Object {
-                    "addFavorite": false,
                     "showHelp": false,
                   }
                 }
@@ -1132,7 +1123,6 @@ ShallowWrapper {
                 data={Array []}
                 extraData={
                   Object {
-                    "addFavorite": false,
                     "showHelp": false,
                   }
                 }
@@ -1174,7 +1164,6 @@ ShallowWrapper {
                   },
                 ],
                 "extraData": Object {
-                  "addFavorite": false,
                   "showHelp": false,
                 },
                 "initialNumToRender": 11,
@@ -1195,7 +1184,6 @@ ShallowWrapper {
                 "ItemSeparatorComponent": [Function],
                 "data": Array [],
                 "extraData": Object {
-                  "addFavorite": false,
                   "showHelp": false,
                 },
                 "getItemLayout": [Function],
