@@ -15,7 +15,6 @@ ShallowWrapper {
         "fgColor": "#eee",
         "isLive": true,
         "journeyid": "123",
-        "night": false,
         "sname": "16X",
         "timeLeft": "3",
         "timeNext": "8",
@@ -554,7 +553,6 @@ ShallowWrapper {
                       }
                     }
                   />,
-                  null,
                 ],
                 "style": Object {
                   "flexDirection": "row",
@@ -595,7 +593,6 @@ ShallowWrapper {
                   "rendered": null,
                   "type": "FontAwesomeIcon",
                 },
-                null,
               ],
               "type": [Function],
             },
@@ -1198,7 +1195,6 @@ ShallowWrapper {
                         }
                       }
                     />,
-                    null,
                   ],
                   "style": Object {
                     "flexDirection": "row",
@@ -1239,7 +1235,6 @@ ShallowWrapper {
                     "rendered": null,
                     "type": "FontAwesomeIcon",
                   },
-                  null,
                 ],
                 "type": [Function],
               },
@@ -1346,7 +1341,6 @@ ShallowWrapper {
         "index": 1,
         "isLive": true,
         "journeyid": "123",
-        "night": true,
         "sname": "SVART",
         "timeFormat": "",
         "timeLeft": "0",
@@ -1456,16 +1450,6 @@ ShallowWrapper {
               Läge 
               A
             </DefaultFont>
-            <IonIcon
-              name="ios-moon"
-              size={13}
-              style={
-                Object {
-                  "alignSelf": "center",
-                  "marginLeft": 5,
-                }
-              }
-            />
           </View>
         </View>
         <View
@@ -1584,16 +1568,6 @@ ShallowWrapper {
                 Läge 
                 A
               </DefaultFont>
-              <IonIcon
-                name="ios-moon"
-                size={13}
-                style={
-                  Object {
-                    "alignSelf": "center",
-                    "marginLeft": 5,
-                  }
-                }
-              />
             </View>
           </View>,
           <View
@@ -1788,16 +1762,6 @@ ShallowWrapper {
                   Läge 
                   A
                 </DefaultFont>
-                <IonIcon
-                  name="ios-moon"
-                  size={13}
-                  style={
-                    Object {
-                      "alignSelf": "center",
-                      "marginLeft": 5,
-                    }
-                  }
-                />
               </View>,
             ],
             "style": Object {
@@ -1834,16 +1798,6 @@ ShallowWrapper {
                     A
                   </DefaultFont>,
                   null,
-                  <IonIcon
-                    name="ios-moon"
-                    size={13}
-                    style={
-                      Object {
-                        "alignSelf": "center",
-                        "marginLeft": 5,
-                      }
-                    }
-                  />,
                 ],
                 "style": Object {
                   "flexDirection": "row",
@@ -1869,22 +1823,6 @@ ShallowWrapper {
                   "type": [Function],
                 },
                 null,
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "name": "ios-moon",
-                    "size": 13,
-                    "style": Object {
-                      "alignSelf": "center",
-                      "marginLeft": 5,
-                    },
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": "IonIcon",
-                },
               ],
               "type": [Function],
             },
@@ -2057,16 +1995,6 @@ ShallowWrapper {
                 Läge 
                 A
               </DefaultFont>
-              <IonIcon
-                name="ios-moon"
-                size={13}
-                style={
-                  Object {
-                    "alignSelf": "center",
-                    "marginLeft": 5,
-                  }
-                }
-              />
             </View>
           </View>
           <View
@@ -2185,16 +2113,6 @@ ShallowWrapper {
                   Läge 
                   A
                 </DefaultFont>
-                <IonIcon
-                  name="ios-moon"
-                  size={13}
-                  style={
-                    Object {
-                      "alignSelf": "center",
-                      "marginLeft": 5,
-                    }
-                  }
-                />
               </View>
             </View>,
             <View
@@ -2389,16 +2307,6 @@ ShallowWrapper {
                     Läge 
                     A
                   </DefaultFont>
-                  <IonIcon
-                    name="ios-moon"
-                    size={13}
-                    style={
-                      Object {
-                        "alignSelf": "center",
-                        "marginLeft": 5,
-                      }
-                    }
-                  />
                 </View>,
               ],
               "style": Object {
@@ -2435,16 +2343,6 @@ ShallowWrapper {
                       A
                     </DefaultFont>,
                     null,
-                    <IonIcon
-                      name="ios-moon"
-                      size={13}
-                      style={
-                        Object {
-                          "alignSelf": "center",
-                          "marginLeft": 5,
-                        }
-                      }
-                    />,
                   ],
                   "style": Object {
                     "flexDirection": "row",
@@ -2470,22 +2368,6 @@ ShallowWrapper {
                     "type": [Function],
                   },
                   null,
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "host",
-                    "props": Object {
-                      "name": "ios-moon",
-                      "size": 13,
-                      "style": Object {
-                        "alignSelf": "center",
-                        "marginLeft": 5,
-                      },
-                    },
-                    "ref": null,
-                    "rendered": null,
-                    "type": "IonIcon",
-                  },
                 ],
                 "type": [Function],
               },
@@ -2591,7 +2473,6 @@ ShallowWrapper {
         "fgColor": "#eee",
         "isLive": false,
         "journeyid": "123",
-        "night": false,
         "sname": "1",
         "timeFormat": "minutes",
         "timeLeft": "60",
@@ -3049,7 +2930,6 @@ ShallowWrapper {
                     A
                   </DefaultFont>,
                   null,
-                  null,
                 ],
                 "style": Object {
                   "flexDirection": "row",
@@ -3074,7 +2954,6 @@ ShallowWrapper {
                   ],
                   "type": [Function],
                 },
-                null,
                 null,
               ],
               "type": [Function],
@@ -3596,7 +3475,6 @@ ShallowWrapper {
                       A
                     </DefaultFont>,
                     null,
-                    null,
                   ],
                   "style": Object {
                     "flexDirection": "row",
@@ -3621,7 +3499,6 @@ ShallowWrapper {
                     ],
                     "type": [Function],
                   },
-                  null,
                   null,
                 ],
                 "type": [Function],

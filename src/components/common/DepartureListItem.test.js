@@ -15,7 +15,6 @@ const item = {
     type: 'BUS',
     via: 'via Centralstationen',
     track: 'A',
-    night: false,
     accessibility: 'wheelChair',
     journeyid: '123'
 };
@@ -33,7 +32,6 @@ const item2 = {
     type: 'BOAT',
     via: '',
     track: '',
-    night: true,
     accessibility: null,
     journeyid: '123',
     index: 1,
@@ -53,7 +51,6 @@ const item3 = {
     type: 'VAS',
     via: '',
     track: '',
-    night: false,
     accessibility: null,
     journeyid: '123',
     timeFormat: 'minutes',
