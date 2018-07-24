@@ -153,10 +153,6 @@ export class DepartureListItem extends PureComponent {
                                 <Icon name="wheelchair" size={13} style={iconStyle} />
                                 : null
                             }
-                            {item.night === true ?
-                                <Icon2 name="ios-moon" size={13} style={iconStyle} />
-                                : null
-                            }
                         </View>
                     </View>
 
