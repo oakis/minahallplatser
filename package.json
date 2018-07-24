@@ -12,7 +12,8 @@
     "build-debug": "curl http://localhost:8081/index.android.bundle?platform=android -o android/app/src/main/assets/index.android.bundle && cd android && gradlew clean && gradlew assembleDebug",
     "build-release": "npm run clean && cd android && gradlew assembleRelease",
     "debug": "npm run clean && react-native run-android --appIdSuffix dev",
-    "release": "npm run clean && cd android && gradlew installRelease"
+    "release": "npm run clean && cd android && gradlew installRelease",
+    "adb": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:5000 tcp:5000"
   },
   "dependencies": {
     "base-64": "^0.1.0",
