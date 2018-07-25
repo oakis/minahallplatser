@@ -18,10 +18,12 @@ export const getDepartures = ({ id }) => {
 				method: 'post',
 				headers: {
 					Accept: 'application/json',
-					'Content-Type': 'application/x-www-form-urlencoded',
+					'Content-Type': 'application/json',
 					access_token
 				},
-				body: `id=${id}`
+				body: JSON.stringify({
+					id,
+				})
 			};
 			fetch(url, config, 'getDepartures')
 			.finally(handleJsonFetch)
