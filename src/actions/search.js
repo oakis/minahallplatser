@@ -59,10 +59,12 @@ export const searchStops = ({ busStop }) => {
 				method: 'post',
 				headers: {
 					'Accept': 'application/json',
-					'Content-Type': 'application/x-www-form-urlencoded',
+					'Content-Type': 'application/json',
 					'access_token': access_token
 				},
-				body: `search=${busStop}`
+				body: JSON.stringify({
+					search: busStop,
+				}),
 			};
 			fetch(url, config, 'searchStops')
 			.finally(handleJsonFetch)
