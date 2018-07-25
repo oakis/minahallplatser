@@ -24,6 +24,6 @@ export const handleJsonFetch = (response) => {
         });
     }
     const error = response.statusText || response.Message || 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
-    window.log('handleJsonFetch(): Error', error);
+    window.log('handleJsonFetch(): Error', error, response);
     throw error;
 };
