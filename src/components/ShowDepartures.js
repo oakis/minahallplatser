@@ -214,7 +214,15 @@ const MapStateToProps = (state) => {
 	const { timeFormat } = state.settings;
 	const favoriteDepartures = state.fav.favorites;
 	const favoriteIds = _.map(favoriteDepartures, 'id');
-	return { departures, loading, error, timestamp, favorites, timeFormat, favoriteIds };
+	return {
+		departures: _.sortBy(departures, ['timeLeft', 'timeNext']),
+		error,
+		favoriteIds,
+		favorites:  _.sortBy(favorites, ['timeLeft', 'timeNext']),
+		loading,
+		timestamp,
+		timeFormat,
+	};
 };
 
 export default connect(MapStateToProps,
