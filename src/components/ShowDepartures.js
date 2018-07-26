@@ -16,7 +16,8 @@ class ShowDepartures extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
-			showHelp: false
+			init: true,
+			showHelp: false,
 		};
 	}
 	
@@ -36,6 +37,10 @@ class ShowDepartures extends PureComponent {
 	}
 
 	componentWillReceiveProps({ favorites, departures, timestamp }) {
+		if (this.state.init) {
+			Actions.refresh({ right: HelpButton(this) });
+			this.setState({ init: false });
+		}
 		const favoritesUpdated = JSON.stringify(this.props.favorites) !== JSON.stringify(favorites);
 		const departuresUpdated = JSON.stringify(this.props.departures) !== JSON.stringify(departures);
 		if (favoritesUpdated) {
@@ -76,7 +81,7 @@ class ShowDepartures extends PureComponent {
 		self.interval = setInterval(self.refresh.bind(self), 10000);
 	}
 
-	refresh() {
+	refresh = () => {
 		Actions.refresh({ right: () => {
 			return (
 				<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
