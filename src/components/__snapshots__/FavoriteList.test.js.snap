@@ -207,7 +207,7 @@ ShallowWrapper {
             >
               orange
             </DefaultFont>
-             färg.
+             färg och hållplatsen sparas i listan "Mina Hållplatser".
           </DefaultFont>
           <DefaultFont
             style={
@@ -522,7 +522,7 @@ ShallowWrapper {
               >
                 orange
               </DefaultFont>
-               färg.
+               färg och hållplatsen sparas i listan "Mina Hållplatser".
             </DefaultFont>,
             <DefaultFont
               style={
@@ -780,7 +780,7 @@ ShallowWrapper {
                 >
                   orange
                 </DefaultFont>,
-                " färg.",
+                " färg och hållplatsen sparas i listan \\"Mina Hållplatser\\".",
               ],
               "style": Object {
                 "marginBottom": 10,
@@ -829,7 +829,7 @@ ShallowWrapper {
                 "rendered": "orange",
                 "type": [Function],
               },
-              " färg.",
+              " färg och hållplatsen sparas i listan \\"Mina Hållplatser\\".",
             ],
             "type": [Function],
           },
@@ -1578,7 +1578,7 @@ ShallowWrapper {
               >
                 orange
               </DefaultFont>
-               färg.
+               färg och hållplatsen sparas i listan "Mina Hållplatser".
             </DefaultFont>
             <DefaultFont
               style={
@@ -1893,7 +1893,7 @@ ShallowWrapper {
                 >
                   orange
                 </DefaultFont>
-                 färg.
+                 färg och hållplatsen sparas i listan "Mina Hållplatser".
               </DefaultFont>,
               <DefaultFont
                 style={
@@ -2151,7 +2151,7 @@ ShallowWrapper {
                   >
                     orange
                   </DefaultFont>,
-                  " färg.",
+                  " färg och hållplatsen sparas i listan \\"Mina Hållplatser\\".",
                 ],
                 "style": Object {
                   "marginBottom": 10,
@@ -2200,7 +2200,7 @@ ShallowWrapper {
                   "rendered": "orange",
                   "type": [Function],
                 },
-                " färg.",
+                " färg och hållplatsen sparas i listan \\"Mina Hållplatser\\".",
               ],
               "type": [Function],
             },

@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
+import { Keyboard, Alert, FlatList, View, ScrollView, AppState, TouchableWithoutFeedback } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -148,7 +149,7 @@ class FavoriteList extends PureComponent {
 					Spara hållplats som favorit
 				</Text>
 				<Text style={component.popup.text}>
-					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Ionicons name="ios-star-outline" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Ionicons name="ios-star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg.
+					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Ionicons name="ios-star-outline" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Ionicons name="ios-star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg och hållplatsen sparas i listan "Mina Hållplatser".
 				</Text>
 
 				<Text style={component.popup.header}>
@@ -309,9 +310,11 @@ class FavoriteList extends PureComponent {
 					}
 					{this.renderSectionList()}
 					{(this.props.favorites.length === 0 && !this.props.favoritesLoading) ?
-						<Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>
-							Du har inte sparat några favoriter än.
-						</Text> : null
+						<View style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>
+							<Text>
+								Du har inte sparat några favoriter än. Tryck <Text onPress={this.openPopup}>HÄR</Text> för mer information.
+							</Text>
+						</View> : null
 					}
 				</ScrollView>
 			</View>
