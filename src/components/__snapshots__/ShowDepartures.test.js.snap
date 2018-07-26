@@ -209,6 +209,7 @@ ShallowWrapper {
             }
             extraData={
               Object {
+                "init": true,
                 "showHelp": false,
               }
             }
@@ -223,6 +224,7 @@ ShallowWrapper {
             data={Array []}
             extraData={
               Object {
+                "init": true,
                 "showHelp": false,
               }
             }
@@ -548,6 +550,7 @@ ShallowWrapper {
               }
               extraData={
                 Object {
+                  "init": true,
                   "showHelp": false,
                 }
               }
@@ -562,6 +565,7 @@ ShallowWrapper {
               data={Array []}
               extraData={
                 Object {
+                  "init": true,
                   "showHelp": false,
                 }
               }
@@ -603,6 +607,7 @@ ShallowWrapper {
                 },
               ],
               "extraData": Object {
+                "init": true,
                 "showHelp": false,
               },
               "initialNumToRender": 11,
@@ -623,6 +628,7 @@ ShallowWrapper {
               "ItemSeparatorComponent": [Function],
               "data": Array [],
               "extraData": Object {
+                "init": true,
                 "showHelp": false,
               },
               "getItemLayout": [Function],
@@ -770,6 +776,7 @@ ShallowWrapper {
               }
               extraData={
                 Object {
+                  "init": true,
                   "showHelp": false,
                 }
               }
@@ -784,6 +791,7 @@ ShallowWrapper {
               data={Array []}
               extraData={
                 Object {
+                  "init": true,
                   "showHelp": false,
                 }
               }
@@ -1109,6 +1117,7 @@ ShallowWrapper {
                 }
                 extraData={
                   Object {
+                    "init": true,
                     "showHelp": false,
                   }
                 }
@@ -1123,6 +1132,7 @@ ShallowWrapper {
                 data={Array []}
                 extraData={
                   Object {
+                    "init": true,
                     "showHelp": false,
                   }
                 }
@@ -1164,6 +1174,7 @@ ShallowWrapper {
                   },
                 ],
                 "extraData": Object {
+                  "init": true,
                   "showHelp": false,
                 },
                 "initialNumToRender": 11,
@@ -1184,6 +1195,7 @@ ShallowWrapper {
                 "ItemSeparatorComponent": [Function],
                 "data": Array [],
                 "extraData": Object {
+                  "init": true,
                   "showHelp": false,
                 },
                 "getItemLayout": [Function],
