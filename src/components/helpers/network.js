@@ -20,10 +20,10 @@ export const handleJsonFetch = (response) => {
         return response.json()
         .then((data) => {
             window.log('handleJsonFetch(): Error', data);
-            throw data.data || data;
+            throw data.message || data;
         });
     }
-    const error = response.statusText || response.Message || 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
+    const error = response.statusText || response.message || 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
     window.log('handleJsonFetch(): Error', error, response);
     throw error;
 };
