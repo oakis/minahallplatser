@@ -14,6 +14,11 @@ React Native, Redux, react-native-router-flux and react-native-vector-icons.
 The project also uses fabric.io to track usage over time and retention mostly.
 For tracking user behavior it uses Mixpanel.
 
+## Backend service
+
+The app has used multiple backends because I like to learn new things. (including js/node, c#/dotnetcore2 & python3)
+Current backend is written in Python3: https://github.com/oakis/MinaHallplatserPy
+
 ## Download from Google Play
 
 https://play.google.com/store/apps/details?id=com.oakis.minahallplatser
