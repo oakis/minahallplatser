@@ -4,8 +4,8 @@ import React, { PureComponent } from 'react';
 import { View, ScrollView, FlatList, AppState } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
-import firebase from 'firebase';
-import { renderHelpButton } from '../Router';
+import firebase from 'react-native-firebase';
+import { HelpButton } from '../Router';
 import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle } from '../actions';
 import { DepartureListItem, Spinner, Message, ListItemSeparator, Popup, Text } from './common';
 import { updateStopsCount, track, incrementStopsOpened } from './helpers';
@@ -16,13 +16,13 @@ class ShowDepartures extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
-			addFavorite: false,
-			showHelp: false
+			init: true,
+			showHelp: false,
 		};
 	}
 	
 	componentWillMount() {
-		track('Page View', { Page: 'Departures', Stop: this.props.busStop });
+		track('Page View', { Page: 'Departures', Stop: this.props.busStop, Parent: this.props.parent });
 		this.props.getDepartures({ id: this.props.id });
 		updateStopsCount();
 		const { currentUser } = firebase.auth();
@@ -37,6 +37,10 @@ class ShowDepartures extends PureComponent {
 	}
 
 	componentWillReceiveProps({ favorites, departures, timestamp }) {
+		if (this.state.init) {
+			Actions.refresh({ right: HelpButton(this) });
+			this.setState({ init: false });
+		}
 		const favoritesUpdated = JSON.stringify(this.props.favorites) !== JSON.stringify(favorites);
 		const departuresUpdated = JSON.stringify(this.props.departures) !== JSON.stringify(departures);
 		if (favoritesUpdated) {
@@ -46,7 +50,7 @@ class ShowDepartures extends PureComponent {
 			this.populateDepartures(departures);
 		}
 		if (this.props.timestamp !== timestamp) {
-			Actions.refresh({ right: renderHelpButton(this) });
+			Actions.refresh({ right: HelpButton(this) });
 		}
 	}
 
@@ -77,12 +81,12 @@ class ShowDepartures extends PureComponent {
 		self.interval = setInterval(self.refresh.bind(self), 10000);
 	}
 
-	refresh() {
+	refresh = () => {
 		Actions.refresh({ right: () => {
 			return (
 				<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 					<Spinner color={colors.alternative} />
-					{renderHelpButton(this)}
+					{HelpButton(this)}
 				</View>
 			);
 		} });
@@ -118,7 +122,6 @@ class ShowDepartures extends PureComponent {
 				item={itemWithNewIndex}
 				onPress={() => {
 					this.props.favoriteLineToggle(item);
-					this.setState({ addFavorite: !this.state.addFavorite });
 				}}
 			/>
 		);
@@ -133,15 +136,15 @@ class ShowDepartures extends PureComponent {
 			>
 				<Text style={component.popup.header}>När går nästa avgång?</Text>
 				<Text style={component.popup.text}>Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. <Text style={{ fontStyle: 'italic' }}>Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.</Text></Text>
-				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode={'cover'} /> */}
+				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode="cover" /> */}
 				
 				<Text style={component.popup.header}>Varför har tiden till nästa avgång ibland färg?</Text>
 				<Text style={component.popup.text}>När en avgång snart ska gå från en hållplats så kommer alltid texten "<Text style={{ color: colors.danger }}>Nu</Text>" att visas med röd färg. Ibland kan man också se att en avgång har <Text style={{ color: colors.warning }}>orange</Text> text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.</Text>
-				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode={'cover'} /> */}
+				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode="cover" /> */}
 				
 				<Text style={component.popup.header}>Hur sparar man en linje som favorit?</Text>
 				<Text style={component.popup.text}>För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.</Text>
-				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode={'cover'} /> */}
+				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode="cover" /> */}
 			</Popup>
 		);
 	}
@@ -174,7 +177,6 @@ class ShowDepartures extends PureComponent {
 				<FlatList
 					data={this.props.departures}
 					renderItem={this.renderDepartures}
-					title={'departures'}
 					keyExtractor={item => item.journeyid}
 					ItemSeparatorComponent={ListItemSeparator}
 					getItemLayout={(data, index) => (
@@ -200,13 +202,13 @@ class ShowDepartures extends PureComponent {
 }
 
 const MapStateToProps = (state) => {
-	const { lines } = state.fav;
+	const lines = _.map(state.fav.lines, (line) => line.replace('X', ''));
 	const { loading, timestamp } = state.departures;
 	let favorites = [];
 	let departures = [];
 	_.forEach(state.departures.departures, item => {
 		const { sname, direction } = item;
-		const departure = `${sname} ${direction}`;
+		const departure = `${sname} ${direction}`.replace('X', '');
 		if (_.includes(lines, departure)) {
 			favorites = [...favorites, item];
 		} else {
@@ -217,7 +219,15 @@ const MapStateToProps = (state) => {
 	const { timeFormat } = state.settings;
 	const favoriteDepartures = state.fav.favorites;
 	const favoriteIds = _.map(favoriteDepartures, 'id');
-	return { departures, loading, error, timestamp, favorites, timeFormat, favoriteIds };
+	return {
+		departures: _.sortBy(departures, ['timeLeft', 'timeNext']),
+		error,
+		favoriteIds,
+		favorites:  _.sortBy(favorites, ['timeLeft', 'timeNext']),
+		loading,
+		timestamp,
+		timeFormat,
+	};
 };
 
 export default connect(MapStateToProps,

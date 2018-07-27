@@ -1,0 +1,1227 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match snapshot 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <ShowDepartures
+    departures={Array []}
+    error=""
+    favoriteIds={Array []}
+    favorites={
+      Array [
+        Object {
+          "accessibility": "wheelChair",
+          "bgColor": "#000",
+          "clockLeft": "16:00",
+          "clockNext": "16:05",
+          "direction": "Högsbo",
+          "fgColor": "#eee",
+          "isLive": true,
+          "journeyid": "123",
+          "night": false,
+          "sname": "16X",
+          "timeLeft": "3",
+          "timeNext": "8",
+          "track": "A",
+          "type": "BUS",
+          "via": "via Centralstationen",
+        },
+      ]
+    }
+    getDepartures={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Object {
+              "id": undefined,
+            },
+          ],
+        ],
+      }
+    }
+    loading={false}
+    store={
+      Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      }
+    }
+    storeSubscription={
+      Subscription {
+        "listeners": Object {
+          "clear": [Function],
+          "get": [Function],
+          "notify": [Function],
+          "subscribe": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": [Function],
+      }
+    }
+    timeFormat=""
+    timestamp={undefined}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": Array [
+        <Popup
+          isVisible={false}
+          onPress={[Function]}
+        >
+          <DefaultFont
+            style={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "marginBottom": 5,
+              }
+            }
+          >
+            När går nästa avgång?
+          </DefaultFont>
+          <DefaultFont
+            style={
+              Object {
+                "marginBottom": 10,
+              }
+            }
+          >
+            Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. 
+            <DefaultFont
+              style={
+                Object {
+                  "fontStyle": "italic",
+                }
+              }
+            >
+              Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.
+            </DefaultFont>
+          </DefaultFont>
+          <DefaultFont
+            style={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "marginBottom": 5,
+              }
+            }
+          >
+            Varför har tiden till nästa avgång ibland färg?
+          </DefaultFont>
+          <DefaultFont
+            style={
+              Object {
+                "marginBottom": 10,
+              }
+            }
+          >
+            När en avgång snart ska gå från en hållplats så kommer alltid texten "
+            <DefaultFont
+              style={
+                Object {
+                  "color": "#FF6961",
+                }
+              }
+            >
+              Nu
+            </DefaultFont>
+            " att visas med röd färg. Ibland kan man också se att en avgång har 
+            <DefaultFont
+              style={
+                Object {
+                  "color": "#FFB347",
+                }
+              }
+            >
+              orange
+            </DefaultFont>
+             text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.
+          </DefaultFont>
+          <DefaultFont
+            style={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "marginBottom": 5,
+              }
+            }
+          >
+            Hur sparar man en linje som favorit?
+          </DefaultFont>
+          <DefaultFont
+            style={
+              Object {
+                "marginBottom": 10,
+              }
+            }
+          >
+            För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.
+          </DefaultFont>
+        </Popup>,
+        <ScrollView>
+          <FlatList
+            ItemSeparatorComponent={[Function]}
+            ListFooterComponent={[Function]}
+            data={
+              Array [
+                Object {
+                  "accessibility": "wheelChair",
+                  "bgColor": "#000",
+                  "clockLeft": "16:00",
+                  "clockNext": "16:05",
+                  "direction": "Högsbo",
+                  "fgColor": "#eee",
+                  "isLive": true,
+                  "journeyid": "123",
+                  "night": false,
+                  "sname": "16X",
+                  "timeLeft": "3",
+                  "timeNext": "8",
+                  "track": "A",
+                  "type": "BUS",
+                  "via": "via Centralstationen",
+                },
+              ]
+            }
+            extraData={
+              Object {
+                "init": true,
+                "showHelp": false,
+              }
+            }
+            initialNumToRender={11}
+            keyExtractor={[Function]}
+            maxToRenderPerBatch={11}
+            renderItem={[Function]}
+            scrollEnabled={false}
+          />
+          <FlatList
+            ItemSeparatorComponent={[Function]}
+            data={Array []}
+            extraData={
+              Object {
+                "init": true,
+                "showHelp": false,
+              }
+            }
+            getItemLayout={[Function]}
+            initialNumToRender={11}
+            keyExtractor={[Function]}
+            maxToRenderPerBatch={11}
+            renderItem={[Function]}
+            scrollEnabled={false}
+          />
+        </ScrollView>,
+      ],
+      "style": Object {
+        "flex": 1,
+      },
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "children": Array [
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "marginBottom": 5,
+                }
+              }
+            >
+              När går nästa avgång?
+            </DefaultFont>,
+            <DefaultFont
+              style={
+                Object {
+                  "marginBottom": 10,
+                }
+              }
+            >
+              Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. 
+              <DefaultFont
+                style={
+                  Object {
+                    "fontStyle": "italic",
+                  }
+                }
+              >
+                Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.
+              </DefaultFont>
+            </DefaultFont>,
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "marginBottom": 5,
+                }
+              }
+            >
+              Varför har tiden till nästa avgång ibland färg?
+            </DefaultFont>,
+            <DefaultFont
+              style={
+                Object {
+                  "marginBottom": 10,
+                }
+              }
+            >
+              När en avgång snart ska gå från en hållplats så kommer alltid texten "
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FF6961",
+                  }
+                }
+              >
+                Nu
+              </DefaultFont>
+              " att visas med röd färg. Ibland kan man också se att en avgång har 
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FFB347",
+                  }
+                }
+              >
+                orange
+              </DefaultFont>
+               text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.
+            </DefaultFont>,
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "marginBottom": 5,
+                }
+              }
+            >
+              Hur sparar man en linje som favorit?
+            </DefaultFont>,
+            <DefaultFont
+              style={
+                Object {
+                  "marginBottom": 10,
+                }
+              }
+            >
+              För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.
+            </DefaultFont>,
+          ],
+          "isVisible": false,
+          "onPress": [Function],
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": "När går nästa avgång?",
+              "style": Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "marginBottom": 5,
+              },
+            },
+            "ref": null,
+            "rendered": "När går nästa avgång?",
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                "Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. ",
+                <DefaultFont
+                  style={
+                    Object {
+                      "fontStyle": "italic",
+                    }
+                  }
+                >
+                  Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.
+                </DefaultFont>,
+              ],
+              "style": Object {
+                "marginBottom": 10,
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              "Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. ",
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.",
+                  "style": Object {
+                    "fontStyle": "italic",
+                  },
+                },
+                "ref": null,
+                "rendered": "Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.",
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": "Varför har tiden till nästa avgång ibland färg?",
+              "style": Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "marginBottom": 5,
+              },
+            },
+            "ref": null,
+            "rendered": "Varför har tiden till nästa avgång ibland färg?",
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                "När en avgång snart ska gå från en hållplats så kommer alltid texten \\"",
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                    }
+                  }
+                >
+                  Nu
+                </DefaultFont>,
+                "\\" att visas med röd färg. Ibland kan man också se att en avgång har ",
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FFB347",
+                    }
+                  }
+                >
+                  orange
+                </DefaultFont>,
+                " text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.",
+              ],
+              "style": Object {
+                "marginBottom": 10,
+              },
+            },
+            "ref": null,
+            "rendered": Array [
+              "När en avgång snart ska gå från en hållplats så kommer alltid texten \\"",
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "Nu",
+                  "style": Object {
+                    "color": "#FF6961",
+                  },
+                },
+                "ref": null,
+                "rendered": "Nu",
+                "type": [Function],
+              },
+              "\\" att visas med röd färg. Ibland kan man också se att en avgång har ",
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "orange",
+                  "style": Object {
+                    "color": "#FFB347",
+                  },
+                },
+                "ref": null,
+                "rendered": "orange",
+                "type": [Function],
+              },
+              " text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.",
+            ],
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": "Hur sparar man en linje som favorit?",
+              "style": Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "marginBottom": 5,
+              },
+            },
+            "ref": null,
+            "rendered": "Hur sparar man en linje som favorit?",
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": "För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.",
+              "style": Object {
+                "marginBottom": 10,
+              },
+            },
+            "ref": null,
+            "rendered": "För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.",
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": Array [
+            <FlatList
+              ItemSeparatorComponent={[Function]}
+              ListFooterComponent={[Function]}
+              data={
+                Array [
+                  Object {
+                    "accessibility": "wheelChair",
+                    "bgColor": "#000",
+                    "clockLeft": "16:00",
+                    "clockNext": "16:05",
+                    "direction": "Högsbo",
+                    "fgColor": "#eee",
+                    "isLive": true,
+                    "journeyid": "123",
+                    "night": false,
+                    "sname": "16X",
+                    "timeLeft": "3",
+                    "timeNext": "8",
+                    "track": "A",
+                    "type": "BUS",
+                    "via": "via Centralstationen",
+                  },
+                ]
+              }
+              extraData={
+                Object {
+                  "init": true,
+                  "showHelp": false,
+                }
+              }
+              initialNumToRender={11}
+              keyExtractor={[Function]}
+              maxToRenderPerBatch={11}
+              renderItem={[Function]}
+              scrollEnabled={false}
+            />,
+            <FlatList
+              ItemSeparatorComponent={[Function]}
+              data={Array []}
+              extraData={
+                Object {
+                  "init": true,
+                  "showHelp": false,
+                }
+              }
+              getItemLayout={[Function]}
+              initialNumToRender={11}
+              keyExtractor={[Function]}
+              maxToRenderPerBatch={11}
+              renderItem={[Function]}
+              scrollEnabled={false}
+            />,
+          ],
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "ItemSeparatorComponent": [Function],
+              "ListFooterComponent": [Function],
+              "data": Array [
+                Object {
+                  "accessibility": "wheelChair",
+                  "bgColor": "#000",
+                  "clockLeft": "16:00",
+                  "clockNext": "16:05",
+                  "direction": "Högsbo",
+                  "fgColor": "#eee",
+                  "isLive": true,
+                  "journeyid": "123",
+                  "night": false,
+                  "sname": "16X",
+                  "timeLeft": "3",
+                  "timeNext": "8",
+                  "track": "A",
+                  "type": "BUS",
+                  "via": "via Centralstationen",
+                },
+              ],
+              "extraData": Object {
+                "init": true,
+                "showHelp": false,
+              },
+              "initialNumToRender": 11,
+              "keyExtractor": [Function],
+              "maxToRenderPerBatch": 11,
+              "renderItem": [Function],
+              "scrollEnabled": false,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "ItemSeparatorComponent": [Function],
+              "data": Array [],
+              "extraData": Object {
+                "init": true,
+                "showHelp": false,
+              },
+              "getItemLayout": [Function],
+              "initialNumToRender": 11,
+              "keyExtractor": [Function],
+              "maxToRenderPerBatch": 11,
+              "renderItem": [Function],
+              "scrollEnabled": false,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+    ],
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": Array [
+          <Popup
+            isVisible={false}
+            onPress={[Function]}
+          >
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "marginBottom": 5,
+                }
+              }
+            >
+              När går nästa avgång?
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "marginBottom": 10,
+                }
+              }
+            >
+              Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. 
+              <DefaultFont
+                style={
+                  Object {
+                    "fontStyle": "italic",
+                  }
+                }
+              >
+                Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.
+              </DefaultFont>
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "marginBottom": 5,
+                }
+              }
+            >
+              Varför har tiden till nästa avgång ibland färg?
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "marginBottom": 10,
+                }
+              }
+            >
+              När en avgång snart ska gå från en hållplats så kommer alltid texten "
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FF6961",
+                  }
+                }
+              >
+                Nu
+              </DefaultFont>
+              " att visas med röd färg. Ibland kan man också se att en avgång har 
+              <DefaultFont
+                style={
+                  Object {
+                    "color": "#FFB347",
+                  }
+                }
+              >
+                orange
+              </DefaultFont>
+               text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "marginBottom": 5,
+                }
+              }
+            >
+              Hur sparar man en linje som favorit?
+            </DefaultFont>
+            <DefaultFont
+              style={
+                Object {
+                  "marginBottom": 10,
+                }
+              }
+            >
+              För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.
+            </DefaultFont>
+          </Popup>,
+          <ScrollView>
+            <FlatList
+              ItemSeparatorComponent={[Function]}
+              ListFooterComponent={[Function]}
+              data={
+                Array [
+                  Object {
+                    "accessibility": "wheelChair",
+                    "bgColor": "#000",
+                    "clockLeft": "16:00",
+                    "clockNext": "16:05",
+                    "direction": "Högsbo",
+                    "fgColor": "#eee",
+                    "isLive": true,
+                    "journeyid": "123",
+                    "night": false,
+                    "sname": "16X",
+                    "timeLeft": "3",
+                    "timeNext": "8",
+                    "track": "A",
+                    "type": "BUS",
+                    "via": "via Centralstationen",
+                  },
+                ]
+              }
+              extraData={
+                Object {
+                  "init": true,
+                  "showHelp": false,
+                }
+              }
+              initialNumToRender={11}
+              keyExtractor={[Function]}
+              maxToRenderPerBatch={11}
+              renderItem={[Function]}
+              scrollEnabled={false}
+            />
+            <FlatList
+              ItemSeparatorComponent={[Function]}
+              data={Array []}
+              extraData={
+                Object {
+                  "init": true,
+                  "showHelp": false,
+                }
+              }
+              getItemLayout={[Function]}
+              initialNumToRender={11}
+              keyExtractor={[Function]}
+              maxToRenderPerBatch={11}
+              renderItem={[Function]}
+              scrollEnabled={false}
+            />
+          </ScrollView>,
+        ],
+        "style": Object {
+          "flex": 1,
+        },
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": Array [
+              <DefaultFont
+                style={
+                  Object {
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+              >
+                När går nästa avgång?
+              </DefaultFont>,
+              <DefaultFont
+                style={
+                  Object {
+                    "marginBottom": 10,
+                  }
+                }
+              >
+                Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. 
+                <DefaultFont
+                  style={
+                    Object {
+                      "fontStyle": "italic",
+                    }
+                  }
+                >
+                  Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.
+                </DefaultFont>
+              </DefaultFont>,
+              <DefaultFont
+                style={
+                  Object {
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+              >
+                Varför har tiden till nästa avgång ibland färg?
+              </DefaultFont>,
+              <DefaultFont
+                style={
+                  Object {
+                    "marginBottom": 10,
+                  }
+                }
+              >
+                När en avgång snart ska gå från en hållplats så kommer alltid texten "
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FF6961",
+                    }
+                  }
+                >
+                  Nu
+                </DefaultFont>
+                " att visas med röd färg. Ibland kan man också se att en avgång har 
+                <DefaultFont
+                  style={
+                    Object {
+                      "color": "#FFB347",
+                    }
+                  }
+                >
+                  orange
+                </DefaultFont>
+                 text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.
+              </DefaultFont>,
+              <DefaultFont
+                style={
+                  Object {
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+              >
+                Hur sparar man en linje som favorit?
+              </DefaultFont>,
+              <DefaultFont
+                style={
+                  Object {
+                    "marginBottom": 10,
+                  }
+                }
+              >
+                För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.
+              </DefaultFont>,
+            ],
+            "isVisible": false,
+            "onPress": [Function],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "När går nästa avgång?",
+                "style": Object {
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "marginBottom": 5,
+                },
+              },
+              "ref": null,
+              "rendered": "När går nästa avgång?",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": Array [
+                  "Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. ",
+                  <DefaultFont
+                    style={
+                      Object {
+                        "fontStyle": "italic",
+                      }
+                    }
+                  >
+                    Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.
+                  </DefaultFont>,
+                ],
+                "style": Object {
+                  "marginBottom": 10,
+                },
+              },
+              "ref": null,
+              "rendered": Array [
+                "Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. ",
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": "Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.",
+                    "style": Object {
+                      "fontStyle": "italic",
+                    },
+                  },
+                  "ref": null,
+                  "rendered": "Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.",
+                  "type": [Function],
+                },
+              ],
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Varför har tiden till nästa avgång ibland färg?",
+                "style": Object {
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "marginBottom": 5,
+                },
+              },
+              "ref": null,
+              "rendered": "Varför har tiden till nästa avgång ibland färg?",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": Array [
+                  "När en avgång snart ska gå från en hållplats så kommer alltid texten \\"",
+                  <DefaultFont
+                    style={
+                      Object {
+                        "color": "#FF6961",
+                      }
+                    }
+                  >
+                    Nu
+                  </DefaultFont>,
+                  "\\" att visas med röd färg. Ibland kan man också se att en avgång har ",
+                  <DefaultFont
+                    style={
+                      Object {
+                        "color": "#FFB347",
+                      }
+                    }
+                  >
+                    orange
+                  </DefaultFont>,
+                  " text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.",
+                ],
+                "style": Object {
+                  "marginBottom": 10,
+                },
+              },
+              "ref": null,
+              "rendered": Array [
+                "När en avgång snart ska gå från en hållplats så kommer alltid texten \\"",
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": "Nu",
+                    "style": Object {
+                      "color": "#FF6961",
+                    },
+                  },
+                  "ref": null,
+                  "rendered": "Nu",
+                  "type": [Function],
+                },
+                "\\" att visas med röd färg. Ibland kan man också se att en avgång har ",
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": "orange",
+                    "style": Object {
+                      "color": "#FFB347",
+                    },
+                  },
+                  "ref": null,
+                  "rendered": "orange",
+                  "type": [Function],
+                },
+                " text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.",
+              ],
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Hur sparar man en linje som favorit?",
+                "style": Object {
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "marginBottom": 5,
+                },
+              },
+              "ref": null,
+              "rendered": "Hur sparar man en linje som favorit?",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.",
+                "style": Object {
+                  "marginBottom": 10,
+                },
+              },
+              "ref": null,
+              "rendered": "För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.",
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              <FlatList
+                ItemSeparatorComponent={[Function]}
+                ListFooterComponent={[Function]}
+                data={
+                  Array [
+                    Object {
+                      "accessibility": "wheelChair",
+                      "bgColor": "#000",
+                      "clockLeft": "16:00",
+                      "clockNext": "16:05",
+                      "direction": "Högsbo",
+                      "fgColor": "#eee",
+                      "isLive": true,
+                      "journeyid": "123",
+                      "night": false,
+                      "sname": "16X",
+                      "timeLeft": "3",
+                      "timeNext": "8",
+                      "track": "A",
+                      "type": "BUS",
+                      "via": "via Centralstationen",
+                    },
+                  ]
+                }
+                extraData={
+                  Object {
+                    "init": true,
+                    "showHelp": false,
+                  }
+                }
+                initialNumToRender={11}
+                keyExtractor={[Function]}
+                maxToRenderPerBatch={11}
+                renderItem={[Function]}
+                scrollEnabled={false}
+              />,
+              <FlatList
+                ItemSeparatorComponent={[Function]}
+                data={Array []}
+                extraData={
+                  Object {
+                    "init": true,
+                    "showHelp": false,
+                  }
+                }
+                getItemLayout={[Function]}
+                initialNumToRender={11}
+                keyExtractor={[Function]}
+                maxToRenderPerBatch={11}
+                renderItem={[Function]}
+                scrollEnabled={false}
+              />,
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "ItemSeparatorComponent": [Function],
+                "ListFooterComponent": [Function],
+                "data": Array [
+                  Object {
+                    "accessibility": "wheelChair",
+                    "bgColor": "#000",
+                    "clockLeft": "16:00",
+                    "clockNext": "16:05",
+                    "direction": "Högsbo",
+                    "fgColor": "#eee",
+                    "isLive": true,
+                    "journeyid": "123",
+                    "night": false,
+                    "sname": "16X",
+                    "timeLeft": "3",
+                    "timeNext": "8",
+                    "track": "A",
+                    "type": "BUS",
+                    "via": "via Centralstationen",
+                  },
+                ],
+                "extraData": Object {
+                  "init": true,
+                  "showHelp": false,
+                },
+                "initialNumToRender": 11,
+                "keyExtractor": [Function],
+                "maxToRenderPerBatch": 11,
+                "renderItem": [Function],
+                "scrollEnabled": false,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "ItemSeparatorComponent": [Function],
+                "data": Array [],
+                "extraData": Object {
+                  "init": true,
+                  "showHelp": false,
+                },
+                "getItemLayout": [Function],
+                "initialNumToRender": 11,
+                "keyExtractor": [Function],
+                "maxToRenderPerBatch": 11,
+                "renderItem": [Function],
+                "scrollEnabled": false,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+      ],
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;

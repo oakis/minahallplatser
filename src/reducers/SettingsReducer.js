@@ -8,7 +8,6 @@ const INIT_STATE = {
     favoriteOrder: 'nothing',
     allowedGPS: true,
     hasUsedGPS: false,
-    anonFirstAppStart: true
 };
 
 export default (state = INIT_STATE, action) => {

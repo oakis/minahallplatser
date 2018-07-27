@@ -59,10 +59,12 @@ export const searchStops = ({ busStop }) => {
 				method: 'post',
 				headers: {
 					'Accept': 'application/json',
-					'Content-Type': 'application/x-www-form-urlencoded',
+					'Content-Type': 'application/json',
 					'access_token': access_token
 				},
-				body: `search=${busStop}`
+				body: JSON.stringify({
+					search: busStop,
+				}),
 			};
 			fetch(url, config, 'searchStops')
 			.finally(handleJsonFetch)
@@ -193,10 +195,13 @@ const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 			method: 'post',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/x-www-form-urlencoded',
+				'Content-Type': 'application/json',
 				'access_token': access_token
 			},
-			body: `longitude=${longitude}&latitude=${latitude}`
+			body: JSON.stringify({
+				longitude,
+				latitude,
+			})
 		};
 		fetch(url, config, 'getNearbyStops')
 		.then(handleJsonFetch)

@@ -69,3 +69,5 @@
 
 -keep class com.google.android.gms.** { *; }
 -dontwarn com.google.android.gms.**
+-keep class io.invertase.firebase.** { *; }
+-dontwarn io.invertase.firebase.**

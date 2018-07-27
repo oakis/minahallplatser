@@ -1,17 +1,18 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
+import { Keyboard, Alert, FlatList, View, ScrollView, AppState, TouchableWithoutFeedback } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import firebase from 'firebase';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteGet, favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops, setSetting } from '../actions';
 import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading, Text, Popup } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
-import { renderHelpButton } from '../Router';
+import { HelpButton } from '../Router';
 import { store } from '../App';
 import { track, globals, getStorage, isAndroid } from './helpers';
 
@@ -23,36 +24,38 @@ class FavoriteList extends PureComponent {
 		this.state = {
 			editing: false,
 			showHelp: false,
-			init: true
+			init: true,
 		};
-		this.searchTimeout = null;
+		this.searchTimeout = undefined;
+		this.clearTimeout = undefined;
 	}
 
 	componentWillMount() {
 		globals.shouldExitApp = false;
 		Keyboard.dismiss();
 		const fbUser = firebase.auth().currentUser;
-		if (fbUser && fbUser.uid) {
-			getStorage('minahallplatser-user').then((user) => {
-				if (user && user.uid === fbUser.uid) {
-					this.props.favoriteGet(fbUser);
+		const actualUser = fbUser === null
+			? null
+			: { email: fbUser.email,
+				isAnonymous: fbUser.isAnonymous,
+				metadata: fbUser.metadata,
+				providerId: fbUser.providerId,
+				uid: fbUser.uid,
+			};
+		if (actualUser && actualUser.uid) {
+			Promise.all([getStorage('minahallplatser-user'), getStorage('minahallplatser-settings')])
+			.then(([user, settings]) => {
+				window.log('Localstorage user:', user, 'Firebase user', actualUser, 'with settings:', settings);
+				if (user !== null && (user.uid === actualUser.uid)) {
+					this.props.favoriteGet(actualUser);
 				}
-				getStorage('minahallplatser-settings')
-				.then((settings) => {
-					window.log('Got settings:', settings);
-					if (fbUser.isAnonymous && this.props.anonFirstAppStart) {
-						this.showRegistrationQuestion();
-					}
-					if (this.props.hasUsedGPS && this.props.allowedGPS) {
-						this.props.getNearbyStops();
-					}
-				})
-				.catch(() => {
-					window.log('Could not find settings, setting default settings.');
-					if (fbUser.isAnonymous) {
-						this.showRegistrationQuestion();
-					}
-				});
+				if (this.props.hasUsedGPS && this.props.allowedGPS) {
+					window.log('Refreshing nearby stops');
+					this.props.getNearbyStops();
+				}
+			})
+			.catch((e) => {
+				window.log('Something went wrong', e);
 			});
 		}
 		track('Page View', { Page: 'Dashboard' });
@@ -61,23 +64,32 @@ class FavoriteList extends PureComponent {
 	componentDidMount() {
 		AppState.addEventListener('change', this.handleAppStateChange);
 	}
-
+	
 	componentWillReceiveProps() {
 		if (this.state.init) {
-			Actions.refresh({ right: renderHelpButton(this) });
+			Actions.refresh({ right: HelpButton(this) });
 			this.setState({ init: false });
 		}
 	}
-
+	
 	componentWillUnmount() {
+		const { currentUser } = firebase.auth();
 		fetch.abort('searchStops');
 		this.props.clearErrors();
 		AppState.removeEventListener('change', this.handleAppStateChange);
+		if (currentUser) {
+			firebase.database().ref('.info/connected')
+				.once('value', (snap) => {
+					if (snap.val() === true) {
+						firebase.database().ref(`/users/${currentUser.uid}/favorites`).off();
+					}
+				});
+		}
 	}
 	
 	onInputChange = (busStop) => {
 		fetch.abort('searchStops');
-		clearTimeout(this.searchTimeout);
+		this.clearTimeout = clearTimeout(this.searchTimeout);
 		this.props.searchChanged(busStop);
 		this.searchTimeout = setTimeout(() => {
 			this.props.searchStops({ busStop });
@@ -86,45 +98,11 @@ class FavoriteList extends PureComponent {
 
 	handleAppStateChange = (nextAppState) => {
 		if (nextAppState === 'active') {
-			getStorage('minahallplatser-settings').then((settings) => {
-				if (settings.hasUsedGPS && settings.allowedGPS) {
-					this.props.getNearbyStops();
-				}
-			});
+			if (this.props.hasUsedGPS && this.props.allowedGPS) {
+				this.props.getNearbyStops();
+			}
 			track('Page View', { Page: 'Dashboard', Type: 'Reopened app from background' });
 		}
-	}
-	
-	showRegistrationQuestion = () => {
-		globals.anonFirstAppStart = false;
-		this.props.setSetting('anonFirstAppStart', false);
-		Alert.alert(
-			'Få ut mer av appen',
-			'Få en bättre upplevelse genom att registrera dig i appen. Det är helt gratis!\nDina hållplatser sparas i molnet så att du alltid har dom kvar på ditt konto, även om du till exempel köper en ny telefon. Det går alltid att registrera sig vid ett annat tillfälle via menyn.',
-			[
-				{
-					text: 'Nej tack',
-					onPress: () => {
-						track('Registration Question', { answer: 'No' });
-					}
-				},
-				{
-					text: 'Logga in',
-					onPress: () => {
-						track('Registration Question', { answer: 'Login' });
-						Actions.login();
-					}
-				},
-				{
-					text: 'Registrera',
-					onPress: () => {
-						track('Registration Question', { answer: 'Register' });
-						Actions.register();
-					}
-				}
-			],
-			{ cancelable: false }
-		);
 	}
 
 	resetSearch = () => {
@@ -171,7 +149,7 @@ class FavoriteList extends PureComponent {
 					Spara hållplats som favorit
 				</Text>
 				<Text style={component.popup.text}>
-					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Ionicons name="ios-star-outline" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Ionicons name="ios-star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg.
+					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Ionicons name="ios-star-outline" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Ionicons name="ios-star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg och hållplatsen sparas i listan "Mina Hållplatser".
 				</Text>
 
 				<Text style={component.popup.header}>
@@ -200,7 +178,7 @@ class FavoriteList extends PureComponent {
 				pressItem={async () => {
 					Keyboard.dismiss();
 					await this.props.clearErrors();
-					Actions.departures({ busStop: item.busStop, id: item.id, title: item.busStop });
+					Actions.departures({ busStop: item.busStop, id: item.id, title: item.busStop, parent: 'favorites' });
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -213,7 +191,7 @@ class FavoriteList extends PureComponent {
 								text: 'Ja',
 								onPress: () => {
 									track('Favorite Stop Remove', { Stop: item.busStop, Parent: 'Favorite List' });
-									this.props.favoriteDelete(item.id);
+									this.props.favoriteCreate({ busStop: item.name, id: item.id });
 								}
 							}
 						]
@@ -225,14 +203,14 @@ class FavoriteList extends PureComponent {
 		);
 	}
 
-	renderSearchItem = ({ item }) => {
+	renderSearchItem = ({ item }, parent) => {
 		return (
 			<ListItem
 				text={item.name}
 				icon={item.icon}
 				pressItem={() => {
 					Keyboard.dismiss();
-					Actions.departures({ busStop: item.name, id: item.id, title: item.name });
+					Actions.departures({ busStop: item.name, id: item.id, title: item.name, parent });
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -255,11 +233,11 @@ class FavoriteList extends PureComponent {
 		}
 		return (
 			<View>
-				<ListHeading text={'Hållplatser nära dig'} icon={'md-refresh'} onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
+				<ListHeading text="Hållplatser nära dig" icon="md-refresh" onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
 				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0 && this.state.hasUsedGPS) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
 				<FlatList
 					data={this.props.stopsNearby}
-					renderItem={this.renderSearchItem}
+					renderItem={item => this.renderSearchItem(item, 'nearby stops')}
 					keyExtractor={item => item.id}
 					ItemSeparatorComponent={ListItemSeparator}
 					scrollEnabled={false}
@@ -282,17 +260,17 @@ class FavoriteList extends PureComponent {
 		}
 		return (
 			<View>
-				{(this.props.departureList.length > 0) ? <ListHeading text={'Sökresultat'} /> : null}
+				{(this.props.departureList.length > 0) ? <ListHeading text="Sökresultat" /> : null}
 				<FlatList
 					data={this.props.departureList}
-					renderItem={this.renderSearchItem}
+					renderItem={item => this.renderSearchItem(item, 'search')}
 					keyExtractor={item => item.id}
 					ItemSeparatorComponent={ListItemSeparator}
 					scrollEnabled={false}
 					keyboardShouldPersistTaps='always'
 				/>
 				{this.renderNearbyStops()}
-				<ListHeading text={'Mina hållplatser'} icon={this.props.favorites.length > 0 ? 'edit' : null} iconSize={16} onPress={() => { track('Edit Stops Toggle', { On: !this.state.editing }); this.setState({ editing: !this.state.editing }); }} />
+				<ListHeading text="Mina hållplatser" icon={this.props.favorites.length > 0 ? 'edit' : null} iconSize={16} onPress={() => { track('Edit Stops Toggle', { On: !this.state.editing }); this.setState({ editing: !this.state.editing }); }} />
 				<FlatList
 					data={this.props.favorites}
 					renderItem={this.renderFavoriteItem}
@@ -310,7 +288,7 @@ class FavoriteList extends PureComponent {
 		return (
 			<View style={{ flex: 1 }}>
 				{this.renderPopup()}
-				<ScrollView scrollEnabled keyboardShouldPersistTaps={'always'}>
+				<ScrollView scrollEnabled keyboardShouldPersistTaps="always">
 					<Input
 						placeholder="Sök hållplats.."
 						onChangeText={this.onInputChange}
@@ -319,7 +297,7 @@ class FavoriteList extends PureComponent {
 						loading={this.props.searchLoading && this.props.busStop.length > 0}
 						iconRight={this.props.busStop.length > 0 ? 'ios-close' : null}
 						iconRightPress={this.resetSearch}
-						underlineColorAndroid={'#fff'}
+						underlineColorAndroid="#fff"
 						onFocus={() => track('Search Focused')}
 						style={[{ borderRadius: 15, paddingLeft: metrics.padding.sm, paddingRight: metrics.padding.sm, margin: metrics.margin.md, backgroundColor: '#fff' }, !isAndroid() ? { paddingTop: metrics.padding.md, paddingBottom: metrics.padding.md } : null]}
 					/>
@@ -332,9 +310,11 @@ class FavoriteList extends PureComponent {
 					}
 					{this.renderSectionList()}
 					{(this.props.favorites.length === 0 && !this.props.favoritesLoading) ?
-						<Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>
-							Du har inte sparat några favoriter än.
-						</Text> : null
+						<View style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>
+							<Text>
+								Du har inte sparat några favoriter än. Tryck <Text onPress={this.openPopup}>HÄR</Text> för mer information.
+							</Text>
+						</View> : null
 					}
 				</ScrollView>
 			</View>
@@ -343,7 +323,7 @@ class FavoriteList extends PureComponent {
 }
 
 const mapStateToProps = state => {
-	const { favoriteOrder, allowedGPS, hasUsedGPS, anonFirstAppStart } = state.settings;
+	const { favoriteOrder, allowedGPS, hasUsedGPS } = state.settings;
 	const favorites = _.orderBy(state.fav.favorites, (o) => o[favoriteOrder] || 0, favoriteOrder === 'busStop' ? 'asc' : 'desc');
 	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
@@ -356,7 +336,7 @@ const mapStateToProps = state => {
 	const departureList = _.map(state.search.departureList, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Search List' };
 	});
-	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS, hasUsedGPS, anonFirstAppStart };
+	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS, hasUsedGPS };
 };
 
 export default connect(mapStateToProps,

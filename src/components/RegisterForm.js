@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, AppState } from 'react-native';
+import { View, AppState, Text } from 'react-native';
 import { connect } from 'react-redux';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { Actions } from 'react-native-router-flux';
 import facebook from 'react-native-fbsdk';
 import {
@@ -15,6 +15,7 @@ import {
 } from '../actions';
 import { Input, Button, Message } from './common';
 import { track } from './helpers';
+import { metrics } from './style';
 
 const { LoginManager, AccessToken } = facebook;
 
@@ -48,8 +49,8 @@ class RegisterForm extends Component {
 
 	onButtonPress = () => {
 		this.props.loading = true;
-		const { email, password, passwordSecond } = this.props;
-		this.props.registerUser({ email, password, passwordSecond });
+		const { email, password, passwordSecond, favorites, lines } = this.props;
+		this.props.registerUser({ email, password, passwordSecond, favorites, lines });
 	}
 
 	registerFacebook = () => {
@@ -143,15 +144,15 @@ class RegisterForm extends Component {
 					onPress={this.registerFacebook}
 				/>
 				{currentUser && currentUser.isAnonymous ?
-					<Button
-						uppercase
-						color="danger"
-						label="Avbryt registering"
+					<Text
+						style={{ padding: metrics.padding.md }}
 						onPress={() => {
 							track('Cancel Register');
 							Actions.dashboard();
 						}}
-					/> : null
+					>
+						Gå till startsidan
+					</Text> : null
 				}
 			</View>
 		);
@@ -161,8 +162,9 @@ class RegisterForm extends Component {
 
 const MapStateToProps = (state) => {
 	const { loading, email, password, passwordSecond, loadingFacebook } = state.auth;
+	const { favorites, lines } = state.fav;
 	const { error } = state.errors;
-	return { error, loading, email, password, passwordSecond, loadingFacebook };
+	return { error, loading, email, password, passwordSecond, loadingFacebook, favorites, lines };
 };
 
 export default connect(MapStateToProps,

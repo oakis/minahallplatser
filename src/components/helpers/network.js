@@ -1,4 +1,4 @@
-import { Crashlytics } from 'react-native-fabric';
+import firebase from 'react-native-firebase';
 
 export const handleJsonFetch = (response) => {
     window.log(`handleJsonFetch() - Status: ${response.status} - ok: ${response.ok}`);
@@ -13,17 +13,17 @@ export const handleJsonFetch = (response) => {
         return response.json()
         .then((data) => {
             window.log('handleJsonFetch(): Error', data);
-            Crashlytics.logException(data.StackTraceString);
+            firebase.crashlytics().recordError(data.StackTraceString);
             throw data.Message;
         });
-     } else if (response.status === 404) {
+    } else if (response.status === 404) {
         return response.json()
         .then((data) => {
             window.log('handleJsonFetch(): Error', data);
-            throw data.data || data;
+            throw data.message || data;
         });
     }
-    const error = response.statusText || response.Message || 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
-    window.log('handleJsonFetch(): Error', error);
+    const error = response.statusText || response.message || 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
+    window.log('handleJsonFetch(): Error', error, response);
     throw error;
 };

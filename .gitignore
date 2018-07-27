@@ -35,6 +35,7 @@ android/gradle.properties
 #
 node_modules/
 npm-debug.log
+yarn-error.log
 
 # BUCK
 buck-out/
@@ -63,3 +64,9 @@ index.android.bundle
 ios/Crashlytics*
 ios/Fabric*
 ios/Pods*
+
+# Bundle artifact
+*.jsbundle
+
+google-services.json
+coverage/

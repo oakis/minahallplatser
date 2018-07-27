@@ -20,7 +20,7 @@ export const Input = ({ style, value, label, icon, iconRight = null, iconRightPr
                 keyboardType={keyboardType}
                 secureTextEntry={secureTextEntry}
                 autoCorrect={false}
-                autoCapitalize={'none'}
+                autoCapitalize="none"
                 onFocus={onFocus}
                 multiline={multiline}
             />

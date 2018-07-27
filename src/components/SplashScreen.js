@@ -1,46 +1,9 @@
 import React, { Component } from 'react';
 import { View, ImageBackground } from 'react-native';
-import firebase from 'firebase';
-import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
-import { autoLogin, loginAnonUser } from '../actions';
 import { Spinner, Text } from './common';
 import { colors } from './style';
-import { globals, getStorage, track } from './helpers';
 
 class SplashScreen extends Component {
-
-	componentDidMount() {
-		// Try to automaticly login
-		globals.isLoggingIn = true;
-		track('App Start');
-		firebase.auth().onAuthStateChanged((fbUser) => {
-			getStorage('minahallplatser-user')
-			.then((user) => {
-				window.log('Localstorage user:', user, 'Firebase user:', fbUser);
-				if (fbUser && fbUser.uid && globals.isLoggingIn) {
-					window.log('User already exists, continue to autologin.');
-					globals.isLoggingIn = false;
-					this.props.autoLogin(fbUser);
-				} else if (globals.didLogout && !globals.isLoggingIn) {
-					Actions.login();
-					globals.didLogout = false;
-					globals.isLoggingIn = true;
-				} else if (globals.isLoggingIn) {
-					window.log('New user, creating anonymous account.');
-					this.props.loginAnonUser();
-					globals.isLoggingIn = false;
-				}
-			})
-			.catch((err) => {
-				window.log('Something went wrong:', err);
-				this.props.login();
-			});
-		}, (err) => {
-			window.log('Something went wrong:', err);
-			this.props.login();
-		});
-	}
 
 	render() {
 		return (
@@ -73,4 +36,4 @@ class SplashScreen extends Component {
 
 }
 
-export default connect(null, { autoLogin, loginAnonUser })(SplashScreen);
+export default SplashScreen;

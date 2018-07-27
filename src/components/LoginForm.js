@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { View, AppState } from 'react-native';
+import { View, AppState, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import facebook from 'react-native-fbsdk';
 import { emailChanged, passwordChanged, loginUser, resetRoute, autoLogin, clearErrors, loginAnonUser, loginFacebook } from '../actions';
 import { Button, Input, Message } from './common';
 import { track, globals } from './helpers';
+import { metrics } from './style';
 
 const { LoginManager, AccessToken } = facebook;
 
@@ -39,7 +40,6 @@ class LoginForm extends Component {
 	}
 
 	onButtonPress = () => {
-		this.props.loading = true;
 		const { email, password } = this.props;
 		this.props.loginUser({ email, password });
 	}
@@ -60,8 +60,8 @@ class LoginForm extends Component {
 					(data) => {
 						globals.isLoggingIn = true;
 						const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
-						firebase.auth().signInWithCredential(credential)
-						.then(user => window.log(`Facebook account ${user.email} was successfully logged in.`))
+						firebase.auth().signInAndRetrieveDataWithCredential(credential)
+						.then(user => window.log(`Facebook account ${user.user.email} was successfully logged in.`))
 						.catch(error => window.log('Facebook account failed:', error));
 					}
 				);
@@ -151,15 +151,15 @@ class LoginForm extends Component {
 					}}
 				/>
 				{currentUser && currentUser.isAnonymous ?
-					<Button
-						uppercase
-						color="danger"
-						label="Avbryt registering"
+					<Text
+						style={{ padding: metrics.padding.md }}
 						onPress={() => {
 							track('Cancel Login');
 							Actions.dashboard();
 						}}
-					/> : null
+					>
+						Gå till startsidan
+					</Text> : null
 				}
 
 			</View>
@@ -169,9 +169,9 @@ class LoginForm extends Component {
 }
 
 const mapStateToProps = ({ auth, errors }) => {
-	const { email, password, loading, token, loadingAnon } = auth;
+	const { email, password, loading, token } = auth;
 	const { error } = errors;
-	return { email, password, error, loading, token, loadingAnon };
+	return { email, password, error, loading, token };
 };
 
 export default connect(mapStateToProps, {

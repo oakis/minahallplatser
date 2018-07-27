@@ -182,7 +182,7 @@ exports.accountCleanup = functions.https.onRequest((request, response) => {
         .then(() => {
           admin.auth().deleteUser(data.key)
           .then(() => console.log('Deleted user:', data.key))
-          .catch(e => console.log('Could not delete user:', e));
+          .catch(e => console.log(`Could not delete user: ${data.key}`, e));
         })
         .catch(e => console.log('Remove user database entry failed:', e));
       }

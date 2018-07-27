@@ -1,0 +1,185 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match snapshot 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <ListItem />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": Array [
+        <DefaultFont
+          style={
+            Object {
+              "alignSelf": "center",
+              "fontSize": 18,
+              "justifyContent": "flex-start",
+            }
+          }
+        />,
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "width": 24,
+            }
+          }
+        />,
+      ],
+      "onPress": undefined,
+      "style": Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "height": 50,
+          "justifyContent": "space-between",
+          "paddingHorizontal": 10,
+        },
+        null,
+      ],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": undefined,
+          "style": Object {
+            "alignSelf": "center",
+            "fontSize": 18,
+            "justifyContent": "flex-start",
+          },
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": Array [
+            null,
+            null,
+          ],
+          "style": Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "width": 24,
+          },
+        },
+        "ref": null,
+        "rendered": Array [
+          null,
+          null,
+        ],
+        "type": [Function],
+      },
+    ],
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": Array [
+          <DefaultFont
+            style={
+              Object {
+                "alignSelf": "center",
+                "fontSize": 18,
+                "justifyContent": "flex-start",
+              }
+            }
+          />,
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "width": 24,
+              }
+            }
+          />,
+        ],
+        "onPress": undefined,
+        "style": Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "height": 50,
+            "justifyContent": "space-between",
+            "paddingHorizontal": 10,
+          },
+          null,
+        ],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": undefined,
+            "style": Object {
+              "alignSelf": "center",
+              "fontSize": 18,
+              "justifyContent": "flex-start",
+            },
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              null,
+              null,
+            ],
+            "style": Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "width": 24,
+            },
+          },
+          "ref": null,
+          "rendered": Array [
+            null,
+            null,
+          ],
+          "type": [Function],
+        },
+      ],
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;

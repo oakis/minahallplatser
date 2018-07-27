@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import _ from 'lodash';
 import { store } from '../App';
 import {

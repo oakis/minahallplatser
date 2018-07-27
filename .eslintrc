@@ -11,5 +11,8 @@
 		"window": false,
 		"ErrorUtils": false,
 		"__DEV__": false
+	},
+	"env": {
+		"jest": true
 	}
 }

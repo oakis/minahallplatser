@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import moment from 'moment';
 import _ from 'lodash';
 import Mixpanel from 'react-native-mixpanel';
@@ -23,13 +23,19 @@ import { store } from '../App';
 import { getSettings } from './';
 
 export const resetUserPassword = (email) => {
+	if (email.length === 0) {
+		return { 
+			type: ERROR,
+			payload: getFirebaseError({ code: 'auth/invalid-email' }),
+		};
+	}
 	return (dispatch) => {
-		firebase.auth().sendPasswordResetEmail(email)
+		return firebase.auth().sendPasswordResetEmail(email)
 		.then(() => {
 			showMessage('long', `Ett mail för att återställa ditt lösenord har skickats till ${email}.`);
 			dispatch({ type: RESET_PASSWORD });
 			Actions.login();
-		}, (error) => {
+		}).catch((error) => {
 			dispatch({ type: RESET_PASSWORD });
 			dispatch({ type: ERROR, payload: getFirebaseError(error) });
 		});
@@ -63,34 +69,33 @@ export const passwordSecondChanged = (text) => {
 	};
 };
 
-export const registerUser = ({ email, password, passwordSecond }) => {
-	return (dispatch) => {
+export const registerUser = ({ email, password, passwordSecond, favorites, lines }) => {
+	return async (dispatch) => {
 		dispatch({ type: REGISTER_USER });
 		if (password !== passwordSecond) {
 			dispatch({ type: REGISTER_USER_FAIL });
 			dispatch({ type: ERROR, payload: 'Lösenorden matchade inte.' });
 		} else if (firebase.auth().currentUser && firebase.auth().currentUser.isAnonymous) {
-			track('Register', { type: 'From Anonymous' });
-			const credential = firebase.auth.EmailAuthProvider.credential(email, password);
-			firebase.auth().currentUser.linkWithCredential(credential).then(() => {
+			try {
+				track('Register', { type: 'From Anonymous' });
+				const credential = firebase.auth.EmailAuthProvider.credential(email, password);
+				await firebase.auth().currentUser.linkAndRetrieveDataWithCredential(credential);
 				dispatch({ type: LOGIN_USER });
-				firebase.auth().signInWithEmailAndPassword(email, password)
-					.then(user => {
-						const { favorites, lines } = store.getState().fav;
-						const fbUser = firebase.database().ref(`/users/${user.uid}`);
-						_.forEach(favorites, (favorite) => {
-							fbUser.child('favorites').push(favorite);
-						});
-						_.forEach(lines, (line) => {
-							fbUser.child('lines').push(line);
-						});
-						loginUserSuccess(dispatch, user);
-					})
-					.catch((error) => loginUserFail(dispatch, error));
-			}, (error) => loginUserFail(dispatch, error));
+				const user = await firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password);
+				const fbUser = firebase.database().ref(`/users/${user.uid}`);
+				_.forEach(favorites, (favorite) => {
+					fbUser.child('favorites').push(favorite);
+				});
+				_.forEach(lines, (line) => {
+					fbUser.child('lines').push(line);
+				});
+				loginUserSuccess(dispatch, user);
+			} catch (error) {
+				loginUserFail(dispatch, error);
+			}
 		} else {
 			track('Register', { type: 'New Account' });
-			firebase.auth().createUserWithEmailAndPassword(email, password)
+			firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
 				.catch((error) => {
 					dispatch({ type: REGISTER_USER_FAIL });
 					dispatch({ type: ERROR, payload: getFirebaseError(error) });
@@ -98,7 +103,7 @@ export const registerUser = ({ email, password, passwordSecond }) => {
 				.then((registered) => {
 					if (registered) {
 						dispatch({ type: LOGIN_USER });
-						firebase.auth().signInWithEmailAndPassword(email, password)
+						firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
 							.then(user => loginUserSuccess(dispatch, user))
 							.catch((error) => loginUserFail(dispatch, error));
 					}
@@ -112,9 +117,9 @@ export const registerFacebook = (credential) => {
 		dispatch({ type: REGISTER_FACEBOOK });
 		if (firebase.auth().currentUser && firebase.auth().currentUser.isAnonymous) {
 			track('Register', { type: 'From Anonymous' });
-			firebase.auth().currentUser.linkWithCredential(credential).then(() => {
+			firebase.auth().currentUser.linkAndRetrieveDataWithCredential(credential).then(() => {
 				globals.isLoggingIn = true;
-				firebase.auth().signInWithCredential(credential)
+				firebase.auth().signInAndRetrieveDataWithCredential(credential)
 					.then(user => {
 						const { favorites, lines } = store.getState().fav;
 						const fbUser = firebase.database().ref(`/users/${user.uid}`);
@@ -133,7 +138,7 @@ export const registerFacebook = (credential) => {
 			});
 		} else {
 			track('Register', { type: 'New Account' });
-			firebase.auth().signInWithCredential(credential)
+			firebase.auth().signInAndRetrieveDataWithCredential(credential)
 			.then(user => window.log(`Facebook account ${user.email} was successfully logged in.`))
 			.catch(error => window.log('Facebook account failed:', error));
 		}
@@ -145,7 +150,7 @@ export const loginUser = ({ email, password }) => {
 		dispatch({ type: LOGIN_USER });
 		if (email && password) {
 			globals.isLoggingIn = true;
-			firebase.auth().signInWithEmailAndPassword(email, password)
+			firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
 			.then(user => window.log(`Email account ${user.email} was successfully logged in.`))
 			.catch(error => loginUserFail(dispatch, error));
 		} else if (email && !password) {
@@ -164,7 +169,7 @@ export const loginUser = ({ email, password }) => {
 export const loginAnonUser = () => {
 	return (dispatch) => {
 		dispatch({ type: LOGIN_ANON_USER });
-		firebase.auth().signInAnonymously()
+		firebase.auth().signInAnonymouslyAndRetrieveData()
 		.then(user => loginUserSuccess(dispatch, user))
 		.catch(error => loginUserFail(dispatch, error));
 	};
@@ -180,21 +185,19 @@ export const autoLogin = (user) => {
 };
 
 const loginUserSuccess = (dispatch, user) => {
+	const actualUser = user && user.additionalUserInfo ? user.user : user;
 	getToken().finally(() => {
-		Mixpanel.identify(user.uid);
-		if (!user.isAnonymous) {
-			Mixpanel.set({ $email: user.email });
-		}
-		const fbUser = firebase.database().ref(`/users/${user.uid}`);
+		Mixpanel.identify(actualUser.uid);
+		const fbUser = firebase.database().ref(`/users/${actualUser.uid}`);
 		fbUser.update({
 			lastLogin: moment().format(),
-			isAnonymous: user.isAnonymous,
-			email: user.isAnonymous ? '-' : user.email,
-			created: moment(user.metadata.creationTime).format('YYYY-MM-DDThh:mm:ssZZ'),
-			provider: user.isAnonymous ? 'Anonymous' : user.providerData[0].providerId
+			isAnonymous: actualUser.isAnonymous,
+			email: actualUser.isAnonymous ? '-' : actualUser.email,
+			created: moment(actualUser.metadata.creationTime).format(),
+			provider: actualUser.isAnonymous ? 'Anonymous' : actualUser.providerId
 		});
-		setStorage('minahallplatser-user', user).then(() => {
-			dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
+		setStorage('minahallplatser-user', actualUser).then(() => {
+			dispatch({ type: LOGIN_USER_SUCCESS, payload: actualUser });
 			getSettings(dispatch).then(() => {
 				globals.isLoggingIn = false;
 				Actions.dashboard({ type: 'reset' });
@@ -216,7 +219,7 @@ const loginUserFail = (dispatch, error) => {
 	}
 };
 
-const getFirebaseError = (error) => {
+export const getFirebaseError = (error) => {
 	window.log('Firebase Error:', error);
 	switch (error.code) {
 		case 'auth/network-request-failed':

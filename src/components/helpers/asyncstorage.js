@@ -10,18 +10,19 @@ function s4() {
 
 /**
  * @param {string} item 
- * @returns {Promise}
+ * @returns {Promise} Loaded storage
  */
 export const getStorage = (item) => {
     return new Promise((resolve, reject) => {
         AsyncStorage.getItem(item)
         .then((json) => {
-            window.log(`getStorage() ${item}: OK`);
-            return resolve(JSON.parse(json));
+            const data = json === null ? {} : JSON.parse(json);
+            window.log(`getStorage() ${item}: OK`, data);
+            resolve(data);
         })
         .catch((e) => {
             window.log(`getStorage() ${item}: FAIL`, e);
-            return reject(e);
+            reject(e);
         });
     });
 };
@@ -29,18 +30,18 @@ export const getStorage = (item) => {
 /**
  * @param {string} item 
  * @param {JSON} json 
- * @returns {Promise}
+ * @returns {Promise} -
  */
 export const setStorage = (item, json) => {
     return new Promise((resolve, reject) => {
         AsyncStorage.setItem(item, JSON.stringify(json))
         .then(() => {
             window.log(`setStorage() ${item}: OK`);
-            return resolve();
+            resolve();
         })
         .catch((e) => {
             window.log(`setStorage() ${item}: FAIL`, e);
-            return reject(e);
+            reject(e);
         });
     });
 };
