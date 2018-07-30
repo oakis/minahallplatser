@@ -103,15 +103,18 @@ class RouterComponent extends Component {
 				window.log('onAuthStateChanged(): Localstorage user:', user, 'Firebase user:', actualUser);
 				if (actualUser && actualUser.uid && globals.isLoggingIn) {
 					window.log('User already exists, continue to autologin.');
+					track('Auth State Changed', { Message: 'AutoLogin' })
 					globals.isLoggingIn = false;
 					this.props.autoLogin(actualUser);
 				} else if (globals.didLogout && !globals.isLoggingIn) {
 					window.log('User logged out.');
+					track('Auth State Changed', { Message: 'Logged out' })
 					Actions.login();
 					globals.didLogout = false;
 					globals.isLoggingIn = true;
 				} else if (globals.isLoggingIn) {
 					window.log('New user, creating anonymous account.');
+					track('Auth State Changed', { Message: 'Create anonymous account' })
 					this.props.loginAnonUser();
 					globals.isLoggingIn = false;
 				}
