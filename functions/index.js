@@ -4,7 +4,9 @@ const moment = require('moment');
 const nodemailer = require('nodemailer');
 const cors = require('cors')({ origin: true });
 
-admin.initializeApp(functions.config().firebase);
+const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG);
+
+admin.initializeApp();
 
 const mailer = nodemailer.createTransport({
   service: 'gmail',
@@ -52,8 +54,9 @@ exports.getDeparturesCount = functions.https.onRequest((request, response) => {
 });
 
 exports.addDeparturesCount = functions.https.onRequest((request, response) => {
+  console.log(request.query);
   admin.database().ref('/stats').once('value').then(snapshot => {
-    const newValue = parseInt(snapshot.val().departuresCount) + parseInt(request.query.count);
+    const newValue = parseInt(snapshot.val().departuresCount, 10) + parseInt(request.query.count, 10);
     admin.database().ref('/stats').update({
         departuresCount: newValue
     });
@@ -61,7 +64,8 @@ exports.addDeparturesCount = functions.https.onRequest((request, response) => {
         message: `departuresCount is now: ${newValue}`,
         departuresCount: newValue
     });
-  });
+  })
+  .catch(e => console.log(e));
 });
 
 exports.getStopsCount = functions.https.onRequest((request, response) => {
@@ -74,7 +78,7 @@ exports.getStopsCount = functions.https.onRequest((request, response) => {
 
 exports.addStopsCount = functions.https.onRequest((request, response) => {
   admin.database().ref('/stats').once('value').then(snapshot => {
-    const newValue = parseInt(snapshot.val().stopsCount) + 1;
+    const newValue = parseInt(snapshot.val().stopsCount, 10) + 1;
     admin.database().ref('/stats').update({
       stopsCount: newValue
     });
@@ -86,7 +90,7 @@ exports.addStopsCount = functions.https.onRequest((request, response) => {
 });
 
 exports.incrementStopsOpen = functions.https.onRequest((request, response) => {
-  const ref = admin.database().ref('/users/' + request.query.user + '/favorites/');
+  const ref = admin.database().ref(`/users/${request.query.user}/favorites/`);
   ref.orderByChild('id').equalTo(request.query.stopId).once('value', snapshot => {
     snapshot.forEach(data => {
       const opened = data.child('opened');
@@ -143,7 +147,7 @@ exports.replyFeedback = functions.database.ref('/feedback/{key}/reply').onCreate
   console.log('Data:', e.data.val());
   console.log(e.params.key);
   return admin.database().ref(`/feedback/${e.params.key}`).once('value').then((feedback) => {
-    const { name, appVersion, email, message, os } = feedback.val();
+    const { email, message } = feedback.val();
     const options = {
       from: functions.config().gmail.email,
       to: email,
