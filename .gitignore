@@ -40,16 +40,12 @@ yarn-error.log
 # BUCK
 buck-out/
 \.buckd/
-android/app/libs
 *.keystore
 
 src/Vasttrafik.js
 src/Server.js
 src/Variables.js
 
-buggar/
-todo.txt
-index.android.bundle
 # fastlane
 #
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the

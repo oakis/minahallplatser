@@ -21,8 +21,8 @@
     "enzyme-adapter-react-16": "1.1.1",
     "lodash": "4.17.4",
     "moment": "2.21.0",
-    "react": "16.4.0",
-    "react-native": "0.55.3",
+    "react": "16.6.3",
+    "react-native": "0.57.8",
     "react-native-cancelable-fetch": "0.1.1",
     "react-native-device-info": "0.21.5",
     "react-native-fabric": "0.5.1",
@@ -44,7 +44,7 @@
     "eslint-config-rallycoding": "3.1.0",
     "jest": "22.4.3",
     "react-dom": "16.4.0",
-    "react-test-renderer": "16.4.0"
+    "react-test-renderer": "16.6.3"
   },
   "jest": {
     "preset": "react-native",
