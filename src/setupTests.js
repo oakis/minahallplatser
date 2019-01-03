@@ -367,6 +367,9 @@ jest.mock('react-native-firebase', () => ({
     update: jest.fn().mockReturnThis(),
     on: jest.fn().mockReturnThis(),
     once: jest.fn().mockReturnThis(),
+    crashlytics: jest.fn().mockReturnThis(),
+    log: jest.fn().mockReturnThis(),
+    crash: jest.fn().mockReturnThis(),
 }));
 
 jest.mock('react-native-router-flux', () => ({
@@ -411,8 +414,6 @@ jest.mock('react-native-cancelable-fetch', () => jest.fn().mockImplementation(()
     then: stub().resolves({}),
     catch: stub().rejects({}),
 })));
-
-jest.mock('react-native-fabric', () => {});
 
 if (typeof window !== 'object') {
     global.window = global;
