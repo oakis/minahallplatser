@@ -16,7 +16,7 @@ import Settings from './components/Settings';
 import Profile from './components/Profile';
 import { colors } from './components/style';
 import { isAndroid, track, showMessage, globals, getStorage } from './components/helpers';
-import { store } from './App';
+import store from './setupStore';
 import { CLR_ERROR } from './actions/types';
 import { autoLogin, loginAnonUser } from './actions';
 
@@ -103,18 +103,18 @@ class RouterComponent extends Component {
 				window.log('onAuthStateChanged(): Localstorage user:', user, 'Firebase user:', actualUser);
 				if (actualUser && actualUser.uid && globals.isLoggingIn) {
 					window.log('User already exists, continue to autologin.');
-					track('Auth State Changed', { Message: 'AutoLogin' })
+					track('Auth State Changed', { Message: 'AutoLogin' });
 					globals.isLoggingIn = false;
 					this.props.autoLogin(actualUser);
 				} else if (globals.didLogout && !globals.isLoggingIn) {
 					window.log('User logged out.');
-					track('Auth State Changed', { Message: 'Logged out' })
+					track('Auth State Changed', { Message: 'Logged out' });
 					Actions.login();
 					globals.didLogout = false;
 					globals.isLoggingIn = true;
 				} else if (globals.isLoggingIn) {
 					window.log('New user, creating anonymous account.');
-					track('Auth State Changed', { Message: 'Create anonymous account' })
+					track('Auth State Changed', { Message: 'Create anonymous account' });
 					this.props.loginAnonUser();
 					globals.isLoggingIn = false;
 				}

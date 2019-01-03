@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { store } from '../../App';
+import store from '../../setupStore';
 import { CLR_ERROR } from '../../actions/types';
 import { Text } from '../common';
 import { colors, component } from '../style';

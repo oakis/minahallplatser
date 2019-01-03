@@ -9,7 +9,7 @@ import fetch from 'react-native-cancelable-fetch';
 import FavoriteList from './FavoriteList';
 import { getStorage, track } from './helpers';
 import { CLR_ERROR, CLR_SEARCH } from '../actions/types';
-import { store } from '../App';
+import store from '../setupStore';
 
 const mockStore = configureMockStore([thunk]);
 const initialState = {

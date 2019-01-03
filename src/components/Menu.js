@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import { ListItem, ListHeading } from './common';
 import { RESET_ALL } from '../actions/types';
 import { setSetting } from '../actions';
-import { store } from '../App';
+import store from '../setupStore';
 import { colors, metrics } from './style';
 import { track, globals } from './helpers';
 import { Feedback } from './modals';

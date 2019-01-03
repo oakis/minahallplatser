@@ -19,7 +19,7 @@ import {
 	REGISTER_FACEBOOK
 } from './types';
 import { showMessage, getToken, track, globals, setStorage } from '../components/helpers';
-import { store } from '../App';
+import store from '../setupStore';
 import { getSettings } from './';
 
 export const resetUserPassword = (email) => {

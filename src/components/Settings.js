@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Picker, Switch, TouchableNativeFeedback, ScrollView, Keyboard, AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
-import { store } from '../App';
+import store from '../setupStore';
 import { RESET_ALL } from '../actions/types';
 import { setSetting } from '../actions';
 import { Text, ListItemSeparator, Popup, Input, Button } from './common';

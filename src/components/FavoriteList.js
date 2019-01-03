@@ -1,10 +1,9 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, FlatList, View, ScrollView, AppState, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -13,7 +12,7 @@ import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading, Text
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { HelpButton } from '../Router';
-import { store } from '../App';
+import store from '../setupStore';
 import { track, globals, getStorage, isAndroid } from './helpers';
 
 

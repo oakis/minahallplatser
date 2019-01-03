@@ -1,6 +1,6 @@
 import { getStorage, setStorage } from '../components/helpers';
 import { SET_SETTING } from './types';
-import { store } from '../App';
+import store from '../setupStore';
 
 export const getSettings = (dispatch) => {
     return getStorage('minahallplatser-settings')

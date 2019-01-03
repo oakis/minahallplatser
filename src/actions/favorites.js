@@ -1,6 +1,6 @@
 import firebase from 'react-native-firebase';
 import _ from 'lodash';
-import { store } from '../App';
+import store from '../setupStore';
 import {
 	FAVORITE_CREATE, FAVORITE_CREATE_FAIL, FAVORITE_DELETE,
 	FAVORITE_FETCH_SUCCESS, FAVORITE_FETCH_FAIL,

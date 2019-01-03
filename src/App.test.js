@@ -1,4 +1,4 @@
-require('./App');
+require('./setupLogging');
 
 window.log = () => {};
 

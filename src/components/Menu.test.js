@@ -6,7 +6,7 @@ import firebase from 'react-native-firebase';
 import { AsyncStorage } from 'react-native';
 import { stub } from 'sinon';
 import { globals, track } from './helpers';
-import { store } from '../App';
+import store from '../setupStore';
 import Menu from './Menu';
 
 
