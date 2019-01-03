@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
-    "test": "jest",
+    "test": "jest --forceExit",
     "test:watch": "jest --watch --verbose",
     "test:coverage": "jest --coverage",
     "clean": "cd android && ./gradlew clean",
