@@ -80,7 +80,7 @@ describe('onInputChange', () => {
     let wrapper;
     const searchChanged = stub();
     const searchStops = stub();
-    
+
     beforeEach(() => {
         wrapper = shallow(<FavoriteList store={mockStore(initialState)} searchChanged={searchChanged} searchStops={searchStops} />).dive();
         searchChanged.reset();
@@ -115,7 +115,7 @@ describe('onInputChange', () => {
 describe('componentWillUnmount', () => {
     let wrapper;
     const clearErrors = stub();
-    
+
     beforeEach(() => {
         wrapper = shallow(<FavoriteList store={mockStore(initialState)} clearErrors={clearErrors} />).dive();
         clearErrors.reset();
@@ -146,8 +146,8 @@ describe('componentWillUnmount', () => {
 
 describe('handleAppStateChange', () => {
     let wrapper;
-    const getNearbyStops = stub();    
-    
+    const getNearbyStops = stub();
+
     beforeEach(() => {
         wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={getNearbyStops} />).dive();
         getNearbyStops.reset();
@@ -162,7 +162,7 @@ describe('handleAppStateChange', () => {
     it('should track page view if user is reopening app', () => {
         track.mockReset();
         wrapper.instance().handleAppStateChange('active');
-        expect(track).toBeCalledWith('Page View', { Page: 'Dashboard', Type: 'Reopened app from background' });
+        expect(track).toBeCalledWith('Page View', { Page: 'Dashboard', Parent: 'Background' });
     });
 });
 
@@ -177,8 +177,8 @@ it('resetSearch should dispatch CLR_SEARCH & CLR_ERROR', () => {
 describe('refreshNearbyStops', () => {
     let wrapper;
     const setSetting = jest.fn();
-    const getNearbyStops = stub();    
-    
+    const getNearbyStops = stub();
+
     beforeEach(() => {
         wrapper = shallow(<FavoriteList store={mockStore(initialState)} setSetting={setSetting} getNearbyStops={getNearbyStops} />).dive();
     });

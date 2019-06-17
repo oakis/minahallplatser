@@ -63,14 +63,14 @@ class FavoriteList extends PureComponent {
 	componentDidMount() {
 		AppState.addEventListener('change', this.handleAppStateChange);
 	}
-	
+
 	componentWillReceiveProps() {
 		if (this.state.init) {
 			Actions.refresh({ right: HelpButton(this) });
 			this.setState({ init: false });
 		}
 	}
-	
+
 	componentWillUnmount() {
 		const { currentUser } = firebase.auth();
 		fetch.abort('searchStops');
@@ -85,7 +85,7 @@ class FavoriteList extends PureComponent {
 				});
 		}
 	}
-	
+
 	onInputChange = (busStop) => {
 		fetch.abort('searchStops');
 		this.clearTimeout = clearTimeout(this.searchTimeout);
@@ -100,7 +100,7 @@ class FavoriteList extends PureComponent {
 			if (this.props.hasUsedGPS && this.props.allowedGPS) {
 				this.props.getNearbyStops();
 			}
-			track('Page View', { Page: 'Dashboard', Type: 'Reopened app from background' });
+			track('Page View', { Page: 'Dashboard', Parent: 'Background' });
 		}
 	}
 
@@ -129,7 +129,7 @@ class FavoriteList extends PureComponent {
 				onPress={() => this.setState({ showHelp: false })}
 				isVisible={this.state.showHelp}
 			>
-			
+
 				<Text style={component.popup.header}>
 					Söka efter hållplats
 				</Text>
@@ -164,7 +164,7 @@ class FavoriteList extends PureComponent {
 				<Text style={component.popup.text}>
 					I <Text style={{ fontWeight: 'bold' }}>menyn</Text> ( <Ionicons name="ios-menu" /> ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.
 				</Text>
-				
+
 			</Popup>
 		);
 	}

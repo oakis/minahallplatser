@@ -82,7 +82,7 @@ class RegisterForm extends Component {
 
 	handleAppStateChange = (nextAppState) => {
 		if (nextAppState === 'active') {
-			track('Page View', { Page: 'Register', Type: 'Reopened app from background' });
+			track('Page View', { Page: 'Register', Parent: 'Background' });
 		}
 	}
 

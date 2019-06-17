@@ -76,7 +76,7 @@ class LoginForm extends Component {
 
 	handleAppStateChange = (nextAppState) => {
 		if (nextAppState === 'active' && !this.state.fbPopupVisible) {
-			track('Page View', { Page: 'Login', Type: 'Reopened app from background' });
+			track('Page View', { Page: 'Login', Parent: 'Background' });
 		}
 	}
 

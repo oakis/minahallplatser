@@ -33,7 +33,7 @@ class ResetPassword extends Component {
 
 	handleAppStateChange = (nextAppState) => {
 		if (nextAppState === 'active') {
-			track('Page View', { Page: 'Reset Password', Type: 'Reopened app from background' });
+			track('Page View', { Page: 'Reset Password', Parent: 'Background' });
 		}
 	}
 
