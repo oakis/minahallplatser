@@ -6,7 +6,6 @@ import {
 	SEARCH_BY_GPS_SUCCESS,
 	SEARCH_BY_GPS_FAIL,
 	CLR_SEARCH,
-	RESET_ALL
 } from '../actions/types';
 
 const INIT_STATE = {
@@ -33,8 +32,6 @@ export default (state = INIT_STATE, action) => {
 			return { ...state, stops: [], gpsLoading: false };
 		case CLR_SEARCH:
 			return { ...state, departureList: [], loading: false, busStop: '' };
-		case RESET_ALL:
-			return { ...INIT_STATE };
 		default:
 			return state;
 	}

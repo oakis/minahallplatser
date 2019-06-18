@@ -1,22 +1,14 @@
 import { Platform } from 'react-native';
-import { getModel, getSystemVersion, getVersion } from 'react-native-device-info';
+import { getModel, getSystemVersion, getVersion, getUniqueID } from 'react-native-device-info';
 
-export const isAndroid = () => {
-    return Platform.OS === 'android';
-};
+export const isAndroid = () => Platform.OS === 'android';
 
-export const isIOS = () => {
-    return Platform.OS === 'ios';
-};
+export const isIOS = () => Platform.OS === 'ios';
 
-export const getDeviceModel = () => {
-    return getModel();
-};
+export const getDeviceModel = () => getModel();
 
-export const getOsVersion = () => {
-    return getSystemVersion();
-};
+export const getOsVersion = () => getSystemVersion();
 
-export const getAppVersion = () => {
-    return getVersion();
-};
+export const getAppVersion = () => getVersion();
+
+export const deviceId = () => getUniqueID();

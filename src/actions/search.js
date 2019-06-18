@@ -9,7 +9,6 @@ import {
 	SEARCH_BY_GPS,
 	SEARCH_BY_GPS_SUCCESS,
 	SEARCH_BY_GPS_FAIL,
-	CLR_SEARCH,
 	ERROR, CLR_ERROR
 } from './types';
 import { handleJsonFetch, getToken, track, getStorage, setStorage, isAndroid } from '../components/helpers';
@@ -65,6 +64,7 @@ export const searchStops = ({ busStop }) => {
 					search: busStop,
 				}),
 			};
+			window.log(url, config);
 			fetch(url, config, 'searchStops')
 			.finally(handleJsonFetch)
 			.then(({ data }) => {
@@ -94,12 +94,6 @@ export const getNearbyStops = () => {
 						requestLocationPermission().then(() => {
 							returnCoords(dispatch);
 						}).catch(() => {
-							getStorage('minahallplatser-settings')
-							.then((data) => {
-								const settings = data;
-								settings['allowedGPS'] = false;
-								setStorage('minahallplatser-settings', settings);
-							});
 							dispatch({ type: SEARCH_BY_GPS_FAIL })
 							dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
 						});
@@ -111,15 +105,6 @@ export const getNearbyStops = () => {
 				returnCoords(dispatch);
 			}
 		} catch (e) {
-			getStorage('minahallplatser-settings')
-				.then((data) => {
-					const settings = data || {};
-					settings['allowedGPS'] = false;
-					setStorage('minahallplatser-settings', settings);
-				})
-				.catch((e) => {
-					window.log(e);
-				});
 			dispatch({ type: SEARCH_BY_GPS_FAIL })
 			dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
 		}
@@ -128,12 +113,6 @@ export const getNearbyStops = () => {
 
 let gpsCount = 0;
 const returnCoords = (dispatch) => {
-	getStorage('minahallplatser-settings')
-		.then((data) => {
-			const settings = data;
-			settings['allowedGPS'] = true;
-			setStorage('minahallplatser-settings', settings);
-		});
 	dispatch({ type: SEARCH_BY_GPS });
 	geolocation.getCurrentPosition((position) => {
 		window.log('Got coords:', position.coords);

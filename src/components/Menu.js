@@ -1,35 +1,16 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, ImageBackground, ScrollView } from 'react-native';
+import { View, ImageBackground, ScrollView, Picker } from 'react-native';
 import { connect } from 'react-redux';
-import firebase from 'react-native-firebase';
-import { Actions } from 'react-native-router-flux';
-import { ListItem, ListHeading } from './common';
-import { RESET_ALL } from '../actions/types';
+import { ListItem, ListItemSeparator, Text } from './common';
 import { setSetting } from '../actions';
-import store from '../setupStore';
-import { colors, metrics } from './style';
-import { track, globals } from './helpers';
+import { colors, metrics, component } from './style';
+import { track, isAndroid } from './helpers';
 import { Feedback } from './modals';
 
 class Menu extends Component {
 
     state = {
-        user: firebase.auth().currentUser || { email: null },
         feedbackVisible: false,
-    }
-
-    logout() {
-        globals.didLogout = true;
-        globals.isLoggingIn = false;
-        firebase.auth().signOut().then(() => {
-            AsyncStorage.clear().then(() => {
-                store.dispatch({ type: RESET_ALL });
-                track('Logout', { Success: true });
-            });
-        }, (error) => {
-            track('Logout', { Success: false });
-            window.log('Sign Out Error', error);
-        });
     }
 
     openFeedback() {
@@ -38,6 +19,49 @@ class Menu extends Component {
 
     closeFeedback() {
         this.setState({ feedbackVisible: false });
+    }
+
+    renderFavoriteOrder = () => {
+        return (
+            <View style={{ height: 60 }}>
+                <Text style={component.text.menu.label}>
+                    SORTERA FAVORITER
+                </Text>
+                <Picker
+                    selectedValue={this.props.favoriteOrder}
+                    onValueChange={(itemValue) => {
+                        this.props.setSetting('favoriteOrder', itemValue);
+                    }}
+                    style={[isAndroid() ? component.picker : {}]}
+                    itemStyle={{ fontSize: 16, height: 90, marginTop: -10 }}
+                >
+                    <Picker.Item label="Ingen sortering" value="nothing" />
+                    <Picker.Item label="Mina mest använda" value="opened" />
+                    <Picker.Item label="Efter bokstav" value="busStop" />
+                </Picker>
+            </View>
+        );
+    }
+
+    renderTimeFormat = () => {
+        return (
+            <View style={{ height: 60 }}>
+                <Text style={component.text.menu.label}>
+                    TIDSFORMAT
+                </Text>
+                <Picker
+                    selectedValue={this.props.timeFormat}
+                    onValueChange={(itemValue) => {
+                        this.props.setSetting('timeFormat', itemValue);
+                    }}
+                    style={[isAndroid() ? component.picker : {}]}
+                    itemStyle={{ fontSize: 16, height: 90, marginTop: -10 }}
+                >
+                    <Picker.Item label="Minuter" value="minutes" />
+                    <Picker.Item label="Klockslag" value="clock" />
+                </Picker>
+            </View>
+        );
     }
 
 	render() {
@@ -57,31 +81,15 @@ class Menu extends Component {
                         />
                     </ImageBackground>
 
-                    <ListHeading text="Konto" />
+                    {this.renderFavoriteOrder()}
 
-                    {this.state.user && !this.state.user.isAnonymous ?
-                        <ListItem
-                            text="Profil"
-                            icon="ios-person"
-                            iconVisible
-                            pressItem={() => {
-                                Actions.profile();
-                            }}
-                        />
-                    : null}
+                    <ListItemSeparator />
 
-                    <ListItem
-                        text="Inställningar"
-                        icon="ios-settings"
-                        iconVisible
-                        pressItem={() => {
-                            Actions.settings();
-                        }}
-                    />
+                    {this.renderTimeFormat()}
 
-                    <View style={{ marginBottom: metrics.margin.md }} />
+                    <ListItemSeparator />
 
-                    <ListHeading text="Åtgärder" />
+                    <View style={{ flex: 1 }} />
 
                     <ListItem
                         text="Lämna feedback"
@@ -94,34 +102,6 @@ class Menu extends Component {
                         style={{ marginTop: metrics.margin.md }} // Första ListItem ska ha en marginTop för att få ett jämnt mellanrum mellan ListItem's
                     />
 
-                    {this.state.user && this.state.user.isAnonymous ?
-                    <View>
-                        <ListItem
-                            text="Logga in"
-                            icon="ios-log-in-outline"
-                            iconVisible
-                            pressItem={() => {
-                                Actions.login();
-                            }}
-                        />
-                        <ListItem
-                            text="Registrera"
-                            icon="ios-log-in-outline"
-                            iconVisible
-                            pressItem={() => {
-                                Actions.register();
-                            }}
-                        />
-                    </View>
-                    :
-                    <ListItem
-                        text='Logga ut'
-                        icon='ios-exit-outline'
-                        iconVisible
-                        pressItem={() => {
-                            this.logout();
-                        }}
-                    />}
                 </ScrollView>
             </View>
 		);
@@ -130,8 +110,8 @@ class Menu extends Component {
 }
 
 const mapStateToProps = state => {
-    const { timeFormat, favoriteOrder, allowedGPS } = state.settings;
-	return { favoriteOrder, timeFormat, allowedGPS };
+    const { timeFormat, favoriteOrder } = state.settings;
+	return { favoriteOrder, timeFormat };
 };
 
 export default connect(mapStateToProps, { setSetting })(Menu);

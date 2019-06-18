@@ -1,9 +1,9 @@
 import moment from 'moment';
 import base64 from 'base-64';
-import firebase from 'react-native-firebase';
 import fetch from 'react-native-cancelable-fetch';
 import { handleJsonFetch } from './';
 import { key, secret, url } from '../../Vasttrafik';
+import { deviceId } from '../../components/helpers/device';
 
 const encoded = base64.encode(`${key}:${secret}`);
 let localToken = {};
@@ -12,11 +12,6 @@ let tokenExpires = moment();
 export const getToken = () => {
 	tokenWillExpireIn();
 	return new Promise((resolve, reject) => {
-		const { currentUser } = firebase.auth();
-		if (!currentUser) {
-			window.log('firebase not logged in', firebase.auth());
-			return;
-		}
 		if (tokenNeedsRefresh()) {
 			fetch(url, {
 				method: 'POST',
@@ -24,7 +19,7 @@ export const getToken = () => {
 					'Content-Type': 'application/x-www-form-urlencoded',
 					Authorization: `Basic ${encoded}`
 				},
-				body: `grant_type=client_credentials&scope=device_${currentUser.uid}`
+				body: `grant_type=client_credentials&scope=device_${deviceId()}`
 			}, 'getToken')
 			.then(handleJsonFetch)
 			.then((token) => {

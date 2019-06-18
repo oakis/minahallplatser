@@ -4,12 +4,12 @@ import React, { PureComponent } from 'react';
 import { View, ScrollView, FlatList, AppState } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
-import firebase from 'react-native-firebase';
 import { HelpButton } from '../Router';
 import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle } from '../actions';
 import { DepartureListItem, Spinner, Message, ListItemSeparator, Popup, Text } from './common';
 import { updateStopsCount, track, incrementStopsOpened } from './helpers';
 import { colors, component } from './style';
+import { store } from '../App';
 
 class ShowDepartures extends PureComponent {
 
@@ -24,11 +24,8 @@ class ShowDepartures extends PureComponent {
 	componentWillMount() {
 		track('Page View', { Page: 'Departures', Stop: this.props.busStop, Parent: this.props.parent });
 		this.props.getDepartures({ id: this.props.id });
-		updateStopsCount();
-		const { currentUser } = firebase.auth();
-		if (!currentUser.isAnonymous && _.includes(this.props.favoriteIds, this.props.id)) {
-			incrementStopsOpened(currentUser.uid, this.props.id);
-		}
+		// updateStopsCount();
+		// incrementStopsOpened(currentUser.uid, this.props.id);
 	}
 
 	componentDidMount() {
@@ -223,7 +220,7 @@ const MapStateToProps = (state) => {
 		departures: _.sortBy(departures, ['timeLeft', 'timeNext']),
 		error,
 		favoriteIds,
-		favorites:  _.sortBy(favorites, ['timeLeft', 'timeNext']),
+		favorites: _.sortBy(favorites, ['timeLeft', 'timeNext']),
 		loading,
 		timestamp,
 		timeFormat,

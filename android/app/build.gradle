@@ -75,7 +75,8 @@ import groovy.json.JsonSlurper
  */
 
 project.ext.react = [
-    entryFile: "index.js"
+    entryFile: "index.js",
+    bundleInDebug: true,
 ]
 
 def getNpmVersion() {
@@ -175,7 +176,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':react-native-fbsdk')
+    compile project(':@react-native-community_async-storage')
 
     implementation project(':react-native-device-info')
 
@@ -184,11 +185,9 @@ dependencies {
     implementation(project(':react-native-firebase')) {
         transitive = false
     }
-    implementation "com.google.android.gms:play-services-base:16.0.1"
-    implementation "com.google.firebase:firebase-core:16.0.4"
-    implementation "com.google.firebase:firebase-auth:16.0.5"
-    implementation "com.google.firebase:firebase-database:16.0.4"
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.8@aar') {
+    implementation "com.google.android.gms:play-services-base:16.1.0"
+    implementation "com.google.firebase:firebase-core:16.0.9"
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
         transitive = true;
     }
 
