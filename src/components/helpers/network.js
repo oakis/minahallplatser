@@ -1,4 +1,5 @@
 import firebase from 'react-native-firebase';
+import { isObject } from './index';
 
 export const handleJsonFetch = (response) => {
     window.log(`handleJsonFetch() - Status: ${response.status} - ok: ${response.ok}`);
@@ -26,4 +27,21 @@ export const handleJsonFetch = (response) => {
     const error = response.statusText || response.message || 'Det gick inte att ansluta till Mina Hållplatser. Kontrollera din anslutning.';
     window.log('handleJsonFetch(): Error', error, response);
     throw error;
+};
+
+export const handleVasttrafikSearch = ({ LocationList }) => {
+    window.log('handleVasttrafikSearch()', LocationList);
+    if (LocationList && LocationList.StopLocation && LocationList.StopLocation.length) {
+        return LocationList.StopLocation.map(({ id, name }) => ({
+            id,
+            name
+        })).splice(0, 10);
+    } else if (LocationList && isObject(LocationList.StopLocation)) {
+        const { id, name } = LocationList.StopLocation;
+        return [{
+            id,
+            name
+        }];
+    }
+    return [];
 };

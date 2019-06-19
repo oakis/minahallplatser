@@ -11,7 +11,7 @@ import {
 	SEARCH_BY_GPS_FAIL,
 	ERROR, CLR_ERROR
 } from './types';
-import { handleJsonFetch, getToken, track, getStorage, setStorage, isAndroid } from '../components/helpers';
+import { handleJsonFetch, getToken, track, isAndroid, handleVasttrafikSearch } from '../components/helpers';
 import { serverUrl } from '../Server';
 
 async function checkLocationPermission() {
@@ -52,28 +52,29 @@ export const searchStops = ({ busStop }) => {
 		}
 		getToken().finally(({ access_token }) => {
 			window.timeStart('searchStops');
-			const url = `${serverUrl}/api/vasttrafik/stops`;
+			const url = `https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=${busStop}&format=json`;
 			const config = {
-				method: 'post',
+				method: 'get',
 				headers: {
 					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-					'access_token': access_token
+					'Authorization': `Bearer ${access_token}`,
 				},
-				body: JSON.stringify({
-					search: busStop,
-				}),
 			};
 			window.log(url, config);
 			fetch(url, config, 'searchStops')
 			.finally(handleJsonFetch)
-			.then(({ data }) => {
-				dispatch({
-					type: SEARCH_DEPARTURES,
-					payload: data
-				});
-				dispatch({ type: CLR_ERROR });
-				window.timeEnd('searchStops');
+			.then(handleVasttrafikSearch)
+			.then((data) => {
+				if (data.length) {
+					dispatch({
+						type: SEARCH_DEPARTURES,
+						payload: data
+					});
+					dispatch({ type: CLR_ERROR });
+					return window.timeEnd('searchStops');
+				} else {
+					throw 'Din sökning matchade inga hållplatser.';
+				}
 			})
 			.catch((data) => {
 				dispatch({ type: SEARCH_DEPARTURES_FAIL });
