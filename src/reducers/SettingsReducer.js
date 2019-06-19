@@ -1,12 +1,12 @@
 import {
     SET_SETTING,
+    ALLOWED_GPS,
 } from '../actions/types';
 
 const INIT_STATE = {
     timeFormat: 'minutes',
     favoriteOrder: 'nothing',
-    allowedGPS: true,
-    hasUsedGPS: false,
+    allowedGPS: false,
 };
 
 export default (state = INIT_STATE, action) => {
@@ -15,6 +15,11 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 [action.payload.type]: action.payload.value,
+            };
+        case ALLOWED_GPS:
+            return {
+                ...state,
+                allowedGPS: action.payload,
             };
         default:
             return state;

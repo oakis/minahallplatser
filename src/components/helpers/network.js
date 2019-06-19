@@ -29,8 +29,8 @@ export const handleJsonFetch = (response) => {
     throw error;
 };
 
-export const handleVasttrafikSearch = ({ LocationList }) => {
-    window.log('handleVasttrafikSearch()', LocationList);
+export const handleVasttrafikStops = ({ LocationList }) => {
+    window.log('handleVasttrafikStops()', LocationList);
     if (LocationList && LocationList.StopLocation && LocationList.StopLocation.length) {
         return LocationList.StopLocation.map(({ id, name }) => ({
             id,

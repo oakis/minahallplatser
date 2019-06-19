@@ -13,6 +13,7 @@ export const SEARCH_BY_GPS = 'SEARCH_BY_GPS';
 export const SEARCH_BY_GPS_SUCCESS = 'SEARCH_BY_GPS_SUCCESS';
 export const SEARCH_BY_GPS_FAIL = 'SEARCH_BY_GPS_FAIL';
 export const CLR_SEARCH = 'CLR_SEARCH';
+export const ALLOWED_GPS = 'ALLOWED_GPS';
 
 // Departures
 export const GET_DEPARTURES = 'GET_DEPARTURES';

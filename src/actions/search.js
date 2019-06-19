@@ -1,8 +1,10 @@
+import _ from 'lodash';
 import { PermissionsAndroid } from 'react-native';
 import geolocation from 'react-native-geolocation-service';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import {
+	ALLOWED_GPS,
 	SEARCH_CHANGED,
 	SEARCH_DEPARTURES,
 	SEARCH_DEPARTURES_FAIL,
@@ -11,8 +13,8 @@ import {
 	SEARCH_BY_GPS_FAIL,
 	ERROR, CLR_ERROR
 } from './types';
-import { handleJsonFetch, getToken, track, isAndroid, handleVasttrafikSearch } from '../components/helpers';
-import { serverUrl } from '../Server';
+import { handleJsonFetch, getToken, track, isAndroid, handleVasttrafikStops } from '../components/helpers';
+import { setAllowedGPS } from './'
 
 async function checkLocationPermission() {
 	return await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
@@ -63,7 +65,7 @@ export const searchStops = ({ busStop }) => {
 			window.log(url, config);
 			fetch(url, config, 'searchStops')
 			.finally(handleJsonFetch)
-			.then(handleVasttrafikSearch)
+			.then(handleVasttrafikStops)
 			.then((data) => {
 				if (data.length) {
 					dispatch({
@@ -93,8 +95,16 @@ export const getNearbyStops = () => {
 				checkLocationPermission().then(ok => {
 					if (!ok) {
 						requestLocationPermission().then(() => {
+							dispatch({
+								type: ALLOWED_GPS,
+								payload: true,
+							});
 							returnCoords(dispatch);
 						}).catch(() => {
+							dispatch({
+								type: ALLOWED_GPS,
+								payload: false,
+							});
 							dispatch({ type: SEARCH_BY_GPS_FAIL })
 							dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
 						});
@@ -169,26 +179,22 @@ const tryOldGeolocation = (dispatch) => {
 const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 	getToken().finally(({ access_token }) => {
 		window.timeStart('getNearbyStops');
-		const url = `${serverUrl}/api/vasttrafik/gps`;
+		const url = `https://api.vasttrafik.se/bin/rest.exe/v2/location.nearbystops?originCoordLat=${latitude}&originCoordLong=${longitude}&format=json`;
 		const config = {
-			method: 'post',
+			method: 'get',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-				'access_token': access_token
+				'Authorization': `Bearer ${access_token}`,
 			},
-			body: JSON.stringify({
-				longitude,
-				latitude,
-			})
 		};
 		fetch(url, config, 'getNearbyStops')
 		.then(handleJsonFetch)
-		.then(({ data }) => {
+		.then(handleVasttrafikStops)
+		.then((data) => {
 			gpsCount = 0;
 			window.timeEnd('getNearbyStops');
 			dispatch({ type: CLR_ERROR });
-			dispatch({ type: SEARCH_BY_GPS_SUCCESS, payload: data });
+			dispatch({ type: SEARCH_BY_GPS_SUCCESS, payload: _.uniqBy(_.filter(data, (o) => !o.track), 'name') });
 		})
 		.catch((error) => {
 			window.timeEnd('getNearbyStops');
