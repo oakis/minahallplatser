@@ -50,7 +50,6 @@ ShallowWrapper {
       }
     }
     gpsLoading={false}
-    hasUsedGPS={true}
     searchLoading={undefined}
     stopsNearby={
       Array [
