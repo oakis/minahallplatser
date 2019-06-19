@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import store from '../../setupStore';
+import { store } from '../../App';
 import { Message } from './Message';
 
 const types = ['info', 'success', 'danger', 'warning', null];

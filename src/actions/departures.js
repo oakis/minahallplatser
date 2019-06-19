@@ -25,6 +25,7 @@ export const getDepartures = ({ id }) => {
 					id,
 				})
 			};
+			window.log('getDepartures data:', url, config);
 			fetch(url, config, 'getDepartures')
 			.finally(handleJsonFetch)
 			.then(({ departures, timestamp }) => {

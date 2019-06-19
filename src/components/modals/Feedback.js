@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { View, Modal, ScrollView, Alert } from 'react-native';
 import fetch from 'react-native-cancelable-fetch';
-import firebase from 'react-native-firebase';
 import { Button, ListHeading, Input, Text } from '../common';
 import { metrics, colors } from '../style';
 import { track, getDeviceModel, getOsVersion, getAppVersion, handleJsonFetch } from '../helpers';
@@ -14,18 +13,18 @@ export class Feedback extends PureComponent {
         this.state = {
             loading: false,
             name: '',
-            email: (firebase.auth().currentUser) ? firebase.auth().currentUser.email : '',
+            email: '',
             message: '',
             validated: true
         };
     }
-    
+
     onChangeEmail = (email) => this.setState({ email, validated: true });
-    
+
     onChangeName = (name) => this.setState({ name, validated: true });
-    
+
     onChangeMessage = (message) => this.setState({ message, validated: true });
-    
+
     cancel = () => {
         track('Feedback Cancel');
         this.props.close();
@@ -35,7 +34,7 @@ export class Feedback extends PureComponent {
         this.setState({
             loading: false,
             name: '',
-            email: firebase.auth().currentUser.email || '',
+            email: '',
             message: '',
             validated: true
         });

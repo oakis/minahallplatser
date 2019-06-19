@@ -9,7 +9,7 @@ import fetch from 'react-native-cancelable-fetch';
 import FavoriteList from './FavoriteList';
 import { getStorage, track } from './helpers';
 import { CLR_ERROR, CLR_SEARCH } from '../actions/types';
-import store from '../setupStore';
+import { store } from '../App';
 
 const mockStore = configureMockStore([thunk]);
 const initialState = {
@@ -44,13 +44,7 @@ const initialState = {
 
 window.log = () => {};
 
-it('favoriteGet should be called if local and firebase uid match', async () => {
-    getStorage.mockImplementationOnce(() => Promise.resolve({ uid: 123 }));
-    const favoriteGet = stub();
-    await shallow(<FavoriteList store={mockStore(initialState)} favoriteGet={favoriteGet} />).dive();
-    expect(favoriteGet.callCount).toBe(1);
-});
-
+// REWRITE?
 it('getNearbyStops should be called if logged in and user has accepted GPS', async () => {
     getStorage
         .mockImplementationOnce(() => Promise.resolve(null))
@@ -65,14 +59,14 @@ it('getNearbyStops should be called if logged in and user has accepted GPS', asy
 it('HelpButton to the right side of the navbar, and state.init to be false', () => {
     getStorage.mockImplementation(() => Promise.resolve());
     const refresh = Actions.refresh = stub();
-    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} />).dive();
+    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
     wrapper.setProps();
     expect(refresh.callCount).toBe(1);
     expect(wrapper.state().init).toBe(false);
 });
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} />).dive();
+    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
     expect(wrapper).toMatchSnapshot();
 });
 
@@ -82,7 +76,7 @@ describe('onInputChange', () => {
     const searchStops = stub();
 
     beforeEach(() => {
-        wrapper = shallow(<FavoriteList store={mockStore(initialState)} searchChanged={searchChanged} searchStops={searchStops} />).dive();
+        wrapper = shallow(<FavoriteList store={mockStore(initialState)} searchChanged={searchChanged} searchStops={searchStops} getNearbyStops={jest.fn()} />).dive();
         searchChanged.reset();
     });
     it('should abort ongoing searches', () => {
@@ -117,7 +111,7 @@ describe('componentWillUnmount', () => {
     const clearErrors = stub();
 
     beforeEach(() => {
-        wrapper = shallow(<FavoriteList store={mockStore(initialState)} clearErrors={clearErrors} />).dive();
+        wrapper = shallow(<FavoriteList store={mockStore(initialState)} clearErrors={clearErrors} getNearbyStops={jest.fn()} />).dive();
         clearErrors.reset();
     });
     it('should abort ongoing http requests', () => {
@@ -168,7 +162,7 @@ describe('handleAppStateChange', () => {
 
 it('resetSearch should dispatch CLR_SEARCH & CLR_ERROR', () => {
     store.dispatch = jest.fn();
-    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} />).dive();
+    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
     wrapper.instance().resetSearch();
     expect(store.dispatch).toBeCalledWith({ type: CLR_SEARCH });
     expect(store.dispatch).toBeCalledWith({ type: CLR_ERROR });
@@ -188,11 +182,6 @@ describe('refreshNearbyStops', () => {
         expect(track).toBeCalledWith('Refresh NearbyStops');
     });
 
-    it('should call setSetting with "hasUsedGPS", true', () => {
-        wrapper.instance().refreshNearbyStops();
-        expect(setSetting).toBeCalledWith('hasUsedGPS', true);
-    });
-
     it('should call getNearbyStops', () => {
         getNearbyStops.reset();
         wrapper.instance().refreshNearbyStops();
@@ -203,7 +192,7 @@ describe('refreshNearbyStops', () => {
 describe('openPopup', () => {
     let wrapper;
     beforeEach(() => {
-        wrapper = shallow(<FavoriteList store={mockStore(initialState)} />).dive();
+        wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
     });
     it('should be tracked', () => {
         track.mockReset();
@@ -226,7 +215,7 @@ describe('renderFavoriteItem', () => {
     Actions.departures = jest.fn();
 
     beforeEach(() => {
-        wrapper = shallow(<FavoriteList store={mockStore(initialState)} clearErrors={clearErrors} />).dive();
+        wrapper = shallow(<FavoriteList store={mockStore(initialState)} clearErrors={clearErrors} getNearbyStops={jest.fn()} />).dive();
         ListItem = wrapper.find('FlatList').last().props().renderItem({ item: { busStop: 'Centralstationen', id: '1' } });
         Keyboard.dismiss.reset();
         clearErrors.reset();

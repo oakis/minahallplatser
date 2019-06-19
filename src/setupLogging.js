@@ -1,5 +1,6 @@
 // eslint-disable-next-line
 import fbPerformanceNow from 'fbjs/lib/performanceNow';
+import { YellowBox } from 'react-native';
 
 const PerformanceNow = () => global.nativePerformanceNow || global.performanceNow || fbPerformanceNow();
 const startTimes = {};
@@ -25,4 +26,4 @@ if (__DEV__) {
   window.timeEnd = () => {};
 }
 
-console.ignoredYellowBox = ['Setting a timer', 'Require cycle:'];
+YellowBox.ignoreWarnings(['Setting a timer', 'Require cycle']);

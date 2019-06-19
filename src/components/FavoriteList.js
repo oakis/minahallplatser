@@ -4,16 +4,15 @@ import React, { PureComponent } from 'react';
 import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { favoriteGet, favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops, setSetting } from '../actions';
-import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading, Text, Popup } from './common';
+import { favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
+import { ListItem, Message, Input, ListItemSeparator, ListHeading, Text, Popup } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { HelpButton } from '../Router';
-import store from '../setupStore';
-import { track, globals, getStorage, isAndroid } from './helpers';
+import { store } from '../App';
+import { track, globals, isAndroid } from './helpers';
 
 
 class FavoriteList extends PureComponent {
@@ -29,38 +28,14 @@ class FavoriteList extends PureComponent {
 		this.clearTimeout = undefined;
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		globals.shouldExitApp = false;
 		Keyboard.dismiss();
-		const fbUser = firebase.auth().currentUser;
-		const actualUser = fbUser === null
-			? null
-			: { email: fbUser.email,
-				isAnonymous: fbUser.isAnonymous,
-				metadata: fbUser.metadata,
-				providerId: fbUser.providerId,
-				uid: fbUser.uid,
-			};
-		if (actualUser && actualUser.uid) {
-			Promise.all([getStorage('minahallplatser-user'), getStorage('minahallplatser-settings')])
-			.then(([user, settings]) => {
-				window.log('Localstorage user:', user, 'Firebase user', actualUser, 'with settings:', settings);
-				if (user !== null && (user.uid === actualUser.uid)) {
-					this.props.favoriteGet(actualUser);
-				}
-				if (this.props.hasUsedGPS && this.props.allowedGPS) {
-					window.log('Refreshing nearby stops');
-					this.props.getNearbyStops();
-				}
-			})
-			.catch((e) => {
-				window.log('Something went wrong', e);
-			});
+		if (this.props.hasUsedGPS && this.props.allowedGPS) {
+			window.log('Refreshing nearby stops');
+			this.props.getNearbyStops();
 		}
 		track('Page View', { Page: 'Dashboard' });
-	}
-
-	componentDidMount() {
 		AppState.addEventListener('change', this.handleAppStateChange);
 	}
 
@@ -72,18 +47,9 @@ class FavoriteList extends PureComponent {
 	}
 
 	componentWillUnmount() {
-		const { currentUser } = firebase.auth();
 		fetch.abort('searchStops');
 		this.props.clearErrors();
 		AppState.removeEventListener('change', this.handleAppStateChange);
-		if (currentUser) {
-			firebase.database().ref('.info/connected')
-				.once('value', (snap) => {
-					if (snap.val() === true) {
-						firebase.database().ref(`/users/${currentUser.uid}/favorites`).off();
-					}
-				});
-		}
 	}
 
 	onInputChange = (busStop) => {
@@ -105,13 +71,13 @@ class FavoriteList extends PureComponent {
 	}
 
 	resetSearch = () => {
+		window.log('resetSearch()');
 		store.dispatch({ type: CLR_SEARCH });
 		store.dispatch({ type: CLR_ERROR });
 	}
 
 	refreshNearbyStops = () => {
 		track('Refresh NearbyStops');
-		this.props.setSetting('hasUsedGPS', true);
 		store.dispatch({ type: SEARCH_BY_GPS_FAIL });
 		this.props.getNearbyStops();
 	}
@@ -190,7 +156,7 @@ class FavoriteList extends PureComponent {
 								text: 'Ja',
 								onPress: () => {
 									track('Favorite Stop Remove', { Stop: item.busStop, Parent: 'Favorite List' });
-									this.props.favoriteCreate({ busStop: item.name, id: item.id });
+									this.props.favoriteDelete(item.id);
 								}
 							}
 						]
@@ -215,10 +181,11 @@ class FavoriteList extends PureComponent {
 					Keyboard.dismiss();
 					if (item.icon === 'ios-star') {
 						track('Favorite Stop Remove', { Stop: item.name, Parent: item.parent });
+						this.props.favoriteDelete(item.id);
 					} else {
 						track('Favorite Stop Add', { Stop: item.name, Parent: item.parent });
+						this.props.favoriteCreate({ busStop: item.name, id: item.id });
 					}
-					this.props.favoriteCreate({ busStop: item.name, id: item.id });
 				}}
 				iconVisible
 				iconColor={colors.warning}
@@ -247,16 +214,6 @@ class FavoriteList extends PureComponent {
 	}
 
 	renderSectionList() {
-		if (this.props.favoritesLoading) {
-			return (
-				<View style={{ marginTop: 10 }}>
-					<Spinner
-						size="large"
-						color={colors.primary}
-					/>
-				</View>
-			);
-		}
 		return (
 			<View>
 				{(this.props.departureList.length > 0) ? <ListHeading text="Sökresultat" /> : null}
@@ -308,7 +265,7 @@ class FavoriteList extends PureComponent {
 						null
 					}
 					{this.renderSectionList()}
-					{(this.props.favorites.length === 0 && !this.props.favoritesLoading) ?
+					{(this.props.favorites.length === 0) ?
 						<View style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>
 							<Text>
 								Du har inte sparat några favoriter än. Tryck <Text onPress={this.openPopup}>HÄR</Text> för mer information.
@@ -324,7 +281,6 @@ class FavoriteList extends PureComponent {
 const mapStateToProps = state => {
 	const { favoriteOrder, allowedGPS, hasUsedGPS } = state.settings;
 	const favorites = _.orderBy(state.fav.favorites, (o) => o[favoriteOrder] || 0, favoriteOrder === 'busStop' ? 'asc' : 'desc');
-	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
 	const favoriteIds = _.map(favorites, 'id');
 	const { busStop, stops, gpsLoading } = state.search;
@@ -335,17 +291,15 @@ const mapStateToProps = state => {
 	const departureList = _.map(state.search.departureList, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Search List' };
 	});
-	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS, hasUsedGPS };
+	return { favorites, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS, hasUsedGPS };
 };
 
 export default connect(mapStateToProps,
 	{
-		favoriteGet,
 		favoriteDelete,
 		clearErrors,
 		searchStops,
 		searchChanged,
 		favoriteCreate,
-		getNearbyStops,
-		setSetting
+		getNearbyStops
 	})(FavoriteList);

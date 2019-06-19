@@ -315,25 +315,41 @@ jest.mock('react-native', () => {
                 console.warn('VibrationIOS is deprecated, use Vibration instead');
             }),
         }),
+        YellowBox: ({
+            ignoreWarnings: jest.fn(),
+        }),
     };
 });
 
+jest.mock('@react-native-community/async-storage', () => (
+    {
+        config: {
+            storage: {
+                getItem: jest.fn(),
+                setItem: jest.fn(),
+                removeItem: jest.fn(),
+                mergeItem: jest.fn(),
+                clear: jest.fn(() => Promise.resolve()),
+                getAllKeys: jest.fn(),
+                flushGetRequests: jest.fn(),
+                multiGet: jest.fn(),
+                multiSet: jest.fn(),
+                multiRemove: jest.fn(),
+                multiMerge: jest.fn(),
+            }
+        }
+    }
+));
+jest.mock('redux-persist', () => ({
+    persistReducer: () => jest.fn(),
+    persistStore: () => jest.fn(),
+}));
 jest.mock('react-native-router-flux', () => {});
 jest.mock('react-native-vector-icons/Ionicons', () => 'IonIcon');
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'MaterialIcon');
 jest.mock('react-native-vector-icons/FontAwesome', () => 'FontAwesomeIcon');
 jest.mock('react-native-vector-icons/Entypo', () => 'EntypoIcon');
 jest.mock('react-native-device-info', () => {});
-jest.mock('react-native-fbsdk', () => (
-    {
-        LoginManager: {
-            logInWithReadPermissions: () => Promise.resolve({}),
-        },
-        AccessToken: {
-            getCurrentAccessToken: () => Promise.resolve({ accessToken: 123 }),
-        }
-    }
-));
 jest.mock('react-native-mixpanel', () => (
     {
         sharedInstanceWithToken: jest.fn(),
@@ -344,29 +360,6 @@ jest.mock('react-native-mixpanel', () => (
 ));
 jest.mock('react-native-geolocation-service', () => {});
 jest.mock('react-native-firebase', () => ({
-    auth: jest.fn().mockReturnThis(),
-    onAuthStateChanged: (fn) => {
-        fn({ uid: 123 });
-    },
-    currentUser: {
-        uid: 123,
-        isAnonymous: false,
-        linkAndRetrieveDataWithCredential: jest.fn().mockReturnThis(),
-        providerData: [],
-    },
-    signInAndRetrieveDataWithCredential: stub().resolves({ email: 'abc@123.com' }),
-    signOut: stub(),
-    sendPasswordResetEmail: stub().resolves(),
-    createUserAndRetrieveDataWithEmailAndPassword: stub(),
-    signInAndRetrieveDataWithEmailAndPassword: stub().resolves(),
-
-    database: jest.fn().mockReturnThis(),
-    ref: jest.fn().mockReturnThis(),
-    child: jest.fn().mockReturnThis(),
-    push: jest.fn().mockReturnThis(),
-    update: jest.fn().mockReturnThis(),
-    on: jest.fn().mockReturnThis(),
-    once: jest.fn().mockReturnThis(),
     crashlytics: jest.fn().mockReturnThis(),
     log: jest.fn().mockReturnThis(),
     crash: jest.fn().mockReturnThis(),

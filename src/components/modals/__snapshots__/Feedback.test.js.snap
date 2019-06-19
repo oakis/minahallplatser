@@ -102,7 +102,7 @@ ShallowWrapper {
                 }
               }
               underlineColorAndroid="#fff"
-              value={undefined}
+              value=""
             />
             <DefaultFont>
               Meddelande 
@@ -235,7 +235,7 @@ ShallowWrapper {
                 }
               }
               underlineColorAndroid="#fff"
-              value={undefined}
+              value=""
             />
             <DefaultFont>
               Meddelande 
@@ -362,7 +362,7 @@ ShallowWrapper {
                   }
                 }
                 underlineColorAndroid="#fff"
-                value={undefined}
+                value=""
               />
               <DefaultFont>
                 Meddelande 
@@ -488,7 +488,7 @@ ShallowWrapper {
                     }
                   }
                   underlineColorAndroid="#fff"
-                  value={undefined}
+                  value=""
                 />,
                 <DefaultFont>
                   Meddelande 
@@ -654,7 +654,7 @@ ShallowWrapper {
                     "paddingRight": 5,
                   },
                   "underlineColorAndroid": "#fff",
-                  "value": undefined,
+                  "value": "",
                 },
                 "ref": null,
                 "rendered": null,
@@ -853,7 +853,7 @@ ShallowWrapper {
                   }
                 }
                 underlineColorAndroid="#fff"
-                value={undefined}
+                value=""
               />
               <DefaultFont>
                 Meddelande 
@@ -986,7 +986,7 @@ ShallowWrapper {
                   }
                 }
                 underlineColorAndroid="#fff"
-                value={undefined}
+                value=""
               />
               <DefaultFont>
                 Meddelande 
@@ -1113,7 +1113,7 @@ ShallowWrapper {
                     }
                   }
                   underlineColorAndroid="#fff"
-                  value={undefined}
+                  value=""
                 />
                 <DefaultFont>
                   Meddelande 
@@ -1239,7 +1239,7 @@ ShallowWrapper {
                       }
                     }
                     underlineColorAndroid="#fff"
-                    value={undefined}
+                    value=""
                   />,
                   <DefaultFont>
                     Meddelande 
@@ -1405,7 +1405,7 @@ ShallowWrapper {
                       "paddingRight": 5,
                     },
                     "underlineColorAndroid": "#fff",
-                    "value": undefined,
+                    "value": "",
                   },
                   "ref": null,
                   "rendered": null,
