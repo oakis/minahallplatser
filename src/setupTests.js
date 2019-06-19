@@ -315,6 +315,9 @@ jest.mock('react-native', () => {
                 console.warn('VibrationIOS is deprecated, use Vibration instead');
             }),
         }),
+        YellowBox: ({
+            ignoreWarnings: jest.fn(),
+        }),
     };
 });
 
