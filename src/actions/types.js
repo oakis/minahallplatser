@@ -1,6 +1,7 @@
 // Favorite
 export const FAVORITE_CREATE = 'FAVORITE_CREATE';
 export const FAVORITE_DELETE = 'FAVORITE_DELETE';
+export const FAVORITE_OPENED = 'FAVORITE_OPENED';
 export const LINES_FETCH = 'LINES_FETCH';
 export const LINE_ADD = 'LINE_ADD';
 export const LINE_REMOVE = 'LINE_REMOVE';

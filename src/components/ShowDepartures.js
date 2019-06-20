@@ -5,9 +5,9 @@ import { View, ScrollView, FlatList, AppState } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import { HelpButton } from '../Router';
-import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle } from '../actions';
+import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle, incrementStopsOpened } from '../actions';
 import { DepartureListItem, Spinner, Message, ListItemSeparator, Popup, Text } from './common';
-import { updateStopsCount, track, incrementStopsOpened } from './helpers';
+import { updateStopsCount, track } from './helpers';
 import { colors, component } from './style';
 
 class ShowDepartures extends PureComponent {
@@ -24,7 +24,7 @@ class ShowDepartures extends PureComponent {
 		track('Page View', { Page: 'Departures', Stop: this.props.busStop, Parent: this.props.parent });
 		this.props.getDepartures({ id: this.props.id });
 		updateStopsCount();
-		//incrementStopsOpened(currentUser.uid, this.props.id);
+		this.props.incrementStopsOpened(this.props.id);
 	}
 
 	componentDidMount() {
@@ -227,4 +227,4 @@ const MapStateToProps = (state) => {
 };
 
 export default connect(MapStateToProps,
-	{ getDepartures, clearDepartures, clearErrors, favoriteLineToggle })(ShowDepartures);
+	{ getDepartures, clearDepartures, clearErrors, favoriteLineToggle, incrementStopsOpened })(ShowDepartures);

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { store } from '../App';
 import {
-	FAVORITE_CREATE, FAVORITE_DELETE,
+	FAVORITE_CREATE, FAVORITE_DELETE, FAVORITE_OPENED,
 	LINE_ADD, LINE_REMOVE
 } from './types';
 import { track, } from '../components/helpers';
@@ -19,6 +19,13 @@ export const favoriteDelete = (stopId) => {
 	window.log('favoriteDelete():', stopId);
 	return (dispatch) => {
 		dispatch({ type: FAVORITE_DELETE, payload: stopId });
+	};
+};
+
+export const incrementStopsOpened = (stopId) => {
+	window.log('incrementStopsOpened()', stopId);
+	return (dispatch) => {
+		dispatch({ type: FAVORITE_OPENED, payload: stopId });
 	};
 };
 
