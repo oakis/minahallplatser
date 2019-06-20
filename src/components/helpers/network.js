@@ -1,4 +1,6 @@
 import firebase from 'react-native-firebase';
+import moment from 'moment';
+import _ from 'lodash';
 import { isObject } from './index';
 
 export const handleJsonFetch = (response) => {
@@ -44,4 +46,51 @@ export const handleVasttrafikStops = ({ LocationList }) => {
         }];
     }
     return [];
+};
+
+export const handleVasttrafikDepartures = ({ DepartureBoard }) => {
+    window.log('handleVasttrafikDepartures()', DepartureBoard);
+    let departures = [];
+    if (DepartureBoard && DepartureBoard.Departure) {
+        const rawDepartureList = (DepartureBoard.Departure.length) ? DepartureBoard.Departure : [DepartureBoard.Departure];
+        const date = DepartureBoard.serverdate || moment().format('YYYY-MM-DD');
+        const time = DepartureBoard.servertime || moment().format('HH:mm');
+        const now = moment(`${date} ${time}`);
+        let mapdDepartures = [];
+        rawDepartureList.forEach((item) => {
+            const [direction, via] = item.direction.split('via');
+            const findIndex = _.findIndex(mapdDepartures,
+                { name: item.name, direction: direction.trim(), via: via ? `via ${via.trim()}` : '' }
+            );
+
+            const timeLeft = moment(`${item.date} ${item.rtTime || item.time}`).diff(now, 'minutes');
+
+            if (findIndex !== -1 && !mapdDepartures[findIndex].timeNext) {
+                mapdDepartures[findIndex].timeNext = timeLeft;
+                mapdDepartures[findIndex].clockNext = item.rtTime;
+            } else if (findIndex === -1) {
+                mapdDepartures.push({
+                    ...item,
+                    timeNext: null,
+                    timeLeft: (timeLeft <= 0) ? 0 : timeLeft,
+                    clockNext: null,
+                    clockLeft: Object.prototype.hasOwnProperty.call(item, 'rtTime') ? item.rtTime : item.time,
+                    isLive: Object.prototype.hasOwnProperty.call(item, 'rtTime') === true,
+                    direction: direction.trim(),
+                    via: via ? `via ${via.trim()}` : '',
+                });
+            }
+        });
+        mapdDepartures = _.orderBy(mapdDepartures, ['timeLeft', 'timeNext']);
+        mapdDepartures = _.map(mapdDepartures, (dep, index) => {
+            return { ...dep, index };
+        });
+        if (mapdDepartures.length > 0) {
+            departures = mapdDepartures;
+        }
+    }
+    return {
+        departures,
+        timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
+    };
 };

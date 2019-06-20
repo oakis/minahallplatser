@@ -1,33 +1,31 @@
 import fetch from 'react-native-cancelable-fetch';
+import moment from 'moment';
 import {
 	GET_DEPARTURES,
 	GET_DEPARTURES_FAIL,
 	CLR_DEPARTURES,
 	ERROR, CLR_ERROR
 } from './types';
-import { handleJsonFetch, getToken, updateDeparturesCount } from '../components/helpers';
-import { serverUrl } from '../Server';
+import { handleJsonFetch, getToken, updateDeparturesCount, handleVasttrafikDepartures } from '../components/helpers';
 
 export const getDepartures = ({ id }) => {
 	return (dispatch) => {
 		getToken()
-		.finally(({ access_token }) => {
+		.finally(({ access_token: accessToken }) => {
 			window.timeStart('getDepartures()');
-			const url = `${serverUrl}/api/vasttrafik/departures`;
+			const date = moment().format('YYYY-MM-DD');
+			const time = moment().format('HH:mm');
+			const url = `https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=${id}&date=${date}&time=${time}&format=json&timeSpan=90&maxDeparturesPerLine=2&needJourneyDetail=0`;
 			const config = {
-				method: 'post',
+				method: 'get',
 				headers: {
 					Accept: 'application/json',
-					'Content-Type': 'application/json',
-					access_token
+					Authorization: `Bearer ${accessToken}`
 				},
-				body: JSON.stringify({
-					id,
-				})
 			};
-			window.log('getDepartures data:', url, config);
 			fetch(url, config, 'getDepartures')
 			.finally(handleJsonFetch)
+			.then(handleVasttrafikDepartures)
 			.then(({ departures, timestamp }) => {
 				updateDeparturesCount(departures.length);
 				dispatch({ type: CLR_ERROR });
@@ -37,6 +35,7 @@ export const getDepartures = ({ id }) => {
 				});
 			})
 			.catch((error) => {
+				window.log('Get departures failed', error);
 				dispatch({
 					type: GET_DEPARTURES_FAIL
 				});

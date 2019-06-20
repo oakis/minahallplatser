@@ -9,7 +9,7 @@
     "test:watch": "jest --watch --verbose",
     "test:coverage": "jest --coverage",
     "clean": "cd android && ./gradlew clean",
-    "build-debug": "curl http://localhost:8081/index.android.bundle?platform=android -o android/app/src/main/assets/index.android.bundle && cd android && gradlew clean && gradlew assembleDebug",
+    "build-debug": "curl http://localhost:8081/index.bundle?platform=android -o android/app/src/main/assets/index.bundle && cd android && ./gradlew clean && ./gradlew assembleDebug",
     "build-release": "yarn clean && cd android && ./gradlew assembleRelease",
     "debug": "yarn clean && react-native run-android --appIdSuffix dev",
     "release": "yarn clean && cd android && ./gradlew installRelease",
