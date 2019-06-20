@@ -16,7 +16,6 @@ const initialState = {
     settings: {
         favoriteOrder: 'nothing',
         allowedGPS: false,
-        hasUsedGPS: false,
     },
     fav: {
         favorites: [
@@ -50,7 +49,6 @@ it('getNearbyStops should be called if logged in and user has accepted GPS', asy
         .mockImplementationOnce(() => Promise.resolve(null))
         .mockImplementationOnce(() => Promise.resolve({}));
     const getNearbyStops = stub();
-    initialState.settings.hasUsedGPS = true;
     initialState.settings.allowedGPS = true;
     await shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={getNearbyStops} />).dive();
     expect(getNearbyStops.callCount).toBe(1);
@@ -147,7 +145,6 @@ describe('handleAppStateChange', () => {
         getNearbyStops.reset();
     });
     it('should refresh nearby stops if prev accepted by user', () => {
-        initialState.settings.hasUsedGPS = true;
         initialState.settings.allowedGPS = true;
         wrapper.instance().handleAppStateChange('active');
         expect(getNearbyStops.callCount).toBe(1);

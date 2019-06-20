@@ -1,6 +1,7 @@
 // Favorite
 export const FAVORITE_CREATE = 'FAVORITE_CREATE';
 export const FAVORITE_DELETE = 'FAVORITE_DELETE';
+export const FAVORITE_OPENED = 'FAVORITE_OPENED';
 export const LINES_FETCH = 'LINES_FETCH';
 export const LINE_ADD = 'LINE_ADD';
 export const LINE_REMOVE = 'LINE_REMOVE';
@@ -13,6 +14,7 @@ export const SEARCH_BY_GPS = 'SEARCH_BY_GPS';
 export const SEARCH_BY_GPS_SUCCESS = 'SEARCH_BY_GPS_SUCCESS';
 export const SEARCH_BY_GPS_FAIL = 'SEARCH_BY_GPS_FAIL';
 export const CLR_SEARCH = 'CLR_SEARCH';
+export const ALLOWED_GPS = 'ALLOWED_GPS';
 
 // Departures
 export const GET_DEPARTURES = 'GET_DEPARTURES';

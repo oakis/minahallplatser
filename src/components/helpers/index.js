@@ -6,3 +6,7 @@ export * from './firebase';
 export * from './mixpanel';
 export * from './globals';
 export * from './image';
+
+export const isObject = (obj) => {
+    return Object.prototype.toString.call(obj) === '[object Object]';
+};
