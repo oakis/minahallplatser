@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { stub } from 'sinon';
-import { Actions } from 'react-native-router-flux';
 import { TouchableWithoutFeedback } from 'react-native';
 import { BackButton, HelpButton, onBackAndroid } from './Router';
 import { globals } from './components/helpers';

@@ -4,16 +4,16 @@ import React, { PureComponent } from 'react';
 import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import { connect, Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
 import { ListItem, Message, Input, ListItemSeparator, ListHeading, Text, Popup } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { HelpButton } from '../Router';
-import { store } from '../App';
 import { track, globals, isAndroid } from './helpers';
-
+import SplashScreen from './SplashScreen';
+import { store, persistor } from '../../index';
 
 class FavoriteList extends PureComponent {
 
@@ -41,7 +41,7 @@ class FavoriteList extends PureComponent {
 
 	componentWillReceiveProps() {
 		if (this.state.init) {
-			Actions.refresh({ right: HelpButton(this) });
+			//Actions.refresh({ right: HelpButton(this) });
 			this.setState({ init: false });
 		}
 	}
@@ -143,7 +143,7 @@ class FavoriteList extends PureComponent {
 				pressItem={async () => {
 					Keyboard.dismiss();
 					await this.props.clearErrors();
-					Actions.departures({ busStop: item.busStop, id: item.id, title: item.busStop, parent: 'favorites' });
+					//Actions.departures({ busStop: item.busStop, id: item.id, title: item.busStop, parent: 'favorites' });
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -175,7 +175,7 @@ class FavoriteList extends PureComponent {
 				icon={item.icon}
 				pressItem={() => {
 					Keyboard.dismiss();
-					Actions.departures({ busStop: item.name, id: item.id, title: item.name, parent });
+					//Actions.departures({ busStop: item.name, id: item.id, title: item.name, parent });
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -239,38 +239,42 @@ class FavoriteList extends PureComponent {
 
 	render() {
 		return (
-			<View style={{ flex: 1 }}>
-				{this.renderPopup()}
-				<ScrollView scrollEnabled keyboardShouldPersistTaps="always">
-					<Input
-						placeholder="Sök hållplats.."
-						onChangeText={this.onInputChange}
-						value={this.props.busStop}
-						icon="ios-search"
-						loading={this.props.searchLoading && this.props.busStop.length > 0}
-						iconRight={this.props.busStop.length > 0 ? 'ios-close' : null}
-						iconRightPress={this.resetSearch}
-						underlineColorAndroid="#fff"
-						onFocus={() => track('Search Focused')}
-						style={[{ borderRadius: 15, paddingLeft: metrics.padding.sm, paddingRight: metrics.padding.sm, margin: metrics.margin.md, backgroundColor: '#fff' }, !isAndroid() ? { paddingTop: metrics.padding.md, paddingBottom: metrics.padding.md } : null]}
-					/>
-					{(this.props.error) ?
-						<Message
-							type="warning"
-							message={this.props.error}
-						/> :
-						null
-					}
-					{this.renderSectionList()}
-					{(this.props.favorites.length === 0) ?
-						<View style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>
-							<Text>
-								Du har inte sparat några favoriter än. Tryck <Text onPress={this.openPopup}>HÄR</Text> för mer information.
-							</Text>
-						</View> : null
-					}
-				</ScrollView>
-			</View>
+			<Provider store={store}>
+				<PersistGate loading={<SplashScreen />} persistor={persistor}>
+					<View style={{ flex: 1 }}>
+						{this.renderPopup()}
+						<ScrollView scrollEnabled keyboardShouldPersistTaps="always">
+							<Input
+								placeholder="Sök hållplats.."
+								onChangeText={this.onInputChange}
+								value={this.props.busStop}
+								icon="ios-search"
+								loading={this.props.searchLoading && this.props.busStop.length > 0}
+								iconRight={this.props.busStop.length > 0 ? 'ios-close' : null}
+								iconRightPress={this.resetSearch}
+								underlineColorAndroid="#fff"
+								onFocus={() => track('Search Focused')}
+								style={[{ borderRadius: 15, paddingLeft: metrics.padding.sm, paddingRight: metrics.padding.sm, margin: metrics.margin.md, backgroundColor: '#fff' }, !isAndroid() ? { paddingTop: metrics.padding.md, paddingBottom: metrics.padding.md } : null]}
+							/>
+							{(this.props.error) ?
+								<Message
+									type="warning"
+									message={this.props.error}
+								/> :
+								null
+							}
+							{this.renderSectionList()}
+							{(this.props.favorites.length === 0) ?
+								<View style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>
+									<Text>
+										Du har inte sparat några favoriter än. Tryck <Text onPress={this.openPopup}>HÄR</Text> för mer information.
+									</Text>
+								</View> : null
+							}
+						</ScrollView>
+					</View>
+				</PersistGate>
+			</Provider>
 		);
 	}
 }

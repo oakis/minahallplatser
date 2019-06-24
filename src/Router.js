@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TouchableWithoutFeedback, View, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Scene, Router, Actions, Stack, Drawer } from 'react-native-router-flux';
+// import { Scene, Router, Actions, Stack, Drawer } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import FavoriteList from './components/FavoriteList';
 import ShowDepartures from './components/ShowDepartures';

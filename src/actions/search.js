@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import { PermissionsAndroid } from 'react-native';
 import geolocation from 'react-native-geolocation-service';
-import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import {
 	ALLOWED_GPS,

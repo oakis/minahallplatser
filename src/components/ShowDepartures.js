@@ -2,7 +2,6 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import React, { PureComponent } from 'react';
 import { View, ScrollView, FlatList, AppState } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import { HelpButton } from '../Router';
 import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle, incrementStopsOpened } from '../actions';

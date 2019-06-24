@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, ImageBackground } from 'react-native';
 import { Spinner, Text } from './common';
 import { colors } from './style';
+import { track } from './helpers';
 
 class SplashScreen extends Component {
+
+	componentDidMount() {
+		track('App Start');
+	}
 
 	render() {
 		return (
@@ -22,7 +28,7 @@ class SplashScreen extends Component {
 						alignItems: 'center'
 					}}
 				>
-					{/* Mina hållplatser logo, custom 'spinner' under logo (brummande buss t.ex) */} 
+					{/* Mina hållplatser logo, custom 'spinner' under logo (brummande buss t.ex) */}
 					<Text style={{ marginBottom: 10, opacity: 1 }}>Mina Hållplatser</Text>
 					<Spinner
 						size="large"
@@ -36,4 +42,9 @@ class SplashScreen extends Component {
 
 }
 
-export default SplashScreen;
+const mapStateToProps = state => {
+	window.log('SplashScreen', state);
+	return {};
+};
+
+export default connect(mapStateToProps, null)(SplashScreen);

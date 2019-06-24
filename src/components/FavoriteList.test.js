@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { stub } from 'sinon';
-import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import FavoriteList from './FavoriteList';
 import { getStorage, track } from './helpers';
