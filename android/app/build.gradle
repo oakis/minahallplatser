@@ -176,7 +176,7 @@ repositories {
 }
 
 dependencies {
-    compile project(':@react-native-community_async-storage')
+    implementation project(':@react-native-community_async-storage')
 
     implementation project(':react-native-device-info')
 

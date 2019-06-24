@@ -10,7 +10,9 @@
     "test:coverage": "jest --coverage",
     "clean": "cd android && ./gradlew clean",
     "build-debug": "curl http://localhost:8081/index.bundle?platform=android -o android/app/src/main/assets/index.bundle && cd android && ./gradlew clean && ./gradlew assembleDebug",
-    "build-release": "yarn clean && cd android && ./gradlew assembleRelease",
+    "build-release": "yarn bundle && yarn clear-drawable && yarn clean && cd android && ./gradlew assembleRelease",
+    "clear-drawable": "rm -R android/app/src/main/res/drawable*",
+    "bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "debug": "yarn clean && react-native run-android --appIdSuffix dev",
     "release": "yarn clean && cd android && ./gradlew installRelease",
     "adb": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:5000 tcp:5000"

@@ -67,3 +67,6 @@ ios/Pods*
 google-services.json
 coverage/
 .runtimeconfig.json
+
+index.android.bundle
+index.android.bundle.meta
