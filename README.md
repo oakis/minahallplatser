@@ -11,13 +11,13 @@ It is a mobile app used to check departures from the local public transit compan
 ## Technologies used
 
 React Native, Redux, react-native-router-flux and react-native-vector-icons.
-The project also uses Firebase to track usage, store user data and handle authentication.
+The project also uses Firebase to track usage.
 For tracking user behavior it uses Mixpanel. (This will be phased out and replaced by Firebase)
 
 ## Backend service
 
 The app has used multiple backends because I like to learn new things. (including js/node, c#/dotnetcore2 & python3)
-Current backend is written in Python3: https://github.com/oakis/MinaHallplatserPy
+Currently no backend is being used.
 
 ## Download from Google Play
 
