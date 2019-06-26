@@ -1,2859 +1,317 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should match snapshot 1`] = `
-ShallowWrapper {
-  "length": 1,
-  Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <FavoriteList
-    allowedGPS={true}
-    busStop=""
-    departureList={
-      Array [
-        Object {
-          "busStop": "Volvo Torslanda PV, Göteborg",
-          "icon": "ios-star-outline",
-          "id": "9021014007483000",
-          "parent": "Search List",
-        },
-        Object {
-          "busStop": "Överåsvallen, Göteborg",
-          "icon": "ios-star",
-          "id": "9021014007900000",
-          "parent": "Search List",
-        },
-      ]
-    }
-    error="Felmeddelande"
-    favoriteIds={
-      Array [
-        "9021014007900000",
-        "9021014016323000",
-      ]
-    }
-    favorites={
-      Array [
-        Object {
-          "busStop": "Överåsvallen, Göteborg",
-          "id": "9021014007900000",
-        },
-        Object {
-          "busStop": "Älmhult, Ale",
-          "id": "9021014016323000",
-        },
-      ]
-    }
-    getNearbyStops={
-      [MockFunction] {
-        "calls": Array [
-          Array [],
-        ],
-      }
-    }
-    gpsLoading={false}
-    searchLoading={undefined}
-    stopsNearby={
-      Array [
-        Object {
-          "busStop": "Volvo Torslanda PV, Göteborg",
-          "icon": "ios-star-outline",
-          "id": "9021014007483000",
-          "parent": "Stops Nearby",
-        },
-        Object {
-          "busStop": "Överåsvallen, Göteborg",
-          "icon": "ios-star",
-          "id": "9021014007900000",
-          "parent": "Stops Nearby",
-        },
-      ]
-    }
-    store={
-      Object {
-        "clearActions": [Function],
-        "dispatch": [Function],
-        "getActions": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      }
-    }
-    storeSubscription={
-      Subscription {
-        "listeners": Object {
-          "clear": [Function],
-          "get": [Function],
-          "notify": [Function],
-          "subscribe": [Function],
-        },
-        "onStateChange": [Function],
-        "parentSub": undefined,
-        "store": Object {
-          "clearActions": [Function],
-          "dispatch": [Function],
-          "getActions": [Function],
-          "getState": [Function],
-          "replaceReducer": [Function],
-          "subscribe": [Function],
-        },
-        "unsubscribe": [Function],
-      }
-    }
-  />,
-  Symbol(enzyme.__renderer__): Object {
-    "batchedUpdates": [Function],
-    "getNode": [Function],
-    "render": [Function],
-    "simulateEvent": [Function],
-    "unmount": [Function],
-  },
-  Symbol(enzyme.__node__): Object {
-    "instance": null,
-    "key": undefined,
-    "nodeType": "function",
-    "props": Object {
-      "children": Array [
-        <Popup
-          isVisible={false}
-          onPress={[Function]}
-        >
-          <DefaultFont
-            style={
-              Object {
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginBottom": 5,
-              }
-            }
-          >
-            Söka efter hållplats
-          </DefaultFont>
-          <DefaultFont
-            style={
-              Object {
-                "marginBottom": 10,
-              }
-            }
-          >
-            För att söka på en hållplats klickar du på sökfältet ( 
-            <IonIcon
-              name="ios-search"
-            />
-             ) högst upp på startsidan och fyller i ett eller flera sökord.
-          </DefaultFont>
-          <DefaultFont
-            style={
-              Object {
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginBottom": 5,
-              }
-            }
-          >
-            Hållplatser nära dig
-          </DefaultFont>
-          <DefaultFont
-            style={
-              Object {
-                "marginBottom": 10,
-              }
-            }
-          >
-            Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din 
-            <DefaultFont
-              style={
-                Object {
-                  "fontWeight": "bold",
-                }
-              }
-            >
-              plats
-            </DefaultFont>
-            . Om du har nekat tillgång så kan du klicka på pilen ( 
-            <IonIcon
-              name="md-refresh"
-            />
-             ) till höger om "Hållplatser nära dig" och godkänna åtkomst till platstjänster.
-          </DefaultFont>
-          <DefaultFont
-            style={
-              Object {
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginBottom": 5,
-              }
-            }
-          >
-            Spara hållplats som favorit
-          </DefaultFont>
-          <DefaultFont
-            style={
-              Object {
-                "marginBottom": 10,
-              }
-            }
-          >
-            Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( 
-            <IonIcon
-              color="#FFB347"
-              name="ios-star-outline"
-            />
-             ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( 
-            <IonIcon
-              color="#FFB347"
-              name="ios-star"
-            />
-             ) att bli fylld med 
-            <DefaultFont
-              style={
-                Object {
-                  "color": "#FFB347",
-                }
-              }
-            >
-              orange
-            </DefaultFont>
-             färg och hållplatsen sparas i listan "Mina Hållplatser".
-          </DefaultFont>
-          <DefaultFont
-            style={
-              Object {
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginBottom": 5,
-              }
-            }
-          >
-            Ta bort hållplats från favoriter
-          </DefaultFont>
-          <DefaultFont
-            style={
-              Object {
-                "marginBottom": 10,
-              }
-            }
-          >
-            För att ta bort en hållplats från favoriter så klickar du på 
-            <DefaultFont
-              style={
-                Object {
-                  "fontWeight": "bold",
-                }
-              }
-            >
-              pennan
-            </DefaultFont>
-             ( 
-            <EntypoIcon
-              name="edit"
-            />
-             ) och sedan på 
-            <DefaultFont
-              style={
-                Object {
-                  "fontWeight": "bold",
-                }
-              }
-            >
-              minustecknet
-            </DefaultFont>
-             ( 
-            <IonIcon
-              color="#FF6961"
-              name="ios-remove-circle-outline"
-            />
-             ) bredvid den hållplatsen du vill ta bort.
-          </DefaultFont>
-          <DefaultFont
-            style={
-              Object {
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginBottom": 5,
-              }
-            }
-          >
-            Sortera favoriter
-          </DefaultFont>
-          <DefaultFont
-            style={
-              Object {
-                "marginBottom": 10,
-              }
-            }
-          >
-            I 
-            <DefaultFont
-              style={
-                Object {
-                  "fontWeight": "bold",
-                }
-              }
-            >
-              menyn
-            </DefaultFont>
-             ( 
-            <IonIcon
-              name="ios-menu"
-            />
-             ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.
-          </DefaultFont>
-        </Popup>,
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={true}
-        >
-          <Input
-            icon="ios-search"
-            iconRight={null}
-            iconRightPress={[Function]}
-            loading={undefined}
-            onChangeText={[Function]}
-            onFocus={[Function]}
-            placeholder="Sök hållplats.."
-            style={
-              Array [
-                Object {
-                  "backgroundColor": "#fff",
-                  "borderRadius": 15,
-                  "margin": 10,
-                  "paddingLeft": 5,
-                  "paddingRight": 5,
-                },
-                Object {
-                  "paddingBottom": 10,
-                  "paddingTop": 10,
-                },
-              ]
-            }
-            underlineColorAndroid="#fff"
-            value=""
-          />
-          <Message
-            message="Felmeddelande"
-            type="warning"
-          />
-          <View>
-            <ListHeading
-              text="Sökresultat"
-            />
-            <FlatList
-              ItemSeparatorComponent={[Function]}
-              data={
-                Array [
-                  Object {
-                    "busStop": "Volvo Torslanda PV, Göteborg",
-                    "icon": "ios-star-outline",
-                    "id": "9021014007483000",
-                    "parent": "Search List",
-                  },
-                  Object {
-                    "busStop": "Överåsvallen, Göteborg",
-                    "icon": "ios-star",
-                    "id": "9021014007900000",
-                    "parent": "Search List",
-                  },
-                ]
-              }
-              keyExtractor={[Function]}
-              keyboardShouldPersistTaps="always"
-              renderItem={[Function]}
-              scrollEnabled={false}
-            />
-            <View>
-              <ListHeading
-                icon="md-refresh"
-                loading={false}
-                onPress={[Function]}
-                text="Hållplatser nära dig"
-              />
-              <FlatList
-                ItemSeparatorComponent={[Function]}
-                data={
-                  Array [
-                    Object {
-                      "busStop": "Volvo Torslanda PV, Göteborg",
-                      "icon": "ios-star-outline",
-                      "id": "9021014007483000",
-                      "parent": "Stops Nearby",
-                    },
-                    Object {
-                      "busStop": "Överåsvallen, Göteborg",
-                      "icon": "ios-star",
-                      "id": "9021014007900000",
-                      "parent": "Stops Nearby",
-                    },
-                  ]
-                }
-                keyExtractor={[Function]}
-                keyboardShouldPersistTaps="always"
-                renderItem={[Function]}
-                scrollEnabled={false}
-              />
-            </View>
-            <ListHeading
-              icon="edit"
-              iconSize={16}
-              onPress={[Function]}
-              text="Mina hållplatser"
-            />
-            <FlatList
-              ItemSeparatorComponent={[Function]}
-              data={
-                Array [
-                  Object {
-                    "busStop": "Överåsvallen, Göteborg",
-                    "id": "9021014007900000",
-                  },
-                  Object {
-                    "busStop": "Älmhult, Ale",
-                    "id": "9021014016323000",
-                  },
-                ]
-              }
-              extraData={false}
-              keyExtractor={[Function]}
-              keyboardShouldPersistTaps="always"
-              renderItem={[Function]}
-              scrollEnabled={false}
-            />
-          </View>
-        </ScrollView>,
-      ],
-      "style": Object {
-        "flex": 1,
-      },
-    },
-    "ref": null,
-    "rendered": Array [
-      Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "class",
-        "props": Object {
-          "children": Array [
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                }
-              }
-            >
-              Söka efter hållplats
-            </DefaultFont>,
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                }
-              }
-            >
-              För att söka på en hållplats klickar du på sökfältet ( 
-              <IonIcon
-                name="ios-search"
-              />
-               ) högst upp på startsidan och fyller i ett eller flera sökord.
-            </DefaultFont>,
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                }
-              }
-            >
-              Hållplatser nära dig
-            </DefaultFont>,
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                }
-              }
-            >
-              Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din 
-              <DefaultFont
-                style={
-                  Object {
-                    "fontWeight": "bold",
-                  }
-                }
-              >
-                plats
-              </DefaultFont>
-              . Om du har nekat tillgång så kan du klicka på pilen ( 
-              <IonIcon
-                name="md-refresh"
-              />
-               ) till höger om "Hållplatser nära dig" och godkänna åtkomst till platstjänster.
-            </DefaultFont>,
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                }
-              }
-            >
-              Spara hållplats som favorit
-            </DefaultFont>,
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                }
-              }
-            >
-              Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( 
-              <IonIcon
-                color="#FFB347"
-                name="ios-star-outline"
-              />
-               ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( 
-              <IonIcon
-                color="#FFB347"
-                name="ios-star"
-              />
-               ) att bli fylld med 
-              <DefaultFont
-                style={
-                  Object {
-                    "color": "#FFB347",
-                  }
-                }
-              >
-                orange
-              </DefaultFont>
-               färg och hållplatsen sparas i listan "Mina Hållplatser".
-            </DefaultFont>,
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                }
-              }
-            >
-              Ta bort hållplats från favoriter
-            </DefaultFont>,
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                }
-              }
-            >
-              För att ta bort en hållplats från favoriter så klickar du på 
-              <DefaultFont
-                style={
-                  Object {
-                    "fontWeight": "bold",
-                  }
-                }
-              >
-                pennan
-              </DefaultFont>
-               ( 
-              <EntypoIcon
-                name="edit"
-              />
-               ) och sedan på 
-              <DefaultFont
-                style={
-                  Object {
-                    "fontWeight": "bold",
-                  }
-                }
-              >
-                minustecknet
-              </DefaultFont>
-               ( 
-              <IonIcon
-                color="#FF6961"
-                name="ios-remove-circle-outline"
-              />
-               ) bredvid den hållplatsen du vill ta bort.
-            </DefaultFont>,
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                }
-              }
-            >
-              Sortera favoriter
-            </DefaultFont>,
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                }
-              }
-            >
-              I 
-              <DefaultFont
-                style={
-                  Object {
-                    "fontWeight": "bold",
-                  }
-                }
-              >
-                menyn
-              </DefaultFont>
-               ( 
-              <IonIcon
-                name="ios-menu"
-              />
-               ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.
-            </DefaultFont>,
-          ],
-          "isVisible": false,
-          "onPress": [Function],
-        },
-        "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": "Söka efter hållplats",
-              "style": Object {
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginBottom": 5,
-              },
-            },
-            "ref": null,
-            "rendered": "Söka efter hållplats",
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": Array [
-                "För att söka på en hållplats klickar du på sökfältet ( ",
-                <IonIcon
-                  name="ios-search"
-                />,
-                " ) högst upp på startsidan och fyller i ett eller flera sökord.",
-              ],
-              "style": Object {
-                "marginBottom": 10,
-              },
-            },
-            "ref": null,
-            "rendered": Array [
-              "För att söka på en hållplats klickar du på sökfältet ( ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "name": "ios-search",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": "IonIcon",
-              },
-              " ) högst upp på startsidan och fyller i ett eller flera sökord.",
-            ],
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": "Hållplatser nära dig",
-              "style": Object {
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginBottom": 5,
-              },
-            },
-            "ref": null,
-            "rendered": "Hållplatser nära dig",
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": Array [
-                "Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din ",
-                <DefaultFont
-                  style={
-                    Object {
-                      "fontWeight": "bold",
-                    }
-                  }
-                >
-                  plats
-                </DefaultFont>,
-                ". Om du har nekat tillgång så kan du klicka på pilen ( ",
-                <IonIcon
-                  name="md-refresh"
-                />,
-                " ) till höger om \\"Hållplatser nära dig\\" och godkänna åtkomst till platstjänster.",
-              ],
-              "style": Object {
-                "marginBottom": 10,
-              },
-            },
-            "ref": null,
-            "rendered": Array [
-              "Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "children": "plats",
-                  "style": Object {
-                    "fontWeight": "bold",
-                  },
-                },
-                "ref": null,
-                "rendered": "plats",
-                "type": [Function],
-              },
-              ". Om du har nekat tillgång så kan du klicka på pilen ( ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "name": "md-refresh",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": "IonIcon",
-              },
-              " ) till höger om \\"Hållplatser nära dig\\" och godkänna åtkomst till platstjänster.",
-            ],
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": "Spara hållplats som favorit",
-              "style": Object {
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginBottom": 5,
-              },
-            },
-            "ref": null,
-            "rendered": "Spara hållplats som favorit",
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": Array [
-                "Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( ",
-                <IonIcon
-                  color="#FFB347"
-                  name="ios-star-outline"
-                />,
-                " ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( ",
-                <IonIcon
-                  color="#FFB347"
-                  name="ios-star"
-                />,
-                " ) att bli fylld med ",
-                <DefaultFont
-                  style={
-                    Object {
-                      "color": "#FFB347",
-                    }
-                  }
-                >
-                  orange
-                </DefaultFont>,
-                " färg och hållplatsen sparas i listan \\"Mina Hållplatser\\".",
-              ],
-              "style": Object {
-                "marginBottom": 10,
-              },
-            },
-            "ref": null,
-            "rendered": Array [
-              "Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "color": "#FFB347",
-                  "name": "ios-star-outline",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": "IonIcon",
-              },
-              " ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "color": "#FFB347",
-                  "name": "ios-star",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": "IonIcon",
-              },
-              " ) att bli fylld med ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "children": "orange",
-                  "style": Object {
-                    "color": "#FFB347",
-                  },
-                },
-                "ref": null,
-                "rendered": "orange",
-                "type": [Function],
-              },
-              " färg och hållplatsen sparas i listan \\"Mina Hållplatser\\".",
-            ],
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": "Ta bort hållplats från favoriter",
-              "style": Object {
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginBottom": 5,
-              },
-            },
-            "ref": null,
-            "rendered": "Ta bort hållplats från favoriter",
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": Array [
-                "För att ta bort en hållplats från favoriter så klickar du på ",
-                <DefaultFont
-                  style={
-                    Object {
-                      "fontWeight": "bold",
-                    }
-                  }
-                >
-                  pennan
-                </DefaultFont>,
-                " ( ",
-                <EntypoIcon
-                  name="edit"
-                />,
-                " ) och sedan på ",
-                <DefaultFont
-                  style={
-                    Object {
-                      "fontWeight": "bold",
-                    }
-                  }
-                >
-                  minustecknet
-                </DefaultFont>,
-                " ( ",
-                <IonIcon
-                  color="#FF6961"
-                  name="ios-remove-circle-outline"
-                />,
-                " ) bredvid den hållplatsen du vill ta bort.",
-              ],
-              "style": Object {
-                "marginBottom": 10,
-              },
-            },
-            "ref": null,
-            "rendered": Array [
-              "För att ta bort en hållplats från favoriter så klickar du på ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "children": "pennan",
-                  "style": Object {
-                    "fontWeight": "bold",
-                  },
-                },
-                "ref": null,
-                "rendered": "pennan",
-                "type": [Function],
-              },
-              " ( ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "name": "edit",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": "EntypoIcon",
-              },
-              " ) och sedan på ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "children": "minustecknet",
-                  "style": Object {
-                    "fontWeight": "bold",
-                  },
-                },
-                "ref": null,
-                "rendered": "minustecknet",
-                "type": [Function],
-              },
-              " ( ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "color": "#FF6961",
-                  "name": "ios-remove-circle-outline",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": "IonIcon",
-              },
-              " ) bredvid den hållplatsen du vill ta bort.",
-            ],
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": "Sortera favoriter",
-              "style": Object {
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginBottom": 5,
-              },
-            },
-            "ref": null,
-            "rendered": "Sortera favoriter",
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": Array [
-                "I ",
-                <DefaultFont
-                  style={
-                    Object {
-                      "fontWeight": "bold",
-                    }
-                  }
-                >
-                  menyn
-                </DefaultFont>,
-                " ( ",
-                <IonIcon
-                  name="ios-menu"
-                />,
-                " ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.",
-              ],
-              "style": Object {
-                "marginBottom": 10,
-              },
-            },
-            "ref": null,
-            "rendered": Array [
-              "I ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "children": "menyn",
-                  "style": Object {
-                    "fontWeight": "bold",
-                  },
-                },
-                "ref": null,
-                "rendered": "menyn",
-                "type": [Function],
-              },
-              " ( ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "name": "ios-menu",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": "IonIcon",
-              },
-              " ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.",
-            ],
-            "type": [Function],
-          },
-        ],
-        "type": [Function],
-      },
-      Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "function",
-        "props": Object {
-          "children": Array [
-            <Input
-              icon="ios-search"
-              iconRight={null}
-              iconRightPress={[Function]}
-              loading={undefined}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="Sök hållplats.."
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "#fff",
-                    "borderRadius": 15,
-                    "margin": 10,
-                    "paddingLeft": 5,
-                    "paddingRight": 5,
-                  },
-                  Object {
-                    "paddingBottom": 10,
-                    "paddingTop": 10,
-                  },
-                ]
-              }
-              underlineColorAndroid="#fff"
-              value=""
-            />,
-            <Message
-              message="Felmeddelande"
-              type="warning"
-            />,
-            <View>
-              <ListHeading
-                text="Sökresultat"
-              />
-              <FlatList
-                ItemSeparatorComponent={[Function]}
-                data={
-                  Array [
-                    Object {
-                      "busStop": "Volvo Torslanda PV, Göteborg",
-                      "icon": "ios-star-outline",
-                      "id": "9021014007483000",
-                      "parent": "Search List",
-                    },
-                    Object {
-                      "busStop": "Överåsvallen, Göteborg",
-                      "icon": "ios-star",
-                      "id": "9021014007900000",
-                      "parent": "Search List",
-                    },
-                  ]
-                }
-                keyExtractor={[Function]}
-                keyboardShouldPersistTaps="always"
-                renderItem={[Function]}
-                scrollEnabled={false}
-              />
-              <View>
-                <ListHeading
-                  icon="md-refresh"
-                  loading={false}
-                  onPress={[Function]}
-                  text="Hållplatser nära dig"
-                />
-                <FlatList
-                  ItemSeparatorComponent={[Function]}
-                  data={
-                    Array [
-                      Object {
-                        "busStop": "Volvo Torslanda PV, Göteborg",
-                        "icon": "ios-star-outline",
-                        "id": "9021014007483000",
-                        "parent": "Stops Nearby",
-                      },
-                      Object {
-                        "busStop": "Överåsvallen, Göteborg",
-                        "icon": "ios-star",
-                        "id": "9021014007900000",
-                        "parent": "Stops Nearby",
-                      },
-                    ]
-                  }
-                  keyExtractor={[Function]}
-                  keyboardShouldPersistTaps="always"
-                  renderItem={[Function]}
-                  scrollEnabled={false}
-                />
-              </View>
-              <ListHeading
-                icon="edit"
-                iconSize={16}
-                onPress={[Function]}
-                text="Mina hållplatser"
-              />
-              <FlatList
-                ItemSeparatorComponent={[Function]}
-                data={
-                  Array [
-                    Object {
-                      "busStop": "Överåsvallen, Göteborg",
-                      "id": "9021014007900000",
-                    },
-                    Object {
-                      "busStop": "Älmhult, Ale",
-                      "id": "9021014016323000",
-                    },
-                  ]
-                }
-                extraData={false}
-                keyExtractor={[Function]}
-                keyboardShouldPersistTaps="always"
-                renderItem={[Function]}
-                scrollEnabled={false}
-              />
-            </View>,
-            null,
-          ],
-          "keyboardShouldPersistTaps": "always",
-          "scrollEnabled": true,
-        },
-        "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "icon": "ios-search",
-              "iconRight": null,
-              "iconRightPress": [Function],
-              "loading": undefined,
-              "onChangeText": [Function],
-              "onFocus": [Function],
-              "placeholder": "Sök hållplats..",
-              "style": Array [
-                Object {
-                  "backgroundColor": "#fff",
-                  "borderRadius": 15,
-                  "margin": 10,
-                  "paddingLeft": 5,
-                  "paddingRight": 5,
-                },
-                Object {
-                  "paddingBottom": 10,
-                  "paddingTop": 10,
-                },
-              ],
-              "underlineColorAndroid": "#fff",
-              "value": "",
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "message": "Felmeddelande",
-              "type": "warning",
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": Array [
-                <ListHeading
-                  text="Sökresultat"
-                />,
-                <FlatList
-                  ItemSeparatorComponent={[Function]}
-                  data={
-                    Array [
-                      Object {
-                        "busStop": "Volvo Torslanda PV, Göteborg",
-                        "icon": "ios-star-outline",
-                        "id": "9021014007483000",
-                        "parent": "Search List",
-                      },
-                      Object {
-                        "busStop": "Överåsvallen, Göteborg",
-                        "icon": "ios-star",
-                        "id": "9021014007900000",
-                        "parent": "Search List",
-                      },
-                    ]
-                  }
-                  keyExtractor={[Function]}
-                  keyboardShouldPersistTaps="always"
-                  renderItem={[Function]}
-                  scrollEnabled={false}
-                />,
-                <View>
-                  <ListHeading
-                    icon="md-refresh"
-                    loading={false}
-                    onPress={[Function]}
-                    text="Hållplatser nära dig"
-                  />
-                  <FlatList
-                    ItemSeparatorComponent={[Function]}
-                    data={
-                      Array [
-                        Object {
-                          "busStop": "Volvo Torslanda PV, Göteborg",
-                          "icon": "ios-star-outline",
-                          "id": "9021014007483000",
-                          "parent": "Stops Nearby",
-                        },
-                        Object {
-                          "busStop": "Överåsvallen, Göteborg",
-                          "icon": "ios-star",
-                          "id": "9021014007900000",
-                          "parent": "Stops Nearby",
-                        },
-                      ]
-                    }
-                    keyExtractor={[Function]}
-                    keyboardShouldPersistTaps="always"
-                    renderItem={[Function]}
-                    scrollEnabled={false}
-                  />
-                </View>,
-                <ListHeading
-                  icon="edit"
-                  iconSize={16}
-                  onPress={[Function]}
-                  text="Mina hållplatser"
-                />,
-                <FlatList
-                  ItemSeparatorComponent={[Function]}
-                  data={
-                    Array [
-                      Object {
-                        "busStop": "Överåsvallen, Göteborg",
-                        "id": "9021014007900000",
-                      },
-                      Object {
-                        "busStop": "Älmhult, Ale",
-                        "id": "9021014016323000",
-                      },
-                    ]
-                  }
-                  extraData={false}
-                  keyExtractor={[Function]}
-                  keyboardShouldPersistTaps="always"
-                  renderItem={[Function]}
-                  scrollEnabled={false}
-                />,
-              ],
-            },
-            "ref": null,
-            "rendered": Array [
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "text": "Sökresultat",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "ItemSeparatorComponent": [Function],
-                  "data": Array [
-                    Object {
-                      "busStop": "Volvo Torslanda PV, Göteborg",
-                      "icon": "ios-star-outline",
-                      "id": "9021014007483000",
-                      "parent": "Search List",
-                    },
-                    Object {
-                      "busStop": "Överåsvallen, Göteborg",
-                      "icon": "ios-star",
-                      "id": "9021014007900000",
-                      "parent": "Search List",
-                    },
-                  ],
-                  "keyExtractor": [Function],
-                  "keyboardShouldPersistTaps": "always",
-                  "renderItem": [Function],
-                  "scrollEnabled": false,
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "children": Array [
-                    <ListHeading
-                      icon="md-refresh"
-                      loading={false}
-                      onPress={[Function]}
-                      text="Hållplatser nära dig"
-                    />,
-                    null,
-                    <FlatList
-                      ItemSeparatorComponent={[Function]}
-                      data={
-                        Array [
-                          Object {
-                            "busStop": "Volvo Torslanda PV, Göteborg",
-                            "icon": "ios-star-outline",
-                            "id": "9021014007483000",
-                            "parent": "Stops Nearby",
-                          },
-                          Object {
-                            "busStop": "Överåsvallen, Göteborg",
-                            "icon": "ios-star",
-                            "id": "9021014007900000",
-                            "parent": "Stops Nearby",
-                          },
-                        ]
-                      }
-                      keyExtractor={[Function]}
-                      keyboardShouldPersistTaps="always"
-                      renderItem={[Function]}
-                      scrollEnabled={false}
-                    />,
-                  ],
-                },
-                "ref": null,
-                "rendered": Array [
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "function",
-                    "props": Object {
-                      "icon": "md-refresh",
-                      "loading": false,
-                      "onPress": [Function],
-                      "text": "Hållplatser nära dig",
-                    },
-                    "ref": null,
-                    "rendered": null,
-                    "type": [Function],
-                  },
-                  null,
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "function",
-                    "props": Object {
-                      "ItemSeparatorComponent": [Function],
-                      "data": Array [
-                        Object {
-                          "busStop": "Volvo Torslanda PV, Göteborg",
-                          "icon": "ios-star-outline",
-                          "id": "9021014007483000",
-                          "parent": "Stops Nearby",
-                        },
-                        Object {
-                          "busStop": "Överåsvallen, Göteborg",
-                          "icon": "ios-star",
-                          "id": "9021014007900000",
-                          "parent": "Stops Nearby",
-                        },
-                      ],
-                      "keyExtractor": [Function],
-                      "keyboardShouldPersistTaps": "always",
-                      "renderItem": [Function],
-                      "scrollEnabled": false,
-                    },
-                    "ref": null,
-                    "rendered": null,
-                    "type": [Function],
-                  },
-                ],
-                "type": [Function],
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "icon": "edit",
-                  "iconSize": 16,
-                  "onPress": [Function],
-                  "text": "Mina hållplatser",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "ItemSeparatorComponent": [Function],
-                  "data": Array [
-                    Object {
-                      "busStop": "Överåsvallen, Göteborg",
-                      "id": "9021014007900000",
-                    },
-                    Object {
-                      "busStop": "Älmhult, Ale",
-                      "id": "9021014016323000",
-                    },
-                  ],
-                  "extraData": false,
-                  "keyExtractor": [Function],
-                  "keyboardShouldPersistTaps": "always",
-                  "renderItem": [Function],
-                  "scrollEnabled": false,
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-            ],
-            "type": [Function],
-          },
-          null,
-        ],
-        "type": [Function],
-      },
-    ],
-    "type": [Function],
-  },
-  Symbol(enzyme.__nodes__): Array [
+<View
+  style={
     Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "function",
-      "props": Object {
-        "children": Array [
-          <Popup
-            isVisible={false}
-            onPress={[Function]}
-          >
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                }
-              }
-            >
-              Söka efter hållplats
-            </DefaultFont>
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                }
-              }
-            >
-              För att söka på en hållplats klickar du på sökfältet ( 
-              <IonIcon
-                name="ios-search"
-              />
-               ) högst upp på startsidan och fyller i ett eller flera sökord.
-            </DefaultFont>
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                }
-              }
-            >
-              Hållplatser nära dig
-            </DefaultFont>
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                }
-              }
-            >
-              Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din 
-              <DefaultFont
-                style={
-                  Object {
-                    "fontWeight": "bold",
-                  }
-                }
-              >
-                plats
-              </DefaultFont>
-              . Om du har nekat tillgång så kan du klicka på pilen ( 
-              <IonIcon
-                name="md-refresh"
-              />
-               ) till höger om "Hållplatser nära dig" och godkänna åtkomst till platstjänster.
-            </DefaultFont>
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                }
-              }
-            >
-              Spara hållplats som favorit
-            </DefaultFont>
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                }
-              }
-            >
-              Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( 
-              <IonIcon
-                color="#FFB347"
-                name="ios-star-outline"
-              />
-               ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( 
-              <IonIcon
-                color="#FFB347"
-                name="ios-star"
-              />
-               ) att bli fylld med 
-              <DefaultFont
-                style={
-                  Object {
-                    "color": "#FFB347",
-                  }
-                }
-              >
-                orange
-              </DefaultFont>
-               färg och hållplatsen sparas i listan "Mina Hållplatser".
-            </DefaultFont>
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                }
-              }
-            >
-              Ta bort hållplats från favoriter
-            </DefaultFont>
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                }
-              }
-            >
-              För att ta bort en hållplats från favoriter så klickar du på 
-              <DefaultFont
-                style={
-                  Object {
-                    "fontWeight": "bold",
-                  }
-                }
-              >
-                pennan
-              </DefaultFont>
-               ( 
-              <EntypoIcon
-                name="edit"
-              />
-               ) och sedan på 
-              <DefaultFont
-                style={
-                  Object {
-                    "fontWeight": "bold",
-                  }
-                }
-              >
-                minustecknet
-              </DefaultFont>
-               ( 
-              <IonIcon
-                color="#FF6961"
-                name="ios-remove-circle-outline"
-              />
-               ) bredvid den hållplatsen du vill ta bort.
-            </DefaultFont>
-            <DefaultFont
-              style={
-                Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                }
-              }
-            >
-              Sortera favoriter
-            </DefaultFont>
-            <DefaultFont
-              style={
-                Object {
-                  "marginBottom": 10,
-                }
-              }
-            >
-              I 
-              <DefaultFont
-                style={
-                  Object {
-                    "fontWeight": "bold",
-                  }
-                }
-              >
-                menyn
-              </DefaultFont>
-               ( 
-              <IonIcon
-                name="ios-menu"
-              />
-               ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.
-            </DefaultFont>
-          </Popup>,
-          <ScrollView
-            keyboardShouldPersistTaps="always"
-            scrollEnabled={true}
-          >
-            <Input
-              icon="ios-search"
-              iconRight={null}
-              iconRightPress={[Function]}
-              loading={undefined}
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              placeholder="Sök hållplats.."
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "#fff",
-                    "borderRadius": 15,
-                    "margin": 10,
-                    "paddingLeft": 5,
-                    "paddingRight": 5,
-                  },
-                  Object {
-                    "paddingBottom": 10,
-                    "paddingTop": 10,
-                  },
-                ]
-              }
-              underlineColorAndroid="#fff"
-              value=""
-            />
-            <Message
-              message="Felmeddelande"
-              type="warning"
-            />
-            <View>
-              <ListHeading
-                text="Sökresultat"
-              />
-              <FlatList
-                ItemSeparatorComponent={[Function]}
-                data={
-                  Array [
-                    Object {
-                      "busStop": "Volvo Torslanda PV, Göteborg",
-                      "icon": "ios-star-outline",
-                      "id": "9021014007483000",
-                      "parent": "Search List",
-                    },
-                    Object {
-                      "busStop": "Överåsvallen, Göteborg",
-                      "icon": "ios-star",
-                      "id": "9021014007900000",
-                      "parent": "Search List",
-                    },
-                  ]
-                }
-                keyExtractor={[Function]}
-                keyboardShouldPersistTaps="always"
-                renderItem={[Function]}
-                scrollEnabled={false}
-              />
-              <View>
-                <ListHeading
-                  icon="md-refresh"
-                  loading={false}
-                  onPress={[Function]}
-                  text="Hållplatser nära dig"
-                />
-                <FlatList
-                  ItemSeparatorComponent={[Function]}
-                  data={
-                    Array [
-                      Object {
-                        "busStop": "Volvo Torslanda PV, Göteborg",
-                        "icon": "ios-star-outline",
-                        "id": "9021014007483000",
-                        "parent": "Stops Nearby",
-                      },
-                      Object {
-                        "busStop": "Överåsvallen, Göteborg",
-                        "icon": "ios-star",
-                        "id": "9021014007900000",
-                        "parent": "Stops Nearby",
-                      },
-                    ]
-                  }
-                  keyExtractor={[Function]}
-                  keyboardShouldPersistTaps="always"
-                  renderItem={[Function]}
-                  scrollEnabled={false}
-                />
-              </View>
-              <ListHeading
-                icon="edit"
-                iconSize={16}
-                onPress={[Function]}
-                text="Mina hållplatser"
-              />
-              <FlatList
-                ItemSeparatorComponent={[Function]}
-                data={
-                  Array [
-                    Object {
-                      "busStop": "Överåsvallen, Göteborg",
-                      "id": "9021014007900000",
-                    },
-                    Object {
-                      "busStop": "Älmhult, Ale",
-                      "id": "9021014016323000",
-                    },
-                  ]
-                }
-                extraData={false}
-                keyExtractor={[Function]}
-                keyboardShouldPersistTaps="always"
-                renderItem={[Function]}
-                scrollEnabled={false}
-              />
-            </View>
-          </ScrollView>,
-        ],
-        "style": Object {
-          "flex": 1,
-        },
-      },
-      "ref": null,
-      "rendered": Array [
+      "flex": 1,
+    }
+  }
+>
+  <Popup
+    isVisible={false}
+    onPress={[Function]}
+  >
+    <DefaultFont
+      style={
         Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "class",
-          "props": Object {
-            "children": Array [
-              <DefaultFont
-                style={
-                  Object {
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                    "marginBottom": 5,
-                  }
-                }
-              >
-                Söka efter hållplats
-              </DefaultFont>,
-              <DefaultFont
-                style={
-                  Object {
-                    "marginBottom": 10,
-                  }
-                }
-              >
-                För att söka på en hållplats klickar du på sökfältet ( 
-                <IonIcon
-                  name="ios-search"
-                />
-                 ) högst upp på startsidan och fyller i ett eller flera sökord.
-              </DefaultFont>,
-              <DefaultFont
-                style={
-                  Object {
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                    "marginBottom": 5,
-                  }
-                }
-              >
-                Hållplatser nära dig
-              </DefaultFont>,
-              <DefaultFont
-                style={
-                  Object {
-                    "marginBottom": 10,
-                  }
-                }
-              >
-                Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din 
-                <DefaultFont
-                  style={
-                    Object {
-                      "fontWeight": "bold",
-                    }
-                  }
-                >
-                  plats
-                </DefaultFont>
-                . Om du har nekat tillgång så kan du klicka på pilen ( 
-                <IonIcon
-                  name="md-refresh"
-                />
-                 ) till höger om "Hållplatser nära dig" och godkänna åtkomst till platstjänster.
-              </DefaultFont>,
-              <DefaultFont
-                style={
-                  Object {
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                    "marginBottom": 5,
-                  }
-                }
-              >
-                Spara hållplats som favorit
-              </DefaultFont>,
-              <DefaultFont
-                style={
-                  Object {
-                    "marginBottom": 10,
-                  }
-                }
-              >
-                Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( 
-                <IonIcon
-                  color="#FFB347"
-                  name="ios-star-outline"
-                />
-                 ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( 
-                <IonIcon
-                  color="#FFB347"
-                  name="ios-star"
-                />
-                 ) att bli fylld med 
-                <DefaultFont
-                  style={
-                    Object {
-                      "color": "#FFB347",
-                    }
-                  }
-                >
-                  orange
-                </DefaultFont>
-                 färg och hållplatsen sparas i listan "Mina Hållplatser".
-              </DefaultFont>,
-              <DefaultFont
-                style={
-                  Object {
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                    "marginBottom": 5,
-                  }
-                }
-              >
-                Ta bort hållplats från favoriter
-              </DefaultFont>,
-              <DefaultFont
-                style={
-                  Object {
-                    "marginBottom": 10,
-                  }
-                }
-              >
-                För att ta bort en hållplats från favoriter så klickar du på 
-                <DefaultFont
-                  style={
-                    Object {
-                      "fontWeight": "bold",
-                    }
-                  }
-                >
-                  pennan
-                </DefaultFont>
-                 ( 
-                <EntypoIcon
-                  name="edit"
-                />
-                 ) och sedan på 
-                <DefaultFont
-                  style={
-                    Object {
-                      "fontWeight": "bold",
-                    }
-                  }
-                >
-                  minustecknet
-                </DefaultFont>
-                 ( 
-                <IonIcon
-                  color="#FF6961"
-                  name="ios-remove-circle-outline"
-                />
-                 ) bredvid den hållplatsen du vill ta bort.
-              </DefaultFont>,
-              <DefaultFont
-                style={
-                  Object {
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                    "marginBottom": 5,
-                  }
-                }
-              >
-                Sortera favoriter
-              </DefaultFont>,
-              <DefaultFont
-                style={
-                  Object {
-                    "marginBottom": 10,
-                  }
-                }
-              >
-                I 
-                <DefaultFont
-                  style={
-                    Object {
-                      "fontWeight": "bold",
-                    }
-                  }
-                >
-                  menyn
-                </DefaultFont>
-                 ( 
-                <IonIcon
-                  name="ios-menu"
-                />
-                 ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.
-              </DefaultFont>,
-            ],
-            "isVisible": false,
-            "onPress": [Function],
-          },
-          "ref": null,
-          "rendered": Array [
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": "Söka efter hållplats",
-                "style": Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                },
-              },
-              "ref": null,
-              "rendered": "Söka efter hållplats",
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": Array [
-                  "För att söka på en hållplats klickar du på sökfältet ( ",
-                  <IonIcon
-                    name="ios-search"
-                  />,
-                  " ) högst upp på startsidan och fyller i ett eller flera sökord.",
-                ],
-                "style": Object {
-                  "marginBottom": 10,
-                },
-              },
-              "ref": null,
-              "rendered": Array [
-                "För att söka på en hållplats klickar du på sökfältet ( ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "name": "ios-search",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": "IonIcon",
-                },
-                " ) högst upp på startsidan och fyller i ett eller flera sökord.",
-              ],
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": "Hållplatser nära dig",
-                "style": Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                },
-              },
-              "ref": null,
-              "rendered": "Hållplatser nära dig",
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": Array [
-                  "Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din ",
-                  <DefaultFont
-                    style={
-                      Object {
-                        "fontWeight": "bold",
-                      }
-                    }
-                  >
-                    plats
-                  </DefaultFont>,
-                  ". Om du har nekat tillgång så kan du klicka på pilen ( ",
-                  <IonIcon
-                    name="md-refresh"
-                  />,
-                  " ) till höger om \\"Hållplatser nära dig\\" och godkänna åtkomst till platstjänster.",
-                ],
-                "style": Object {
-                  "marginBottom": 10,
-                },
-              },
-              "ref": null,
-              "rendered": Array [
-                "Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "children": "plats",
-                    "style": Object {
-                      "fontWeight": "bold",
-                    },
-                  },
-                  "ref": null,
-                  "rendered": "plats",
-                  "type": [Function],
-                },
-                ". Om du har nekat tillgång så kan du klicka på pilen ( ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "name": "md-refresh",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": "IonIcon",
-                },
-                " ) till höger om \\"Hållplatser nära dig\\" och godkänna åtkomst till platstjänster.",
-              ],
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": "Spara hållplats som favorit",
-                "style": Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                },
-              },
-              "ref": null,
-              "rendered": "Spara hållplats som favorit",
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": Array [
-                  "Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( ",
-                  <IonIcon
-                    color="#FFB347"
-                    name="ios-star-outline"
-                  />,
-                  " ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( ",
-                  <IonIcon
-                    color="#FFB347"
-                    name="ios-star"
-                  />,
-                  " ) att bli fylld med ",
-                  <DefaultFont
-                    style={
-                      Object {
-                        "color": "#FFB347",
-                      }
-                    }
-                  >
-                    orange
-                  </DefaultFont>,
-                  " färg och hållplatsen sparas i listan \\"Mina Hållplatser\\".",
-                ],
-                "style": Object {
-                  "marginBottom": 10,
-                },
-              },
-              "ref": null,
-              "rendered": Array [
-                "Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "color": "#FFB347",
-                    "name": "ios-star-outline",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": "IonIcon",
-                },
-                " ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "color": "#FFB347",
-                    "name": "ios-star",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": "IonIcon",
-                },
-                " ) att bli fylld med ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "children": "orange",
-                    "style": Object {
-                      "color": "#FFB347",
-                    },
-                  },
-                  "ref": null,
-                  "rendered": "orange",
-                  "type": [Function],
-                },
-                " färg och hållplatsen sparas i listan \\"Mina Hållplatser\\".",
-              ],
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": "Ta bort hållplats från favoriter",
-                "style": Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                },
-              },
-              "ref": null,
-              "rendered": "Ta bort hållplats från favoriter",
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": Array [
-                  "För att ta bort en hållplats från favoriter så klickar du på ",
-                  <DefaultFont
-                    style={
-                      Object {
-                        "fontWeight": "bold",
-                      }
-                    }
-                  >
-                    pennan
-                  </DefaultFont>,
-                  " ( ",
-                  <EntypoIcon
-                    name="edit"
-                  />,
-                  " ) och sedan på ",
-                  <DefaultFont
-                    style={
-                      Object {
-                        "fontWeight": "bold",
-                      }
-                    }
-                  >
-                    minustecknet
-                  </DefaultFont>,
-                  " ( ",
-                  <IonIcon
-                    color="#FF6961"
-                    name="ios-remove-circle-outline"
-                  />,
-                  " ) bredvid den hållplatsen du vill ta bort.",
-                ],
-                "style": Object {
-                  "marginBottom": 10,
-                },
-              },
-              "ref": null,
-              "rendered": Array [
-                "För att ta bort en hållplats från favoriter så klickar du på ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "children": "pennan",
-                    "style": Object {
-                      "fontWeight": "bold",
-                    },
-                  },
-                  "ref": null,
-                  "rendered": "pennan",
-                  "type": [Function],
-                },
-                " ( ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "name": "edit",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": "EntypoIcon",
-                },
-                " ) och sedan på ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "children": "minustecknet",
-                    "style": Object {
-                      "fontWeight": "bold",
-                    },
-                  },
-                  "ref": null,
-                  "rendered": "minustecknet",
-                  "type": [Function],
-                },
-                " ( ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "color": "#FF6961",
-                    "name": "ios-remove-circle-outline",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": "IonIcon",
-                },
-                " ) bredvid den hållplatsen du vill ta bort.",
-              ],
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": "Sortera favoriter",
-                "style": Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 5,
-                },
-              },
-              "ref": null,
-              "rendered": "Sortera favoriter",
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": Array [
-                  "I ",
-                  <DefaultFont
-                    style={
-                      Object {
-                        "fontWeight": "bold",
-                      }
-                    }
-                  >
-                    menyn
-                  </DefaultFont>,
-                  " ( ",
-                  <IonIcon
-                    name="ios-menu"
-                  />,
-                  " ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.",
-                ],
-                "style": Object {
-                  "marginBottom": 10,
-                },
-              },
-              "ref": null,
-              "rendered": Array [
-                "I ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "children": "menyn",
-                    "style": Object {
-                      "fontWeight": "bold",
-                    },
-                  },
-                  "ref": null,
-                  "rendered": "menyn",
-                  "type": [Function],
-                },
-                " ( ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "name": "ios-menu",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": "IonIcon",
-                },
-                " ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.",
-              ],
-              "type": [Function],
-            },
-          ],
-          "type": [Function],
-        },
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "marginBottom": 5,
+        }
+      }
+    >
+      Söka efter hållplats
+    </DefaultFont>
+    <DefaultFont
+      style={
         Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "function",
-          "props": Object {
-            "children": Array [
-              <Input
-                icon="ios-search"
-                iconRight={null}
-                iconRightPress={[Function]}
-                loading={undefined}
-                onChangeText={[Function]}
-                onFocus={[Function]}
-                placeholder="Sök hållplats.."
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#fff",
-                      "borderRadius": 15,
-                      "margin": 10,
-                      "paddingLeft": 5,
-                      "paddingRight": 5,
-                    },
-                    Object {
-                      "paddingBottom": 10,
-                      "paddingTop": 10,
-                    },
-                  ]
-                }
-                underlineColorAndroid="#fff"
-                value=""
-              />,
-              <Message
-                message="Felmeddelande"
-                type="warning"
-              />,
-              <View>
-                <ListHeading
-                  text="Sökresultat"
-                />
-                <FlatList
-                  ItemSeparatorComponent={[Function]}
-                  data={
-                    Array [
-                      Object {
-                        "busStop": "Volvo Torslanda PV, Göteborg",
-                        "icon": "ios-star-outline",
-                        "id": "9021014007483000",
-                        "parent": "Search List",
-                      },
-                      Object {
-                        "busStop": "Överåsvallen, Göteborg",
-                        "icon": "ios-star",
-                        "id": "9021014007900000",
-                        "parent": "Search List",
-                      },
-                    ]
-                  }
-                  keyExtractor={[Function]}
-                  keyboardShouldPersistTaps="always"
-                  renderItem={[Function]}
-                  scrollEnabled={false}
-                />
-                <View>
-                  <ListHeading
-                    icon="md-refresh"
-                    loading={false}
-                    onPress={[Function]}
-                    text="Hållplatser nära dig"
-                  />
-                  <FlatList
-                    ItemSeparatorComponent={[Function]}
-                    data={
-                      Array [
-                        Object {
-                          "busStop": "Volvo Torslanda PV, Göteborg",
-                          "icon": "ios-star-outline",
-                          "id": "9021014007483000",
-                          "parent": "Stops Nearby",
-                        },
-                        Object {
-                          "busStop": "Överåsvallen, Göteborg",
-                          "icon": "ios-star",
-                          "id": "9021014007900000",
-                          "parent": "Stops Nearby",
-                        },
-                      ]
-                    }
-                    keyExtractor={[Function]}
-                    keyboardShouldPersistTaps="always"
-                    renderItem={[Function]}
-                    scrollEnabled={false}
-                  />
-                </View>
-                <ListHeading
-                  icon="edit"
-                  iconSize={16}
-                  onPress={[Function]}
-                  text="Mina hållplatser"
-                />
-                <FlatList
-                  ItemSeparatorComponent={[Function]}
-                  data={
-                    Array [
-                      Object {
-                        "busStop": "Överåsvallen, Göteborg",
-                        "id": "9021014007900000",
-                      },
-                      Object {
-                        "busStop": "Älmhult, Ale",
-                        "id": "9021014016323000",
-                      },
-                    ]
-                  }
-                  extraData={false}
-                  keyExtractor={[Function]}
-                  keyboardShouldPersistTaps="always"
-                  renderItem={[Function]}
-                  scrollEnabled={false}
-                />
-              </View>,
-              null,
-            ],
-            "keyboardShouldPersistTaps": "always",
-            "scrollEnabled": true,
+          "marginBottom": 10,
+        }
+      }
+    >
+      För att söka på en hållplats klickar du på sökfältet ( 
+      <MaterialIcon
+        name="search"
+      />
+       ) högst upp på startsidan och fyller i ett eller flera sökord.
+    </DefaultFont>
+    <DefaultFont
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "marginBottom": 5,
+        }
+      }
+    >
+      Hållplatser nära dig
+    </DefaultFont>
+    <DefaultFont
+      style={
+        Object {
+          "marginBottom": 10,
+        }
+      }
+    >
+      Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din 
+      <DefaultFont
+        style={
+          Object {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        plats
+      </DefaultFont>
+      . Om du har nekat tillgång så kan du klicka på pilen ( 
+      <MaterialIcon
+        name="refresh"
+      />
+       ) till höger om "Hållplatser nära dig" och godkänna åtkomst till platstjänster.
+    </DefaultFont>
+    <DefaultFont
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "marginBottom": 5,
+        }
+      }
+    >
+      Spara hållplats som favorit
+    </DefaultFont>
+    <DefaultFont
+      style={
+        Object {
+          "marginBottom": 10,
+        }
+      }
+    >
+      Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( 
+      <MaterialIcon
+        color="#FFB347"
+        name="star-border"
+      />
+       ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( 
+      <MaterialIcon
+        color="#FFB347"
+        name="star"
+      />
+       ) att bli fylld med 
+      <DefaultFont
+        style={
+          Object {
+            "color": "#FFB347",
+          }
+        }
+      >
+        orange
+      </DefaultFont>
+       färg och hållplatsen sparas i listan "Mina Hållplatser".
+    </DefaultFont>
+    <DefaultFont
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "marginBottom": 5,
+        }
+      }
+    >
+      Ta bort hållplats från favoriter
+    </DefaultFont>
+    <DefaultFont
+      style={
+        Object {
+          "marginBottom": 10,
+        }
+      }
+    >
+      För att ta bort en hållplats från favoriter så klickar du på 
+      <DefaultFont
+        style={
+          Object {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        pennan
+      </DefaultFont>
+       ( 
+      <MaterialIcon
+        name="edit"
+      />
+       ) och sedan på 
+      <DefaultFont
+        style={
+          Object {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        minustecknet
+      </DefaultFont>
+       ( 
+      <MaterialIcon
+        color="#FF6961"
+        name="remove-circle-outline"
+      />
+       ) bredvid den hållplatsen du vill ta bort.
+    </DefaultFont>
+    <DefaultFont
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "marginBottom": 5,
+        }
+      }
+    >
+      Sortera favoriter
+    </DefaultFont>
+    <DefaultFont
+      style={
+        Object {
+          "marginBottom": 10,
+        }
+      }
+    >
+      I 
+      <DefaultFont
+        style={
+          Object {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        menyn
+      </DefaultFont>
+       ( 
+      <MaterialIcon
+        name="menu"
+      />
+       ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.
+    </DefaultFont>
+  </Popup>
+  <ScrollView
+    keyboardShouldPersistTaps="always"
+    scrollEnabled={true}
+  >
+    <Input
+      icon="search"
+      iconRight={null}
+      iconRightPress={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholder="Sök hållplats.."
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#fff",
+            "borderRadius": 15,
+            "margin": 10,
+            "paddingLeft": 5,
+            "paddingRight": 5,
           },
-          "ref": null,
-          "rendered": Array [
+          Object {
+            "paddingBottom": 10,
+            "paddingTop": 10,
+          },
+        ]
+      }
+      underlineColorAndroid="#fff"
+      value=""
+    />
+    <Message
+      message="Felmeddelande"
+      type="warning"
+    />
+    <View>
+      <ListHeading
+        text="Sökresultat"
+      />
+      <FlatList
+        ItemSeparatorComponent={[Function]}
+        data={
+          Array [
             Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "icon": "ios-search",
-                "iconRight": null,
-                "iconRightPress": [Function],
-                "loading": undefined,
-                "onChangeText": [Function],
-                "onFocus": [Function],
-                "placeholder": "Sök hållplats..",
-                "style": Array [
-                  Object {
-                    "backgroundColor": "#fff",
-                    "borderRadius": 15,
-                    "margin": 10,
-                    "paddingLeft": 5,
-                    "paddingRight": 5,
-                  },
-                  Object {
-                    "paddingBottom": 10,
-                    "paddingTop": 10,
-                  },
-                ],
-                "underlineColorAndroid": "#fff",
-                "value": "",
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
+              "busStop": "Volvo Torslanda PV, Göteborg",
+              "icon": "star-border",
+              "id": "9021014007483000",
+              "parent": "Search List",
             },
             Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "message": "Felmeddelande",
-                "type": "warning",
+              "busStop": "Överåsvallen, Göteborg",
+              "icon": "star",
+              "id": "9021014007900000",
+              "parent": "Search List",
+            },
+          ]
+        }
+        keyExtractor={[Function]}
+        keyboardShouldPersistTaps="always"
+        renderItem={[Function]}
+        scrollEnabled={false}
+      />
+      <View>
+        <ListHeading
+          icon="refresh"
+          loading={false}
+          onPress={[Function]}
+          text="Hållplatser nära dig"
+        />
+        <FlatList
+          ItemSeparatorComponent={[Function]}
+          data={
+            Array [
+              Object {
+                "busStop": "Volvo Torslanda PV, Göteborg",
+                "icon": "star-border",
+                "id": "9021014007483000",
+                "parent": "Stops Nearby",
               },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
+              Object {
+                "busStop": "Överåsvallen, Göteborg",
+                "icon": "star",
+                "id": "9021014007900000",
+                "parent": "Stops Nearby",
+              },
+            ]
+          }
+          keyExtractor={[Function]}
+          keyboardShouldPersistTaps="always"
+          renderItem={[Function]}
+          scrollEnabled={false}
+        />
+      </View>
+      <ListHeading
+        icon="edit"
+        iconSize={16}
+        onPress={[Function]}
+        text="Mina hållplatser"
+      />
+      <FlatList
+        ItemSeparatorComponent={[Function]}
+        data={
+          Array [
+            Object {
+              "busStop": "Överåsvallen, Göteborg",
+              "id": "9021014007900000",
             },
             Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": Array [
-                  <ListHeading
-                    text="Sökresultat"
-                  />,
-                  <FlatList
-                    ItemSeparatorComponent={[Function]}
-                    data={
-                      Array [
-                        Object {
-                          "busStop": "Volvo Torslanda PV, Göteborg",
-                          "icon": "ios-star-outline",
-                          "id": "9021014007483000",
-                          "parent": "Search List",
-                        },
-                        Object {
-                          "busStop": "Överåsvallen, Göteborg",
-                          "icon": "ios-star",
-                          "id": "9021014007900000",
-                          "parent": "Search List",
-                        },
-                      ]
-                    }
-                    keyExtractor={[Function]}
-                    keyboardShouldPersistTaps="always"
-                    renderItem={[Function]}
-                    scrollEnabled={false}
-                  />,
-                  <View>
-                    <ListHeading
-                      icon="md-refresh"
-                      loading={false}
-                      onPress={[Function]}
-                      text="Hållplatser nära dig"
-                    />
-                    <FlatList
-                      ItemSeparatorComponent={[Function]}
-                      data={
-                        Array [
-                          Object {
-                            "busStop": "Volvo Torslanda PV, Göteborg",
-                            "icon": "ios-star-outline",
-                            "id": "9021014007483000",
-                            "parent": "Stops Nearby",
-                          },
-                          Object {
-                            "busStop": "Överåsvallen, Göteborg",
-                            "icon": "ios-star",
-                            "id": "9021014007900000",
-                            "parent": "Stops Nearby",
-                          },
-                        ]
-                      }
-                      keyExtractor={[Function]}
-                      keyboardShouldPersistTaps="always"
-                      renderItem={[Function]}
-                      scrollEnabled={false}
-                    />
-                  </View>,
-                  <ListHeading
-                    icon="edit"
-                    iconSize={16}
-                    onPress={[Function]}
-                    text="Mina hållplatser"
-                  />,
-                  <FlatList
-                    ItemSeparatorComponent={[Function]}
-                    data={
-                      Array [
-                        Object {
-                          "busStop": "Överåsvallen, Göteborg",
-                          "id": "9021014007900000",
-                        },
-                        Object {
-                          "busStop": "Älmhult, Ale",
-                          "id": "9021014016323000",
-                        },
-                      ]
-                    }
-                    extraData={false}
-                    keyExtractor={[Function]}
-                    keyboardShouldPersistTaps="always"
-                    renderItem={[Function]}
-                    scrollEnabled={false}
-                  />,
-                ],
-              },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "text": "Sökresultat",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "ItemSeparatorComponent": [Function],
-                    "data": Array [
-                      Object {
-                        "busStop": "Volvo Torslanda PV, Göteborg",
-                        "icon": "ios-star-outline",
-                        "id": "9021014007483000",
-                        "parent": "Search List",
-                      },
-                      Object {
-                        "busStop": "Överåsvallen, Göteborg",
-                        "icon": "ios-star",
-                        "id": "9021014007900000",
-                        "parent": "Search List",
-                      },
-                    ],
-                    "keyExtractor": [Function],
-                    "keyboardShouldPersistTaps": "always",
-                    "renderItem": [Function],
-                    "scrollEnabled": false,
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "children": Array [
-                      <ListHeading
-                        icon="md-refresh"
-                        loading={false}
-                        onPress={[Function]}
-                        text="Hållplatser nära dig"
-                      />,
-                      null,
-                      <FlatList
-                        ItemSeparatorComponent={[Function]}
-                        data={
-                          Array [
-                            Object {
-                              "busStop": "Volvo Torslanda PV, Göteborg",
-                              "icon": "ios-star-outline",
-                              "id": "9021014007483000",
-                              "parent": "Stops Nearby",
-                            },
-                            Object {
-                              "busStop": "Överåsvallen, Göteborg",
-                              "icon": "ios-star",
-                              "id": "9021014007900000",
-                              "parent": "Stops Nearby",
-                            },
-                          ]
-                        }
-                        keyExtractor={[Function]}
-                        keyboardShouldPersistTaps="always"
-                        renderItem={[Function]}
-                        scrollEnabled={false}
-                      />,
-                    ],
-                  },
-                  "ref": null,
-                  "rendered": Array [
-                    Object {
-                      "instance": null,
-                      "key": undefined,
-                      "nodeType": "function",
-                      "props": Object {
-                        "icon": "md-refresh",
-                        "loading": false,
-                        "onPress": [Function],
-                        "text": "Hållplatser nära dig",
-                      },
-                      "ref": null,
-                      "rendered": null,
-                      "type": [Function],
-                    },
-                    null,
-                    Object {
-                      "instance": null,
-                      "key": undefined,
-                      "nodeType": "function",
-                      "props": Object {
-                        "ItemSeparatorComponent": [Function],
-                        "data": Array [
-                          Object {
-                            "busStop": "Volvo Torslanda PV, Göteborg",
-                            "icon": "ios-star-outline",
-                            "id": "9021014007483000",
-                            "parent": "Stops Nearby",
-                          },
-                          Object {
-                            "busStop": "Överåsvallen, Göteborg",
-                            "icon": "ios-star",
-                            "id": "9021014007900000",
-                            "parent": "Stops Nearby",
-                          },
-                        ],
-                        "keyExtractor": [Function],
-                        "keyboardShouldPersistTaps": "always",
-                        "renderItem": [Function],
-                        "scrollEnabled": false,
-                      },
-                      "ref": null,
-                      "rendered": null,
-                      "type": [Function],
-                    },
-                  ],
-                  "type": [Function],
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "icon": "edit",
-                    "iconSize": 16,
-                    "onPress": [Function],
-                    "text": "Mina hållplatser",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "ItemSeparatorComponent": [Function],
-                    "data": Array [
-                      Object {
-                        "busStop": "Överåsvallen, Göteborg",
-                        "id": "9021014007900000",
-                      },
-                      Object {
-                        "busStop": "Älmhult, Ale",
-                        "id": "9021014016323000",
-                      },
-                    ],
-                    "extraData": false,
-                    "keyExtractor": [Function],
-                    "keyboardShouldPersistTaps": "always",
-                    "renderItem": [Function],
-                    "scrollEnabled": false,
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-              ],
-              "type": [Function],
+              "busStop": "Älmhult, Ale",
+              "id": "9021014016323000",
             },
-            null,
-          ],
-          "type": [Function],
-        },
-      ],
-      "type": [Function],
-    },
-  ],
-  Symbol(enzyme.__options__): Object {
-    "adapter": ReactSixteenAdapter {
-      "options": Object {
-        "enableComponentDidUpdateOnSetState": true,
-      },
-    },
-  },
-}
+          ]
+        }
+        extraData={false}
+        keyExtractor={[Function]}
+        keyboardShouldPersistTaps="always"
+        renderItem={[Function]}
+        scrollEnabled={false}
+      />
+    </View>
+  </ScrollView>
+</View>
 `;
