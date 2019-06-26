@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import React, { PureComponent } from 'react';
-import { View, ScrollView, FlatList, AppState, ProgressBarAndroid } from 'react-native';
+import { View, ScrollView, FlatList, AppState } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import { HelpButton } from '../Router';
@@ -17,7 +17,6 @@ class ShowDepartures extends PureComponent {
 		this.state = {
 			init: true,
 			showHelp: false,
-			progress: 0,
 		};
 	}
 
@@ -29,7 +28,6 @@ class ShowDepartures extends PureComponent {
 	}
 
 	componentDidMount() {
-		this.mounted = true;
 		this.startRefresh();
 		AppState.addEventListener('change', this.handleAppStateChange);
 	}
@@ -53,11 +51,8 @@ class ShowDepartures extends PureComponent {
 	}
 
 	componentWillUnmount() {
-		this.mounted = false;
 		clearInterval(this.interval);
 		this.interval = null;
-		clearInterval(this.progress);
-		this.progress = null;
 		this.props.clearDepartures();
 		this.props.clearErrors();
 		fetch.abort('getDepartures');
@@ -67,8 +62,6 @@ class ShowDepartures extends PureComponent {
 	handleAppStateChange = (nextAppState) => {
 		clearInterval(this.interval);
 		this.interval = null;
-		clearInterval(this.progress);
-		this.progress = null;
 		this.props.clearDepartures();
 		this.props.clearErrors();
 		fetch.abort('getDepartures');
@@ -82,19 +75,9 @@ class ShowDepartures extends PureComponent {
 	startRefresh() {
 		const self = this;
 		self.interval = setInterval(self.refresh.bind(self), 10000);
-		self.progress = setInterval(() => {
-			if (this.mounted) {
-				this.setState((prevState) => ({
-					progress: prevState.progress + 0.011
-				}));
-			}
-		}, 100);
 	}
 
 	refresh = () => {
-		this.setState({
-			progress: 0,
-		});
 		Actions.refresh({ right: () => {
 			return (
 				<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -175,44 +158,32 @@ class ShowDepartures extends PureComponent {
 		}
 
 		return (
-			<View>
-				<ProgressBarAndroid
-					styleAttr="Horizontal"
-					indeterminate={false}
-					progress={this.state.progress}
-					style={{
-						paddingTop: 0,
-						marginTop: 0,
-						height: 2,
-					}}
+			<ScrollView>
+				<FlatList
+					data={this.props.favorites}
+					renderItem={this.renderDepartures}
+					keyExtractor={item => item.journeyid}
+					ItemSeparatorComponent={ListItemSeparator}
+					ListFooterComponent={this.ListFooterComponent}
+					maxToRenderPerBatch={11}
+					initialNumToRender={11}
+					scrollEnabled={false}
+					extraData={this.state}
 				/>
-				<ScrollView>
-					<FlatList
-						data={this.props.favorites}
-						renderItem={this.renderDepartures}
-						keyExtractor={item => item.journeyid}
-						ItemSeparatorComponent={ListItemSeparator}
-						ListFooterComponent={this.ListFooterComponent}
-						maxToRenderPerBatch={11}
-						initialNumToRender={11}
-						scrollEnabled={false}
-						extraData={this.state}
-					/>
-					<FlatList
-						data={this.props.departures}
-						renderItem={this.renderDepartures}
-						keyExtractor={item => item.journeyid}
-						ItemSeparatorComponent={ListItemSeparator}
-						getItemLayout={(data, index) => (
-							{ length: 51, offset: 51 * index, index }
-						)}
-						maxToRenderPerBatch={11}
-						initialNumToRender={11}
-						scrollEnabled={false}
-						extraData={this.state}
-					/>
-				</ScrollView>
-			</View>
+				<FlatList
+					data={this.props.departures}
+					renderItem={this.renderDepartures}
+					keyExtractor={item => item.journeyid}
+					ItemSeparatorComponent={ListItemSeparator}
+					getItemLayout={(data, index) => (
+						{ length: 51, offset: 51 * index, index }
+					)}
+					maxToRenderPerBatch={11}
+					initialNumToRender={11}
+					scrollEnabled={false}
+					extraData={this.state}
+				/>
+			</ScrollView>
 		);
 	}
 

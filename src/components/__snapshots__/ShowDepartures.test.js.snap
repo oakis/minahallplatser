@@ -191,76 +191,60 @@ ShallowWrapper {
             För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.
           </DefaultFont>
         </Popup>,
-        <View>
-          <ProgressBarAndroid
-            indeterminate={false}
-            progress={0}
-            style={
+        <ScrollView>
+          <FlatList
+            ItemSeparatorComponent={[Function]}
+            ListFooterComponent={[Function]}
+            data={
+              Array [
+                Object {
+                  "accessibility": "wheelChair",
+                  "bgColor": "#000",
+                  "clockLeft": "16:00",
+                  "clockNext": "16:05",
+                  "direction": "Högsbo",
+                  "fgColor": "#eee",
+                  "isLive": true,
+                  "journeyid": "123",
+                  "night": false,
+                  "sname": "16X",
+                  "timeLeft": "3",
+                  "timeNext": "8",
+                  "track": "A",
+                  "type": "BUS",
+                  "via": "via Centralstationen",
+                },
+              ]
+            }
+            extraData={
               Object {
-                "height": 2,
-                "marginTop": 0,
-                "paddingTop": 0,
+                "init": true,
+                "showHelp": false,
               }
             }
-            styleAttr="Horizontal"
+            initialNumToRender={11}
+            keyExtractor={[Function]}
+            maxToRenderPerBatch={11}
+            renderItem={[Function]}
+            scrollEnabled={false}
           />
-          <ScrollView>
-            <FlatList
-              ItemSeparatorComponent={[Function]}
-              ListFooterComponent={[Function]}
-              data={
-                Array [
-                  Object {
-                    "accessibility": "wheelChair",
-                    "bgColor": "#000",
-                    "clockLeft": "16:00",
-                    "clockNext": "16:05",
-                    "direction": "Högsbo",
-                    "fgColor": "#eee",
-                    "isLive": true,
-                    "journeyid": "123",
-                    "night": false,
-                    "sname": "16X",
-                    "timeLeft": "3",
-                    "timeNext": "8",
-                    "track": "A",
-                    "type": "BUS",
-                    "via": "via Centralstationen",
-                  },
-                ]
+          <FlatList
+            ItemSeparatorComponent={[Function]}
+            data={Array []}
+            extraData={
+              Object {
+                "init": true,
+                "showHelp": false,
               }
-              extraData={
-                Object {
-                  "init": true,
-                  "progress": 0,
-                  "showHelp": false,
-                }
-              }
-              initialNumToRender={11}
-              keyExtractor={[Function]}
-              maxToRenderPerBatch={11}
-              renderItem={[Function]}
-              scrollEnabled={false}
-            />
-            <FlatList
-              ItemSeparatorComponent={[Function]}
-              data={Array []}
-              extraData={
-                Object {
-                  "init": true,
-                  "progress": 0,
-                  "showHelp": false,
-                }
-              }
-              getItemLayout={[Function]}
-              initialNumToRender={11}
-              keyExtractor={[Function]}
-              maxToRenderPerBatch={11}
-              renderItem={[Function]}
-              scrollEnabled={false}
-            />
-          </ScrollView>
-        </View>,
+            }
+            getItemLayout={[Function]}
+            initialNumToRender={11}
+            keyExtractor={[Function]}
+            maxToRenderPerBatch={11}
+            renderItem={[Function]}
+            scrollEnabled={false}
+          />
+        </ScrollView>,
       ],
       "style": Object {
         "flex": 1,
@@ -549,74 +533,58 @@ ShallowWrapper {
         "nodeType": "function",
         "props": Object {
           "children": Array [
-            <ProgressBarAndroid
-              indeterminate={false}
-              progress={0}
-              style={
+            <FlatList
+              ItemSeparatorComponent={[Function]}
+              ListFooterComponent={[Function]}
+              data={
+                Array [
+                  Object {
+                    "accessibility": "wheelChair",
+                    "bgColor": "#000",
+                    "clockLeft": "16:00",
+                    "clockNext": "16:05",
+                    "direction": "Högsbo",
+                    "fgColor": "#eee",
+                    "isLive": true,
+                    "journeyid": "123",
+                    "night": false,
+                    "sname": "16X",
+                    "timeLeft": "3",
+                    "timeNext": "8",
+                    "track": "A",
+                    "type": "BUS",
+                    "via": "via Centralstationen",
+                  },
+                ]
+              }
+              extraData={
                 Object {
-                  "height": 2,
-                  "marginTop": 0,
-                  "paddingTop": 0,
+                  "init": true,
+                  "showHelp": false,
                 }
               }
-              styleAttr="Horizontal"
+              initialNumToRender={11}
+              keyExtractor={[Function]}
+              maxToRenderPerBatch={11}
+              renderItem={[Function]}
+              scrollEnabled={false}
             />,
-            <ScrollView>
-              <FlatList
-                ItemSeparatorComponent={[Function]}
-                ListFooterComponent={[Function]}
-                data={
-                  Array [
-                    Object {
-                      "accessibility": "wheelChair",
-                      "bgColor": "#000",
-                      "clockLeft": "16:00",
-                      "clockNext": "16:05",
-                      "direction": "Högsbo",
-                      "fgColor": "#eee",
-                      "isLive": true,
-                      "journeyid": "123",
-                      "night": false,
-                      "sname": "16X",
-                      "timeLeft": "3",
-                      "timeNext": "8",
-                      "track": "A",
-                      "type": "BUS",
-                      "via": "via Centralstationen",
-                    },
-                  ]
+            <FlatList
+              ItemSeparatorComponent={[Function]}
+              data={Array []}
+              extraData={
+                Object {
+                  "init": true,
+                  "showHelp": false,
                 }
-                extraData={
-                  Object {
-                    "init": true,
-                    "progress": 0,
-                    "showHelp": false,
-                  }
-                }
-                initialNumToRender={11}
-                keyExtractor={[Function]}
-                maxToRenderPerBatch={11}
-                renderItem={[Function]}
-                scrollEnabled={false}
-              />
-              <FlatList
-                ItemSeparatorComponent={[Function]}
-                data={Array []}
-                extraData={
-                  Object {
-                    "init": true,
-                    "progress": 0,
-                    "showHelp": false,
-                  }
-                }
-                getItemLayout={[Function]}
-                initialNumToRender={11}
-                keyExtractor={[Function]}
-                maxToRenderPerBatch={11}
-                renderItem={[Function]}
-                scrollEnabled={false}
-              />
-            </ScrollView>,
+              }
+              getItemLayout={[Function]}
+              initialNumToRender={11}
+              keyExtractor={[Function]}
+              maxToRenderPerBatch={11}
+              renderItem={[Function]}
+              scrollEnabled={false}
+            />,
           ],
         },
         "ref": null,
@@ -626,14 +594,36 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "function",
             "props": Object {
-              "indeterminate": false,
-              "progress": 0,
-              "style": Object {
-                "height": 2,
-                "marginTop": 0,
-                "paddingTop": 0,
+              "ItemSeparatorComponent": [Function],
+              "ListFooterComponent": [Function],
+              "data": Array [
+                Object {
+                  "accessibility": "wheelChair",
+                  "bgColor": "#000",
+                  "clockLeft": "16:00",
+                  "clockNext": "16:05",
+                  "direction": "Högsbo",
+                  "fgColor": "#eee",
+                  "isLive": true,
+                  "journeyid": "123",
+                  "night": false,
+                  "sname": "16X",
+                  "timeLeft": "3",
+                  "timeNext": "8",
+                  "track": "A",
+                  "type": "BUS",
+                  "via": "via Centralstationen",
+                },
+              ],
+              "extraData": Object {
+                "init": true,
+                "showHelp": false,
               },
-              "styleAttr": "Horizontal",
+              "initialNumToRender": 11,
+              "keyExtractor": [Function],
+              "maxToRenderPerBatch": 11,
+              "renderItem": [Function],
+              "scrollEnabled": false,
             },
             "ref": null,
             "rendered": null,
@@ -644,130 +634,21 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "function",
             "props": Object {
-              "children": Array [
-                <FlatList
-                  ItemSeparatorComponent={[Function]}
-                  ListFooterComponent={[Function]}
-                  data={
-                    Array [
-                      Object {
-                        "accessibility": "wheelChair",
-                        "bgColor": "#000",
-                        "clockLeft": "16:00",
-                        "clockNext": "16:05",
-                        "direction": "Högsbo",
-                        "fgColor": "#eee",
-                        "isLive": true,
-                        "journeyid": "123",
-                        "night": false,
-                        "sname": "16X",
-                        "timeLeft": "3",
-                        "timeNext": "8",
-                        "track": "A",
-                        "type": "BUS",
-                        "via": "via Centralstationen",
-                      },
-                    ]
-                  }
-                  extraData={
-                    Object {
-                      "init": true,
-                      "progress": 0,
-                      "showHelp": false,
-                    }
-                  }
-                  initialNumToRender={11}
-                  keyExtractor={[Function]}
-                  maxToRenderPerBatch={11}
-                  renderItem={[Function]}
-                  scrollEnabled={false}
-                />,
-                <FlatList
-                  ItemSeparatorComponent={[Function]}
-                  data={Array []}
-                  extraData={
-                    Object {
-                      "init": true,
-                      "progress": 0,
-                      "showHelp": false,
-                    }
-                  }
-                  getItemLayout={[Function]}
-                  initialNumToRender={11}
-                  keyExtractor={[Function]}
-                  maxToRenderPerBatch={11}
-                  renderItem={[Function]}
-                  scrollEnabled={false}
-                />,
-              ],
+              "ItemSeparatorComponent": [Function],
+              "data": Array [],
+              "extraData": Object {
+                "init": true,
+                "showHelp": false,
+              },
+              "getItemLayout": [Function],
+              "initialNumToRender": 11,
+              "keyExtractor": [Function],
+              "maxToRenderPerBatch": 11,
+              "renderItem": [Function],
+              "scrollEnabled": false,
             },
             "ref": null,
-            "rendered": Array [
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "ItemSeparatorComponent": [Function],
-                  "ListFooterComponent": [Function],
-                  "data": Array [
-                    Object {
-                      "accessibility": "wheelChair",
-                      "bgColor": "#000",
-                      "clockLeft": "16:00",
-                      "clockNext": "16:05",
-                      "direction": "Högsbo",
-                      "fgColor": "#eee",
-                      "isLive": true,
-                      "journeyid": "123",
-                      "night": false,
-                      "sname": "16X",
-                      "timeLeft": "3",
-                      "timeNext": "8",
-                      "track": "A",
-                      "type": "BUS",
-                      "via": "via Centralstationen",
-                    },
-                  ],
-                  "extraData": Object {
-                    "init": true,
-                    "progress": 0,
-                    "showHelp": false,
-                  },
-                  "initialNumToRender": 11,
-                  "keyExtractor": [Function],
-                  "maxToRenderPerBatch": 11,
-                  "renderItem": [Function],
-                  "scrollEnabled": false,
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {
-                  "ItemSeparatorComponent": [Function],
-                  "data": Array [],
-                  "extraData": Object {
-                    "init": true,
-                    "progress": 0,
-                    "showHelp": false,
-                  },
-                  "getItemLayout": [Function],
-                  "initialNumToRender": 11,
-                  "keyExtractor": [Function],
-                  "maxToRenderPerBatch": 11,
-                  "renderItem": [Function],
-                  "scrollEnabled": false,
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-            ],
+            "rendered": null,
             "type": [Function],
           },
         ],
@@ -877,76 +758,60 @@ ShallowWrapper {
               För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.
             </DefaultFont>
           </Popup>,
-          <View>
-            <ProgressBarAndroid
-              indeterminate={false}
-              progress={0}
-              style={
+          <ScrollView>
+            <FlatList
+              ItemSeparatorComponent={[Function]}
+              ListFooterComponent={[Function]}
+              data={
+                Array [
+                  Object {
+                    "accessibility": "wheelChair",
+                    "bgColor": "#000",
+                    "clockLeft": "16:00",
+                    "clockNext": "16:05",
+                    "direction": "Högsbo",
+                    "fgColor": "#eee",
+                    "isLive": true,
+                    "journeyid": "123",
+                    "night": false,
+                    "sname": "16X",
+                    "timeLeft": "3",
+                    "timeNext": "8",
+                    "track": "A",
+                    "type": "BUS",
+                    "via": "via Centralstationen",
+                  },
+                ]
+              }
+              extraData={
                 Object {
-                  "height": 2,
-                  "marginTop": 0,
-                  "paddingTop": 0,
+                  "init": true,
+                  "showHelp": false,
                 }
               }
-              styleAttr="Horizontal"
+              initialNumToRender={11}
+              keyExtractor={[Function]}
+              maxToRenderPerBatch={11}
+              renderItem={[Function]}
+              scrollEnabled={false}
             />
-            <ScrollView>
-              <FlatList
-                ItemSeparatorComponent={[Function]}
-                ListFooterComponent={[Function]}
-                data={
-                  Array [
-                    Object {
-                      "accessibility": "wheelChair",
-                      "bgColor": "#000",
-                      "clockLeft": "16:00",
-                      "clockNext": "16:05",
-                      "direction": "Högsbo",
-                      "fgColor": "#eee",
-                      "isLive": true,
-                      "journeyid": "123",
-                      "night": false,
-                      "sname": "16X",
-                      "timeLeft": "3",
-                      "timeNext": "8",
-                      "track": "A",
-                      "type": "BUS",
-                      "via": "via Centralstationen",
-                    },
-                  ]
+            <FlatList
+              ItemSeparatorComponent={[Function]}
+              data={Array []}
+              extraData={
+                Object {
+                  "init": true,
+                  "showHelp": false,
                 }
-                extraData={
-                  Object {
-                    "init": true,
-                    "progress": 0,
-                    "showHelp": false,
-                  }
-                }
-                initialNumToRender={11}
-                keyExtractor={[Function]}
-                maxToRenderPerBatch={11}
-                renderItem={[Function]}
-                scrollEnabled={false}
-              />
-              <FlatList
-                ItemSeparatorComponent={[Function]}
-                data={Array []}
-                extraData={
-                  Object {
-                    "init": true,
-                    "progress": 0,
-                    "showHelp": false,
-                  }
-                }
-                getItemLayout={[Function]}
-                initialNumToRender={11}
-                keyExtractor={[Function]}
-                maxToRenderPerBatch={11}
-                renderItem={[Function]}
-                scrollEnabled={false}
-              />
-            </ScrollView>
-          </View>,
+              }
+              getItemLayout={[Function]}
+              initialNumToRender={11}
+              keyExtractor={[Function]}
+              maxToRenderPerBatch={11}
+              renderItem={[Function]}
+              scrollEnabled={false}
+            />
+          </ScrollView>,
         ],
         "style": Object {
           "flex": 1,
@@ -1235,74 +1100,58 @@ ShallowWrapper {
           "nodeType": "function",
           "props": Object {
             "children": Array [
-              <ProgressBarAndroid
-                indeterminate={false}
-                progress={0}
-                style={
+              <FlatList
+                ItemSeparatorComponent={[Function]}
+                ListFooterComponent={[Function]}
+                data={
+                  Array [
+                    Object {
+                      "accessibility": "wheelChair",
+                      "bgColor": "#000",
+                      "clockLeft": "16:00",
+                      "clockNext": "16:05",
+                      "direction": "Högsbo",
+                      "fgColor": "#eee",
+                      "isLive": true,
+                      "journeyid": "123",
+                      "night": false,
+                      "sname": "16X",
+                      "timeLeft": "3",
+                      "timeNext": "8",
+                      "track": "A",
+                      "type": "BUS",
+                      "via": "via Centralstationen",
+                    },
+                  ]
+                }
+                extraData={
                   Object {
-                    "height": 2,
-                    "marginTop": 0,
-                    "paddingTop": 0,
+                    "init": true,
+                    "showHelp": false,
                   }
                 }
-                styleAttr="Horizontal"
+                initialNumToRender={11}
+                keyExtractor={[Function]}
+                maxToRenderPerBatch={11}
+                renderItem={[Function]}
+                scrollEnabled={false}
               />,
-              <ScrollView>
-                <FlatList
-                  ItemSeparatorComponent={[Function]}
-                  ListFooterComponent={[Function]}
-                  data={
-                    Array [
-                      Object {
-                        "accessibility": "wheelChair",
-                        "bgColor": "#000",
-                        "clockLeft": "16:00",
-                        "clockNext": "16:05",
-                        "direction": "Högsbo",
-                        "fgColor": "#eee",
-                        "isLive": true,
-                        "journeyid": "123",
-                        "night": false,
-                        "sname": "16X",
-                        "timeLeft": "3",
-                        "timeNext": "8",
-                        "track": "A",
-                        "type": "BUS",
-                        "via": "via Centralstationen",
-                      },
-                    ]
+              <FlatList
+                ItemSeparatorComponent={[Function]}
+                data={Array []}
+                extraData={
+                  Object {
+                    "init": true,
+                    "showHelp": false,
                   }
-                  extraData={
-                    Object {
-                      "init": true,
-                      "progress": 0,
-                      "showHelp": false,
-                    }
-                  }
-                  initialNumToRender={11}
-                  keyExtractor={[Function]}
-                  maxToRenderPerBatch={11}
-                  renderItem={[Function]}
-                  scrollEnabled={false}
-                />
-                <FlatList
-                  ItemSeparatorComponent={[Function]}
-                  data={Array []}
-                  extraData={
-                    Object {
-                      "init": true,
-                      "progress": 0,
-                      "showHelp": false,
-                    }
-                  }
-                  getItemLayout={[Function]}
-                  initialNumToRender={11}
-                  keyExtractor={[Function]}
-                  maxToRenderPerBatch={11}
-                  renderItem={[Function]}
-                  scrollEnabled={false}
-                />
-              </ScrollView>,
+                }
+                getItemLayout={[Function]}
+                initialNumToRender={11}
+                keyExtractor={[Function]}
+                maxToRenderPerBatch={11}
+                renderItem={[Function]}
+                scrollEnabled={false}
+              />,
             ],
           },
           "ref": null,
@@ -1312,14 +1161,36 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "function",
               "props": Object {
-                "indeterminate": false,
-                "progress": 0,
-                "style": Object {
-                  "height": 2,
-                  "marginTop": 0,
-                  "paddingTop": 0,
+                "ItemSeparatorComponent": [Function],
+                "ListFooterComponent": [Function],
+                "data": Array [
+                  Object {
+                    "accessibility": "wheelChair",
+                    "bgColor": "#000",
+                    "clockLeft": "16:00",
+                    "clockNext": "16:05",
+                    "direction": "Högsbo",
+                    "fgColor": "#eee",
+                    "isLive": true,
+                    "journeyid": "123",
+                    "night": false,
+                    "sname": "16X",
+                    "timeLeft": "3",
+                    "timeNext": "8",
+                    "track": "A",
+                    "type": "BUS",
+                    "via": "via Centralstationen",
+                  },
+                ],
+                "extraData": Object {
+                  "init": true,
+                  "showHelp": false,
                 },
-                "styleAttr": "Horizontal",
+                "initialNumToRender": 11,
+                "keyExtractor": [Function],
+                "maxToRenderPerBatch": 11,
+                "renderItem": [Function],
+                "scrollEnabled": false,
               },
               "ref": null,
               "rendered": null,
@@ -1330,130 +1201,21 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "function",
               "props": Object {
-                "children": Array [
-                  <FlatList
-                    ItemSeparatorComponent={[Function]}
-                    ListFooterComponent={[Function]}
-                    data={
-                      Array [
-                        Object {
-                          "accessibility": "wheelChair",
-                          "bgColor": "#000",
-                          "clockLeft": "16:00",
-                          "clockNext": "16:05",
-                          "direction": "Högsbo",
-                          "fgColor": "#eee",
-                          "isLive": true,
-                          "journeyid": "123",
-                          "night": false,
-                          "sname": "16X",
-                          "timeLeft": "3",
-                          "timeNext": "8",
-                          "track": "A",
-                          "type": "BUS",
-                          "via": "via Centralstationen",
-                        },
-                      ]
-                    }
-                    extraData={
-                      Object {
-                        "init": true,
-                        "progress": 0,
-                        "showHelp": false,
-                      }
-                    }
-                    initialNumToRender={11}
-                    keyExtractor={[Function]}
-                    maxToRenderPerBatch={11}
-                    renderItem={[Function]}
-                    scrollEnabled={false}
-                  />,
-                  <FlatList
-                    ItemSeparatorComponent={[Function]}
-                    data={Array []}
-                    extraData={
-                      Object {
-                        "init": true,
-                        "progress": 0,
-                        "showHelp": false,
-                      }
-                    }
-                    getItemLayout={[Function]}
-                    initialNumToRender={11}
-                    keyExtractor={[Function]}
-                    maxToRenderPerBatch={11}
-                    renderItem={[Function]}
-                    scrollEnabled={false}
-                  />,
-                ],
+                "ItemSeparatorComponent": [Function],
+                "data": Array [],
+                "extraData": Object {
+                  "init": true,
+                  "showHelp": false,
+                },
+                "getItemLayout": [Function],
+                "initialNumToRender": 11,
+                "keyExtractor": [Function],
+                "maxToRenderPerBatch": 11,
+                "renderItem": [Function],
+                "scrollEnabled": false,
               },
               "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "ItemSeparatorComponent": [Function],
-                    "ListFooterComponent": [Function],
-                    "data": Array [
-                      Object {
-                        "accessibility": "wheelChair",
-                        "bgColor": "#000",
-                        "clockLeft": "16:00",
-                        "clockNext": "16:05",
-                        "direction": "Högsbo",
-                        "fgColor": "#eee",
-                        "isLive": true,
-                        "journeyid": "123",
-                        "night": false,
-                        "sname": "16X",
-                        "timeLeft": "3",
-                        "timeNext": "8",
-                        "track": "A",
-                        "type": "BUS",
-                        "via": "via Centralstationen",
-                      },
-                    ],
-                    "extraData": Object {
-                      "init": true,
-                      "progress": 0,
-                      "showHelp": false,
-                    },
-                    "initialNumToRender": 11,
-                    "keyExtractor": [Function],
-                    "maxToRenderPerBatch": 11,
-                    "renderItem": [Function],
-                    "scrollEnabled": false,
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "function",
-                  "props": Object {
-                    "ItemSeparatorComponent": [Function],
-                    "data": Array [],
-                    "extraData": Object {
-                      "init": true,
-                      "progress": 0,
-                      "showHelp": false,
-                    },
-                    "getItemLayout": [Function],
-                    "initialNumToRender": 11,
-                    "keyExtractor": [Function],
-                    "maxToRenderPerBatch": 11,
-                    "renderItem": [Function],
-                    "scrollEnabled": false,
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-              ],
+              "rendered": null,
               "type": [Function],
             },
           ],
