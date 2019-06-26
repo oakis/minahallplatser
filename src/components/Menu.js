@@ -9,8 +9,11 @@ import { Feedback } from './modals';
 
 class Menu extends Component {
 
-    state = {
-        feedbackVisible: false,
+    constructor(props) {
+        super(props);
+        this.state = {
+            feedbackVisible: false,
+        };
     }
 
     openFeedback() {
@@ -93,7 +96,7 @@ class Menu extends Component {
 
                     <ListItem
                         text="Lämna feedback"
-                        icon="ios-mail-outline"
+                        icon="email"
                         iconVisible
                         pressItem={() => {
                             track('Feedback Open');

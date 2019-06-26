@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Icon2 from 'react-native-vector-icons/Ionicons';
-import Icon3 from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
 import { Text } from './';
 import { colors } from '../style';
@@ -14,27 +12,35 @@ function formatTime(minutes) {
 
 export class DepartureListItem extends PureComponent {
 
+    constructor(props) {
+        super(props);
+
+        this.getDepartureTypeIcon = this.getDepartureTypeIcon.bind(this);
+    }
+
     getDepartureTypeIcon = (type, color) => {
 		let iconName;
 		switch (type) {
             case 'BOAT':
-                iconName = 'ios-boat';
+                iconName = 'directions_boat';
                 break;
             case 'BUS':
-                iconName = 'ios-bus';
+                iconName = 'directions-bus';
                 break;
             case 'TAXI':
-                return <Icon3 name="local-taxi" size={15} color={color} />;
+                iconName = 'local-taxi';
+                break;
             case 'TRAM':
-                return <Icon3 name="tram" size={15} color={color} />;
+                iconName = 'tram';
+                break;
             case 'VAS':
             case 'REG':
-                iconName = 'ios-train';
+                iconName = 'train';
                 break;
             default:
                 return null;
 		}
-		return <Icon2 name={iconName} size={15} color={color} />;
+		return <Icon name={iconName} size={15} color={color} />;
 	}
 
     render() {

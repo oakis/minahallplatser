@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import firebase from 'react-native-firebase';
 import { stub } from 'sinon';
 import Menu from './Menu';
 
@@ -25,7 +25,7 @@ beforeEach(() => {
 
 it('should match snapshot', () => {
     const wrapper = shallow(<Menu store={mockStore(initialState)} />).dive();
-    expect(wrapper).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('openFeedback should set feedbackVisible to true', () => {

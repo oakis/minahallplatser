@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableWithoutFeedback, View, StatusBar } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Scene, Router, Actions, Stack, Drawer } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import FavoriteList from './components/FavoriteList';
@@ -47,7 +46,7 @@ export const BackButton = () => {
 				}}
 			>
 				<Icon
-					name="ios-arrow-back"
+					name="keyboard-arrow-left"
 					style={{ color: colors.alternative, fontSize: iconSize }}
 				/>
 			</View>
@@ -68,7 +67,7 @@ export const HelpButton = (self) => {
 					justifyContent: 'center'
 				}}
 			>
-				<MaterialIcons
+				<Icon
 					name="live-help"
 					style={{ color: colors.alternative, fontSize: iconSize }}
 				/>
@@ -103,7 +102,7 @@ class RouterComponent extends Component {
 						<Drawer
 							key="dashboard"
 							contentComponent={Menu}
-							drawerIcon={<Icon name="ios-menu" size={iconSize} style={{ color: colors.alternative }} />}
+							drawerIcon={<Icon name="menu" size={iconSize} style={{ color: colors.alternative }} />}
 							drawerWidth={225}
 						>
 							<Scene

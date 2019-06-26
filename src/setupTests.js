@@ -345,10 +345,7 @@ jest.mock('redux-persist', () => ({
     persistStore: () => jest.fn(),
 }));
 jest.mock('react-native-router-flux', () => {});
-jest.mock('react-native-vector-icons/Ionicons', () => 'IonIcon');
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'MaterialIcon');
-jest.mock('react-native-vector-icons/FontAwesome', () => 'FontAwesomeIcon');
-jest.mock('react-native-vector-icons/Entypo', () => 'EntypoIcon');
 jest.mock('react-native-device-info', () => {});
 jest.mock('react-native-mixpanel', () => (
     {
