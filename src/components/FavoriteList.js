@@ -7,7 +7,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
-import { ListItem, Message, Input, ListItemSeparator, ListHeading, Text, Popup } from './common';
+import { ListItem, Message, Input, ListItemSeparator, ListHeading, Text, Popup, Button } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { HelpButton } from '../Router';
@@ -263,10 +263,16 @@ class FavoriteList extends PureComponent {
 					}
 					{this.renderSectionList()}
 					{(this.props.favorites.length === 0) ?
-						<View style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>
-							<Text>
-								Du har inte sparat några favoriter än. Tryck <Text onPress={this.openPopup}>HÄR</Text> för mer information.
+						<View style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md, marginRight: metrics.margin.md }}>
+							<Text style={{ marginBottom: metrics.margin.md }}>
+								Du har inte sparat några favoriter än.
 							</Text>
+							<Button
+								onPress={this.openPopup}
+								label="Hjälp"
+								icon="live-help"
+								color="primary"
+							/>
 						</View> : null
 					}
 				</ScrollView>
