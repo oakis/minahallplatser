@@ -1,7 +1,7 @@
 {
   "name": "minahallplatser",
   "version": "0.9.1",
-  "versionCode": "64",
+  "versionCode": "91",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
@@ -10,7 +10,7 @@
     "test:coverage": "jest --coverage",
     "clean": "cd android && ./gradlew clean",
     "build-debug": "curl http://localhost:8081/index.bundle?platform=android -o android/app/src/main/assets/index.bundle && cd android && ./gradlew clean && ./gradlew assembleDebug",
-    "build-release": "yarn bundle && yarn clear-drawable && yarn clean && cd android && ./gradlew assembleRelease",
+    "build-release": "yarn bundle && yarn clear-drawable && yarn clean && cd android && ./gradlew bundleRelease",
     "clear-drawable": "rm -R android/app/src/main/res/drawable*",
     "bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "debug": "yarn clean && react-native run-android --appIdSuffix dev",
