@@ -2,8 +2,7 @@ import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
 import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Entypo from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
@@ -100,35 +99,35 @@ class FavoriteList extends PureComponent {
 					Söka efter hållplats
 				</Text>
 				<Text style={component.popup.text}>
-					För att söka på en hållplats klickar du på sökfältet ( <Ionicons name="ios-search" /> ) högst upp på startsidan och fyller i ett eller flera sökord.
+					För att söka på en hållplats klickar du på sökfältet ( <Icon name="search" /> ) högst upp på startsidan och fyller i ett eller flera sökord.
 				</Text>
 
 				<Text style={component.popup.header}>
 					Hållplatser nära dig
 				</Text>
 				<Text style={component.popup.text}>
-					Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din <Text style={{ fontWeight: 'bold' }}>plats</Text>. Om du har nekat tillgång så kan du klicka på pilen ( <Ionicons name="md-refresh" /> ) till höger om "Hållplatser nära dig" och godkänna åtkomst till platstjänster.
+					Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din <Text style={{ fontWeight: 'bold' }}>plats</Text>. Om du har nekat tillgång så kan du klicka på pilen ( <Icon name="refresh" /> ) till höger om "Hållplatser nära dig" och godkänna åtkomst till platstjänster.
 				</Text>
 
 				<Text style={component.popup.header}>
 					Spara hållplats som favorit
 				</Text>
 				<Text style={component.popup.text}>
-					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Ionicons name="ios-star-outline" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Ionicons name="ios-star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg och hållplatsen sparas i listan "Mina Hållplatser".
+					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Icon name="star-border" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Icon name="star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg och hållplatsen sparas i listan "Mina Hållplatser".
 				</Text>
 
 				<Text style={component.popup.header}>
 					Ta bort hållplats från favoriter
 				</Text>
 				<Text style={component.popup.text}>
-					För att ta bort en hållplats från favoriter så klickar du på <Text style={{ fontWeight: 'bold' }}>pennan</Text> ( <Entypo name="edit" /> ) och sedan på <Text style={{ fontWeight: 'bold' }}>minustecknet</Text> ( <Ionicons name="ios-remove-circle-outline" color={colors.danger} /> ) bredvid den hållplatsen du vill ta bort.
+					För att ta bort en hållplats från favoriter så klickar du på <Text style={{ fontWeight: 'bold' }}>pennan</Text> ( <Icon name="edit" /> ) och sedan på <Text style={{ fontWeight: 'bold' }}>minustecknet</Text> ( <Icon name="remove-circle-outline" color={colors.danger} /> ) bredvid den hållplatsen du vill ta bort.
 				</Text>
 
 				<Text style={component.popup.header}>
 					Sortera favoriter
 				</Text>
 				<Text style={component.popup.text}>
-					I <Text style={{ fontWeight: 'bold' }}>menyn</Text> ( <Ionicons name="ios-menu" /> ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.
+					I <Text style={{ fontWeight: 'bold' }}>menyn</Text> ( <Icon name="menu" /> ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.
 				</Text>
 
 			</Popup>
@@ -139,7 +138,7 @@ class FavoriteList extends PureComponent {
 		return (
 			<ListItem
 				text={item.busStop}
-				icon='ios-remove-circle-outline'
+				icon='remove-circle-outline'
 				pressItem={async () => {
 					Keyboard.dismiss();
 					await this.props.clearErrors();
@@ -179,7 +178,7 @@ class FavoriteList extends PureComponent {
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
-					if (item.icon === 'ios-star') {
+					if (item.icon === 'star') {
 						track('Favorite Stop Remove', { Stop: item.name, Parent: item.parent });
 						this.props.favoriteDelete(item.id);
 					} else {
@@ -196,7 +195,7 @@ class FavoriteList extends PureComponent {
 	renderNearbyStops = () => {
 		return (
 			<View>
-				<ListHeading text="Hållplatser nära dig" icon="md-refresh" onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
+				<ListHeading text="Hållplatser nära dig" icon="refresh" onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
 				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
 				<FlatList
 					data={this.props.stopsNearby}
@@ -246,9 +245,9 @@ class FavoriteList extends PureComponent {
 						placeholder="Sök hållplats.."
 						onChangeText={this.onInputChange}
 						value={this.props.busStop}
-						icon="ios-search"
+						icon="search"
 						loading={this.props.searchLoading && this.props.busStop.length > 0}
-						iconRight={this.props.busStop.length > 0 ? 'ios-close' : null}
+						iconRight={this.props.busStop.length > 0 ? 'close' : null}
 						iconRightPress={this.resetSearch}
 						underlineColorAndroid="#fff"
 						onFocus={() => track('Search Focused')}
@@ -288,11 +287,11 @@ const mapStateToProps = state => {
 	const favoriteIds = _.map(favorites, 'id');
 	const { busStop, stops, gpsLoading } = state.search;
 	const stopsNearby = _.map(stops, (item) => {
-		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Stops Nearby' };
+		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'star' : 'star-border', parent: 'Stops Nearby' };
 	});
 	const searchLoading = state.search.loading;
 	const departureList = _.map(state.search.departureList, (item) => {
-		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Search List' };
+		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'star' : 'star-border', parent: 'Search List' };
 	});
 	return { favorites, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS };
 };

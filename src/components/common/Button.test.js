@@ -1,18 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import { isAndroid } from '../helpers';
 import { Button } from './';
 
 it('should match snapshot on Android', () => {
     isAndroid.mockImplementationOnce(() => true);
     const wrapper = shallow(<Button />);
-    expect(wrapper).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('should match snapshot on iOS', () => {
     isAndroid.mockImplementationOnce(() => false);
     const wrapper = shallow(<Button />);
-    expect(wrapper).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('should fire callback function onPress on Android', () => {

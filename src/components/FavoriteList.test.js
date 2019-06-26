@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppState, Keyboard } from 'react-native';
 import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { stub } from 'sinon';
@@ -58,14 +59,14 @@ it('HelpButton to the right side of the navbar, and state.init to be false', () 
     getStorage.mockImplementation(() => Promise.resolve());
     const refresh = Actions.refresh = stub();
     const wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
-    wrapper.setProps();
+    wrapper.setProps({ getNearbyStops: jest.fn() }); // Must set something to actually run.
     expect(refresh.callCount).toBe(1);
     expect(wrapper.state().init).toBe(false);
 });
 
 it('should match snapshot', () => {
     const wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
-    expect(wrapper).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 describe('onInputChange', () => {

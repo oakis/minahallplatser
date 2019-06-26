@@ -1,12 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import { Input } from './Input';
 
 it('should match snapshot', () => {
     const wrapper = shallow(<Input
         label="text"
-        icon="ios-mail"
-        iconRight="ios-key"
+        icon="mail"
+        iconRight="vpn-key"
     />);
-    expect(wrapper).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
 });

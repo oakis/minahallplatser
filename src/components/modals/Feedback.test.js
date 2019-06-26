@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import firebase from 'react-native-firebase';
+import toJson from 'enzyme-to-json';
 import fetch from 'react-native-cancelable-fetch';
 import { Alert } from 'react-native';
 import { stub } from 'sinon';
@@ -11,11 +11,10 @@ window.log = () => {};
 
 it('should match snapshot', () => {
     const wrapper = shallow(<Feedback />);
-    expect(wrapper).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('reset() should reset to initial state', () => {
-    firebase.auth = () => ({ currentUser: { email: 'abc@123.com' } });
     const wrapper = shallow(<Feedback />);
     const initialState = wrapper.state();
     wrapper.setState({
@@ -90,19 +89,19 @@ describe('press skicka feedback button', () => {
             wrapper.instance().setState = jest.fn();
             wrapper.find('Button').at(0).simulate('press');
         });
-    
+
         it('should indicate loading', () => {
             expect(wrapper.instance().setState).toBeCalledWith({ loading: true });
         });
-    
+
         it('should be tracked on success', () => {
             expect(track).toBeCalledWith('Feedback Send');
         });
-    
+
         it('should alert user that it was successful', () => {
             expect(Alert.alert).toBeCalledWith('', 'Tack för din feedback!');
         });
-    
+
         it('should reset state', () => {
             expect(wrapper.instance().reset).toHaveBeenCalledTimes(1);
         });
@@ -119,15 +118,15 @@ describe('press skicka feedback button', () => {
             wrapper.instance().setState = jest.fn();
             wrapper.find('Button').at(0).simulate('press');
         });
-        
+
         it('should be tracked on fail', () => {
             expect(track).toBeCalledWith('Feedback Failed', { Error: { err: 'err' } });
         });
-    
+
         it('should alert the user about the error', () => {
             expect(Alert.alert).toBeCalledWith('', 'Något gick snett, försök igen senare.');
         });
-    
+
         it('should stop indicating load', () => {
             expect(wrapper.instance().setState).toBeCalledWith({ loading: false });
         });

@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import configureMockStore from 'redux-mock-store';
 import ShowDepartures from './ShowDepartures';
 
@@ -43,7 +44,7 @@ const initialState = {
 
 it('should match snapshot', () => {
     const wrapper = shallow(<ShowDepartures store={mockStore(initialState)} getDepartures={jest.fn()} incrementStopsOpened={jest.fn()} />).dive();
-    expect(wrapper).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('16 Högsbo should match 16X Högsbo', () => {

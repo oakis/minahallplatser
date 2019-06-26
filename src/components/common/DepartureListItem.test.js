@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import { DepartureListItem } from './DepartureListItem';
 
 const item = {
@@ -57,16 +58,16 @@ const item3 = {
 };
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<DepartureListItem item={item} />);
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = shallow(<DepartureListItem item={item} onPress={jest.fn()} />);
+    expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<DepartureListItem item={item2} />);
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = shallow(<DepartureListItem item={item2} onPress={jest.fn()} />);
+    expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<DepartureListItem item={item3} />);
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = shallow(<DepartureListItem item={item3} onPress={jest.fn()} />);
+    expect(toJson(wrapper)).toMatchSnapshot();
 });
