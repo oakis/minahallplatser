@@ -16,7 +16,6 @@ const initialState = {
     settings: {
         favoriteOrder: 'nothing',
         allowedGPS: false,
-        hasUsedGPS: false,
     },
     fav: {
         favorites: [
@@ -44,19 +43,12 @@ const initialState = {
 
 window.log = () => {};
 
-it('favoriteGet should be called if local and firebase uid match', async () => {
-    getStorage.mockImplementationOnce(() => Promise.resolve({ uid: 123 }));
-    const favoriteGet = stub();
-    await shallow(<FavoriteList store={mockStore(initialState)} favoriteGet={favoriteGet} />).dive();
-    expect(favoriteGet.callCount).toBe(1);
-});
-
+// REWRITE?
 it('getNearbyStops should be called if logged in and user has accepted GPS', async () => {
     getStorage
         .mockImplementationOnce(() => Promise.resolve(null))
         .mockImplementationOnce(() => Promise.resolve({}));
     const getNearbyStops = stub();
-    initialState.settings.hasUsedGPS = true;
     initialState.settings.allowedGPS = true;
     await shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={getNearbyStops} />).dive();
     expect(getNearbyStops.callCount).toBe(1);
@@ -65,14 +57,14 @@ it('getNearbyStops should be called if logged in and user has accepted GPS', asy
 it('HelpButton to the right side of the navbar, and state.init to be false', () => {
     getStorage.mockImplementation(() => Promise.resolve());
     const refresh = Actions.refresh = stub();
-    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} />).dive();
+    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
     wrapper.setProps();
     expect(refresh.callCount).toBe(1);
     expect(wrapper.state().init).toBe(false);
 });
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} />).dive();
+    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
     expect(wrapper).toMatchSnapshot();
 });
 
@@ -80,9 +72,9 @@ describe('onInputChange', () => {
     let wrapper;
     const searchChanged = stub();
     const searchStops = stub();
-    
+
     beforeEach(() => {
-        wrapper = shallow(<FavoriteList store={mockStore(initialState)} searchChanged={searchChanged} searchStops={searchStops} />).dive();
+        wrapper = shallow(<FavoriteList store={mockStore(initialState)} searchChanged={searchChanged} searchStops={searchStops} getNearbyStops={jest.fn()} />).dive();
         searchChanged.reset();
     });
     it('should abort ongoing searches', () => {
@@ -115,9 +107,9 @@ describe('onInputChange', () => {
 describe('componentWillUnmount', () => {
     let wrapper;
     const clearErrors = stub();
-    
+
     beforeEach(() => {
-        wrapper = shallow(<FavoriteList store={mockStore(initialState)} clearErrors={clearErrors} />).dive();
+        wrapper = shallow(<FavoriteList store={mockStore(initialState)} clearErrors={clearErrors} getNearbyStops={jest.fn()} />).dive();
         clearErrors.reset();
     });
     it('should abort ongoing http requests', () => {
@@ -146,14 +138,13 @@ describe('componentWillUnmount', () => {
 
 describe('handleAppStateChange', () => {
     let wrapper;
-    const getNearbyStops = stub();    
-    
+    const getNearbyStops = stub();
+
     beforeEach(() => {
         wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={getNearbyStops} />).dive();
         getNearbyStops.reset();
     });
     it('should refresh nearby stops if prev accepted by user', () => {
-        initialState.settings.hasUsedGPS = true;
         initialState.settings.allowedGPS = true;
         wrapper.instance().handleAppStateChange('active');
         expect(getNearbyStops.callCount).toBe(1);
@@ -162,13 +153,13 @@ describe('handleAppStateChange', () => {
     it('should track page view if user is reopening app', () => {
         track.mockReset();
         wrapper.instance().handleAppStateChange('active');
-        expect(track).toBeCalledWith('Page View', { Page: 'Dashboard', Type: 'Reopened app from background' });
+        expect(track).toBeCalledWith('Page View', { Page: 'Dashboard', Parent: 'Background' });
     });
 });
 
 it('resetSearch should dispatch CLR_SEARCH & CLR_ERROR', () => {
     store.dispatch = jest.fn();
-    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} />).dive();
+    const wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
     wrapper.instance().resetSearch();
     expect(store.dispatch).toBeCalledWith({ type: CLR_SEARCH });
     expect(store.dispatch).toBeCalledWith({ type: CLR_ERROR });
@@ -177,8 +168,8 @@ it('resetSearch should dispatch CLR_SEARCH & CLR_ERROR', () => {
 describe('refreshNearbyStops', () => {
     let wrapper;
     const setSetting = jest.fn();
-    const getNearbyStops = stub();    
-    
+    const getNearbyStops = stub();
+
     beforeEach(() => {
         wrapper = shallow(<FavoriteList store={mockStore(initialState)} setSetting={setSetting} getNearbyStops={getNearbyStops} />).dive();
     });
@@ -186,11 +177,6 @@ describe('refreshNearbyStops', () => {
         track.mockReset();
         wrapper.instance().refreshNearbyStops();
         expect(track).toBeCalledWith('Refresh NearbyStops');
-    });
-
-    it('should call setSetting with "hasUsedGPS", true', () => {
-        wrapper.instance().refreshNearbyStops();
-        expect(setSetting).toBeCalledWith('hasUsedGPS', true);
     });
 
     it('should call getNearbyStops', () => {
@@ -203,7 +189,7 @@ describe('refreshNearbyStops', () => {
 describe('openPopup', () => {
     let wrapper;
     beforeEach(() => {
-        wrapper = shallow(<FavoriteList store={mockStore(initialState)} />).dive();
+        wrapper = shallow(<FavoriteList store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
     });
     it('should be tracked', () => {
         track.mockReset();
@@ -226,7 +212,7 @@ describe('renderFavoriteItem', () => {
     Actions.departures = jest.fn();
 
     beforeEach(() => {
-        wrapper = shallow(<FavoriteList store={mockStore(initialState)} clearErrors={clearErrors} />).dive();
+        wrapper = shallow(<FavoriteList store={mockStore(initialState)} clearErrors={clearErrors} getNearbyStops={jest.fn()} />).dive();
         ListItem = wrapper.find('FlatList').last().props().renderItem({ item: { busStop: 'Centralstationen', id: '1' } });
         Keyboard.dismiss.reset();
         clearErrors.reset();

@@ -2,7 +2,6 @@ import {
 	GET_DEPARTURES,
 	GET_DEPARTURES_FAIL,
 	CLR_DEPARTURES,
-	RESET_ALL
 } from '../actions/types';
 
 const INIT_STATE = {
@@ -23,7 +22,6 @@ export default (state = INIT_STATE, action) => {
 		case GET_DEPARTURES_FAIL:
 			return { ...state, loading: false };
 		case CLR_DEPARTURES:
-		case RESET_ALL:
 			return { ...INIT_STATE };
 		default:
 			return state;

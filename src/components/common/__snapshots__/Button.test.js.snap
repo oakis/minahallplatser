@@ -44,7 +44,8 @@ ShallowWrapper {
           ]
         }
       >
-        <IonIcon
+        <MaterialIcon
+          color="#fff"
           name={undefined}
           size={24}
         />
@@ -68,7 +69,8 @@ ShallowWrapper {
       "nodeType": "function",
       "props": Object {
         "children": Array [
-          <IonIcon
+          <MaterialIcon
+            color="#fff"
             name={undefined}
             size={24}
           />,
@@ -114,12 +116,13 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
+            "color": "#fff",
             "name": undefined,
             "size": 24,
           },
           "ref": null,
           "rendered": null,
-          "type": "IonIcon",
+          "type": "MaterialIcon",
         },
         Object {
           "instance": null,
@@ -176,7 +179,8 @@ ShallowWrapper {
             ]
           }
         >
-          <IonIcon
+          <MaterialIcon
+            color="#fff"
             name={undefined}
             size={24}
           />
@@ -200,7 +204,8 @@ ShallowWrapper {
         "nodeType": "function",
         "props": Object {
           "children": Array [
-            <IonIcon
+            <MaterialIcon
+              color="#fff"
               name={undefined}
               size={24}
             />,
@@ -246,12 +251,13 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "host",
             "props": Object {
+              "color": "#fff",
               "name": undefined,
               "size": 24,
             },
             "ref": null,
             "rendered": null,
-            "type": "IonIcon",
+            "type": "MaterialIcon",
           },
           Object {
             "instance": null,
@@ -304,7 +310,7 @@ ShallowWrapper {
     "nodeType": "function",
     "props": Object {
       "children": Array [
-        <IonIcon
+        <MaterialIcon
           name={undefined}
           size={24}
         />,
@@ -356,7 +362,7 @@ ShallowWrapper {
         },
         "ref": null,
         "rendered": null,
-        "type": "IonIcon",
+        "type": "MaterialIcon",
       },
       Object {
         "instance": null,
@@ -385,7 +391,7 @@ ShallowWrapper {
       "nodeType": "function",
       "props": Object {
         "children": Array [
-          <IonIcon
+          <MaterialIcon
             name={undefined}
             size={24}
           />,
@@ -437,7 +443,7 @@ ShallowWrapper {
           },
           "ref": null,
           "rendered": null,
-          "type": "IonIcon",
+          "type": "MaterialIcon",
         },
         Object {
           "instance": null,

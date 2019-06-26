@@ -4,11 +4,10 @@ import React, { PureComponent } from 'react';
 import { View, ScrollView, FlatList, AppState } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
-import firebase from 'react-native-firebase';
 import { HelpButton } from '../Router';
-import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle } from '../actions';
+import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle, incrementStopsOpened } from '../actions';
 import { DepartureListItem, Spinner, Message, ListItemSeparator, Popup, Text } from './common';
-import { updateStopsCount, track, incrementStopsOpened } from './helpers';
+import { updateStopsCount, track } from './helpers';
 import { colors, component } from './style';
 
 class ShowDepartures extends PureComponent {
@@ -20,15 +19,12 @@ class ShowDepartures extends PureComponent {
 			showHelp: false,
 		};
 	}
-	
+
 	componentWillMount() {
 		track('Page View', { Page: 'Departures', Stop: this.props.busStop, Parent: this.props.parent });
 		this.props.getDepartures({ id: this.props.id });
 		updateStopsCount();
-		const { currentUser } = firebase.auth();
-		if (!currentUser.isAnonymous && _.includes(this.props.favoriteIds, this.props.id)) {
-			incrementStopsOpened(currentUser.uid, this.props.id);
-		}
+		this.props.incrementStopsOpened(this.props.id);
 	}
 
 	componentDidMount() {
@@ -72,7 +68,7 @@ class ShowDepartures extends PureComponent {
 		if (nextAppState === 'active') {
 			this.props.getDepartures({ id: this.props.id });
 			this.startRefresh();
-			track('Page View', { Page: 'Departures', Stop: this.props.busStop, Type: 'Reopened app from background' });
+			track('Page View', { Page: 'Departures', Stop: this.props.busStop, Parent: 'Background' });
 		}
 	}
 
@@ -137,11 +133,11 @@ class ShowDepartures extends PureComponent {
 				<Text style={component.popup.header}>När går nästa avgång?</Text>
 				<Text style={component.popup.text}>Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. <Text style={{ fontStyle: 'italic' }}>Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.</Text></Text>
 				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode="cover" /> */}
-				
+
 				<Text style={component.popup.header}>Varför har tiden till nästa avgång ibland färg?</Text>
 				<Text style={component.popup.text}>När en avgång snart ska gå från en hållplats så kommer alltid texten "<Text style={{ color: colors.danger }}>Nu</Text>" att visas med röd färg. Ibland kan man också se att en avgång har <Text style={{ color: colors.warning }}>orange</Text> text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.</Text>
 				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode="cover" /> */}
-				
+
 				<Text style={component.popup.header}>Hur sparar man en linje som favorit?</Text>
 				<Text style={component.popup.text}>För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.</Text>
 				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode="cover" /> */}
@@ -223,7 +219,7 @@ const MapStateToProps = (state) => {
 		departures: _.sortBy(departures, ['timeLeft', 'timeNext']),
 		error,
 		favoriteIds,
-		favorites:  _.sortBy(favorites, ['timeLeft', 'timeNext']),
+		favorites: _.sortBy(favorites, ['timeLeft', 'timeNext']),
 		loading,
 		timestamp,
 		timeFormat,
@@ -231,4 +227,4 @@ const MapStateToProps = (state) => {
 };
 
 export default connect(MapStateToProps,
-	{ getDepartures, clearDepartures, clearErrors, favoriteLineToggle })(ShowDepartures);
+	{ getDepartures, clearDepartures, clearErrors, favoriteLineToggle, incrementStopsOpened })(ShowDepartures);

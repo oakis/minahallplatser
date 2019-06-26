@@ -40,6 +40,15 @@ ShallowWrapper {
         ],
       }
     }
+    incrementStopsOpened={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            undefined,
+          ],
+        ],
+      }
+    }
     loading={false}
     store={
       Object {

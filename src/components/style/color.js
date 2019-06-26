@@ -7,13 +7,11 @@ export const colors = {
     success: '#77DD77',
     danger: '#FF6961',
     warning: '#FFB347',
-    
+
     lightgrey: '#efefef',
     darkgrey: '#dedede',
     darkergrey: '#cecece',
     smoothBlack: '#282828',
-
-    facebook: '#3b5998',
 
     overlay: 'rgba(0, 0, 0, 0.4)',
 

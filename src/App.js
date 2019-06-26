@@ -1,73 +1,25 @@
-// import libraries
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import { Crashlytics } from 'react-native-fabric';
-import firebase from 'react-native-firebase';
-import ReduxThunk from 'redux-thunk';
-import fbPerformanceNow from 'fbjs/lib/performanceNow';
-import reducers from './reducers';
+import { PersistGate } from 'redux-persist/integration/react';
 import Router from './Router';
+import SplashScreen from './components/SplashScreen';
+import factory from './setupStore';
+import { track } from './components/helpers';
 
-export const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
-
-const PerformanceNow = () => global.nativePerformanceNow || global.performanceNow || fbPerformanceNow();
-const startTimes = {};
-
-if (__DEV__) {
-  window.log = console.log.bind(window.console);
-  window.timeStart = (label => {
-      startTimes[label] = PerformanceNow();
-  });
-  window.timeEnd = (label => {
-      const endTime = PerformanceNow();
-      if (startTimes[label]) {
-          const delta = endTime - startTimes[label];
-          window.log(`${label}: ${delta.toFixed(3)}ms`);
-          delete startTimes[label];
-          return delta;
-      }
-      console.warn(`Warning: No such label '${label}' for window.timeEnd()`);
-  });
-} else {
-  window.log = () => {};
-  window.timeStart = () => {};
-  window.timeEnd = () => {};
-}
-
-/* eslint-disable no-underscore-dangle */
-const defaultHandler = (ErrorUtils.getGlobalHandler && ErrorUtils.getGlobalHandler()) || ErrorUtils._globalHandler;
-
-ErrorUtils.setGlobalHandler(async ({ stack }) => {
-    window.log('Oops, something went wrong:', stack);
-    const { uid } = firebase.auth().currentUser;
-    await logToFirebase(stack, uid);
-    await logToFabric(stack, uid);
-    defaultHandler.apply(this, arguments);
-});
-
-const logToFirebase = async (stack, uid) => {
-    window.log('Sending stack to Firebase Crashlytics');
-    firebase.crashlytics().setUserIdentifier(uid);
-    await firebase.crashlytics().recordError(1, stack);
-    window.log('Sent stack to Firebase Crashlytics');
-};
-
-const logToFabric = async (stack, uid) => {
-  window.log('Sending stack to Fabric Crashlytics');
-  Crashlytics.setUserIdentifier(uid);
-  await Crashlytics.logException(stack);
-  window.log('Sent stack to Fabric Crashlytics');
-};
-
-console.ignoredYellowBox = ['Setting a timer'];
+export const { store, persistor } = factory();
 
 class App extends Component {
+
+  componentDidMount() {
+    track('App Start');
+  }
 
   render() {
     return (
       <Provider store={store}>
-        <Router />
+        <PersistGate loading={<SplashScreen />} persistor={persistor}>
+          <Router />
+        </PersistGate>
       </Provider>
     );
   }

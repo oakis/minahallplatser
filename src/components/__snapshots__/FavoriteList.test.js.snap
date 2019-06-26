@@ -42,9 +42,14 @@ ShallowWrapper {
         },
       ]
     }
-    favoritesLoading={undefined}
+    getNearbyStops={
+      [MockFunction] {
+        "calls": Array [
+          Array [],
+        ],
+      }
+    }
     gpsLoading={false}
-    hasUsedGPS={true}
     searchLoading={undefined}
     stopsNearby={
       Array [

@@ -42,7 +42,7 @@ const initialState = {
 };
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<ShowDepartures store={mockStore(initialState)} getDepartures={jest.fn()} />).dive();
+    const wrapper = shallow(<ShowDepartures store={mockStore(initialState)} getDepartures={jest.fn()} incrementStopsOpened={jest.fn()} />).dive();
     expect(wrapper).toMatchSnapshot();
 });
 
