@@ -22,7 +22,7 @@ export class DepartureListItem extends PureComponent {
 		let iconName;
 		switch (type) {
             case 'BOAT':
-                iconName = 'directions_boat';
+                iconName = 'directions-boat';
                 break;
             case 'BUS':
                 iconName = 'directions-bus';
@@ -41,7 +41,13 @@ export class DepartureListItem extends PureComponent {
                 return null;
 		}
 		return <Icon name={iconName} size={15} color={color} />;
-	}
+    }
+
+    getSnameFontsize = (sname) => {
+        if (sname.length > 4) return 10;
+        if (sname.length > 3) return 12;
+        return 14;
+    }
 
     render() {
         const { item, onPress } = this.props;
@@ -113,7 +119,7 @@ export class DepartureListItem extends PureComponent {
                 textAlign: 'center',
                 textAlignVertical: 'center',
                 fontWeight: 'bold',
-                fontSize: (item.sname.length > 3) ? 12 : 14,
+                fontSize: this.getSnameFontsize(item.sname),
             },
             departureStyle: {
                 fontSize: getFontSize(),
@@ -156,7 +162,7 @@ export class DepartureListItem extends PureComponent {
                         <View style={{ flexDirection: 'row' }}>
                             <Text>Läge {item.track || 'A'}</Text>
                             {(Object.prototype.hasOwnProperty.call(item, 'accessibility') && item.accessibility === 'wheelChair') ?
-                                <Icon name="wheelchair" size={13} style={iconStyle} />
+                                <Icon name="accessible" size={13} style={iconStyle} />
                                 : null
                             }
                         </View>
