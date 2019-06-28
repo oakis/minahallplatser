@@ -103,7 +103,7 @@ exports[`should match snapshot 1`] = `
           A
         </DefaultFont>
         <MaterialIcon
-          name="wheelchair"
+          name="accessible"
           size={13}
           style={
             Object {
@@ -196,7 +196,7 @@ exports[`should match snapshot 2`] = `
           style={
             Object {
               "color": "#000",
-              "fontSize": 12,
+              "fontSize": 10,
               "fontWeight": "bold",
               "textAlign": "center",
               "textAlignVertical": "center",
@@ -207,7 +207,7 @@ exports[`should match snapshot 2`] = `
         </DefaultFont>
         <MaterialIcon
           color="#000"
-          name="directions_boat"
+          name="directions-boat"
           size={15}
         />
       </View>
