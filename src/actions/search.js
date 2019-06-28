@@ -14,7 +14,8 @@ import {
 	ERROR, CLR_ERROR
 } from './types';
 import { handleJsonFetch, getToken, track, isAndroid, handleVasttrafikStops } from '../components/helpers';
-import { setAllowedGPS } from './'
+
+const mustAllowGPSMsg = 'Du måste tillåta appen att komma åt platstjänster samt aktivera hög träffsäkerhet för platstjänster för att kunna hitta hållplatser nära dig.';
 
 async function checkLocationPermission() {
 	return await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
@@ -106,7 +107,7 @@ export const getNearbyStops = () => {
 								payload: false,
 							});
 							dispatch({ type: SEARCH_BY_GPS_FAIL })
-							dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
+							dispatch({ type: ERROR, payload: mustAllowGPSMsg });
 						});
 					} else {
 						returnCoords(dispatch);
@@ -117,7 +118,7 @@ export const getNearbyStops = () => {
 			}
 		} catch (e) {
 			dispatch({ type: SEARCH_BY_GPS_FAIL })
-			dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
+			dispatch({ type: ERROR, payload: mustAllowGPSMsg });
 		}
 	};
 };
@@ -132,8 +133,13 @@ const returnCoords = (dispatch) => {
 	},
 	(err) => {
 		window.log('Error:', err);
-		if (err.code === 4) {
-			return tryOldGeolocation(dispatch);
+		if (err.code === 4 || err.code === 5) {
+			dispatch({
+				type: ALLOWED_GPS,
+				payload: false,
+			});
+			dispatch({ type: SEARCH_BY_GPS_FAIL })
+			return dispatch({ type: ERROR, payload: mustAllowGPSMsg });
 		}
 		if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
 			dispatch({ type: SEARCH_BY_GPS_FAIL });
@@ -146,31 +152,6 @@ const returnCoords = (dispatch) => {
 	},
 	{
 		enableHighAccuracy: true,
-		timeout: 3000,
-		maximumAge: 5000
-	});
-}
-
-const tryOldGeolocation = (dispatch) => {
-	dispatch({ type: SEARCH_BY_GPS });
-	navigator.geolocation.getCurrentPosition((position) => {
-		window.log('Got coords:', position.coords);
-		const { longitude, latitude } = position.coords;
-		getCoordsSuccess({ dispatch, longitude, latitude });
-	},
-	(err) => {
-		window.log('Error:', err);
-		if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
-			dispatch({ type: SEARCH_BY_GPS_FAIL });
-		} else if (gpsCount < 5) {
-			gpsCount++;
-			return tryOldGeolocation(dispatch);
-		}
-		gpsCount = 0;
-		dispatch({ type: SEARCH_BY_GPS_FAIL })
-	},
-	{
-		enableHighAccuracy: false,
 		timeout: 3000,
 		maximumAge: 5000
 	});
