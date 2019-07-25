@@ -65,5 +65,6 @@ ios/Pods*
 *.jsbundle
 
 google-services.json
+admin.json
 coverage/
 .runtimeconfig.json
