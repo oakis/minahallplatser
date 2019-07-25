@@ -3,10 +3,12 @@ const admin = require('firebase-admin');
 const moment = require('moment');
 const nodemailer = require('nodemailer');
 const cors = require('cors')({ origin: true });
+const serviceAccount = require('./admin.json');
 
-const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG);
-
-admin.initializeApp();
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://minahallplatser.firebaseio.com"
+});
 
 const mailer = nodemailer.createTransport({
   service: 'gmail',
@@ -85,27 +87,6 @@ exports.addStopsCount = functions.https.onRequest((request, response) => {
     response.json({
         message: `stopsCount is now: ${newValue}`,
         stopsCount: newValue
-    });
-  });
-});
-
-exports.incrementStopsOpen = functions.https.onRequest((request, response) => {
-  const ref = admin.database().ref(`/users/${request.query.user}/favorites/`);
-  ref.orderByChild('id').equalTo(request.query.stopId).once('value', snapshot => {
-    snapshot.forEach(data => {
-      const opened = data.child('opened');
-      if (opened.exists()) {
-        const updated = data.val();
-        updated.opened += 1;
-        ref.child(data.key).update(updated);
-      } else {
-        const updated = data.val();
-        updated.opened = 1;
-        ref.child(data.key).update(updated);
-      }
-    });
-    response.json({
-      message: 'Updated'
     });
   });
 });
