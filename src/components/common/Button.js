@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, TouchableNativeFeedback, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { isAndroid } from '../helpers';
 import { Text, Spinner } from './';
 import { colors, component } from '../style';
@@ -36,7 +36,7 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alterna
                     onPress={onPress}
                 >
                     <View style={[component.button, { backgroundColor: colors[color] }]}>
-                        <Icon name={icon} size={iconSize} />
+                        <Icon name={icon} size={iconSize} color={colors[fontColor]} />
                         {showSpinnerOrText()}
                     </View>
                 </TouchableNativeFeedback>

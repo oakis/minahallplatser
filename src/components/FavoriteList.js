@@ -2,18 +2,16 @@ import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
 import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Entypo from 'react-native-vector-icons/Entypo';
-import firebase from 'react-native-firebase';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { favoriteGet, favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops, setSetting } from '../actions';
-import { ListItem, Spinner, Message, Input, ListItemSeparator, ListHeading, Text, Popup } from './common';
+import { favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
+import { ListItem, Message, Input, ListItemSeparator, ListHeading, Text, Popup, Button } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { HelpButton } from '../Router';
-import store from '../setupStore';
-import { track, globals, getStorage, isAndroid } from './helpers';
+import { store } from '../App';
+import { track, globals, isAndroid } from './helpers';
 
 
 class FavoriteList extends PureComponent {
@@ -29,63 +27,30 @@ class FavoriteList extends PureComponent {
 		this.clearTimeout = undefined;
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		globals.shouldExitApp = false;
 		Keyboard.dismiss();
-		const fbUser = firebase.auth().currentUser;
-		const actualUser = fbUser === null
-			? null
-			: { email: fbUser.email,
-				isAnonymous: fbUser.isAnonymous,
-				metadata: fbUser.metadata,
-				providerId: fbUser.providerId,
-				uid: fbUser.uid,
-			};
-		if (actualUser && actualUser.uid) {
-			Promise.all([getStorage('minahallplatser-user'), getStorage('minahallplatser-settings')])
-			.then(([user, settings]) => {
-				window.log('Localstorage user:', user, 'Firebase user', actualUser, 'with settings:', settings);
-				if (user !== null && (user.uid === actualUser.uid)) {
-					this.props.favoriteGet(actualUser);
-				}
-				if (this.props.hasUsedGPS && this.props.allowedGPS) {
-					window.log('Refreshing nearby stops');
-					this.props.getNearbyStops();
-				}
-			})
-			.catch((e) => {
-				window.log('Something went wrong', e);
-			});
+		if (this.props.allowedGPS) {
+			window.log('Refreshing nearby stops');
+			this.props.getNearbyStops();
 		}
 		track('Page View', { Page: 'Dashboard' });
-	}
-
-	componentDidMount() {
 		AppState.addEventListener('change', this.handleAppStateChange);
 	}
-	
+
 	componentWillReceiveProps() {
 		if (this.state.init) {
 			Actions.refresh({ right: HelpButton(this) });
 			this.setState({ init: false });
 		}
 	}
-	
+
 	componentWillUnmount() {
-		const { currentUser } = firebase.auth();
 		fetch.abort('searchStops');
 		this.props.clearErrors();
 		AppState.removeEventListener('change', this.handleAppStateChange);
-		if (currentUser) {
-			firebase.database().ref('.info/connected')
-				.once('value', (snap) => {
-					if (snap.val() === true) {
-						firebase.database().ref(`/users/${currentUser.uid}/favorites`).off();
-					}
-				});
-		}
 	}
-	
+
 	onInputChange = (busStop) => {
 		fetch.abort('searchStops');
 		this.clearTimeout = clearTimeout(this.searchTimeout);
@@ -97,21 +62,21 @@ class FavoriteList extends PureComponent {
 
 	handleAppStateChange = (nextAppState) => {
 		if (nextAppState === 'active') {
-			if (this.props.hasUsedGPS && this.props.allowedGPS) {
+			if (this.props.allowedGPS) {
 				this.props.getNearbyStops();
 			}
-			track('Page View', { Page: 'Dashboard', Type: 'Reopened app from background' });
+			track('Page View', { Page: 'Dashboard', Parent: 'Background' });
 		}
 	}
 
 	resetSearch = () => {
+		window.log('resetSearch()');
 		store.dispatch({ type: CLR_SEARCH });
 		store.dispatch({ type: CLR_ERROR });
 	}
 
 	refreshNearbyStops = () => {
 		track('Refresh NearbyStops');
-		this.props.setSetting('hasUsedGPS', true);
 		store.dispatch({ type: SEARCH_BY_GPS_FAIL });
 		this.props.getNearbyStops();
 	}
@@ -129,42 +94,42 @@ class FavoriteList extends PureComponent {
 				onPress={() => this.setState({ showHelp: false })}
 				isVisible={this.state.showHelp}
 			>
-			
+
 				<Text style={component.popup.header}>
 					Söka efter hållplats
 				</Text>
 				<Text style={component.popup.text}>
-					För att söka på en hållplats klickar du på sökfältet ( <Ionicons name="ios-search" /> ) högst upp på startsidan och fyller i ett eller flera sökord.
+					För att söka på en hållplats klickar du på sökfältet ( <Icon name="search" /> ) högst upp på startsidan och fyller i ett eller flera sökord.
 				</Text>
 
 				<Text style={component.popup.header}>
 					Hållplatser nära dig
 				</Text>
 				<Text style={component.popup.text}>
-					Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din <Text style={{ fontWeight: 'bold' }}>plats</Text>. Om du har nekat tillgång så kan du klicka på pilen ( <Ionicons name="md-refresh" /> ) till höger om "Hållplatser nära dig" och godkänna åtkomst till platstjänster.
+					Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din <Text style={{ fontWeight: 'bold' }}>plats</Text>. Om du har nekat tillgång så kan du klicka på pilen ( <Icon name="refresh" /> ) till höger om "Hållplatser nära dig" och godkänna åtkomst till platstjänster.
 				</Text>
 
 				<Text style={component.popup.header}>
 					Spara hållplats som favorit
 				</Text>
 				<Text style={component.popup.text}>
-					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Ionicons name="ios-star-outline" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Ionicons name="ios-star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg och hållplatsen sparas i listan "Mina Hållplatser".
+					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Icon name="star-border" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Icon name="star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg och hållplatsen sparas i listan "Mina Hållplatser".
 				</Text>
 
 				<Text style={component.popup.header}>
 					Ta bort hållplats från favoriter
 				</Text>
 				<Text style={component.popup.text}>
-					För att ta bort en hållplats från favoriter så klickar du på <Text style={{ fontWeight: 'bold' }}>pennan</Text> ( <Entypo name="edit" /> ) och sedan på <Text style={{ fontWeight: 'bold' }}>minustecknet</Text> ( <Ionicons name="ios-remove-circle-outline" color={colors.danger} /> ) bredvid den hållplatsen du vill ta bort.
+					För att ta bort en hållplats från favoriter så klickar du på <Text style={{ fontWeight: 'bold' }}>pennan</Text> ( <Icon name="edit" /> ) och sedan på <Text style={{ fontWeight: 'bold' }}>minustecknet</Text> ( <Icon name="remove-circle-outline" color={colors.danger} /> ) bredvid den hållplatsen du vill ta bort.
 				</Text>
 
 				<Text style={component.popup.header}>
 					Sortera favoriter
 				</Text>
 				<Text style={component.popup.text}>
-					I <Text style={{ fontWeight: 'bold' }}>menyn</Text> ( <Ionicons name="ios-menu" /> ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.
+					I <Text style={{ fontWeight: 'bold' }}>menyn</Text> ( <Icon name="menu" /> ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.
 				</Text>
-				
+
 			</Popup>
 		);
 	}
@@ -173,7 +138,7 @@ class FavoriteList extends PureComponent {
 		return (
 			<ListItem
 				text={item.busStop}
-				icon='ios-remove-circle-outline'
+				icon='remove-circle-outline'
 				pressItem={async () => {
 					Keyboard.dismiss();
 					await this.props.clearErrors();
@@ -190,7 +155,7 @@ class FavoriteList extends PureComponent {
 								text: 'Ja',
 								onPress: () => {
 									track('Favorite Stop Remove', { Stop: item.busStop, Parent: 'Favorite List' });
-									this.props.favoriteCreate({ busStop: item.name, id: item.id });
+									this.props.favoriteDelete(item.id);
 								}
 							}
 						]
@@ -213,12 +178,13 @@ class FavoriteList extends PureComponent {
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
-					if (item.icon === 'ios-star') {
+					if (item.icon === 'star') {
 						track('Favorite Stop Remove', { Stop: item.name, Parent: item.parent });
+						this.props.favoriteDelete(item.id);
 					} else {
 						track('Favorite Stop Add', { Stop: item.name, Parent: item.parent });
+						this.props.favoriteCreate({ busStop: item.name, id: item.id });
 					}
-					this.props.favoriteCreate({ busStop: item.name, id: item.id });
 				}}
 				iconVisible
 				iconColor={colors.warning}
@@ -227,13 +193,10 @@ class FavoriteList extends PureComponent {
 	}
 
 	renderNearbyStops = () => {
-		if (!this.props.allowedGPS) {
-			return null;
-		}
 		return (
 			<View>
-				<ListHeading text="Hållplatser nära dig" icon="md-refresh" onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
-				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0 && this.state.hasUsedGPS) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
+				<ListHeading text="Hållplatser nära dig" icon="refresh" onPress={() => this.refreshNearbyStops()} loading={this.props.gpsLoading} />
+				{(!this.props.gpsLoading && this.props.stopsNearby.length === 0) ? <Text style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>Vi kunde inte hitta några hållplatser nära dig.</Text> : null}
 				<FlatList
 					data={this.props.stopsNearby}
 					renderItem={item => this.renderSearchItem(item, 'nearby stops')}
@@ -247,16 +210,6 @@ class FavoriteList extends PureComponent {
 	}
 
 	renderSectionList() {
-		if (this.props.favoritesLoading) {
-			return (
-				<View style={{ marginTop: 10 }}>
-					<Spinner
-						size="large"
-						color={colors.primary}
-					/>
-				</View>
-			);
-		}
 		return (
 			<View>
 				{(this.props.departureList.length > 0) ? <ListHeading text="Sökresultat" /> : null}
@@ -292,9 +245,9 @@ class FavoriteList extends PureComponent {
 						placeholder="Sök hållplats.."
 						onChangeText={this.onInputChange}
 						value={this.props.busStop}
-						icon="ios-search"
+						icon="search"
 						loading={this.props.searchLoading && this.props.busStop.length > 0}
-						iconRight={this.props.busStop.length > 0 ? 'ios-close' : null}
+						iconRight={this.props.busStop.length > 0 ? 'close' : null}
 						iconRightPress={this.resetSearch}
 						underlineColorAndroid="#fff"
 						onFocus={() => track('Search Focused')}
@@ -308,11 +261,17 @@ class FavoriteList extends PureComponent {
 						null
 					}
 					{this.renderSectionList()}
-					{(this.props.favorites.length === 0 && !this.props.favoritesLoading) ?
-						<View style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md }}>
-							<Text>
-								Du har inte sparat några favoriter än. Tryck <Text onPress={this.openPopup}>HÄR</Text> för mer information.
+					{(this.props.favorites.length === 0) ?
+						<View style={{ marginTop: metrics.margin.md, marginLeft: metrics.margin.md, marginRight: metrics.margin.md }}>
+							<Text style={{ marginBottom: metrics.margin.md }}>
+								Du har inte sparat några favoriter än.
 							</Text>
+							<Button
+								onPress={this.openPopup}
+								label="Hjälp"
+								icon="live-help"
+								color="primary"
+							/>
 						</View> : null
 					}
 				</ScrollView>
@@ -322,30 +281,27 @@ class FavoriteList extends PureComponent {
 }
 
 const mapStateToProps = state => {
-	const { favoriteOrder, allowedGPS, hasUsedGPS } = state.settings;
+	const { favoriteOrder, allowedGPS } = state.settings;
 	const favorites = _.orderBy(state.fav.favorites, (o) => o[favoriteOrder] || 0, favoriteOrder === 'busStop' ? 'asc' : 'desc');
-	const favoritesLoading = state.fav.loading;
 	const { error } = state.errors;
 	const favoriteIds = _.map(favorites, 'id');
 	const { busStop, stops, gpsLoading } = state.search;
 	const stopsNearby = _.map(stops, (item) => {
-		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Stops Nearby' };
+		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'star' : 'star-border', parent: 'Stops Nearby' };
 	});
 	const searchLoading = state.search.loading;
 	const departureList = _.map(state.search.departureList, (item) => {
-		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'ios-star' : 'ios-star-outline', parent: 'Search List' };
+		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'star' : 'star-border', parent: 'Search List' };
 	});
-	return { favorites, favoritesLoading, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS, hasUsedGPS };
+	return { favorites, error, busStop, departureList, favoriteIds, searchLoading, stopsNearby, gpsLoading, allowedGPS };
 };
 
 export default connect(mapStateToProps,
 	{
-		favoriteGet,
 		favoriteDelete,
 		clearErrors,
 		searchStops,
 		searchChanged,
 		favoriteCreate,
-		getNearbyStops,
-		setSetting
+		getNearbyStops
 	})(FavoriteList);

@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import { TouchableWithoutFeedback, View, StatusBar } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Scene, Router, Actions, Stack, Drawer } from 'react-native-router-flux';
-import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
-import LoginForm from './components/LoginForm';
 import FavoriteList from './components/FavoriteList';
 import ShowDepartures from './components/ShowDepartures';
-import RegisterForm from './components/RegisterForm';
-import ResetPassword from './components/ResetPassword';
-import SplashScreen from './components/SplashScreen';
 import Menu from './components/Menu';
-import Settings from './components/Settings';
-import Profile from './components/Profile';
 import { colors } from './components/style';
-import { isAndroid, track, showMessage, globals, getStorage } from './components/helpers';
-import store from './setupStore';
+import { isAndroid, showMessage, globals } from './components/helpers';
+import { store } from './App';
 import { CLR_ERROR } from './actions/types';
 import { autoLogin, loginAnonUser } from './actions';
 
@@ -53,8 +45,8 @@ export const BackButton = () => {
 					justifyContent: 'center'
 				}}
 			>
-				<Icon 
-					name="ios-arrow-back"
+				<Icon
+					name="keyboard-arrow-left"
 					style={{ color: colors.alternative, fontSize: iconSize }}
 				/>
 			</View>
@@ -75,7 +67,7 @@ export const HelpButton = (self) => {
 					justifyContent: 'center'
 				}}
 			>
-				<MaterialIcons 
+				<Icon
 					name="live-help"
 					style={{ color: colors.alternative, fontSize: iconSize }}
 				/>
@@ -85,49 +77,6 @@ export const HelpButton = (self) => {
 };
 
 class RouterComponent extends Component {
-	
-	componentDidMount() {
-		// Try to automaticly login
-		track('App Start');
-		firebase.auth().onAuthStateChanged((fbUser) => {
-			const actualUser = fbUser === null
-				? null
-				: { email: fbUser.email,
-					isAnonymous: fbUser.isAnonymous,
-					metadata: fbUser.metadata,
-					providerId: fbUser.providerId,
-					uid: fbUser.uid,
-				};
-			getStorage('minahallplatser-user')
-			.then((user) => {
-				window.log('onAuthStateChanged(): Localstorage user:', user, 'Firebase user:', actualUser);
-				if (actualUser && actualUser.uid && globals.isLoggingIn) {
-					window.log('User already exists, continue to autologin.');
-					track('Auth State Changed', { Message: 'AutoLogin' });
-					globals.isLoggingIn = false;
-					this.props.autoLogin(actualUser);
-				} else if (globals.didLogout && !globals.isLoggingIn) {
-					window.log('User logged out.');
-					track('Auth State Changed', { Message: 'Logged out' });
-					Actions.login();
-					globals.didLogout = false;
-					globals.isLoggingIn = true;
-				} else if (globals.isLoggingIn) {
-					window.log('New user, creating anonymous account.');
-					track('Auth State Changed', { Message: 'Create anonymous account' });
-					this.props.loginAnonUser();
-					globals.isLoggingIn = false;
-				}
-			})
-			.catch((err) => {
-				window.log('Something went wrong:', err);
-				Actions.login();
-			});
-		}, (err) => {
-			window.log('Something went wrong:', err);
-			Actions.login();
-		});
-	}
 
 	render() {
 		return (
@@ -150,11 +99,10 @@ class RouterComponent extends Component {
 					renderBackButton={BackButton}
 				>
 					<Stack key="root" hideNavBar>
-						<Scene key="splash" component={SplashScreen} hideNavBar />
 						<Drawer
 							key="dashboard"
 							contentComponent={Menu}
-							drawerIcon={<Icon name="ios-menu" size={iconSize} style={{ color: colors.alternative }} />}
+							drawerIcon={<Icon name="menu" size={iconSize} style={{ color: colors.alternative }} />}
 							drawerWidth={225}
 						>
 							<Scene
@@ -170,53 +118,6 @@ class RouterComponent extends Component {
 								right={HelpButton}
 								left={BackButton}
 							/>
-							<Scene
-								key="settings"
-								component={Settings}
-								title="Inställningar"
-								hideDrawerButton
-								left={BackButton}
-							/>
-							<Scene
-								key="profile"
-								component={Profile}
-								title="Profil"
-								hideDrawerButton
-								left={BackButton}
-							/>
-							<Scene key="auth">
-								<Scene
-									key="login"
-									component={LoginForm}
-									hideNavBar
-									hideDrawerButton
-									drawerLockMode="locked-closed"
-									title="Logga in"
-									left={BackButton}
-									onEnter={() => {
-										track('Page View', { Page: 'Login' });
-										globals.shouldExitApp = false;
-									}}
-								/>
-								<Scene
-									key="register"
-									component={RegisterForm}
-									hideDrawerButton
-									drawerLockMode="locked-closed"
-									title="Registrera"
-									left={BackButton}
-									onEnter={() => track('Page View', { Page: 'Register' })}
-								/>
-								<Scene
-									key="resetpw"
-									component={ResetPassword}
-									hideDrawerButton
-									drawerLockMode="locked-closed"
-									title="Glömt lösenord"
-									left={BackButton}
-									onEnter={() => track('Page View', { Page: 'Reset Password' })}
-								/>
-							</Scene>
 						</Drawer>
 					</Stack>
 				</Router>

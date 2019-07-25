@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import store from '../../setupStore';
+import toJson from 'enzyme-to-json';
+import { store } from '../../App';
 import { Message } from './Message';
 
 const types = ['info', 'success', 'danger', 'warning', null];
@@ -8,13 +9,13 @@ const types = ['info', 'success', 'danger', 'warning', null];
 types.forEach(type => {
     it(`should match snapshot with type ${type}`, () => {
         const wrapper = shallow(<Message type={type} message="Message" />);
-        expect(wrapper).toMatchSnapshot();
+        expect(toJson(wrapper)).toMatchSnapshot();
     });
 });
 
 it('should match snapshot with no message or type', () => {
     const wrapper = shallow(<Message />);
-    expect(wrapper).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('should clear errors onPress', () => {

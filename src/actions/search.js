@@ -1,19 +1,21 @@
+import _ from 'lodash';
 import { PermissionsAndroid } from 'react-native';
 import geolocation from 'react-native-geolocation-service';
 import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import {
+	ALLOWED_GPS,
 	SEARCH_CHANGED,
 	SEARCH_DEPARTURES,
 	SEARCH_DEPARTURES_FAIL,
 	SEARCH_BY_GPS,
 	SEARCH_BY_GPS_SUCCESS,
 	SEARCH_BY_GPS_FAIL,
-	CLR_SEARCH,
 	ERROR, CLR_ERROR
 } from './types';
-import { handleJsonFetch, getToken, track, getStorage, setStorage, isAndroid } from '../components/helpers';
-import { serverUrl } from '../Server';
+import { handleJsonFetch, getToken, track, isAndroid, handleVasttrafikStops } from '../components/helpers';
+
+const mustAllowGPSMsg = 'Du måste tillåta appen att komma åt platstjänster samt aktivera hög träffsäkerhet för platstjänster för att kunna hitta hållplatser nära dig.';
 
 async function checkLocationPermission() {
 	return await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
@@ -51,30 +53,31 @@ export const searchStops = ({ busStop }) => {
 				payload: []
 			});
 		}
-		track('Search', { SearchWord: busStop });
 		getToken().finally(({ access_token }) => {
 			window.timeStart('searchStops');
-			const url = `${serverUrl}/api/vasttrafik/stops`;
+			const url = `https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=${busStop}&format=json`;
 			const config = {
-				method: 'post',
+				method: 'get',
 				headers: {
 					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-					'access_token': access_token
+					'Authorization': `Bearer ${access_token}`,
 				},
-				body: JSON.stringify({
-					search: busStop,
-				}),
 			};
+			window.log(url, config);
 			fetch(url, config, 'searchStops')
 			.finally(handleJsonFetch)
-			.then(({ data }) => {
-				dispatch({
-					type: SEARCH_DEPARTURES,
-					payload: data
-				});
-				dispatch({ type: CLR_ERROR });
-				window.timeEnd('searchStops');
+			.then(handleVasttrafikStops)
+			.then((data) => {
+				if (data.length) {
+					dispatch({
+						type: SEARCH_DEPARTURES,
+						payload: data
+					});
+					dispatch({ type: CLR_ERROR });
+					return window.timeEnd('searchStops');
+				} else {
+					throw 'Din sökning matchade inga hållplatser.';
+				}
 			})
 			.catch((data) => {
 				dispatch({ type: SEARCH_DEPARTURES_FAIL });
@@ -93,16 +96,18 @@ export const getNearbyStops = () => {
 				checkLocationPermission().then(ok => {
 					if (!ok) {
 						requestLocationPermission().then(() => {
+							dispatch({
+								type: ALLOWED_GPS,
+								payload: true,
+							});
 							returnCoords(dispatch);
 						}).catch(() => {
-							getStorage('minahallplatser-settings')
-							.then((data) => {
-								const settings = data;
-								settings['allowedGPS'] = false;
-								setStorage('minahallplatser-settings', settings);
+							dispatch({
+								type: ALLOWED_GPS,
+								payload: false,
 							});
 							dispatch({ type: SEARCH_BY_GPS_FAIL })
-							dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
+							dispatch({ type: ERROR, payload: mustAllowGPSMsg });
 						});
 					} else {
 						returnCoords(dispatch);
@@ -112,29 +117,14 @@ export const getNearbyStops = () => {
 				returnCoords(dispatch);
 			}
 		} catch (e) {
-			getStorage('minahallplatser-settings')
-				.then((data) => {
-					const settings = data || {};
-					settings['allowedGPS'] = false;
-					setStorage('minahallplatser-settings', settings);
-				})
-				.catch((e) => {
-					window.log(e);
-				});
 			dispatch({ type: SEARCH_BY_GPS_FAIL })
-			dispatch({ type: ERROR, payload: 'Du måste tillåta appen att komma åt platstjänster för att kunna hitta hållplatser nära dig.' });
+			dispatch({ type: ERROR, payload: mustAllowGPSMsg });
 		}
 	};
 };
 
 let gpsCount = 0;
 const returnCoords = (dispatch) => {
-	getStorage('minahallplatser-settings')
-		.then((data) => {
-			const settings = data;
-			settings['allowedGPS'] = true;
-			setStorage('minahallplatser-settings', settings);
-		});
 	dispatch({ type: SEARCH_BY_GPS });
 	geolocation.getCurrentPosition((position) => {
 		window.log('Got coords:', position.coords);
@@ -143,8 +133,13 @@ const returnCoords = (dispatch) => {
 	},
 	(err) => {
 		window.log('Error:', err);
-		if (err.code === 4) {
-			return tryOldGeolocation(dispatch);
+		if (err.code === 4 || err.code === 5) {
+			dispatch({
+				type: ALLOWED_GPS,
+				payload: false,
+			});
+			dispatch({ type: SEARCH_BY_GPS_FAIL })
+			return dispatch({ type: ERROR, payload: mustAllowGPSMsg });
 		}
 		if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
 			dispatch({ type: SEARCH_BY_GPS_FAIL });
@@ -162,54 +157,25 @@ const returnCoords = (dispatch) => {
 	});
 }
 
-const tryOldGeolocation = (dispatch) => {
-	dispatch({ type: SEARCH_BY_GPS });
-	navigator.geolocation.getCurrentPosition((position) => {
-		window.log('Got coords:', position.coords);
-		const { longitude, latitude } = position.coords;
-		getCoordsSuccess({ dispatch, longitude, latitude });
-	},
-	(err) => {
-		window.log('Error:', err);
-		if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
-			dispatch({ type: SEARCH_BY_GPS_FAIL });
-		} else if (gpsCount < 5) {
-			gpsCount++;
-			return tryOldGeolocation(dispatch);
-		}
-		gpsCount = 0;
-		dispatch({ type: SEARCH_BY_GPS_FAIL })
-	},
-	{
-		enableHighAccuracy: false,
-		timeout: 3000,
-		maximumAge: 5000
-	});
-}
-
 const getCoordsSuccess = ({ dispatch, longitude, latitude }) => {
 	getToken().finally(({ access_token }) => {
 		window.timeStart('getNearbyStops');
-		const url = `${serverUrl}/api/vasttrafik/gps`;
+		const url = `https://api.vasttrafik.se/bin/rest.exe/v2/location.nearbystops?originCoordLat=${latitude}&originCoordLong=${longitude}&format=json`;
 		const config = {
-			method: 'post',
+			method: 'get',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-				'access_token': access_token
+				'Authorization': `Bearer ${access_token}`,
 			},
-			body: JSON.stringify({
-				longitude,
-				latitude,
-			})
 		};
 		fetch(url, config, 'getNearbyStops')
 		.then(handleJsonFetch)
-		.then(({ data }) => {
+		.then(handleVasttrafikStops)
+		.then((data) => {
 			gpsCount = 0;
 			window.timeEnd('getNearbyStops');
 			dispatch({ type: CLR_ERROR });
-			dispatch({ type: SEARCH_BY_GPS_SUCCESS, payload: data });
+			dispatch({ type: SEARCH_BY_GPS_SUCCESS, payload: _.uniqBy(_.filter(data, (o) => !o.track), 'name') });
 		})
 		.catch((error) => {
 			window.timeEnd('getNearbyStops');

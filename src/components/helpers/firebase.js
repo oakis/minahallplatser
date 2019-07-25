@@ -57,15 +57,3 @@ export const getStopsCount = () => {
         window.log('getStopsCount(): FAILED', err);
     });
 };
-
-export const incrementStopsOpened = (user, stopId) => {
-    const url = `${firebaseFunctionsUrl}/incrementStopsOpen?user=${user}&stopId=${stopId}`;
-    fetch(url, {}, 'incrementStopsOpened')
-    .finally(handleJsonFetch)
-    .then(({ message }) => {
-        window.log('incrementStopsOpened(): OK', message);
-    })
-    .catch((err) => {
-        window.log('incrementStopsOpened(): FAILED', err);
-    });
-};

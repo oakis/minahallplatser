@@ -68,3 +68,6 @@ google-services.json
 admin.json
 coverage/
 .runtimeconfig.json
+
+index.android.bundle
+index.android.bundle.meta

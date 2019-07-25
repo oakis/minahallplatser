@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import store from '../../setupStore';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { store } from '../../App';
 import { CLR_ERROR } from '../../actions/types';
 import { Text } from '../common';
 import { colors, component } from '../style';
@@ -10,13 +10,13 @@ export const Message = ({ type, message = '' }) => {
     const getIcon = (iconType) => {
         switch (iconType) {
             case 'info':
-                return 'ios-information-circle';
+                return 'info';
             case 'success':
-                return 'ios-checkmark-circle';
+                return 'check-circle';
             case 'danger':
-                return 'ios-alert';
+                return 'error';
             case 'warning':
-                return 'ios-warning';
+                return 'warning';
             default:
                 return;
         }

@@ -1,22 +1,27 @@
 import {
     SET_SETTING,
-    RESET_ALL
+    ALLOWED_GPS,
 } from '../actions/types';
 
 const INIT_STATE = {
     timeFormat: 'minutes',
     favoriteOrder: 'nothing',
-    allowedGPS: true,
-    hasUsedGPS: false,
+    allowedGPS: false,
 };
 
 export default (state = INIT_STATE, action) => {
     switch (action.type) {
         case SET_SETTING:
-            return { ...state, ...action.payload };
-        case RESET_ALL:
-			return { ...INIT_STATE };
+            return {
+                ...state,
+                [action.payload.type]: action.payload.value,
+            };
+        case ALLOWED_GPS:
+            return {
+                ...state,
+                allowedGPS: action.payload,
+            };
         default:
             return state;
     }
-};  
+};
