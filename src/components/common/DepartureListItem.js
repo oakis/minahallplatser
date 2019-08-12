@@ -5,11 +5,6 @@ import moment from 'moment';
 import { Text } from './';
 import { colors } from '../style';
 
-function formatTime(minutes) {
-    const duration = moment.duration(minutes, 'minutes');
-    return (minutes > 59) ? `${duration.hours()}h ${duration.minutes()}m` : minutes;
-}
-
 export class DepartureListItem extends PureComponent {
 
     constructor(props) {
@@ -49,31 +44,39 @@ export class DepartureListItem extends PureComponent {
         return 14;
     }
 
+    getFontColor = (isLive, timeLeft) => {
+        if (!isLive) {
+            return colors.warning;
+        } else if (timeLeft === 'Nu') {
+            return colors.danger;
+        }
+        return colors.default;
+    }
+
+    getFontSize = (shouldShowMin, timeLeft) => {
+        if (!shouldShowMin) {
+            return 18;
+        } else if (timeLeft > 59) {
+            return 14;
+        }
+        return 24;
+    }
+
+    formatTime = minutes => {
+        const duration = moment.duration(minutes, 'minutes');
+        return (minutes > 59) ? `${duration.hours()}h ${duration.minutes()}m` : minutes;
+    }
+
+    height = 50;
+
     render() {
         const { item, onPress } = this.props;
         const shouldShowMin = item.timeFormat === 'minutes';
         const { clockLeft, clockNext } = item;
-        const timeLeft = (item.timeLeft <= 0) ? 'Nu' : formatTime(item.timeLeft);
-        const timeNext = (item.timeNext <= 0 && item.timeNext !== null) ? 'Nu' : formatTime(item.timeNext);
+        const timeLeft = (item.timeLeft <= 0) ? 'Nu' : this.formatTime(item.timeLeft);
+        const timeNext = (item.timeNext <= 0 && item.timeNext !== null) ? 'Nu' : this.formatTime(item.timeNext);
         const left = shouldShowMin ? timeLeft : clockLeft;
         const next = shouldShowMin ? timeNext : clockNext;
-        const getFontColor = () => {
-            if (!item.isLive) {
-                return colors.warning;
-            } else if (timeLeft === 'Nu') {
-                return colors.danger;
-            }
-            return colors.default;
-        };
-        const getFontSize = () => {
-            if (!shouldShowMin) {
-                return 18;
-            } else if (item.timeLeft > 59) {
-                return 14;
-            }
-            return 24;
-        };
-        const height = 50;
 
         const styles = {
             listStyle: {
@@ -98,7 +101,7 @@ export class DepartureListItem extends PureComponent {
                 justifyContent: 'center'
             },
             col3Style: {
-                height,
+                height: this.height,
                 width: 56,
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -122,8 +125,8 @@ export class DepartureListItem extends PureComponent {
                 fontSize: this.getSnameFontsize(item.sname),
             },
             departureStyle: {
-                fontSize: getFontSize(),
-                color: getFontColor()
+                fontSize: this.getFontSize(shouldShowMin, item.timeLeft),
+                color: this.getFontColor(item.isLive, timeLeft)
             },
             nextDepStyle: {
                 fontSize: 12
@@ -133,13 +136,14 @@ export class DepartureListItem extends PureComponent {
             },
             viaStyle: {
                 marginTop: -5,
-                fontSize: 10
+                fontSize: 12
             },
             iconStyle: {
                 marginLeft: 5,
                 alignSelf: 'center'
             }
         };
+
         const { stopNumStyle, col1Style, col2Style, col3Style, stopNumText,
                 departureStyle, nextDepStyle, directionStyle, listStyle, viaStyle, iconStyle } = styles;
 
