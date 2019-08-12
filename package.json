@@ -30,7 +30,7 @@
     "react-native-cancelable-fetch": "0.1.1",
     "react-native-device-info": "0.21.5",
     "react-native-firebase": "~5.1.1",
-    "react-native-geolocation-service": "2.0.0",
+    "react-native-geolocation-service": "3.0.0",
     "react-native-mixpanel": "0.0.16",
     "react-native-router-flux": "4.0.0-beta.28",
     "react-native-vector-icons": "6.5.0",

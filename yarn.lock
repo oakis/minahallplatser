@@ -908,6 +908,11 @@
     xcode "^2.0.0"
     xmldoc "^0.4.0"
 
+"@react-native-community/geolocation@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-1.4.2.tgz#7228c6d37c2f55017af9c49c2b9ad586d9bcb9f8"
+  integrity sha512-9x9dHDeUXnh2larA4zTT3y/tXPmRnysh5o9fsNbGcnUKPj1BUCIHnGGPxEIDnwP1DNIMP2DN9DmuMHImtTbX6A==
+
 "@sinonjs/commons@^1", "@sinonjs/commons@^1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.4.0.tgz#7b3ec2d96af481d7a0321252e7b1c94724ec5a78"
@@ -5679,10 +5684,12 @@ react-native-firebase@~5.1.1:
     opencollective-postinstall "^2.0.0"
     prop-types "^15.6.2"
 
-react-native-geolocation-service@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-geolocation-service/-/react-native-geolocation-service-2.0.0.tgz#9fbab4953726b3a3ca9a74388a92dc1e1997127a"
-  integrity sha512-X9WMTqWX6n0GH55/YVKwrdkSl64uTqfIt2ICKpwx6Qko62nqBHHS6AP6BODLQqsfGnZlpNcbDWRoj7JOuKxk+g==
+react-native-geolocation-service@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-geolocation-service/-/react-native-geolocation-service-3.0.0.tgz#9cf822760885a273e712289b00a9c8361734062a"
+  integrity sha512-VU4tJYdHo6fNuMbDd1yBiv1VeD1gdX5RmZYlyRMvR9CiIJSQBzRobKBAesLw+9+5/rFBlyajgWsocs7/UavSFg==
+  dependencies:
+    "@react-native-community/geolocation" "^1.4.2"
 
 react-native-mixpanel@0.0.16:
   version "0.0.16"
