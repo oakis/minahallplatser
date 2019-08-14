@@ -73,7 +73,20 @@ exports[`should match snapshot 1`] = `
             Object {},
           ]
         }
-      />
+      >
+        <Component
+          label="Ingen sortering"
+          value="nothing"
+        />
+        <Component
+          label="Mina mest använda"
+          value="opened"
+        />
+        <Component
+          label="Efter bokstav"
+          value="busStop"
+        />
+      </Picker>
     </View>
     <ListItemSeparator />
     <View
@@ -112,7 +125,16 @@ exports[`should match snapshot 1`] = `
             Object {},
           ]
         }
-      />
+      >
+        <Component
+          label="Minuter"
+          value="minutes"
+        />
+        <Component
+          label="Klockslag"
+          value="clock"
+        />
+      </Picker>
     </View>
     <ListItemSeparator />
     <View

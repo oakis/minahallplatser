@@ -11,7 +11,6 @@ import { colors } from './components/style';
 import { isAndroid, showMessage, globals } from './components/helpers';
 import { store } from './App';
 import { CLR_ERROR } from './actions/types';
-import { autoLogin, loginAnonUser } from './actions';
 
 
 const iconSize = 24;
@@ -94,7 +93,7 @@ class RouterComponent extends Component {
 						fontSize: 14,
 						fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
 					}}
-					navigationBarStyle={{ backgroundColor: colors.primary, paddingHorizontal: 10 }}
+					navigationBarStyle={{ backgroundColor: colors.primary, paddingRight: 5 }}
 					rightButtonTextStyle={{ color: colors.alternative }}
 					leftButtonTextStyle={{ color: colors.alternative }}
 					renderBackButton={BackButton}
@@ -105,6 +104,7 @@ class RouterComponent extends Component {
 							contentComponent={Menu}
 							drawerIcon={<Icon name="menu" size={iconSize} style={{ color: colors.alternative }} />}
 							drawerWidth={225}
+							headerLayoutPreset="center"
 						>
 							<Scene
 								onEnter={() => {
@@ -115,6 +115,7 @@ class RouterComponent extends Component {
 								component={FavoriteList}
 								title="Mina Hållplatser"
 								right={HelpButton}
+								headerLayoutPreset="center"
 							/>
 							<Scene
 								onEnter={() => {
@@ -126,6 +127,7 @@ class RouterComponent extends Component {
 								hideDrawerButton
 								right={HelpButton}
 								left={BackButton}
+								headerLayoutPreset="center"
 							/>
 						</Drawer>
 					</Stack>
@@ -135,4 +137,4 @@ class RouterComponent extends Component {
 	}
 }
 
-export default connect(null, { autoLogin, loginAnonUser })(RouterComponent);
+export default connect(null, null)(RouterComponent);
