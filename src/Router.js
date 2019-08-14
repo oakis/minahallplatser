@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableWithoutFeedback, View, StatusBar } from 'react-native';
+import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Scene, Router, Actions, Stack, Drawer } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -106,12 +107,20 @@ class RouterComponent extends Component {
 							drawerWidth={225}
 						>
 							<Scene
+								onEnter={() => {
+									window.log('Entering Dashboard..');
+									firebase.analytics().setCurrentScreen('Dashboard', 'Dashboard');
+								}}
 								key="favlist"
 								component={FavoriteList}
 								title="Mina Hållplatser"
 								right={HelpButton}
 							/>
 							<Scene
+								onEnter={() => {
+									window.log('Entering Departures..');
+									firebase.analytics().setCurrentScreen('Departures', 'Departures');
+								}}
 								key="departures"
 								component={ShowDepartures}
 								hideDrawerButton

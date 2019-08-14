@@ -3,17 +3,17 @@ package com.oakis.minahallplatser;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.kevinejohn.RNMixpanel.RNMixpanel;
-import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
+import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,8 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
             new MainReactPackage(),
             new AsyncStoragePackage(),
             new RNDeviceInfo(),
-            new RNMixpanel(),
             new RNFirebasePackage(),
+            new RNFirebaseAnalyticsPackage(),
             new RNFirebaseCrashlyticsPackage(),
             new VectorIconsPackage(),
             new RNFusedLocationPackage()

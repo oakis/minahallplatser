@@ -5691,10 +5691,6 @@ react-native-geolocation-service@3.0.0:
   dependencies:
     "@react-native-community/geolocation" "^1.4.2"
 
-react-native-mixpanel@0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-0.0.16.tgz#1c98e61c07c375efd96b8300ec5813fc5966b9df"
-
 react-native-router-flux@4.0.0-beta.28:
   version "4.0.0-beta.28"
   resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.0.0-beta.28.tgz#1d39cf176c88d0658af03cfa80dfb4a8eb284619"
