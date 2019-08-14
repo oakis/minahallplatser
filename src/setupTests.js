@@ -347,19 +347,14 @@ jest.mock('redux-persist', () => ({
 jest.mock('react-native-router-flux', () => {});
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'MaterialIcon');
 jest.mock('react-native-device-info', () => {});
-jest.mock('react-native-mixpanel', () => (
-    {
-        sharedInstanceWithToken: jest.fn(),
-        track: jest.fn(),
-        identify: jest.fn(),
-        set: jest.fn(),
-    }
-));
 jest.mock('react-native-geolocation-service', () => {});
 jest.mock('react-native-firebase', () => ({
     crashlytics: jest.fn().mockReturnThis(),
     log: jest.fn().mockReturnThis(),
     crash: jest.fn().mockReturnThis(),
+    analytics: () => ({
+        setCurrentScreen: jest.fn()
+    }),
 }));
 
 jest.mock('react-native-router-flux', () => ({

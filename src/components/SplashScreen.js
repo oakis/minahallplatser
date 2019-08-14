@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { View, ImageBackground } from 'react-native';
+import firebase from 'react-native-firebase';
 import { Spinner, Text } from './common';
 import { colors } from './style';
 
 class SplashScreen extends Component {
+
+	componentDidMount() {
+		firebase.analytics().setCurrentScreen('Splashscreen', 'Splashscreen');
+	}
 
 	render() {
 		return (
@@ -22,7 +27,7 @@ class SplashScreen extends Component {
 						alignItems: 'center'
 					}}
 				>
-					{/* Mina hållplatser logo, custom 'spinner' under logo (brummande buss t.ex) */} 
+					{/* Mina hållplatser logo, custom 'spinner' under logo (brummande buss t.ex) */}
 					<Text style={{ marginBottom: 10, opacity: 1 }}>Mina Hållplatser</Text>
 					<Spinner
 						size="large"

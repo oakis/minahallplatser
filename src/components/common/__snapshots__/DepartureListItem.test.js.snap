@@ -84,7 +84,7 @@ exports[`should match snapshot 1`] = `
       <DefaultFont
         style={
           Object {
-            "fontSize": 10,
+            "fontSize": 12,
             "marginTop": -5,
           }
         }
