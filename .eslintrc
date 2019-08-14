@@ -1,18 +1,26 @@
 {
-	"extends": "rallycoding",
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended"
+	],
 	"rules": {
 		"arrow-body-style": 0,
 		"max-len": 0,
-		"react/jsx-no-bind": 1,
 		"global-require": 0
 	},
-	"globals": {
-		"navigator": false,
-		"window": false,
-		"ErrorUtils": false,
-		"__DEV__": false
-	},
 	"env": {
-		"jest": true
+		"jest": true,
+		"react-native/react-native": true
+	},
+	"parser": "babel-eslint",
+	"plugins": [
+		"react",
+		"react-native"
+	],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true,
+			"modules": true
+		}
 	}
 }

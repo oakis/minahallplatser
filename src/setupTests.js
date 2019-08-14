@@ -352,6 +352,9 @@ jest.mock('react-native-firebase', () => ({
     crashlytics: jest.fn().mockReturnThis(),
     log: jest.fn().mockReturnThis(),
     crash: jest.fn().mockReturnThis(),
+    analytics: () => ({
+        setCurrentScreen: jest.fn()
+    }),
 }));
 
 jest.mock('react-native-router-flux', () => ({

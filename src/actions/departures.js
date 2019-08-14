@@ -35,7 +35,7 @@ export const getDepartures = ({ id }) => {
 				});
 			})
 			.catch((error) => {
-				window.log('Get departures failed', error);
+				window.log('Get departures failed', error)
 				dispatch({
 					type: GET_DEPARTURES_FAIL
 				});
