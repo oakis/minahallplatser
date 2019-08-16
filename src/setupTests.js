@@ -344,7 +344,6 @@ jest.mock('redux-persist', () => ({
     persistReducer: () => jest.fn(),
     persistStore: () => jest.fn(),
 }));
-jest.mock('react-native-router-flux', () => {});
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'MaterialIcon');
 jest.mock('react-native-device-info', () => {});
 jest.mock('react-native-geolocation-service', () => {});
@@ -355,18 +354,6 @@ jest.mock('react-native-firebase', () => ({
     analytics: () => ({
         setCurrentScreen: jest.fn()
     }),
-}));
-
-jest.mock('react-native-router-flux', () => ({
-    Router: jest.fn(),
-    Stack: jest.fn(),
-    Scene: jest.fn(),
-    Drawer: jest.fn(),
-    Actions: {
-        login: stub(),
-        pop: stub(),
-        refresh: stub(),
-    },
 }));
 
 jest.mock('./components/helpers', () => ({
