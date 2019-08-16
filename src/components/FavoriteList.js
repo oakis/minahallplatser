@@ -1,20 +1,37 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
+import { Keyboard, Alert, FlatList, View, ScrollView, AppState, TouchableWithoutFeedback } from 'react-native';
+import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import { favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
 import { ListItem, Message, Input, ListItemSeparator, ListHeading, Text, Popup, Button } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
-import { HelpButton } from '../Router';
 import { store } from '../App';
-import { track, globals, isAndroid } from './helpers';
+import { track, isAndroid } from './helpers';
+import { HelpButton } from '../Router';
 
+const iconSize = 24;
 
 class FavoriteList extends PureComponent {
+
+	static navigationOptions = ({ navigation }) => ({
+		title: 'Mina Hållplatser',
+		headerLeft: (
+			<Icon
+				name="menu"
+				size={iconSize}
+				style={{
+					color: colors.alternative,
+					left: 8,
+				}}
+				onPress={navigation.state.params && navigation.state.params.onPress}
+			/>
+		),
+		headerRight: navigation.state.params && navigation.state.params.headerRight,
+	});
 
 	constructor(props) {
 		super(props);
@@ -28,7 +45,8 @@ class FavoriteList extends PureComponent {
 	}
 
 	componentDidMount() {
-		globals.shouldExitApp = false;
+		firebase.analytics().setCurrentScreen('Dashboard', 'Dashboard');
+		this.props.navigation.setParams({ headerRight: HelpButton(this), onPress: () => this.props.navigation.toggleDrawer() });
 		Keyboard.dismiss();
 		if (this.props.allowedGPS) {
 			window.log('Refreshing nearby stops');
@@ -40,7 +58,7 @@ class FavoriteList extends PureComponent {
 
 	componentWillReceiveProps() {
 		if (this.state.init) {
-			Actions.refresh({ right: HelpButton(this) });
+			// Actions.refresh({ right: HelpButton(this) });
 			this.setState({ init: false });
 		}
 	}
@@ -142,7 +160,12 @@ class FavoriteList extends PureComponent {
 				pressItem={async () => {
 					Keyboard.dismiss();
 					await this.props.clearErrors();
-					Actions.departures({ busStop: item.busStop, id: item.id, title: item.busStop, parent: 'favorites' });
+					this.props.navigation.navigate('Departures', {
+						busStop: item.busStop,
+						id: item.id,
+						title: item.busStop,
+						parent: 'favorites',
+					});
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -174,7 +197,12 @@ class FavoriteList extends PureComponent {
 				icon={item.icon}
 				pressItem={() => {
 					Keyboard.dismiss();
-					Actions.departures({ busStop: item.name, id: item.id, title: item.name, parent });
+					this.props.navigation.navigate('Departures', {
+						busStop: item.name,
+						id: item.id,
+						title: item.name,
+						parent,
+					});
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -238,7 +266,7 @@ class FavoriteList extends PureComponent {
 
 	render() {
 		return (
-			<View style={{ flex: 1 }}>
+			<View style={{ flex: 1, backgroundColor: colors.background }}>
 				{this.renderPopup()}
 				<ScrollView scrollEnabled keyboardShouldPersistTaps="always">
 					<Input

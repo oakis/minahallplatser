@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import { PermissionsAndroid } from 'react-native';
 import geolocation from 'react-native-geolocation-service';
-import { Actions } from 'react-native-router-flux';
 import fetch from 'react-native-cancelable-fetch';
 import {
 	ALLOWED_GPS,
@@ -141,7 +140,7 @@ const returnCoords = (dispatch) => {
 			dispatch({ type: SEARCH_BY_GPS_FAIL })
 			return dispatch({ type: ERROR, payload: mustAllowGPSMsg });
 		}
-		if (Actions.currentScene === 'dashboard' && gpsCount > 5) {
+		if (/* Actions.currentScene === 'dashboard' && */gpsCount > 5) {
 			dispatch({ type: SEARCH_BY_GPS_FAIL });
 		} else if (gpsCount < 5) {
 			gpsCount++;
