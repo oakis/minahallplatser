@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, FlatList, View, ScrollView, AppState, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
 import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
@@ -56,7 +56,7 @@ class FavoriteList extends PureComponent {
 		AppState.addEventListener('change', this.handleAppStateChange);
 	}
 
-	componentWillReceiveProps() {
+	UNSAFE_componentWillReceiveProps() {
 		if (this.state.init) {
 			this.setState({ init: false });
 		}
@@ -123,14 +123,14 @@ class FavoriteList extends PureComponent {
 					Hållplatser nära dig
 				</Text>
 				<Text style={component.popup.text}>
-					Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din <Text style={{ fontWeight: 'bold' }}>plats</Text>. Om du har nekat tillgång så kan du klicka på pilen ( <Icon name="refresh" /> ) till höger om "Hållplatser nära dig" och godkänna åtkomst till platstjänster.
+					Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din <Text style={{ fontWeight: 'bold' }}>plats</Text>. Om du har nekat tillgång så kan du klicka på pilen ( <Icon name="refresh" /> ) till höger om &quot;Hållplatser nära dig&quot; och godkänna åtkomst till platstjänster.
 				</Text>
 
 				<Text style={component.popup.header}>
 					Spara hållplats som favorit
 				</Text>
 				<Text style={component.popup.text}>
-					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Icon name="star-border" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Icon name="star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg och hållplatsen sparas i listan "Mina Hållplatser".
+					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Icon name="star-border" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Icon name="star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg och hållplatsen sparas i listan &quot;Mina Hållplatser&quot;.
 				</Text>
 
 				<Text style={component.popup.header}>

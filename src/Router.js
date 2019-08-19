@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableWithoutFeedback, View, StatusBar } from 'react-native';
+import { TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createStackNavigator, createAppContainer, createDrawerNavigator } from 'react-navigation';
 import FavoriteList from './components/FavoriteList';
