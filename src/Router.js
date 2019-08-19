@@ -7,36 +7,8 @@ import ShowDepartures from './components/ShowDepartures';
 import Menu from './components/Menu';
 import { colors } from './components/style';
 import { isAndroid } from './components/helpers';
-import { store } from './App';
-import { CLR_ERROR } from './actions/types';
-
 
 const iconSize = 24;
-
-export const BackButton = () => {
-	return (
-		<TouchableWithoutFeedback
-			onPress={async () => {
-				await store.dispatch({ type: CLR_ERROR });
-				Actions.pop();
-			}}
-		>
-			<View
-				style={{
-					width: 30,
-					height: 30,
-					alignItems: 'center',
-					justifyContent: 'center'
-				}}
-			>
-				<Icon
-					name="keyboard-arrow-left"
-					style={{ color: colors.alternative, fontSize: iconSize }}
-				/>
-			</View>
-		</TouchableWithoutFeedback>
-	);
-};
 
 export const HelpButton = (self) => {
 	return (
