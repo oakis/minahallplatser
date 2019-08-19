@@ -16,6 +16,8 @@ exports[`SplashScreen should match snapshot 1`] = `
     <DefaultFont
       style={
         Object {
+          "fontSize": 24,
+          "fontWeight": "bold",
           "marginBottom": 10,
           "opacity": 1,
         }

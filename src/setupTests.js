@@ -389,6 +389,12 @@ jest.mock('react-native-firebase', () => ({
         setCurrentScreen: jest.fn()
     }),
 }));
+jest.mock('react-navigation', () => ({
+    createAppContainer: jest.fn(),
+    createDrawerNavigator: jest.fn(),
+    createStackNavigator: jest.fn(),
+    navigate: jest.fn(),
+}));
 
 jest.mock('./components/helpers', () => ({
     getStorage: jest.fn(() => {}),
