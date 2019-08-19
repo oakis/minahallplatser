@@ -321,6 +321,40 @@ jest.mock('react-native', () => {
     };
 });
 
+jest.mock('react-native-gesture-handler', () => {
+    const View = require('react-native/Libraries/Components/View/View');
+    return {
+        Swipeable: View,
+        DrawerLayout: View,
+        State: {},
+        ScrollView: View,
+        Slider: View,
+        Switch: View,
+        TextInput: View,
+        ToolbarAndroid: View,
+        ViewPagerAndroid: View,
+        DrawerLayoutAndroid: View,
+        WebView: View,
+        NativeViewGestureHandler: View,
+        TapGestureHandler: View,
+        FlingGestureHandler: View,
+        ForceTouchGestureHandler: View,
+        LongPressGestureHandler: View,
+        PanGestureHandler: View,
+        PinchGestureHandler: View,
+        RotationGestureHandler: View,
+        /* Buttons */
+        RawButton: View,
+        BaseButton: View,
+        RectButton: View,
+        BorderlessButton: View,
+        /* Other */
+        FlatList: View,
+        gestureHandlerRootHOC: jest.fn(),
+        Directions: {},
+    };
+});
+
 jest.mock('@react-native-community/async-storage', () => (
     {
         config: {
@@ -344,7 +378,6 @@ jest.mock('redux-persist', () => ({
     persistReducer: () => jest.fn(),
     persistStore: () => jest.fn(),
 }));
-jest.mock('react-native-router-flux', () => {});
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'MaterialIcon');
 jest.mock('react-native-device-info', () => {});
 jest.mock('react-native-geolocation-service', () => {});
@@ -356,17 +389,11 @@ jest.mock('react-native-firebase', () => ({
         setCurrentScreen: jest.fn()
     }),
 }));
-
-jest.mock('react-native-router-flux', () => ({
-    Router: jest.fn(),
-    Stack: jest.fn(),
-    Scene: jest.fn(),
-    Drawer: jest.fn(),
-    Actions: {
-        login: stub(),
-        pop: stub(),
-        refresh: stub(),
-    },
+jest.mock('react-navigation', () => ({
+    createAppContainer: jest.fn(),
+    createDrawerNavigator: jest.fn(),
+    createStackNavigator: jest.fn(),
+    navigate: jest.fn(),
 }));
 
 jest.mock('./components/helpers', () => ({

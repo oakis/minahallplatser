@@ -28,7 +28,7 @@ class SplashScreen extends Component {
 					}}
 				>
 					{/* Mina hållplatser logo, custom 'spinner' under logo (brummande buss t.ex) */}
-					<Text style={{ marginBottom: 10, opacity: 1 }}>Mina Hållplatser</Text>
+					<Text style={{ marginBottom: 10, opacity: 1, fontSize: 24, fontWeight: 'bold' }}>Mina Hållplatser</Text>
 					<Spinner
 						size="large"
 						color={colors.primary}

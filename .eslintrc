@@ -3,10 +3,16 @@
 		"eslint:recommended",
 		"plugin:react/recommended"
 	],
+	"settings": {
+		"react": {
+			"version": "detect",
+		}
+	},
 	"rules": {
 		"arrow-body-style": 0,
 		"max-len": 0,
-		"global-require": 0
+		"global-require": 0,
+		"react/prop-types": 0,
 	},
 	"env": {
 		"jest": true,

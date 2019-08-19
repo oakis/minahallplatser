@@ -2,15 +2,25 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import React, { PureComponent } from 'react';
 import { View, ScrollView, FlatList, AppState } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import firebase from 'react-native-firebase';
 import fetch from 'react-native-cancelable-fetch';
-import { HelpButton } from '../Router';
 import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle, incrementStopsOpened } from '../actions';
 import { DepartureListItem, Spinner, Message, ListItemSeparator, Popup, Text } from './common';
-import { updateStopsCount, track } from './helpers';
+import { updateStopsCount, track, isAndroid } from './helpers';
 import { colors, component } from './style';
+import { HelpButton } from '../Router';
 
 class ShowDepartures extends PureComponent {
+
+	static navigationOptions = ({ navigation }) => ({
+			title: navigation.getParam('title'),
+			headerTitleStyle: {
+				width: 'auto',
+				fontSize: 14,
+				fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
+			},
+			headerRight: navigation.state.params && navigation.state.params.headerRight,
+	});
 
 	constructor(props) {
 		super(props);
@@ -20,21 +30,20 @@ class ShowDepartures extends PureComponent {
 		};
 	}
 
-	componentWillMount() {
-		track('Page View', { Page: 'Departures', Stop: this.props.busStop, Parent: this.props.parent });
-		this.props.getDepartures({ id: this.props.id });
-		updateStopsCount();
-		this.props.incrementStopsOpened(this.props.id);
-	}
-
 	componentDidMount() {
+		firebase.analytics().setCurrentScreen('Departures', 'Departures');
+		this.props.navigation.setParams({ headerRight: HelpButton(this) });
+		track('Page View', { Page: 'Departures', Stop: this.props.navigation.getParam('busStop'), Parent: this.props.navigation.getParam('parent')});
+		this.props.getDepartures({ id: this.props.navigation.getParam('id') });
+		updateStopsCount();
+		this.props.incrementStopsOpened(this.props.navigation.getParam('id'));
 		this.startRefresh();
 		AppState.addEventListener('change', this.handleAppStateChange);
 	}
 
 	componentWillReceiveProps({ favorites, departures, timestamp }) {
 		if (this.state.init) {
-			Actions.refresh({ right: HelpButton(this) });
+			this.props.navigation.setParams({ headerRight: HelpButton(this) });
 			this.setState({ init: false });
 		}
 		const favoritesUpdated = JSON.stringify(this.props.favorites) !== JSON.stringify(favorites);
@@ -46,7 +55,7 @@ class ShowDepartures extends PureComponent {
 			this.populateDepartures(departures);
 		}
 		if (this.props.timestamp !== timestamp) {
-			Actions.refresh({ right: HelpButton(this) });
+			this.props.navigation.setParams({ headerRight: HelpButton(this) });
 		}
 	}
 
@@ -66,9 +75,9 @@ class ShowDepartures extends PureComponent {
 		this.props.clearErrors();
 		fetch.abort('getDepartures');
 		if (nextAppState === 'active') {
-			this.props.getDepartures({ id: this.props.id });
+			this.props.getDepartures({ id: this.props.navigation.getParam('id') });
 			this.startRefresh();
-			track('Page View', { Page: 'Departures', Stop: this.props.busStop, Parent: 'Background' });
+			track('Page View', { Page: 'Departures', Stop: this.props.navigation.getParam('busStop'), Parent: 'Background' });
 		}
 	}
 
@@ -78,15 +87,13 @@ class ShowDepartures extends PureComponent {
 	}
 
 	refresh = () => {
-		Actions.refresh({ right: () => {
-			return (
-				<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-					<Spinner color={colors.alternative} />
-					{HelpButton(this)}
-				</View>
-			);
-		} });
-		this.props.getDepartures({ id: this.props.id });
+		this.props.navigation.setParams({ headerRight: (
+			<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+				<Spinner color={colors.alternative} />
+				{HelpButton(this)}
+			</View>
+		)});
+		this.props.getDepartures({ id: this.props.navigation.getParam('id') });
 	}
 
 	populateFavorites(favorites) {

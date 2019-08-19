@@ -3,14 +3,15 @@ import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import configureMockStore from 'redux-mock-store';
 import ShowDepartures from './ShowDepartures';
+import { navigation } from './helpers/testhelper.js';
 
 const mockStore = configureMockStore();
 
 const initialState = {
     fav: {
         lines: [
-            '16 Högsbo'
-        ]
+            '16 Högsbo',
+        ],
     },
     departures: {
         departures: [
@@ -29,26 +30,26 @@ const initialState = {
                 track: 'A',
                 night: false,
                 accessibility: 'wheelChair',
-                journeyid: '123'
+                journeyid: '123',
             }
         ],
         loading: false,
     },
     errors: {
-        error: ''
+        error: '',
     },
     settings: {
-        timeFormat: ''
-    }
+        timeFormat: '',
+    },
 };
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<ShowDepartures store={mockStore(initialState)} getDepartures={jest.fn()} incrementStopsOpened={jest.fn()} />).dive();
+    const wrapper = shallow(<ShowDepartures navigation={navigation} store={mockStore(initialState)} getDepartures={jest.fn()} incrementStopsOpened={jest.fn()} />).dive();
     expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('16 Högsbo should match 16X Högsbo', () => {
-    const wrapper = shallow(<ShowDepartures store={mockStore(initialState)} />);
+    const wrapper = shallow(<ShowDepartures navigation={navigation} store={mockStore(initialState)} />);
     const expected = '16X';
     const actual = wrapper.props().favorites[0].sname;
     expect(actual).toBe(expected);
@@ -62,7 +63,7 @@ it('16X Högsbo should match 16 Högsbo', () => {
             direction: 'Högsbo'
         }
     ];
-    const wrapper = shallow(<ShowDepartures store={mockStore(initialState)} />);
+    const wrapper = shallow(<ShowDepartures navigation={navigation} store={mockStore(initialState)} />);
     const expected = '16';
     const actual = wrapper.props().favorites[0].sname;
     expect(actual).toBe(expected);

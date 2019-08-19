@@ -15,7 +15,8 @@
     "bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "debug": "yarn clean && react-native run-android --appIdSuffix dev",
     "release": "yarn clean && cd android && ./gradlew installRelease",
-    "adb": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:5000 tcp:5000"
+    "adb": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:5000 tcp:5000",
+    "lint": "eslint src/**.*"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.1",
@@ -31,8 +32,10 @@
     "react-native-device-info": "0.21.5",
     "react-native-firebase": "~5.1.1",
     "react-native-geolocation-service": "3.0.0",
-    "react-native-router-flux": "4.0.0-beta.28",
+    "react-native-gesture-handler": "^1.3.0",
+    "react-native-reanimated": "^1.2.0",
     "react-native-vector-icons": "6.6.0",
+    "react-navigation": "^3.11.1",
     "react-redux": "5.1.1",
     "redux": "4.0.4",
     "redux-mock-store": "1.4.0",
@@ -46,6 +49,7 @@
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
     "eslint": "^6.1.0",
+    "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-native": "^3.7.0",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.54.1",
