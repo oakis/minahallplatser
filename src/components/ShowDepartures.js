@@ -142,7 +142,7 @@ class ShowDepartures extends PureComponent {
 				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode="cover" /> */}
 
 				<Text style={component.popup.header}>Varför har tiden till nästa avgång ibland färg?</Text>
-				<Text style={component.popup.text}>När en avgång snart ska gå från en hållplats så kommer alltid texten "<Text style={{ color: colors.danger }}>Nu</Text>" att visas med röd färg. Ibland kan man också se att en avgång har <Text style={{ color: colors.warning }}>orange</Text> text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.</Text>
+				<Text style={component.popup.text}>När en avgång snart ska gå från en hållplats så kommer alltid texten &quot;<Text style={{ color: colors.danger }}>Nu</Text>&quot; att visas med röd färg. Ibland kan man också se att en avgång har <Text style={{ color: colors.warning }}>orange</Text> text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.</Text>
 				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode="cover" /> */}
 
 				<Text style={component.popup.header}>Hur sparar man en linje som favorit?</Text>
