@@ -1,11 +1,14 @@
+import _ from 'lodash';
 import {
 	FAVORITE_CREATE, FAVORITE_DELETE, FAVORITE_OPENED,
 	LINE_ADD, LINE_REMOVE,
+	LINE_LOCAL_ADD, LINE_LOCAL_REMOVE,
 } from '../actions/types';
 
 const INIT_STATE = {
 	favorites: [],
 	lines: [],
+	linesLocal: [],
 	loading: true
 };
 
@@ -30,6 +33,51 @@ export default (state = INIT_STATE, action) => {
 			return { ...state, lines: [...state.lines, action.payload] };
 		case LINE_REMOVE:
 			return { ...state, lines: state.lines.filter(line => line !== action.payload) };
+		case LINE_LOCAL_ADD: {
+			const existingStop = _.find(state.linesLocal, ({ stop }) => stop === action.payload.stop);
+			if (!state.linesLocal || !state.linesLocal.length) {
+				return {
+					...state,
+					linesLocal: [{
+						stop: action.payload.stop,
+						lines: [action.payload.line],
+					}],
+				};
+			} else if (existingStop && _.includes(existingStop, action.payload.stop)) {
+				return {
+					...state,
+					linesLocal: state.linesLocal.map((line) => {
+						if (line.stop === action.payload.stop) {
+							return {
+								...line,
+								lines: [...line.lines, action.payload.line],
+							};
+						}
+						return line;
+					}),
+				};
+			}
+			return {
+				...state,
+				linesLocal: [...state.linesLocal, {
+					stop: action.payload.stop,
+					lines: [action.payload.line],
+				}],
+			};
+		}
+		case LINE_LOCAL_REMOVE:
+			return {
+				...state,
+				linesLocal: state.linesLocal.map((line) => {
+					if (line.stop === action.payload.stop) {
+						return {
+							...line,
+							lines: line.lines.filter(line => line !== action.payload.line),
+						};
+					}
+					return line;
+				}),
+			};
 		default:
 			return state;
 	}

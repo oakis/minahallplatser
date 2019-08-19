@@ -99,7 +99,7 @@ exports[`should match snapshot 1`] = `
         }
       }
     >
-      För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.
+      För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör på. För att spara avgången som favorit för nuvarande hållplats så tryck på avgången och håll ner fingret i en halv sekund.
     </DefaultFont>
   </Popup>
   <ScrollView>
@@ -115,8 +115,10 @@ exports[`should match snapshot 1`] = `
             "clockNext": "16:05",
             "direction": "Högsbo",
             "fgColor": "#eee",
+            "global": true,
             "isLive": true,
             "journeyid": "123",
+            "local": false,
             "night": false,
             "sname": "16X",
             "timeLeft": "3",

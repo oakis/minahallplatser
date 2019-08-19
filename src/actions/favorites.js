@@ -2,7 +2,8 @@ import _ from 'lodash';
 import { store } from '../App';
 import {
 	FAVORITE_CREATE, FAVORITE_DELETE, FAVORITE_OPENED,
-	LINE_ADD, LINE_REMOVE
+	LINE_ADD, LINE_REMOVE,
+	LINE_LOCAL_ADD, LINE_LOCAL_REMOVE,
 } from './types';
 import { track, } from '../components/helpers';
 
@@ -41,5 +42,21 @@ export const favoriteLineToggle = ({ sname, direction }) => {
 			track('Favorite Line Add', { Line: line });
 			dispatch({ type: LINE_ADD, payload: line });
 		}
+	};
+};
+
+export const favoriteLineLocalAdd = ({ sname, direction }, stop) => {
+	const line = `${sname} ${direction}`;
+	return (dispatch) => {
+		track('Favorite Line Local Add', { Line: line, Stop: stop });
+		dispatch({ type: LINE_LOCAL_ADD, payload: { line, stop } });
+	};
+};
+
+export const favoriteLineLocalRemove = ({ sname, direction }, stop) => {
+	const line = `${sname} ${direction}`;
+	return (dispatch) => {
+		track('Favorite Line Local Remove', { Line: line, Stop: stop });
+		dispatch({ type: LINE_LOCAL_REMOVE, payload: { line, stop } });
 	};
 };

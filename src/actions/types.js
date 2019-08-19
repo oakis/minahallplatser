@@ -5,6 +5,8 @@ export const FAVORITE_OPENED = 'FAVORITE_OPENED';
 export const LINES_FETCH = 'LINES_FETCH';
 export const LINE_ADD = 'LINE_ADD';
 export const LINE_REMOVE = 'LINE_REMOVE';
+export const LINE_LOCAL_ADD = 'LINE_LOCAL_ADD';
+export const LINE_LOCAL_REMOVE = 'LINE_LOCAL_REMOVE';
 
 // Search
 export const SEARCH_CHANGED = 'SEARCH_CHANGED';
