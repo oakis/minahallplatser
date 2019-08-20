@@ -181,7 +181,6 @@ class ShowDepartures extends PureComponent {
 					renderItem={this.renderDepartures}
 					keyExtractor={item => item.journeyid}
 					ItemSeparatorComponent={ListItemSeparator}
-					getItemLayout={this.getItemLayout}
 					ListFooterComponent={this.ListFooterComponent}
 					maxToRenderPerBatch={11}
 					initialNumToRender={11}

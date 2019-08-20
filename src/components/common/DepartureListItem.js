@@ -9,33 +9,24 @@ export class DepartureListItem extends PureComponent {
 
     constructor(props) {
         super(props);
-
-        this.getDepartureTypeIcon = this.getDepartureTypeIcon.bind(this);
     }
 
-    getDepartureTypeIcon = (type, color) => {
-		let iconName;
+    getDepartureType = (type) => {
 		switch (type) {
             case 'BOAT':
-                iconName = 'directions-boat';
-                break;
+                return 'directions-boat';
             case 'BUS':
-                iconName = 'directions-bus';
-                break;
+                return 'directions-bus';
             case 'TAXI':
-                iconName = 'local-taxi';
-                break;
+                return 'local-taxi';
             case 'TRAM':
-                iconName = 'tram';
-                break;
+                return 'tram';
             case 'VAS':
             case 'REG':
-                iconName = 'train';
-                break;
+                return 'train';
             default:
                 return null;
 		}
-		return <Icon name={iconName} size={15} color={color} />;
     }
 
     getSnameFontsize = (sname) => {
@@ -157,7 +148,7 @@ export class DepartureListItem extends PureComponent {
                     <View style={col1Style}>
                         <View style={stopNumStyle}>
                             <Text style={stopNumText}>{item.sname}</Text>
-                            {this.getDepartureTypeIcon(item.type, item.bgColor)}
+                            <Icon name={this.getDepartureType(item.type)} size={15} color={item.bgColor} />
                         </View>
                     </View>
 

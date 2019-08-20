@@ -64,16 +64,16 @@ const item3 = {
 };
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<DepartureListItem item={item} onPress={jest.fn()} />);
+    const wrapper = shallow(<DepartureListItem item={item} onPress={jest.fn()} onLongPress={jest.fn()} />);
     expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<DepartureListItem item={item2} onPress={jest.fn()} />);
+    const wrapper = shallow(<DepartureListItem item={item2} onPress={jest.fn()} onLongPress={jest.fn()} />);
     expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<DepartureListItem item={item3} onPress={jest.fn()} />);
+    const wrapper = shallow(<DepartureListItem item={item3} onPress={jest.fn()} onLongPress={jest.fn()} />);
     expect(toJson(wrapper)).toMatchSnapshot();
 });
