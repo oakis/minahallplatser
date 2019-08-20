@@ -16,12 +16,21 @@ class Menu extends Component {
         };
     }
 
-    openFeedback() {
+    openFeedback = () => {
+        track('Feedback Open');
         this.setState({ feedbackVisible: true });
     }
 
-    closeFeedback() {
+    closeFeedback = () => {
         this.setState({ feedbackVisible: false });
+    }
+
+    onOrderValueChange = (itemValue) => {
+        this.props.setSetting('favoriteOrder', itemValue);
+    }
+
+    onTimeValueChange = (itemValue) => {
+        this.props.setSetting('timeFormat', itemValue);
     }
 
     renderFavoriteOrder = () => {
@@ -32,9 +41,7 @@ class Menu extends Component {
                 </Text>
                 <Picker
                     selectedValue={this.props.favoriteOrder}
-                    onValueChange={(itemValue) => {
-                        this.props.setSetting('favoriteOrder', itemValue);
-                    }}
+                    onValueChange={this.onOrderValueChange}
                     style={[isAndroid() ? component.picker : {}]}
                     itemStyle={{ fontSize: 16, height: 90, marginTop: -10 }}
                 >
@@ -54,9 +61,7 @@ class Menu extends Component {
                 </Text>
                 <Picker
                     selectedValue={this.props.timeFormat}
-                    onValueChange={(itemValue) => {
-                        this.props.setSetting('timeFormat', itemValue);
-                    }}
+                    onValueChange={this.onTimeValueChange}
                     style={[isAndroid() ? component.picker : {}]}
                     itemStyle={{ fontSize: 16, height: 90, marginTop: -10 }}
                 >
@@ -72,7 +77,7 @@ class Menu extends Component {
 			<View style={{ flexDirection: 'column', backgroundColor: colors.background, flex: 1 }}>
                 <Feedback
                     visible={this.state.feedbackVisible}
-                    close={() => this.closeFeedback()}
+                    close={this.closeFeedback}
                 />
                 <ScrollView>
                     <ImageBackground source={{ uri: 'https://www.w3schools.com/css/img_fjords.jpg' }} style={{ width: 225, height: 120 }}>
@@ -98,10 +103,7 @@ class Menu extends Component {
                         text="Lämna feedback"
                         icon="email"
                         iconVisible
-                        pressItem={() => {
-                            track('Feedback Open');
-                            this.openFeedback();
-                        }}
+                        pressItem={this.openFeedback}
                         style={{ marginTop: metrics.margin.md }} // Första ListItem ska ha en marginTop för att få ett jämnt mellanrum mellan ListItem's
                     />
 

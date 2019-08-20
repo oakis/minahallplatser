@@ -135,6 +135,7 @@ exports[`should match snapshot 1`] = `
           "showHelp": false,
         }
       }
+      getItemLayout={[Function]}
       initialNumToRender={11}
       keyExtractor={[Function]}
       maxToRenderPerBatch={11}

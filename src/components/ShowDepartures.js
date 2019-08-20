@@ -140,10 +140,12 @@ class ShowDepartures extends PureComponent {
 		);
 	}
 
+	closePopup = () => this.setState({ showHelp: false });
+
 	renderPopup() {
 		return (
 			<Popup
-				onPress={() => this.setState({ showHelp: false })}
+				onPress={this.closePopup}
 				isVisible={this.state.showHelp}
 			>
 				<Text style={component.popup.header}>När går nästa avgång?</Text>
@@ -157,6 +159,8 @@ class ShowDepartures extends PureComponent {
 			</Popup>
 		);
 	}
+
+	getItemLayout = (data, index) => ({ length: 51, offset: 51 * index, index })
 
 	renderContent() {
 		if (this.props.loading) {
@@ -177,6 +181,7 @@ class ShowDepartures extends PureComponent {
 					renderItem={this.renderDepartures}
 					keyExtractor={item => item.journeyid}
 					ItemSeparatorComponent={ListItemSeparator}
+					getItemLayout={this.getItemLayout}
 					ListFooterComponent={this.ListFooterComponent}
 					maxToRenderPerBatch={11}
 					initialNumToRender={11}
@@ -188,9 +193,7 @@ class ShowDepartures extends PureComponent {
 					renderItem={this.renderDepartures}
 					keyExtractor={item => item.journeyid}
 					ItemSeparatorComponent={ListItemSeparator}
-					getItemLayout={(data, index) => (
-						{ length: 51, offset: 51 * index, index }
-					)}
+					getItemLayout={this.getItemLayout}
 					maxToRenderPerBatch={11}
 					initialNumToRender={11}
 					scrollEnabled={false}

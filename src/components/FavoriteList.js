@@ -263,6 +263,10 @@ class FavoriteList extends PureComponent {
 		);
 	}
 
+	onFocus = () => {
+		track('Search Focused');
+	}
+
 	render() {
 		return (
 			<View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -277,7 +281,7 @@ class FavoriteList extends PureComponent {
 						iconRight={this.props.busStop.length > 0 ? 'close' : null}
 						iconRightPress={this.resetSearch}
 						underlineColorAndroid="#fff"
-						onFocus={() => track('Search Focused')}
+						onFocus={this.onFocus}
 						style={[{ borderRadius: 15, paddingLeft: metrics.padding.sm, paddingRight: metrics.padding.sm, margin: metrics.margin.md, backgroundColor: '#fff' }, !isAndroid() ? { paddingTop: metrics.padding.md, paddingBottom: metrics.padding.md } : null]}
 					/>
 					{(this.props.error) ?
