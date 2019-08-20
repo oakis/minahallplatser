@@ -70,7 +70,7 @@ export class DepartureListItem extends PureComponent {
     height = 50;
 
     render() {
-        const { item, onPress } = this.props;
+        const { item, onPress, onLongPress } = this.props;
         const shouldShowMin = item.timeFormat === 'minutes';
         const { clockLeft, clockNext } = item;
         const timeLeft = (item.timeLeft <= 0) ? 'Nu' : this.formatTime(item.timeLeft);
@@ -150,6 +150,7 @@ export class DepartureListItem extends PureComponent {
         return (
             <TouchableWithoutFeedback
                 onPress={onPress}
+                onLongPress={onLongPress}
                 delayLongPress={500}
             >
                 <View style={listStyle}>
@@ -161,7 +162,10 @@ export class DepartureListItem extends PureComponent {
                     </View>
 
                     <View style={col2Style}>
-                        <Text style={directionStyle}>{item.direction}</Text>
+                        <View style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Text style={directionStyle}>{item.direction}</Text>
+                            {item.global && <Icon name="public" size={13} style={{ ...iconStyle, marginTop: 2, marginLeft: 2, color: colors.primary }} />}
+                        </View>
                         {(item.via) ? <Text style={viaStyle}>{item.via}</Text> : null}
                         <View style={{ flexDirection: 'row' }}>
                             <Text>Läge {item.track || 'A'}</Text>

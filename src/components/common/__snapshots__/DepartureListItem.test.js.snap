@@ -72,15 +72,36 @@ exports[`should match snapshot 1`] = `
         }
       }
     >
-      <DefaultFont
+      <View
         style={
           Object {
-            "fontWeight": "bold",
+            "display": "flex",
+            "flexDirection": "row",
           }
         }
       >
-        Högsbo
-      </DefaultFont>
+        <DefaultFont
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Högsbo
+        </DefaultFont>
+        <MaterialIcon
+          name="public"
+          size={13}
+          style={
+            Object {
+              "alignSelf": "center",
+              "color": "#779ECB",
+              "marginLeft": 2,
+              "marginTop": 2,
+            }
+          }
+        />
+      </View>
       <DefaultFont
         style={
           Object {
@@ -221,15 +242,24 @@ exports[`should match snapshot 2`] = `
         }
       }
     >
-      <DefaultFont
+      <View
         style={
           Object {
-            "fontWeight": "bold",
+            "display": "flex",
+            "flexDirection": "row",
           }
         }
       >
-        Högsbo
-      </DefaultFont>
+        <DefaultFont
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Högsbo
+        </DefaultFont>
+      </View>
       <View
         style={
           Object {
@@ -350,15 +380,36 @@ exports[`should match snapshot 3`] = `
         }
       }
     >
-      <DefaultFont
+      <View
         style={
           Object {
-            "fontWeight": "bold",
+            "display": "flex",
+            "flexDirection": "row",
           }
         }
       >
-        Centralstationen
-      </DefaultFont>
+        <DefaultFont
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Centralstationen
+        </DefaultFont>
+        <MaterialIcon
+          name="public"
+          size={13}
+          style={
+            Object {
+              "alignSelf": "center",
+              "color": "#779ECB",
+              "marginLeft": 2,
+              "marginTop": 2,
+            }
+          }
+        />
+      </View>
       <View
         style={
           Object {
