@@ -1,10 +1,9 @@
 import React from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { createStackNavigator, createAppContainer, createDrawerNavigator } from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 import FavoriteList from './components/FavoriteList';
 import ShowDepartures from './components/ShowDepartures';
-import Menu from './components/Menu';
 import { colors } from './components/style';
 import { isAndroid } from './components/helpers';
 
@@ -56,15 +55,4 @@ const StackNavigator = createStackNavigator(
 	},
 );
 
-const AppNavigator = createDrawerNavigator(
-	{
-		Stack: StackNavigator,
-	}
-	,{
-		initialRouteName: 'Stack',
-		contentComponent: Menu,
-		drawerWidth: 225,
-	}
-);
-
-export default createAppContainer(AppNavigator);
+export default createAppContainer(StackNavigator);

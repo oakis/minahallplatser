@@ -397,8 +397,6 @@ jest.mock('react-navigation', () => ({
 }));
 
 jest.mock('./components/helpers', () => ({
-    getStorage: jest.fn(() => {}),
-    setStorage: jest.fn().mockImplementation(() => Promise.resolve()),
     globals: {},
     track: jest.fn(),
     isAndroid: jest.fn(),

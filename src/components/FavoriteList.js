@@ -1,36 +1,32 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
+import { Keyboard, Alert, FlatList, View, ScrollView, AppState, TouchableWithoutFeedback, Picker } from 'react-native';
 import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import { favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
-import { ListItem, Message, Input, ListItemSeparator, ListHeading, Text, Popup, Button } from './common';
+import { ListItem, Message, Input, ListItemSeparator, ListHeading, Text, Popup, Button, MiniMenu } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { store } from '../App';
 import { track, isAndroid } from './helpers';
 import { HelpButton } from '../Router';
 
-const iconSize = 24;
-
 class FavoriteList extends PureComponent {
 
 	static navigationOptions = ({ navigation }) => ({
 		title: 'Mina Hållplatser',
-		headerLeft: (
-			<Icon
-				name="menu"
-				size={iconSize}
-				style={{
-					color: colors.alternative,
-					left: 8,
-				}}
-				onPress={navigation.state.params && navigation.state.params.onPress}
-			/>
-		),
 		headerRight: navigation.state.params && navigation.state.params.headerRight,
+		headerTitleStyle: {
+			width: '100%',
+			marginHorizontal: 'auto',
+			left: 28,
+			alignSelf: 'center',
+			textAlign: 'center',
+			fontSize: 14,
+			fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
+		},
 	});
 
 	constructor(props) {
@@ -38,7 +34,7 @@ class FavoriteList extends PureComponent {
 		this.state = {
 			editing: false,
 			showHelp: false,
-			init: true,
+			miniMenuOpen: true,
 		};
 		this.searchTimeout = undefined;
 		this.clearTimeout = undefined;
@@ -46,7 +42,26 @@ class FavoriteList extends PureComponent {
 
 	componentDidMount() {
 		firebase.analytics().setCurrentScreen('Dashboard', 'Dashboard');
-		this.props.navigation.setParams({ headerRight: HelpButton(this), onPress: () => this.props.navigation.toggleDrawer() });
+		this.props.navigation.setParams({
+			headerRight: (
+                <TouchableWithoutFeedback
+                    onPress={this.toggleMiniMenu}
+                >
+                    <View style={{
+						width: 30,
+						height: 30,
+						alignItems: 'center',
+						justifyContent: 'center',
+						right: 5,
+					}}>
+                        <Icon
+                            name="more-horiz"
+                            style={{ color: colors.alternative, fontSize: 24 }}
+                        />
+                    </View>
+                </TouchableWithoutFeedback>
+			)
+		});
 		Keyboard.dismiss();
 		if (this.props.allowedGPS) {
 			window.log('Refreshing nearby stops');
@@ -54,12 +69,6 @@ class FavoriteList extends PureComponent {
 		}
 		track('Page View', { Page: 'Dashboard' });
 		AppState.addEventListener('change', this.handleAppStateChange);
-	}
-
-	UNSAFE_componentWillReceiveProps() {
-		if (this.state.init) {
-			this.setState({ init: false });
-		}
 	}
 
 	componentWillUnmount() {
@@ -96,6 +105,36 @@ class FavoriteList extends PureComponent {
 		track('Refresh NearbyStops');
 		store.dispatch({ type: SEARCH_BY_GPS_FAIL });
 		this.props.getNearbyStops();
+	}
+
+	toggleMiniMenu = () => {
+        this.setState(prevState => ({
+            miniMenuOpen: !prevState.miniMenuOpen,
+        }));
+	}
+
+	renderMiniMenu = () => {
+		return (
+			this.state.miniMenuOpen && <MiniMenu
+				items={[
+					{
+						icon: 'search',
+						label: 'Hej',
+						callback: () => window.log('hej!'),
+					},
+					{
+						icon: 'refresh',
+						label: 'Då',
+						callback: () => window.log('då!'),
+					},
+					{
+						icon: 'edit',
+						label: 'Tre',
+						callback: () => window.log('tre!'),
+					},
+				]}
+			/>
+		);
 	}
 
 	openPopup = () => {
@@ -270,7 +309,9 @@ class FavoriteList extends PureComponent {
 	render() {
 		return (
 			<View style={{ flex: 1, backgroundColor: colors.background }}>
+
 				{this.renderPopup()}
+				{this.renderMiniMenu()}
 				<ScrollView scrollEnabled keyboardShouldPersistTaps="always">
 					<Input
 						placeholder="Sök hållplats.."
