@@ -407,7 +407,7 @@ jest.mock('./components/helpers', () => ({
     getAppVersion: jest.fn(),
     getToken: jest.fn().mockImplementation(() => ({
         finally: (fn) => {
-            fn();
+            fn({ access_token: 123 });
         },
     })),
 }));
@@ -431,5 +431,8 @@ if (typeof window !== 'object') {
 }
 
 console.error = () => {};
+
+window.timeStart = jest.fn();
+window.timeEnd = jest.fn();
 
 configure({ adapter: new Adapter() });
