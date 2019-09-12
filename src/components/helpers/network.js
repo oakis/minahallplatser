@@ -92,5 +92,6 @@ export const handleVasttrafikDepartures = ({ DepartureBoard }) => {
     return {
         departures,
         timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
+        error: DepartureBoard.error,
     };
 };
