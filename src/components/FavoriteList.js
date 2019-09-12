@@ -11,7 +11,7 @@ import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
 import { store } from '../App';
 import { track, isAndroid } from './helpers';
-import { HelpButton } from '../Router';
+import { Feedback } from './modals';
 
 class FavoriteList extends PureComponent {
 
@@ -35,6 +35,7 @@ class FavoriteList extends PureComponent {
 			editing: false,
 			showHelp: false,
 			miniMenuOpen: true,
+			feedbackVisible: false,
 		};
 		this.searchTimeout = undefined;
 		this.clearTimeout = undefined;
@@ -115,33 +116,64 @@ class FavoriteList extends PureComponent {
 
 	renderMiniMenu = () => {
 		return (
-			this.state.miniMenuOpen && <MiniMenu
+			<MiniMenu
+				isVisible={this.state.miniMenuOpen}
 				items={[
 					{
 						icon: 'search',
-						label: 'Hej',
+						content: (
+							<Picker
+								mode="dropdown"
+								selectedValue={this.props.favoriteOrder}
+								onValueChange={this.onOrderValueChange}
+								style={[isAndroid() ? component.picker : {}]}
+								itemStyle={{ fontSize: 16, height: 90, marginTop: -10 }}
+							>
+								<Picker.Item label="Ingen sortering" value="nothing" />
+								<Picker.Item label="Mina mest använda" value="opened" />
+								<Picker.Item label="Efter bokstav" value="busStop" />
+							</Picker>
+						),
 						callback: () => window.log('hej!'),
 					},
 					{
-						icon: 'refresh',
-						label: 'Då',
-						callback: () => window.log('då!'),
+						icon: 'edit',
+						content: 'Hjälp',
+						callback: this.openPopup,
 					},
 					{
-						icon: 'edit',
-						label: 'Tre',
-						callback: () => window.log('tre!'),
+						icon: 'email',
+						content: 'Lämna feedback',
+						callback: this.openFeedback,
 					},
 				]}
 			/>
 		);
 	}
 
+	onOrderValueChange = (itemValue) => {
+        this.props.setSetting('favoriteOrder', itemValue);
+    }
+
+	openFeedback = () => {
+        track('Feedback Open');
+        this.setState({ feedbackVisible: true, miniMenuOpen: false, });
+    }
+
+    closeFeedback = () => {
+        this.setState({ feedbackVisible: false });
+    }
+
 	openPopup = () => {
 		track('Show Help', { Page: 'Dashboard' });
 		this.setState({
-			showHelp: true
+			miniMenuOpen: false,
 		});
+		setTimeout(() => {
+			this.setState({
+				showHelp: true,
+			})
+		}, 1);
 	}
 
 	renderPopup() {
@@ -309,7 +341,10 @@ class FavoriteList extends PureComponent {
 	render() {
 		return (
 			<View style={{ flex: 1, backgroundColor: colors.background }}>
-
+				<Feedback
+                    visible={this.state.feedbackVisible}
+                    close={this.closeFeedback}
+                />
 				{this.renderPopup()}
 				{this.renderMiniMenu()}
 				<ScrollView scrollEnabled keyboardShouldPersistTaps="always">
