@@ -9,7 +9,7 @@ const middleware = [ReduxThunk];
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    blacklist: ['departures']
+    blacklist: ['departures', 'search', 'errors']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
