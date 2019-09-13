@@ -122,17 +122,17 @@ class FavoriteList extends PureComponent {
 				onClose={() => this.setState({ miniMenuOpen: false })}
 				items={[
 					{
-						icon: 'search',
+						icon: 'sort',
 						content: 'Sortera favoriter',
 						onPress: this.openSorting,
 					},
 					{
-						icon: 'edit',
+						icon: 'help',
 						content: 'Hjälp',
 						onPress: this.openPopup,
 					},
 					{
-						icon: 'email',
+						icon: 'feedback',
 						content: 'Lämna feedback',
 						onPress: this.openFeedback,
 					},

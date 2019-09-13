@@ -30,12 +30,12 @@ exports[`should match snapshot 1`] = `
       Array [
         Object {
           "content": "Ändra tidsformat",
-          "icon": "search",
+          "icon": "access-time",
           "onPress": [Function],
         },
         Object {
           "content": "Hjälp",
-          "icon": "edit",
+          "icon": "help",
           "onPress": [Function],
         },
       ]

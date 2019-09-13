@@ -120,12 +120,12 @@ class ShowDepartures extends PureComponent {
 				onClose={() => this.setState({ miniMenuOpen: false })}
 				items={[
 					{
-						icon: 'search',
+						icon: 'access-time',
 						content: 'Ändra tidsformat',
 						onPress: this.openTimeformat,
 					},
 					{
-						icon: 'edit',
+						icon: 'help',
 						content: 'Hjälp',
 						onPress: this.openPopup,
 					},
