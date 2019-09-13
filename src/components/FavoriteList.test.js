@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import { stub } from 'sinon';
 import fetch from 'react-native-cancelable-fetch';
 import FavoriteList from './FavoriteList';
-import { getStorage, track } from './helpers';
+import { track } from './helpers';
 import { CLR_ERROR, CLR_SEARCH } from '../actions/types';
 import { store } from '../App';
 import { navigation } from './helpers/testhelper.js';
@@ -46,20 +46,10 @@ window.log = () => {};
 
 // REWRITE?
 it('getNearbyStops should be called if logged in and user has accepted GPS', async () => {
-    getStorage
-        .mockImplementationOnce(() => Promise.resolve(null))
-        .mockImplementationOnce(() => Promise.resolve({}));
     const getNearbyStops = stub();
     initialState.settings.allowedGPS = true;
     await shallow(<FavoriteList navigation={navigation} store={mockStore(initialState)} getNearbyStops={getNearbyStops} />).dive();
     expect(getNearbyStops.callCount).toBe(1);
-});
-
-it('HelpButton to the right side of the navbar, and state.init to be false', () => {
-    getStorage.mockImplementation(() => Promise.resolve());
-    const wrapper = shallow(<FavoriteList navigation={navigation} store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
-    wrapper.setProps({ getNearbyStops: jest.fn() }); // Must set something to actually run.
-    expect(wrapper.state().init).toBe(false);
 });
 
 it('should match snapshot', () => {
@@ -199,6 +189,7 @@ describe('openPopup', () => {
     it('should set showHelp state to true', () => {
         expect(wrapper.state().showHelp).toBe(false);
         wrapper.instance().openPopup();
+        jest.runAllTimers();
         expect(wrapper.state().showHelp).toBe(true);
     });
 });

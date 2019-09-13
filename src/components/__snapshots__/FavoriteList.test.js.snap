@@ -9,6 +9,10 @@ exports[`should match snapshot 1`] = `
     }
   }
 >
+  <Feedback
+    close={[Function]}
+    visible={false}
+  />
   <Popup
     isVisible={false}
     onPress={[Function]}
@@ -195,6 +199,49 @@ exports[`should match snapshot 1`] = `
        ) kan du hitta olika sorteringsalternativ, t.ex dina mest använda hållplatser.
     </DefaultFont>
   </Popup>
+  <MiniMenu
+    isVisible={false}
+    items={
+      Array [
+        Object {
+          "content": "Ingen sortering",
+          "onPress": [Function],
+        },
+        Object {
+          "content": "Mina mest använda",
+          "onPress": [Function],
+        },
+        Object {
+          "content": "Efter bokstav",
+          "onPress": [Function],
+        },
+      ]
+    }
+    onClose={[Function]}
+  />
+  <MiniMenu
+    isVisible={false}
+    items={
+      Array [
+        Object {
+          "content": "Sortera favoriter",
+          "icon": "sort",
+          "onPress": [Function],
+        },
+        Object {
+          "content": "Hjälp",
+          "icon": "help",
+          "onPress": [Function],
+        },
+        Object {
+          "content": "Lämna feedback",
+          "icon": "feedback",
+          "onPress": [Function],
+        },
+      ]
+    }
+    onClose={[Function]}
+  />
   <ScrollView
     keyboardShouldPersistTaps="always"
     scrollEnabled={true}
