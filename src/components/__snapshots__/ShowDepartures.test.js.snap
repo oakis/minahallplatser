@@ -8,6 +8,40 @@ exports[`should match snapshot 1`] = `
     }
   }
 >
+  <MiniMenu
+    isVisible={false}
+    items={
+      Array [
+        Object {
+          "content": "Minuter",
+          "onPress": [Function],
+        },
+        Object {
+          "content": "Klockslag",
+          "onPress": [Function],
+        },
+      ]
+    }
+    onClose={[Function]}
+  />
+  <MiniMenu
+    isVisible={false}
+    items={
+      Array [
+        Object {
+          "content": "Ändra tidsformat",
+          "icon": "search",
+          "onPress": [Function],
+        },
+        Object {
+          "content": "Hjälp",
+          "icon": "edit",
+          "onPress": [Function],
+        },
+      ]
+    }
+    onClose={[Function]}
+  />
   <Popup
     isVisible={false}
     onPress={[Function]}
@@ -132,7 +166,9 @@ exports[`should match snapshot 1`] = `
       extraData={
         Object {
           "init": true,
+          "miniMenuOpen": false,
           "showHelp": false,
+          "timeformatVisible": false,
         }
       }
       initialNumToRender={11}
@@ -147,7 +183,9 @@ exports[`should match snapshot 1`] = `
       extraData={
         Object {
           "init": true,
+          "miniMenuOpen": false,
           "showHelp": false,
+          "timeformatVisible": false,
         }
       }
       getItemLayout={[Function]}

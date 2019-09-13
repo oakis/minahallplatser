@@ -1,14 +1,23 @@
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import React, { PureComponent } from 'react';
-import { View, ScrollView, FlatList, AppState } from 'react-native';
+import { View, ScrollView, FlatList, AppState, TouchableWithoutFeedback } from 'react-native';
 import firebase from 'react-native-firebase';
 import fetch from 'react-native-cancelable-fetch';
-import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle, favoriteLineLocalAdd, favoriteLineLocalRemove, incrementStopsOpened } from '../actions';
-import { DepartureListItem, Spinner, Message, ListItemSeparator, Popup, Text } from './common';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {
+	getDepartures,
+	clearDepartures,
+	clearErrors,
+	favoriteLineToggle,
+	favoriteLineLocalAdd,
+	favoriteLineLocalRemove,
+	incrementStopsOpened,
+	setSetting,
+} from '../actions';
+import { DepartureListItem, Spinner, Message, ListItemSeparator, Popup, Text, MiniMenu } from './common';
 import { updateStopsCount, track, isAndroid } from './helpers';
 import { colors, component } from './style';
-import { HelpButton } from '../Router';
 
 class ShowDepartures extends PureComponent {
 
@@ -27,12 +36,14 @@ class ShowDepartures extends PureComponent {
 		this.state = {
 			init: true,
 			showHelp: false,
+			miniMenuOpen: false,
+			timeformatVisible: false,
 		};
 	}
 
 	componentDidMount() {
 		firebase.analytics().setCurrentScreen('Departures', 'Departures');
-		this.props.navigation.setParams({ headerRight: HelpButton(this) });
+		this.props.navigation.setParams({ headerRight: this.renderMiniMenuButton() });
 		track('Page View', { Page: 'Departures', Stop: this.props.navigation.getParam('busStop'), Parent: this.props.navigation.getParam('parent')});
 		this.props.getDepartures({ id: this.props.navigation.getParam('id') });
 		updateStopsCount();
@@ -43,7 +54,7 @@ class ShowDepartures extends PureComponent {
 
 	componentWillReceiveProps({ favorites, departures, timestamp }) {
 		if (this.state.init) {
-			this.props.navigation.setParams({ headerRight: HelpButton(this) });
+			this.props.navigation.setParams({ headerRight: this.renderMiniMenuButton() });
 			this.setState({ init: false });
 		}
 		const favoritesUpdated = JSON.stringify(this.props.favorites) !== JSON.stringify(favorites);
@@ -55,7 +66,7 @@ class ShowDepartures extends PureComponent {
 			this.populateDepartures(departures);
 		}
 		if (this.props.timestamp !== timestamp) {
-			this.props.navigation.setParams({ headerRight: HelpButton(this) });
+			this.props.navigation.setParams({ headerRight: this.renderMiniMenuButton() });
 		}
 	}
 
@@ -81,6 +92,85 @@ class ShowDepartures extends PureComponent {
 		}
 	}
 
+	renderMiniMenuButton = () => {
+		return (
+			<TouchableWithoutFeedback
+				onPress={this.toggleMiniMenu}
+			>
+				<View style={{
+					width: 30,
+					height: 30,
+					alignItems: 'center',
+					justifyContent: 'center',
+					right: 5,
+				}}>
+					<Icon
+						name="more-horiz"
+						style={{ color: colors.alternative, fontSize: 24 }}
+					/>
+				</View>
+			</TouchableWithoutFeedback>
+		);
+	}
+
+	renderMiniMenu = () => {
+		return (
+			<MiniMenu
+				isVisible={this.state.miniMenuOpen}
+				onClose={() => this.setState({ miniMenuOpen: false })}
+				items={[
+					{
+						icon: 'search',
+						content: 'Ändra tidsformat',
+						onPress: this.openTimeformat,
+					},
+					{
+						icon: 'edit',
+						content: 'Hjälp',
+						onPress: this.openPopup,
+					},
+				]}
+			/>
+		);
+	}
+
+	renderTimeformat() {
+		return (
+			<MiniMenu
+				isVisible={this.state.timeformatVisible}
+				onClose={() => this.setState({ timeformatVisible: false })}
+				items={[
+					{
+						content: 'Minuter',
+						onPress: () => this.onTimeValueChange('minutes'),
+					},
+					{
+						content: 'Klockslag',
+						onPress: () => this.onTimeValueChange('clock'),
+					},
+				]}
+			/>
+		);
+	}
+
+	openTimeformat = () => {
+		this.setState({ miniMenuOpen: false });
+		setTimeout(() => {
+			this.setState({ timeformatVisible: true });
+		}, 1);
+	}
+
+	toggleMiniMenu = () => {
+        this.setState(prevState => ({
+            miniMenuOpen: !prevState.miniMenuOpen,
+        }));
+	}
+
+	onTimeValueChange = (itemValue) => {
+		this.props.setSetting('timeFormat', itemValue);
+		this.setState({ timeformatVisible: false });
+    }
+
 	startRefresh() {
 		const self = this;
 		self.interval = setInterval(self.refresh.bind(self), 10000);
@@ -89,8 +179,8 @@ class ShowDepartures extends PureComponent {
 	refresh = () => {
 		this.props.navigation.setParams({ headerRight: (
 			<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-				<Spinner color={colors.alternative} />
-				{HelpButton(this)}
+				<Spinner color={colors.alternative} style={{ marginRight: 5 }} />
+				{this.renderMiniMenuButton()}
 			</View>
 		)});
 		this.props.getDepartures({ id: this.props.navigation.getParam('id') });
@@ -113,8 +203,13 @@ class ShowDepartures extends PureComponent {
 	openPopup = () => {
 		track('Show Help', { Page: 'Departures' });
 		this.setState({
-			showHelp: true
+			miniMenuOpen: false,
 		});
+		setTimeout(() => {
+			this.setState({
+				showHelp: true,
+			})
+		}, 1);
 	}
 
 	renderDepartures = ({ item, index }) => {
@@ -205,6 +300,8 @@ class ShowDepartures extends PureComponent {
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
+				{this.renderTimeformat()}
+				{this.renderMiniMenu()}
 				{this.renderPopup()}
 				{this.renderContent()}
 			</View>
@@ -246,4 +343,13 @@ const MapStateToProps = (state, ownProps) => {
 };
 
 export default connect(MapStateToProps,
-	{ getDepartures, clearDepartures, clearErrors, favoriteLineToggle, favoriteLineLocalAdd, favoriteLineLocalRemove, incrementStopsOpened })(ShowDepartures);
+	{
+		getDepartures,
+		clearDepartures,
+		clearErrors,
+		favoriteLineToggle,
+		favoriteLineLocalAdd,
+		favoriteLineLocalRemove,
+		incrementStopsOpened,
+		setSetting,
+	})(ShowDepartures);
