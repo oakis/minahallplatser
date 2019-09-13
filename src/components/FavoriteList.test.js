@@ -52,12 +52,6 @@ it('getNearbyStops should be called if logged in and user has accepted GPS', asy
     expect(getNearbyStops.callCount).toBe(1);
 });
 
-it('HelpButton to the right side of the navbar, and state.init to be false', () => {
-    const wrapper = shallow(<FavoriteList navigation={navigation} store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
-    wrapper.setProps({ getNearbyStops: jest.fn() }); // Must set something to actually run.
-    expect(wrapper.state().init).toBe(false);
-});
-
 it('should match snapshot', () => {
     const wrapper = shallow(<FavoriteList navigation={navigation} store={mockStore(initialState)} getNearbyStops={jest.fn()} />).dive();
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -195,6 +189,7 @@ describe('openPopup', () => {
     it('should set showHelp state to true', () => {
         expect(wrapper.state().showHelp).toBe(false);
         wrapper.instance().openPopup();
+        jest.runAllTimers();
         expect(wrapper.state().showHelp).toBe(true);
     });
 });

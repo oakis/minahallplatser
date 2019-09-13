@@ -34,7 +34,7 @@ class FavoriteList extends PureComponent {
 		this.state = {
 			editing: false,
 			showHelp: false,
-			miniMenuOpen: true,
+			miniMenuOpen: false,
 			feedbackVisible: false,
 			sortingVisible: false,
 		};
