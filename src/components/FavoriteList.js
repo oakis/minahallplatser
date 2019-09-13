@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, FlatList, View, ScrollView, AppState, TouchableWithoutFeedback, Picker } from 'react-native';
+import { Keyboard, Alert, FlatList, View, ScrollView, AppState, TouchableWithoutFeedback } from 'react-native';
 import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
-import { favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
+import { favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops, setSetting } from '../actions';
 import { ListItem, Message, Input, ListItemSeparator, ListHeading, Text, Popup, Button, MiniMenu } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
@@ -36,6 +36,7 @@ class FavoriteList extends PureComponent {
 			showHelp: false,
 			miniMenuOpen: true,
 			feedbackVisible: false,
+			sortingVisible: false,
 		};
 		this.searchTimeout = undefined;
 		this.clearTimeout = undefined;
@@ -118,41 +119,38 @@ class FavoriteList extends PureComponent {
 		return (
 			<MiniMenu
 				isVisible={this.state.miniMenuOpen}
+				onClose={() => this.setState({ miniMenuOpen: false })}
 				items={[
 					{
 						icon: 'search',
-						content: (
-							<Picker
-								mode="dropdown"
-								selectedValue={this.props.favoriteOrder}
-								onValueChange={this.onOrderValueChange}
-								style={[isAndroid() ? component.picker : {}]}
-								itemStyle={{ fontSize: 16, height: 90, marginTop: -10 }}
-							>
-								<Picker.Item label="Ingen sortering" value="nothing" />
-								<Picker.Item label="Mina mest använda" value="opened" />
-								<Picker.Item label="Efter bokstav" value="busStop" />
-							</Picker>
-						),
-						callback: () => window.log('hej!'),
+						content: 'Sortera favoriter',
+						onPress: this.openSorting,
 					},
 					{
 						icon: 'edit',
 						content: 'Hjälp',
-						callback: this.openPopup,
+						onPress: this.openPopup,
 					},
 					{
 						icon: 'email',
 						content: 'Lämna feedback',
-						callback: this.openFeedback,
+						onPress: this.openFeedback,
 					},
 				]}
 			/>
 		);
 	}
 
+	openSorting = () => {
+		this.setState({ miniMenuOpen: false });
+		setTimeout(() => {
+			this.setState({ sortingVisible: true });
+		}, 1);
+	}
+
 	onOrderValueChange = (itemValue) => {
-        this.props.setSetting('favoriteOrder', itemValue);
+		this.props.setSetting('favoriteOrder', itemValue);
+		this.setState({ sortingVisible: false });
     }
 
 	openFeedback = () => {
@@ -174,6 +172,29 @@ class FavoriteList extends PureComponent {
 				showHelp: true,
 			})
 		}, 1);
+	}
+
+	renderSorting() {
+		return (
+			<MiniMenu
+				isVisible={this.state.sortingVisible}
+				onClose={() => this.setState({ sortingVisible: false })}
+				items={[
+					{
+						content: 'Ingen sortering',
+						onPress: () => this.onOrderValueChange('nothing'),
+					},
+					{
+						content: 'Mina mest använda',
+						onPress: () => this.onOrderValueChange('opened'),
+					},
+					{
+						content: 'Efter bokstav',
+						onPress: () => this.onOrderValueChange('busStop'),
+					},
+				]}
+			/>
+		);
 	}
 
 	renderPopup() {
@@ -346,6 +367,7 @@ class FavoriteList extends PureComponent {
                     close={this.closeFeedback}
                 />
 				{this.renderPopup()}
+				{this.renderSorting()}
 				{this.renderMiniMenu()}
 				<ScrollView scrollEnabled keyboardShouldPersistTaps="always">
 					<Input
@@ -410,5 +432,6 @@ export default connect(mapStateToProps,
 		searchStops,
 		searchChanged,
 		favoriteCreate,
-		getNearbyStops
+		getNearbyStops,
+		setSetting,
 	})(FavoriteList);
