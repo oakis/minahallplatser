@@ -16,7 +16,8 @@
     "debug": "yarn clean && react-native run-android --appIdSuffix dev",
     "release": "yarn clean && cd android && ./gradlew installRelease",
     "adb": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:5000 tcp:5000",
-    "lint": "eslint src/**.*"
+    "lint": "eslint src/**.*",
+    "copy": "cp -R ../minahallplatser-private/* ./"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.1",
