@@ -380,6 +380,45 @@ jest.mock('redux-persist', () => ({
 }));
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'MaterialIcon');
 jest.mock('react-native-device-info', () => {});
+jest.mock('react-native-reanimated', () => ({
+    decay: jest.fn(),
+    timing: () => ({ start: jest.fn(), }),
+    spring: jest.fn(),
+    add: jest.fn(),
+    divide: jest.fn(),
+    multiply: jest.fn(),
+    modulo: jest.fn(),
+    diffClamp: jest.fn(),
+    delay: jest.fn(),
+    sequence: jest.fn(),
+    parallel: jest.fn(),
+    stagger: jest.fn(),
+    loop: jest.fn(),
+    event: jest.fn(),
+    forkEvent: jest.fn(),
+    unforkEvent: jest.fn(),
+    Value: jest.fn(),
+    View: 'Animated.View',
+    Easing: ({
+        step0: jest.fn(),
+        step1: jest.fn(),
+        linear: jest.fn(),
+        ease: jest.fn(),
+        quad: jest.fn(),
+        cubic: jest.fn(),
+        poly: jest.fn(),
+        sin: jest.fn(),
+        circle: jest.fn(),
+        exp: jest.fn(),
+        elastic: jest.fn(),
+        back: jest.fn(),
+        bounce: jest.fn(),
+        bezier: jest.fn(),
+        in: jest.fn(),
+        out: jest.fn(),
+        inOut: jest.fn(),
+    })
+}));
 jest.mock('react-native-geolocation-service', () => {});
 jest.mock('react-native-firebase', () => ({
     crashlytics: jest.fn().mockReturnThis(),

@@ -46,7 +46,7 @@ exports[`should match snapshot 1`] = `
             "zIndex": 1,
           },
           Object {
-            "opacity": Object {},
+            "opacity": mockConstructor {},
           },
         ]
       }
@@ -68,10 +68,10 @@ exports[`should match snapshot 1`] = `
           "zIndex": 2,
         },
         Object {
-          "opacity": Object {},
+          "opacity": mockConstructor {},
           "transform": Array [
             Object {
-              "scale": Object {},
+              "scale": mockConstructor {},
             },
           ],
         },
@@ -138,7 +138,7 @@ exports[`should match snapshot 2`] = `
             "zIndex": 1,
           },
           Object {
-            "opacity": Object {},
+            "opacity": mockConstructor {},
           },
         ]
       }
@@ -160,10 +160,10 @@ exports[`should match snapshot 2`] = `
           "zIndex": 2,
         },
         Object {
-          "opacity": Object {},
+          "opacity": mockConstructor {},
           "transform": Array [
             Object {
-              "scale": Object {},
+              "scale": mockConstructor {},
             },
           ],
         },
@@ -230,7 +230,7 @@ exports[`should match snapshot 3`] = `
             "zIndex": 1,
           },
           Object {
-            "opacity": Object {},
+            "opacity": mockConstructor {},
           },
         ]
       }
@@ -252,10 +252,10 @@ exports[`should match snapshot 3`] = `
           "zIndex": 2,
         },
         Object {
-          "opacity": Object {},
+          "opacity": mockConstructor {},
           "transform": Array [
             Object {
-              "scale": Object {},
+              "scale": mockConstructor {},
             },
           ],
         },
