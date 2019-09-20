@@ -1,72 +1,70 @@
 import React, { PureComponent } from 'react';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
 import { Button } from './';
 import { component } from '../style/component';
+import { metrics } from '../style';
 
 export class Popup extends PureComponent {
 
     constructor(props) {
         super(props);
         this.state = {
-            opacity: new Animated.Value(0),
-            isVisible: this.props.isVisible,
+            animateValue: new Animated.Value(0),
             hidden: true,
-            transitioning: false,
-            scale: new Animated.Value(0.5)
         };
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.isVisible && !this.state.isVisible) {
-            this.setState({ isVisible: true, hidden: false, transitioning: true });
-            Animated.timing(this.state.scale, {
+        if (nextProps.isVisible && nextProps.isVisible !== this.props.isVisible) {
+            this.setState({ hidden: false });
+            Animated.timing(this.state.animateValue, {
                 toValue: 1,
                 easing: Easing.elastic(),
                 duration: 250,
                 useNativeDriver: true
             }).start();
-            Animated.timing(this.state.opacity, {
+            Animated.timing(this.state.animateValue, {
                 toValue: 1,
                 easing: Easing.ease,
-                duration: 125,
-                useNativeDriver: true
-            }).start(() => {
-                this.setState({ transitioning: false });
-            });
-        } else if (!nextProps.isVisible && this.state.isVisible) {
-            this.setState({ isVisible: false, transitioning: true });
-            Animated.timing(this.state.scale, {
-                toValue: 0,
-                easing: Easing.inOut(Easing.back()),
                 duration: 250,
                 useNativeDriver: true
             }).start();
-            Animated.timing(this.state.opacity, {
+        } else if (!nextProps.isVisible && !nextProps.isVisible !== !this.props.isVisible) {
+            Animated.timing(this.state.animateValue, {
                 toValue: 0,
-                easing: Easing.linear,
-                duration: 125,
+                easing: Easing.ease,
+                duration: 250,
                 useNativeDriver: true
-            }).start(() => {
-                this.setState({ hidden: true, transitioning: false });
-            });
+            }).start();
+            Animated.timing(this.state.animateValue, {
+                toValue: 0,
+                easing: Easing.ease,
+                duration: 250,
+                useNativeDriver: true
+            }).start();
+            setTimeout(() => {
+                this.setState({ hidden: true });
+            }, 250);
         }
     }
 
     render() {
         const { children, onPress } = this.props;
-        const { opacity, hidden, transitioning, scale } = this.state;
+        const { animateValue, hidden } = this.state;
         return (
             <View style={[component.popup.container, { height: hidden ? 0 : '100%', width: hidden ? 0 : '100%', backgroundColor: 'transparent' }]}>
-                <TouchableOpacity activeOpacity={1} disabled={transitioning} onPress={onPress} style={{ position: 'absolute', zIndex: 1, height: hidden ? 0 : '100%', width: hidden ? 0 : '100%' }}>
-                    <Animated.View style={[component.popup.container, { opacity }]} />
+                <TouchableOpacity activeOpacity={1} onPress={onPress} style={{ position: 'absolute', zIndex: 1, height: hidden ? 0 : '100%', width: hidden ? 0 : '100%' }}>
+                    <Animated.View style={[component.popup.container, { opacity: animateValue }]} />
                 </TouchableOpacity>
-                <Animated.View style={[component.popup.content, { opacity, transform: [{ scale }] }]}>
-                    <ScrollView scrollEnabled keyboardShouldPersistTaps="always">
-                        {children}
-                        <Button label="Stäng" uppercase color="primary" onPress={onPress} />
-                    </ScrollView>
-                </Animated.View>
+                <Animated.ScrollView
+                    style={[component.popup.content, { opacity: animateValue, transform: [{ scale: animateValue }] }]}
+                    scrollEnabled
+                    keyboardShouldPersistTaps="always"
+                >
+                    {children}
+                    <Button label="Stäng" uppercase color="primary" onPress={onPress} style={{ marginBottom: metrics.margin.xl }} />
+                </Animated.ScrollView>
             </View>
         );
     }

@@ -9,9 +9,8 @@ import { component } from '../style/component';
 export class MiniMenu extends PureComponent {
 
     state = {
+        animateValue: new Animated.Value(0),
         hidden: true,
-        opacity: new Animated.Value(0),
-        scale: new Animated.Value(0),
     }
 
     style = {
@@ -50,38 +49,36 @@ export class MiniMenu extends PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.isVisible && !this.state.isVisible) {
-            this.setState({ isVisible: true, hidden: false, transitioning: true });
-            Animated.timing(this.state.scale, {
+        if (nextProps.isVisible && nextProps.isVisible !== this.props.isVisible) {
+            this.setState({ hidden: false });
+            Animated.timing(this.state.animateValue, {
                 toValue: 1,
                 easing: Easing.elastic(),
                 duration: 250,
                 useNativeDriver: true
             }).start();
-            Animated.timing(this.state.opacity, {
+            Animated.timing(this.state.animateValue, {
                 toValue: 1,
                 easing: Easing.ease,
-                duration: 125,
-                useNativeDriver: true
-            }).start(() => {
-                this.setState({ transitioning: false });
-            });
-        } else if (!nextProps.isVisible && this.state.isVisible) {
-            this.setState({ isVisible: false, transitioning: true });
-            Animated.timing(this.state.scale, {
-                toValue: 0,
-                easing: Easing.inOut(Easing.back()),
                 duration: 250,
                 useNativeDriver: true
             }).start();
-            Animated.timing(this.state.opacity, {
+        } else if (!nextProps.isVisible && !nextProps.isVisible !== !this.props.isVisible) {
+            Animated.timing(this.state.animateValue, {
                 toValue: 0,
-                easing: Easing.linear,
-                duration: 125,
+                easing: Easing.ease,
+                duration: 250,
                 useNativeDriver: true
-            }).start(() => {
-                this.setState({ hidden: true, transitioning: false });
+            }).start();
+            Animated.timing(this.state.animateValue, {
+                toValue: 0,
+                easing: Easing.ease,
+                duration: 250,
+                useNativeDriver: true
             });
+            setTimeout(() => {
+                this.setState({ hidden: true });
+            }, 250);
         }
     }
 
@@ -89,18 +86,19 @@ export class MiniMenu extends PureComponent {
 
     render() {
         const { onClose } = this.props;
-        const { scale, hidden, transitioning, opacity } = this.state;
+        const { animateValue, hidden } = this.state;
         return (
             <View style={[component.popup.container, { height: hidden ? 0 : '100%', width: hidden ? 0 : '100%', backgroundColor: 'transparent' }]}>
-                <TouchableOpacity activeOpacity={1} disabled={transitioning} onPress={onClose} style={{ position: 'absolute', zIndex: 1, height: hidden ? 0 : '100%', width: hidden ? 0 : '100%' }}>
-                    <Animated.View style={[component.popup.container, { opacity }]} />
+                <TouchableOpacity activeOpacity={1} onPress={onClose} style={{ position: 'absolute', zIndex: 1, height: hidden ? 0 : '100%', width: hidden ? 0 : '100%' }}>
+                    <Animated.View style={[component.popup.container, { opacity: animateValue }]} />
                 </TouchableOpacity>
                 <Animated.View style={{
                     ...this.style.menu,
                     ...this.props.style,
                     height: hidden ? 0 : this.props.items.length * 51,
                     width: hidden ? 0 : this.getLongestContentLength() * 8 + 50,
-                    transform: [{ scale }]
+                    transform: [{ scale: animateValue }],
+                    opacity: animateValue
                 }}>
                     {this.props.items.map(({ icon, content, onPress }, index) => (
                         <TouchableNativeFeedback

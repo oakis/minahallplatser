@@ -23,7 +23,6 @@ exports[`should match snapshot 1`] = `
 >
   <TouchableOpacity
     activeOpacity={1}
-    disabled={false}
     style={
       Object {
         "height": 0,
@@ -52,7 +51,9 @@ exports[`should match snapshot 1`] = `
       }
     />
   </TouchableOpacity>
-  <Animated.View
+  <Component
+    keyboardShouldPersistTaps="always"
+    scrollEnabled={true}
     style={
       Array [
         Object {
@@ -78,17 +79,17 @@ exports[`should match snapshot 1`] = `
       ]
     }
   >
-    <ScrollView
-      keyboardShouldPersistTaps="always"
-      scrollEnabled={true}
-    >
-      <Button
-        color="primary"
-        label="Stäng"
-        uppercase={true}
-      />
-    </ScrollView>
-  </Animated.View>
+    <Button
+      color="primary"
+      label="Stäng"
+      style={
+        Object {
+          "marginBottom": 30,
+        }
+      }
+      uppercase={true}
+    />
+  </Component>
 </View>
 `;
 
@@ -115,7 +116,6 @@ exports[`should match snapshot 2`] = `
 >
   <TouchableOpacity
     activeOpacity={1}
-    disabled={true}
     style={
       Object {
         "height": "100%",
@@ -144,7 +144,9 @@ exports[`should match snapshot 2`] = `
       }
     />
   </TouchableOpacity>
-  <Animated.View
+  <Component
+    keyboardShouldPersistTaps="always"
+    scrollEnabled={true}
     style={
       Array [
         Object {
@@ -170,17 +172,17 @@ exports[`should match snapshot 2`] = `
       ]
     }
   >
-    <ScrollView
-      keyboardShouldPersistTaps="always"
-      scrollEnabled={true}
-    >
-      <Button
-        color="primary"
-        label="Stäng"
-        uppercase={true}
-      />
-    </ScrollView>
-  </Animated.View>
+    <Button
+      color="primary"
+      label="Stäng"
+      style={
+        Object {
+          "marginBottom": 30,
+        }
+      }
+      uppercase={true}
+    />
+  </Component>
 </View>
 `;
 
@@ -207,7 +209,6 @@ exports[`should match snapshot 3`] = `
 >
   <TouchableOpacity
     activeOpacity={1}
-    disabled={true}
     style={
       Object {
         "height": 0,
@@ -236,7 +237,9 @@ exports[`should match snapshot 3`] = `
       }
     />
   </TouchableOpacity>
-  <Animated.View
+  <Component
+    keyboardShouldPersistTaps="always"
+    scrollEnabled={true}
     style={
       Array [
         Object {
@@ -262,16 +265,16 @@ exports[`should match snapshot 3`] = `
       ]
     }
   >
-    <ScrollView
-      keyboardShouldPersistTaps="always"
-      scrollEnabled={true}
-    >
-      <Button
-        color="primary"
-        label="Stäng"
-        uppercase={true}
-      />
-    </ScrollView>
-  </Animated.View>
+    <Button
+      color="primary"
+      label="Stäng"
+      style={
+        Object {
+          "marginBottom": 30,
+        }
+      }
+      uppercase={true}
+    />
+  </Component>
 </View>
 `;

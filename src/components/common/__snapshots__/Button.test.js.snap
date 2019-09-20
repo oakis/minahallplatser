@@ -26,6 +26,7 @@ exports[`should match snapshot on Android 1`] = `
         Object {
           "backgroundColor": undefined,
         },
+        Object {},
       ]
     }
   >
@@ -72,6 +73,7 @@ exports[`should match snapshot on iOS 1`] = `
       Object {
         "backgroundColor": undefined,
       },
+      Object {},
     ]
   }
 >

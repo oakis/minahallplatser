@@ -5,7 +5,7 @@ import { isAndroid } from '../helpers';
 import { Text, Spinner } from './';
 import { colors, component } from '../style';
 
-export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alternative', onPress, uppercase = false, loading }) => {
+export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alternative', onPress, uppercase = false, loading, style = {} }) => {
     function showSpinnerOrText() {
         if (loading) {
             return (
@@ -35,7 +35,7 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alterna
                 <TouchableNativeFeedback
                     onPress={onPress}
                 >
-                    <View style={[component.button, { backgroundColor: colors[color] }]}>
+                    <View style={[component.button, { backgroundColor: colors[color] }, {...style}]}>
                         <Icon name={icon} size={iconSize} color={colors[fontColor]} />
                         {showSpinnerOrText()}
                     </View>
@@ -44,7 +44,7 @@ export const Button = ({ icon, iconSize = 24, label, color, fontColor = 'alterna
         }
         return (
             <TouchableOpacity
-                style={[component.button, { backgroundColor: colors[color] }]}
+                style={[component.button, { backgroundColor: colors[color] }, {...style}]}
                 onPress={onPress}
             >
                 <Icon name={icon} size={iconSize} />
