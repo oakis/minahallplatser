@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { View, Animated, Easing, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
+import Animated, { Easing } from 'react-native-reanimated';
 import { Button } from './';
 import { component } from '../style/component';
 
@@ -22,13 +23,13 @@ export class Popup extends PureComponent {
             Animated.timing(this.state.scale, {
                 toValue: 1,
                 easing: Easing.elastic(),
-                duration: 500,
+                duration: 250,
                 useNativeDriver: true
             }).start();
             Animated.timing(this.state.opacity, {
                 toValue: 1,
                 easing: Easing.ease,
-                duration: 250,
+                duration: 125,
                 useNativeDriver: true
             }).start(() => {
                 this.setState({ transitioning: false });
@@ -38,13 +39,13 @@ export class Popup extends PureComponent {
             Animated.timing(this.state.scale, {
                 toValue: 0,
                 easing: Easing.inOut(Easing.back()),
-                duration: 500,
+                duration: 250,
                 useNativeDriver: true
             }).start();
             Animated.timing(this.state.opacity, {
                 toValue: 0,
                 easing: Easing.linear,
-                duration: 250,
+                duration: 125,
                 useNativeDriver: true
             }).start(() => {
                 this.setState({ hidden: true, transitioning: false });

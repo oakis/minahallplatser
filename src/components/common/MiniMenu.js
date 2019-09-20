@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { View, TouchableNativeFeedback, Animated, Easing, TouchableOpacity } from 'react-native';
+import { View, TouchableNativeFeedback, TouchableOpacity } from 'react-native';
+import Animated, { Easing } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors } from '../style/color';
 import { Text } from './index';
@@ -54,13 +55,13 @@ export class MiniMenu extends PureComponent {
             Animated.timing(this.state.scale, {
                 toValue: 1,
                 easing: Easing.elastic(),
-                duration: 500,
+                duration: 250,
                 useNativeDriver: true
             }).start();
             Animated.timing(this.state.opacity, {
                 toValue: 1,
                 easing: Easing.ease,
-                duration: 250,
+                duration: 125,
                 useNativeDriver: true
             }).start(() => {
                 this.setState({ transitioning: false });
@@ -70,13 +71,13 @@ export class MiniMenu extends PureComponent {
             Animated.timing(this.state.scale, {
                 toValue: 0,
                 easing: Easing.inOut(Easing.back()),
-                duration: 500,
+                duration: 250,
                 useNativeDriver: true
             }).start();
             Animated.timing(this.state.opacity, {
                 toValue: 0,
                 easing: Easing.linear,
-                duration: 250,
+                duration: 125,
                 useNativeDriver: true
             }).start(() => {
                 this.setState({ hidden: true, transitioning: false });
@@ -92,7 +93,7 @@ export class MiniMenu extends PureComponent {
         return (
             <View style={[component.popup.container, { height: hidden ? 0 : '100%', width: hidden ? 0 : '100%', backgroundColor: 'transparent' }]}>
                 <TouchableOpacity activeOpacity={1} disabled={transitioning} onPress={onClose} style={{ position: 'absolute', zIndex: 1, height: hidden ? 0 : '100%', width: hidden ? 0 : '100%' }}>
-                <Animated.View style={[component.popup.container, { opacity }]} />
+                    <Animated.View style={[component.popup.container, { opacity }]} />
                 </TouchableOpacity>
                 <Animated.View style={{
                     ...this.style.menu,
