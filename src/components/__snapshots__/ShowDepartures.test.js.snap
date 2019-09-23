@@ -34,6 +34,11 @@ exports[`should match snapshot 1`] = `
           "onPress": [Function],
         },
         Object {
+          "content": "Lägg till favorit",
+          "icon": "star",
+          "onPress": [Function],
+        },
+        Object {
           "content": "Hjälp",
           "icon": "help",
           "onPress": [Function],
