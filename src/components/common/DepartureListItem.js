@@ -9,33 +9,24 @@ export class DepartureListItem extends PureComponent {
 
     constructor(props) {
         super(props);
-
-        this.getDepartureTypeIcon = this.getDepartureTypeIcon.bind(this);
     }
 
-    getDepartureTypeIcon = (type, color) => {
-		let iconName;
+    getDepartureType = (type) => {
 		switch (type) {
             case 'BOAT':
-                iconName = 'directions-boat';
-                break;
+                return 'directions-boat';
             case 'BUS':
-                iconName = 'directions-bus';
-                break;
+                return 'directions-bus';
             case 'TAXI':
-                iconName = 'local-taxi';
-                break;
+                return 'local-taxi';
             case 'TRAM':
-                iconName = 'tram';
-                break;
+                return 'tram';
             case 'VAS':
             case 'REG':
-                iconName = 'train';
-                break;
+                return 'train';
             default:
                 return null;
 		}
-		return <Icon name={iconName} size={15} color={color} />;
     }
 
     getSnameFontsize = (sname) => {
@@ -70,7 +61,7 @@ export class DepartureListItem extends PureComponent {
     height = 50;
 
     render() {
-        const { item, onPress } = this.props;
+        const { item, onPress, onLongPress } = this.props;
         const shouldShowMin = item.timeFormat === 'minutes';
         const { clockLeft, clockNext } = item;
         const timeLeft = (item.timeLeft <= 0) ? 'Nu' : this.formatTime(item.timeLeft);
@@ -150,18 +141,22 @@ export class DepartureListItem extends PureComponent {
         return (
             <TouchableWithoutFeedback
                 onPress={onPress}
+                onLongPress={onLongPress}
                 delayLongPress={500}
             >
                 <View style={listStyle}>
                     <View style={col1Style}>
                         <View style={stopNumStyle}>
                             <Text style={stopNumText}>{item.sname}</Text>
-                            {this.getDepartureTypeIcon(item.type, item.bgColor)}
+                            <Icon name={this.getDepartureType(item.type)} size={15} color={item.bgColor} />
                         </View>
                     </View>
 
                     <View style={col2Style}>
-                        <Text style={directionStyle}>{item.direction}</Text>
+                        <View style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Text style={directionStyle}>{item.direction}</Text>
+                            {item.global && <Icon name="public" size={13} style={{ ...iconStyle, marginTop: 2, marginLeft: 2, color: colors.primary }} />}
+                        </View>
                         {(item.via) ? <Text style={viaStyle}>{item.via}</Text> : null}
                         <View style={{ flexDirection: 'row' }}>
                             <Text>Läge {item.track || 'A'}</Text>

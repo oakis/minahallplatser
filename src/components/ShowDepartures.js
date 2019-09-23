@@ -1,40 +1,82 @@
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import React, { PureComponent } from 'react';
-import { View, ScrollView, FlatList, AppState } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { View, ScrollView, FlatList, AppState, TouchableWithoutFeedback } from 'react-native';
+import firebase from 'react-native-firebase';
 import fetch from 'react-native-cancelable-fetch';
-import { HelpButton } from '../Router';
-import { getDepartures, clearDepartures, clearErrors, favoriteLineToggle, incrementStopsOpened } from '../actions';
-import { DepartureListItem, Spinner, Message, ListItemSeparator, Popup, Text } from './common';
-import { updateStopsCount, track } from './helpers';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {
+	clearDepartures,
+	clearErrors,
+	favoriteCreate,
+	favoriteDelete,
+	favoriteLineToggle,
+	favoriteLineLocalAdd,
+	favoriteLineLocalRemove,
+	getDepartures,
+	incrementStopsOpened,
+	setSetting,
+} from '../actions';
+import { DepartureListItem, Spinner, Message, ListItemSeparator, Popup, Text, MiniMenu } from './common';
+import { updateStopsCount, track, isAndroid } from './helpers';
 import { colors, component } from './style';
 
 class ShowDepartures extends PureComponent {
+
+	static navigationOptions = ({ navigation }) => ({
+			title: navigation.getParam('title'),
+			headerRight:
+				<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+					{navigation.state.params && navigation.state.params.reloading && <Spinner color={colors.alternative} style={{ marginRight: 5 }} />}
+					<TouchableWithoutFeedback
+						onPress={navigation.state.params && navigation.state.params.toggleMiniMenu}
+					>
+						<View style={{
+							width: 30,
+							height: 30,
+							alignItems: 'center',
+							justifyContent: 'center',
+							right: 5,
+						}}>
+							<Icon
+								name="more-horiz"
+								style={{ color: colors.alternative, fontSize: 24 }}
+							/>
+						</View>
+					</TouchableWithoutFeedback>
+				</View>
+			,
+			headerTitleStyle: {
+				width: 'auto',
+				fontSize: 14,
+				fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
+			},
+	});
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			init: true,
 			showHelp: false,
+			miniMenuOpen: false,
+			timeformatVisible: false,
 		};
 	}
 
-	componentWillMount() {
-		track('Page View', { Page: 'Departures', Stop: this.props.busStop, Parent: this.props.parent });
-		this.props.getDepartures({ id: this.props.id });
-		updateStopsCount();
-		this.props.incrementStopsOpened(this.props.id);
-	}
-
 	componentDidMount() {
+		firebase.analytics().setCurrentScreen('Departures', 'Departures');
+		this.props.navigation.setParams({ toggleMiniMenu: this.toggleMiniMenu });
+		track('Page View', { Page: 'Departures', Stop: this.props.navigation.getParam('busStop'), Parent: this.props.navigation.getParam('parent')});
+		this.props.getDepartures({ id: this.props.navigation.getParam('id') });
+		updateStopsCount();
+		this.props.incrementStopsOpened(this.props.navigation.getParam('id'));
 		this.startRefresh();
 		AppState.addEventListener('change', this.handleAppStateChange);
 	}
 
 	componentWillReceiveProps({ favorites, departures, timestamp }) {
 		if (this.state.init) {
-			Actions.refresh({ right: HelpButton(this) });
+			this.props.navigation.setParams({ reloading: false });
 			this.setState({ init: false });
 		}
 		const favoritesUpdated = JSON.stringify(this.props.favorites) !== JSON.stringify(favorites);
@@ -46,7 +88,7 @@ class ShowDepartures extends PureComponent {
 			this.populateDepartures(departures);
 		}
 		if (this.props.timestamp !== timestamp) {
-			Actions.refresh({ right: HelpButton(this) });
+			this.props.navigation.setParams({ reloading: false });
 		}
 	}
 
@@ -66,11 +108,84 @@ class ShowDepartures extends PureComponent {
 		this.props.clearErrors();
 		fetch.abort('getDepartures');
 		if (nextAppState === 'active') {
-			this.props.getDepartures({ id: this.props.id });
+			this.props.getDepartures({ id: this.props.navigation.getParam('id') });
 			this.startRefresh();
-			track('Page View', { Page: 'Departures', Stop: this.props.busStop, Parent: 'Background' });
+			track('Page View', { Page: 'Departures', Stop: this.props.navigation.getParam('busStop'), Parent: 'Background' });
 		}
 	}
+
+	saveAsFavorite = () => {
+		this.setState({ miniMenuOpen: false });
+		this.props.favoriteCreate({ busStop: this.props.navigation.getParam('busStop'), id: this.props.navigation.getParam('id') });
+	}
+
+	deleteFavorite = () => {
+		this.setState({ miniMenuOpen: false });
+		this.props.favoriteDelete(this.props.navigation.getParam('id'));
+	}
+
+	renderMiniMenu = () => {
+		return (
+			<MiniMenu
+				isVisible={this.state.miniMenuOpen}
+				onClose={() => this.setState({ miniMenuOpen: false })}
+				items={[
+					{
+						icon: 'access-time',
+						content: 'Ändra tidsformat',
+						onPress: this.openTimeformat,
+					},
+					{
+						icon: 'star',
+						content: _.includes(this.props.favoriteStopIds, this.props.navigation.getParam('id')) ? 'Ta bort favorit' : 'Lägg till favorit',
+						onPress: _.includes(this.props.favoriteStopIds, this.props.navigation.getParam('id')) ? this.deleteFavorite : this.saveAsFavorite,
+					},
+					{
+						icon: 'help',
+						content: 'Hjälp',
+						onPress: this.openPopup,
+					},
+				]}
+			/>
+		);
+	}
+
+	renderTimeformat() {
+		return (
+			<MiniMenu
+				isVisible={this.state.timeformatVisible}
+				onClose={() => this.setState({ timeformatVisible: false })}
+				items={[
+					{
+						content: 'Minuter',
+						onPress: () => this.onTimeValueChange('minutes'),
+					},
+					{
+						content: 'Klockslag',
+						onPress: () => this.onTimeValueChange('clock'),
+					},
+				]}
+			/>
+		);
+	}
+
+	openTimeformat = () => {
+		this.setState({ miniMenuOpen: false });
+		setTimeout(() => {
+			this.setState({ timeformatVisible: true });
+		}, 1);
+	}
+
+	toggleMiniMenu = () => {
+        this.setState(prevState => ({
+            miniMenuOpen: !prevState.miniMenuOpen,
+        }));
+	}
+
+	onTimeValueChange = (itemValue) => {
+		this.props.setSetting('timeFormat', itemValue);
+		this.setState({ timeformatVisible: false });
+    }
 
 	startRefresh() {
 		const self = this;
@@ -78,15 +193,8 @@ class ShowDepartures extends PureComponent {
 	}
 
 	refresh = () => {
-		Actions.refresh({ right: () => {
-			return (
-				<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-					<Spinner color={colors.alternative} />
-					{HelpButton(this)}
-				</View>
-			);
-		} });
-		this.props.getDepartures({ id: this.props.id });
+		this.props.navigation.setParams({ reloading: true });
+		this.props.getDepartures({ id: this.props.navigation.getParam('id') });
 	}
 
 	populateFavorites(favorites) {
@@ -106,8 +214,13 @@ class ShowDepartures extends PureComponent {
 	openPopup = () => {
 		track('Show Help', { Page: 'Departures' });
 		this.setState({
-			showHelp: true
+			miniMenuOpen: false,
 		});
+		setTimeout(() => {
+			this.setState({
+				showHelp: true,
+			})
+		}, 1);
 	}
 
 	renderDepartures = ({ item, index }) => {
@@ -119,31 +232,41 @@ class ShowDepartures extends PureComponent {
 				onPress={() => {
 					this.props.favoriteLineToggle(item);
 				}}
+				onLongPress={() => {
+					const localFavorites = this.props.favorites.filter(favorite => favorite.local);
+					const localLines = localFavorites.map(({ sname, direction }) => `${sname} ${direction}`.replace('X', ''));
+					if (_.includes(localLines, `${item.sname} ${item.direction}`.replace('X', ''))) {
+						this.props.favoriteLineLocalRemove(item, this.props.navigation.getParam('id'));
+					} else {
+						this.props.favoriteLineLocalAdd(item, this.props.navigation.getParam('id'));
+					}
+				}}
+
 			/>
 		);
 	}
 
+	closePopup = () => this.setState({ showHelp: false });
+
 	renderPopup() {
-		// const { imageWidth, imageHeight } = calcImageSize(0.85, metrics.margin.md * 2.5);
 		return (
 			<Popup
-				onPress={() => this.setState({ showHelp: false })}
+				onPress={this.closePopup}
 				isVisible={this.state.showHelp}
 			>
 				<Text style={component.popup.header}>När går nästa avgång?</Text>
 				<Text style={component.popup.text}>Längst till höger på varje rad står det antal minuter kvar till nästa avgång samt avgången efter det. <Text style={{ fontStyle: 'italic' }}>Det går även att ändra avgångstiden till klockslag, och det gör du i menyn på startsidan.</Text></Text>
-				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode="cover" /> */}
 
 				<Text style={component.popup.header}>Varför har tiden till nästa avgång ibland färg?</Text>
-				<Text style={component.popup.text}>När en avgång snart ska gå från en hållplats så kommer alltid texten "<Text style={{ color: colors.danger }}>Nu</Text>" att visas med röd färg. Ibland kan man också se att en avgång har <Text style={{ color: colors.warning }}>orange</Text> text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.</Text>
-				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode="cover" /> */}
+				<Text style={component.popup.text}>När en avgång snart ska gå från en hållplats så kommer alltid texten &quot;<Text style={{ color: colors.danger }}>Nu</Text>&quot; att visas med röd färg. Ibland kan man också se att en avgång har <Text style={{ color: colors.warning }}>orange</Text> text. Det kan t.ex betyda att en buss har tappat anslutningen med Västtrafik och inte längre är live. Tiden som visas då är ordinarie avgång enligt tidtabell.</Text>
 
 				<Text style={component.popup.header}>Hur sparar man en linje som favorit?</Text>
-				<Text style={component.popup.text}>För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.</Text>
-				{/* <Image style={component.popup.image} source={require('../assets/help/non-live.png')} style={{ width: imageWidth, height: imageHeight }} ImageResizeMode="cover" /> */}
+				<Text style={component.popup.text}>För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör på. För att spara avgången som favorit för nuvarande hållplats så tryck på avgången och håll ner fingret i en halv sekund.</Text>
 			</Popup>
 		);
 	}
+
+	getItemLayout = (data, index) => ({ length: 51, offset: 51 * index, index })
 
 	renderContent() {
 		if (this.props.loading) {
@@ -175,9 +298,7 @@ class ShowDepartures extends PureComponent {
 					renderItem={this.renderDepartures}
 					keyExtractor={item => item.journeyid}
 					ItemSeparatorComponent={ListItemSeparator}
-					getItemLayout={(data, index) => (
-						{ length: 51, offset: 51 * index, index }
-					)}
+					getItemLayout={this.getItemLayout}
 					maxToRenderPerBatch={11}
 					initialNumToRender={11}
 					scrollEnabled={false}
@@ -190,6 +311,8 @@ class ShowDepartures extends PureComponent {
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
+				{this.renderTimeformat()}
+				{this.renderMiniMenu()}
 				{this.renderPopup()}
 				{this.renderContent()}
 			</View>
@@ -197,29 +320,35 @@ class ShowDepartures extends PureComponent {
 	}
 }
 
-const MapStateToProps = (state) => {
+const MapStateToProps = (state, ownProps) => {
 	const lines = _.map(state.fav.lines, (line) => line.replace('X', ''));
+	const linesLocal = _.filter(state.fav.linesLocal, ({ stop }) => stop === ownProps.navigation.getParam('id')).map(o => o.lines).map(line => line)[0];
 	const { loading, timestamp } = state.departures;
 	let favorites = [];
 	let departures = [];
 	_.forEach(state.departures.departures, item => {
 		const { sname, direction } = item;
 		const departure = `${sname} ${direction}`.replace('X', '');
-		if (_.includes(lines, departure)) {
-			favorites = [...favorites, item];
+		if (_.includes(lines, departure) && _.includes(linesLocal, departure)) {
+			favorites = [...favorites, { ...item, global: true, local: true }];
+		}
+		else if (_.includes(lines, departure)) {
+			favorites = [...favorites, { ...item, global: true, local: false }];
+		}
+		else if (_.includes(linesLocal, departure)) {
+			favorites = [...favorites, { ...item, global: false, local: true }];
 		} else {
 			departures = [...departures, item];
 		}
 	});
 	const { error } = state.errors;
 	const { timeFormat } = state.settings;
-	const favoriteDepartures = state.fav.favorites;
-	const favoriteIds = _.map(favoriteDepartures, 'id');
+	const favoriteStopIds = _.map(state.fav.favorites, 'id');
 	return {
 		departures: _.sortBy(departures, ['timeLeft', 'timeNext']),
 		error,
-		favoriteIds,
 		favorites: _.sortBy(favorites, ['timeLeft', 'timeNext']),
+		favoriteStopIds,
 		loading,
 		timestamp,
 		timeFormat,
@@ -227,4 +356,15 @@ const MapStateToProps = (state) => {
 };
 
 export default connect(MapStateToProps,
-	{ getDepartures, clearDepartures, clearErrors, favoriteLineToggle, incrementStopsOpened })(ShowDepartures);
+	{
+		clearDepartures,
+		clearErrors,
+		favoriteCreate,
+		favoriteDelete,
+		favoriteLineToggle,
+		favoriteLineLocalAdd,
+		favoriteLineLocalRemove,
+		getDepartures,
+		incrementStopsOpened,
+		setSetting,
+	})(ShowDepartures);

@@ -321,6 +321,40 @@ jest.mock('react-native', () => {
     };
 });
 
+jest.mock('react-native-gesture-handler', () => {
+    const View = require('react-native/Libraries/Components/View/View');
+    return {
+        Swipeable: View,
+        DrawerLayout: View,
+        State: {},
+        ScrollView: View,
+        Slider: View,
+        Switch: View,
+        TextInput: View,
+        ToolbarAndroid: View,
+        ViewPagerAndroid: View,
+        DrawerLayoutAndroid: View,
+        WebView: View,
+        NativeViewGestureHandler: View,
+        TapGestureHandler: View,
+        FlingGestureHandler: View,
+        ForceTouchGestureHandler: View,
+        LongPressGestureHandler: View,
+        PanGestureHandler: View,
+        PinchGestureHandler: View,
+        RotationGestureHandler: View,
+        /* Buttons */
+        RawButton: View,
+        BaseButton: View,
+        RectButton: View,
+        BorderlessButton: View,
+        /* Other */
+        FlatList: View,
+        gestureHandlerRootHOC: jest.fn(),
+        Directions: {},
+    };
+});
+
 jest.mock('@react-native-community/async-storage', () => (
     {
         config: {
@@ -344,9 +378,47 @@ jest.mock('redux-persist', () => ({
     persistReducer: () => jest.fn(),
     persistStore: () => jest.fn(),
 }));
-jest.mock('react-native-router-flux', () => {});
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'MaterialIcon');
 jest.mock('react-native-device-info', () => {});
+jest.mock('react-native-reanimated', () => ({
+    decay: jest.fn(),
+    timing: () => ({ start: jest.fn(), }),
+    spring: jest.fn(),
+    add: jest.fn(),
+    divide: jest.fn(),
+    multiply: jest.fn(),
+    modulo: jest.fn(),
+    diffClamp: jest.fn(),
+    delay: jest.fn(),
+    sequence: jest.fn(),
+    parallel: jest.fn(),
+    stagger: jest.fn(),
+    loop: jest.fn(),
+    event: jest.fn(),
+    forkEvent: jest.fn(),
+    unforkEvent: jest.fn(),
+    Value: jest.fn(),
+    View: 'Animated.View',
+    Easing: ({
+        step0: jest.fn(),
+        step1: jest.fn(),
+        linear: jest.fn(),
+        ease: jest.fn(),
+        quad: jest.fn(),
+        cubic: jest.fn(),
+        poly: jest.fn(),
+        sin: jest.fn(),
+        circle: jest.fn(),
+        exp: jest.fn(),
+        elastic: jest.fn(),
+        back: jest.fn(),
+        bounce: jest.fn(),
+        bezier: jest.fn(),
+        in: jest.fn(),
+        out: jest.fn(),
+        inOut: jest.fn(),
+    })
+}));
 jest.mock('react-native-geolocation-service', () => {});
 jest.mock('react-native-firebase', () => ({
     crashlytics: jest.fn().mockReturnThis(),
@@ -356,22 +428,14 @@ jest.mock('react-native-firebase', () => ({
         setCurrentScreen: jest.fn()
     }),
 }));
-
-jest.mock('react-native-router-flux', () => ({
-    Router: jest.fn(),
-    Stack: jest.fn(),
-    Scene: jest.fn(),
-    Drawer: jest.fn(),
-    Actions: {
-        login: stub(),
-        pop: stub(),
-        refresh: stub(),
-    },
+jest.mock('react-navigation', () => ({
+    createAppContainer: jest.fn(),
+    createDrawerNavigator: jest.fn(),
+    createStackNavigator: jest.fn(),
+    navigate: jest.fn(),
 }));
 
 jest.mock('./components/helpers', () => ({
-    getStorage: jest.fn(() => {}),
-    setStorage: jest.fn().mockImplementation(() => Promise.resolve()),
     globals: {},
     track: jest.fn(),
     isAndroid: jest.fn(),
@@ -382,7 +446,7 @@ jest.mock('./components/helpers', () => ({
     getAppVersion: jest.fn(),
     getToken: jest.fn().mockImplementation(() => ({
         finally: (fn) => {
-            fn();
+            fn({ access_token: 123 });
         },
     })),
 }));
@@ -406,5 +470,8 @@ if (typeof window !== 'object') {
 }
 
 console.error = () => {};
+
+window.timeStart = jest.fn();
+window.timeEnd = jest.fn();
 
 configure({ adapter: new Adapter() });

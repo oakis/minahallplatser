@@ -17,7 +17,9 @@ const item = {
     via: 'via Centralstationen',
     track: 'A',
     accessibility: 'wheelChair',
-    journeyid: '123'
+    journeyid: '123',
+    global: true,
+    local: true,
 };
 
 const item2 = {
@@ -37,6 +39,8 @@ const item2 = {
     journeyid: '123',
     index: 1,
     timeFormat: '',
+    global: false,
+    local: true,
 };
 
 const item3 = {
@@ -55,19 +59,21 @@ const item3 = {
     accessibility: null,
     journeyid: '123',
     timeFormat: 'minutes',
+    global: true,
+    local: false,
 };
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<DepartureListItem item={item} onPress={jest.fn()} />);
+    const wrapper = shallow(<DepartureListItem item={item} onPress={jest.fn()} onLongPress={jest.fn()} />);
     expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<DepartureListItem item={item2} onPress={jest.fn()} />);
+    const wrapper = shallow(<DepartureListItem item={item2} onPress={jest.fn()} onLongPress={jest.fn()} />);
     expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<DepartureListItem item={item3} onPress={jest.fn()} />);
+    const wrapper = shallow(<DepartureListItem item={item3} onPress={jest.fn()} onLongPress={jest.fn()} />);
     expect(toJson(wrapper)).toMatchSnapshot();
 });

@@ -10,7 +10,7 @@ It is a mobile app used to check departures from the local public transit compan
 
 ## Technologies used
 
-React Native, Redux, react-native-router-flux and react-native-vector-icons.
+React Native, Redux, React Navigation and react-native-vector-icons.
 The project also uses Firebase to track usage.
 For tracking user behavior it uses Firebase Analytics.
 

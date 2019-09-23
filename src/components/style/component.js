@@ -131,11 +131,5 @@ export const component = {
         image: {
             marginBottom: metrics.margin.xl
         }
-    },
-    picker: {
-        marginLeft: 2,
-        marginTop: -12,
-        marginBottom: -metrics.margin.sm,
-        marginRight: -metrics.margin.sm
     }
 };

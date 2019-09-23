@@ -8,6 +8,45 @@ exports[`should match snapshot 1`] = `
     }
   }
 >
+  <MiniMenu
+    isVisible={false}
+    items={
+      Array [
+        Object {
+          "content": "Minuter",
+          "onPress": [Function],
+        },
+        Object {
+          "content": "Klockslag",
+          "onPress": [Function],
+        },
+      ]
+    }
+    onClose={[Function]}
+  />
+  <MiniMenu
+    isVisible={false}
+    items={
+      Array [
+        Object {
+          "content": "Ändra tidsformat",
+          "icon": "access-time",
+          "onPress": [Function],
+        },
+        Object {
+          "content": "Lägg till favorit",
+          "icon": "star",
+          "onPress": [Function],
+        },
+        Object {
+          "content": "Hjälp",
+          "icon": "help",
+          "onPress": [Function],
+        },
+      ]
+    }
+    onClose={[Function]}
+  />
   <Popup
     isVisible={false}
     onPress={[Function]}
@@ -99,7 +138,7 @@ exports[`should match snapshot 1`] = `
         }
       }
     >
-      För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör.
+      För att spara en linje så räcker det med att klicka på den, linjen kommer då hamna högst upp på alla hållplatser som den linjen kör på. För att spara avgången som favorit för nuvarande hållplats så tryck på avgången och håll ner fingret i en halv sekund.
     </DefaultFont>
   </Popup>
   <ScrollView>
@@ -115,8 +154,10 @@ exports[`should match snapshot 1`] = `
             "clockNext": "16:05",
             "direction": "Högsbo",
             "fgColor": "#eee",
+            "global": true,
             "isLive": true,
             "journeyid": "123",
+            "local": false,
             "night": false,
             "sname": "16X",
             "timeLeft": "3",
@@ -130,7 +171,9 @@ exports[`should match snapshot 1`] = `
       extraData={
         Object {
           "init": true,
+          "miniMenuOpen": false,
           "showHelp": false,
+          "timeformatVisible": false,
         }
       }
       initialNumToRender={11}
@@ -145,7 +188,9 @@ exports[`should match snapshot 1`] = `
       extraData={
         Object {
           "init": true,
+          "miniMenuOpen": false,
           "showHelp": false,
+          "timeformatVisible": false,
         }
       }
       getItemLayout={[Function]}

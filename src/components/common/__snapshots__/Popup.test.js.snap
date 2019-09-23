@@ -23,7 +23,6 @@ exports[`should match snapshot 1`] = `
 >
   <TouchableOpacity
     activeOpacity={1}
-    disabled={false}
     style={
       Object {
         "height": 0,
@@ -46,13 +45,15 @@ exports[`should match snapshot 1`] = `
             "zIndex": 1,
           },
           Object {
-            "opacity": Object {},
+            "opacity": mockConstructor {},
           },
         ]
       }
     />
   </TouchableOpacity>
-  <Animated.View
+  <Component
+    keyboardShouldPersistTaps="always"
+    scrollEnabled={true}
     style={
       Array [
         Object {
@@ -68,27 +69,27 @@ exports[`should match snapshot 1`] = `
           "zIndex": 2,
         },
         Object {
-          "opacity": Object {},
+          "opacity": mockConstructor {},
           "transform": Array [
             Object {
-              "scale": Object {},
+              "scale": mockConstructor {},
             },
           ],
         },
       ]
     }
   >
-    <ScrollView
-      keyboardShouldPersistTaps="always"
-      scrollEnabled={true}
-    >
-      <Button
-        color="primary"
-        label="Stäng"
-        uppercase={true}
-      />
-    </ScrollView>
-  </Animated.View>
+    <Button
+      color="primary"
+      label="Stäng"
+      style={
+        Object {
+          "marginBottom": 30,
+        }
+      }
+      uppercase={true}
+    />
+  </Component>
 </View>
 `;
 
@@ -115,7 +116,6 @@ exports[`should match snapshot 2`] = `
 >
   <TouchableOpacity
     activeOpacity={1}
-    disabled={true}
     style={
       Object {
         "height": "100%",
@@ -138,13 +138,15 @@ exports[`should match snapshot 2`] = `
             "zIndex": 1,
           },
           Object {
-            "opacity": Object {},
+            "opacity": mockConstructor {},
           },
         ]
       }
     />
   </TouchableOpacity>
-  <Animated.View
+  <Component
+    keyboardShouldPersistTaps="always"
+    scrollEnabled={true}
     style={
       Array [
         Object {
@@ -160,27 +162,27 @@ exports[`should match snapshot 2`] = `
           "zIndex": 2,
         },
         Object {
-          "opacity": Object {},
+          "opacity": mockConstructor {},
           "transform": Array [
             Object {
-              "scale": Object {},
+              "scale": mockConstructor {},
             },
           ],
         },
       ]
     }
   >
-    <ScrollView
-      keyboardShouldPersistTaps="always"
-      scrollEnabled={true}
-    >
-      <Button
-        color="primary"
-        label="Stäng"
-        uppercase={true}
-      />
-    </ScrollView>
-  </Animated.View>
+    <Button
+      color="primary"
+      label="Stäng"
+      style={
+        Object {
+          "marginBottom": 30,
+        }
+      }
+      uppercase={true}
+    />
+  </Component>
 </View>
 `;
 
@@ -207,7 +209,6 @@ exports[`should match snapshot 3`] = `
 >
   <TouchableOpacity
     activeOpacity={1}
-    disabled={true}
     style={
       Object {
         "height": 0,
@@ -230,13 +231,15 @@ exports[`should match snapshot 3`] = `
             "zIndex": 1,
           },
           Object {
-            "opacity": Object {},
+            "opacity": mockConstructor {},
           },
         ]
       }
     />
   </TouchableOpacity>
-  <Animated.View
+  <Component
+    keyboardShouldPersistTaps="always"
+    scrollEnabled={true}
     style={
       Array [
         Object {
@@ -252,26 +255,26 @@ exports[`should match snapshot 3`] = `
           "zIndex": 2,
         },
         Object {
-          "opacity": Object {},
+          "opacity": mockConstructor {},
           "transform": Array [
             Object {
-              "scale": Object {},
+              "scale": mockConstructor {},
             },
           ],
         },
       ]
     }
   >
-    <ScrollView
-      keyboardShouldPersistTaps="always"
-      scrollEnabled={true}
-    >
-      <Button
-        color="primary"
-        label="Stäng"
-        uppercase={true}
-      />
-    </ScrollView>
-  </Animated.View>
+    <Button
+      color="primary"
+      label="Stäng"
+      style={
+        Object {
+          "marginBottom": 30,
+        }
+      }
+      uppercase={true}
+    />
+  </Component>
 </View>
 `;

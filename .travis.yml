@@ -1,6 +1,12 @@
 language: node_js
 node_js:
-- 10.16.2
+  - 10.16.2
 before_install:
-- openssl aes-256-cbc -K $encrypted_60a78c57b013_key -iv $encrypted_60a78c57b013_iv
-  -in Server.js.enc -out src/Server.js -d
+  - openssl aes-256-cbc -K $encrypted_60a78c57b013_key -iv $encrypted_60a78c57b013_iv
+    -in Server.js.enc -out src/Server.js -d
+jobs:
+  include:
+    - stage: Test
+      script: yarn test
+    - stage: Lint
+      script: yarn lint

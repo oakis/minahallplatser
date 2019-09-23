@@ -1,34 +1,67 @@
 import _ from 'lodash';
 import fetch from 'react-native-cancelable-fetch';
 import React, { PureComponent } from 'react';
-import { Keyboard, Alert, FlatList, View, ScrollView, AppState } from 'react-native';
+import { Keyboard, Alert, FlatList, View, ScrollView, AppState, TouchableWithoutFeedback } from 'react-native';
+import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
-import { favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops } from '../actions';
-import { ListItem, Message, Input, ListItemSeparator, ListHeading, Text, Popup, Button } from './common';
+import { favoriteDelete, clearErrors, searchStops, searchChanged, favoriteCreate, getNearbyStops, setSetting } from '../actions';
+import { ListItem, Message, Input, ListItemSeparator, ListHeading, Text, Popup, Button, MiniMenu } from './common';
 import { colors, component, metrics } from './style';
 import { CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL } from '../actions/types';
-import { HelpButton } from '../Router';
 import { store } from '../App';
-import { track, globals, isAndroid } from './helpers';
-
+import { track, isAndroid } from './helpers';
+import { Feedback } from './modals';
 
 class FavoriteList extends PureComponent {
+
+	static navigationOptions = ({ navigation }) => ({
+		title: 'Mina Hållplatser',
+		headerRight:
+			<TouchableWithoutFeedback
+				onPress={navigation.state.params && navigation.state.params.toggleMiniMenu}
+			>
+				<View style={{
+					width: 30,
+					height: 30,
+					alignItems: 'center',
+					justifyContent: 'center',
+					right: 5,
+				}}>
+					<Icon
+						name="more-horiz"
+						style={{ color: colors.alternative, fontSize: 24 }}
+					/>
+				</View>
+			</TouchableWithoutFeedback>
+		,
+		headerTitleStyle: {
+			width: '100%',
+			marginHorizontal: 'auto',
+			left: 28,
+			alignSelf: 'center',
+			textAlign: 'center',
+			fontSize: 14,
+			fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
+		},
+	});
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			editing: false,
 			showHelp: false,
-			init: true,
+			miniMenuOpen: false,
+			feedbackVisible: false,
+			sortingVisible: false,
 		};
 		this.searchTimeout = undefined;
 		this.clearTimeout = undefined;
 	}
 
 	componentDidMount() {
-		globals.shouldExitApp = false;
+		firebase.analytics().setCurrentScreen('Dashboard', 'Dashboard');
+		this.props.navigation.setParams({ toggleMiniMenu: this.toggleMiniMenu });
 		Keyboard.dismiss();
 		if (this.props.allowedGPS) {
 			window.log('Refreshing nearby stops');
@@ -36,13 +69,6 @@ class FavoriteList extends PureComponent {
 		}
 		track('Page View', { Page: 'Dashboard' });
 		AppState.addEventListener('change', this.handleAppStateChange);
-	}
-
-	componentWillReceiveProps() {
-		if (this.state.init) {
-			Actions.refresh({ right: HelpButton(this) });
-			this.setState({ init: false });
-		}
 	}
 
 	componentWillUnmount() {
@@ -81,11 +107,92 @@ class FavoriteList extends PureComponent {
 		this.props.getNearbyStops();
 	}
 
+	toggleMiniMenu = () => {
+        this.setState(prevState => ({
+            miniMenuOpen: !prevState.miniMenuOpen,
+        }));
+	}
+
+	renderMiniMenu = () => {
+		return (
+			<MiniMenu
+				isVisible={this.state.miniMenuOpen}
+				onClose={() => this.setState({ miniMenuOpen: false })}
+				items={[
+					{
+						icon: 'sort',
+						content: 'Sortera favoriter',
+						onPress: this.openSorting,
+					},
+					{
+						icon: 'help',
+						content: 'Hjälp',
+						onPress: this.openPopup,
+					},
+					{
+						icon: 'feedback',
+						content: 'Lämna feedback',
+						onPress: this.openFeedback,
+					},
+				]}
+			/>
+		);
+	}
+
+	openSorting = () => {
+		this.setState({ miniMenuOpen: false });
+		setTimeout(() => {
+			this.setState({ sortingVisible: true });
+		}, 1);
+	}
+
+	onOrderValueChange = (itemValue) => {
+		this.props.setSetting('favoriteOrder', itemValue);
+		this.setState({ sortingVisible: false });
+    }
+
+	openFeedback = () => {
+        track('Feedback Open');
+        this.setState({ feedbackVisible: true, miniMenuOpen: false, });
+    }
+
+    closeFeedback = () => {
+        this.setState({ feedbackVisible: false });
+    }
+
 	openPopup = () => {
 		track('Show Help', { Page: 'Dashboard' });
 		this.setState({
-			showHelp: true
+			miniMenuOpen: false,
 		});
+		setTimeout(() => {
+			this.setState({
+				showHelp: true,
+			})
+		}, 1);
+	}
+
+	renderSorting() {
+		return (
+			<MiniMenu
+				isVisible={this.state.sortingVisible}
+				onClose={() => this.setState({ sortingVisible: false })}
+				items={[
+					{
+						content: 'Ingen sortering',
+						onPress: () => this.onOrderValueChange('nothing'),
+					},
+					{
+						content: 'Mina mest använda',
+						onPress: () => this.onOrderValueChange('opened'),
+					},
+					{
+						content: 'Efter bokstav',
+						onPress: () => this.onOrderValueChange('busStop'),
+					},
+				]}
+			/>
+		);
 	}
 
 	renderPopup() {
@@ -106,14 +213,14 @@ class FavoriteList extends PureComponent {
 					Hållplatser nära dig
 				</Text>
 				<Text style={component.popup.text}>
-					Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din <Text style={{ fontWeight: 'bold' }}>plats</Text>. Om du har nekat tillgång så kan du klicka på pilen ( <Icon name="refresh" /> ) till höger om "Hållplatser nära dig" och godkänna åtkomst till platstjänster.
+					Hållplatser som är i din närhet kommer automatiskt att visas sålänge du har godkänt att appen får använda din <Text style={{ fontWeight: 'bold' }}>plats</Text>. Om du har nekat tillgång så kan du klicka på pilen ( <Icon name="refresh" /> ) till höger om &quot;Hållplatser nära dig&quot; och godkänna åtkomst till platstjänster.
 				</Text>
 
 				<Text style={component.popup.header}>
 					Spara hållplats som favorit
 				</Text>
 				<Text style={component.popup.text}>
-					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Icon name="star-border" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Icon name="star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg och hållplatsen sparas i listan "Mina Hållplatser".
+					Längst till höger på hållplatser nära dig eller i sökresultaten finns det en stjärna ( <Icon name="star-border" color={colors.warning} /> ), klicka på den för att spara hållplatsen som favorit. Nu kommer stjärnan ( <Icon name="star" color={colors.warning} /> ) att bli fylld med <Text style={{ color: colors.warning }}>orange</Text> färg och hållplatsen sparas i listan &quot;Mina Hållplatser&quot;.
 				</Text>
 
 				<Text style={component.popup.header}>
@@ -142,7 +249,12 @@ class FavoriteList extends PureComponent {
 				pressItem={async () => {
 					Keyboard.dismiss();
 					await this.props.clearErrors();
-					Actions.departures({ busStop: item.busStop, id: item.id, title: item.busStop, parent: 'favorites' });
+					this.props.navigation.navigate('Departures', {
+						busStop: item.busStop,
+						id: item.id,
+						title: item.busStop,
+						parent: 'favorites',
+					});
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -174,7 +286,12 @@ class FavoriteList extends PureComponent {
 				icon={item.icon}
 				pressItem={() => {
 					Keyboard.dismiss();
-					Actions.departures({ busStop: item.name, id: item.id, title: item.name, parent });
+					this.props.navigation.navigate('Departures', {
+						busStop: item.name,
+						id: item.id,
+						title: item.name,
+						parent,
+					});
 				}}
 				pressIcon={() => {
 					Keyboard.dismiss();
@@ -236,10 +353,20 @@ class FavoriteList extends PureComponent {
 		);
 	}
 
+	onFocus = () => {
+		track('Search Focused');
+	}
+
 	render() {
 		return (
-			<View style={{ flex: 1 }}>
+			<View style={{ flex: 1, backgroundColor: colors.background }}>
+				<Feedback
+                    visible={this.state.feedbackVisible}
+                    close={this.closeFeedback}
+                />
 				{this.renderPopup()}
+				{this.renderSorting()}
+				{this.renderMiniMenu()}
 				<ScrollView scrollEnabled keyboardShouldPersistTaps="always">
 					<Input
 						placeholder="Sök hållplats.."
@@ -250,7 +377,7 @@ class FavoriteList extends PureComponent {
 						iconRight={this.props.busStop.length > 0 ? 'close' : null}
 						iconRightPress={this.resetSearch}
 						underlineColorAndroid="#fff"
-						onFocus={() => track('Search Focused')}
+						onFocus={this.onFocus}
 						style={[{ borderRadius: 15, paddingLeft: metrics.padding.sm, paddingRight: metrics.padding.sm, margin: metrics.margin.md, backgroundColor: '#fff' }, !isAndroid() ? { paddingTop: metrics.padding.md, paddingBottom: metrics.padding.md } : null]}
 					/>
 					{(this.props.error) ?
@@ -303,5 +430,6 @@ export default connect(mapStateToProps,
 		searchStops,
 		searchChanged,
 		favoriteCreate,
-		getNearbyStops
+		getNearbyStops,
+		setSetting,
 	})(FavoriteList);
