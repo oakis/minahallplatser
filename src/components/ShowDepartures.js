@@ -6,12 +6,14 @@ import firebase from 'react-native-firebase';
 import fetch from 'react-native-cancelable-fetch';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
-	getDepartures,
 	clearDepartures,
 	clearErrors,
+	favoriteCreate,
+	favoriteDelete,
 	favoriteLineToggle,
 	favoriteLineLocalAdd,
 	favoriteLineLocalRemove,
+	getDepartures,
 	incrementStopsOpened,
 	setSetting,
 } from '../actions';
@@ -112,6 +114,16 @@ class ShowDepartures extends PureComponent {
 		}
 	}
 
+	saveAsFavorite = () => {
+		this.setState({ miniMenuOpen: false });
+		this.props.favoriteCreate({ busStop: this.props.navigation.getParam('busStop'), id: this.props.navigation.getParam('id') });
+	}
+
+	deleteFavorite = () => {
+		this.setState({ miniMenuOpen: false });
+		this.props.favoriteDelete(this.props.navigation.getParam('id'));
+	}
+
 	renderMiniMenu = () => {
 		return (
 			<MiniMenu
@@ -122,6 +134,11 @@ class ShowDepartures extends PureComponent {
 						icon: 'access-time',
 						content: 'Ändra tidsformat',
 						onPress: this.openTimeformat,
+					},
+					{
+						icon: 'star',
+						content: _.includes(this.props.favoriteStopIds, this.props.navigation.getParam('id')) ? 'Ta bort favorit' : 'Lägg till favorit',
+						onPress: _.includes(this.props.favoriteStopIds, this.props.navigation.getParam('id')) ? this.deleteFavorite : this.saveAsFavorite,
 					},
 					{
 						icon: 'help',
@@ -326,10 +343,12 @@ const MapStateToProps = (state, ownProps) => {
 	});
 	const { error } = state.errors;
 	const { timeFormat } = state.settings;
+	const favoriteStopIds = _.map(state.fav.favorites, 'id');
 	return {
 		departures: _.sortBy(departures, ['timeLeft', 'timeNext']),
 		error,
 		favorites: _.sortBy(favorites, ['timeLeft', 'timeNext']),
+		favoriteStopIds,
 		loading,
 		timestamp,
 		timeFormat,
@@ -338,12 +357,14 @@ const MapStateToProps = (state, ownProps) => {
 
 export default connect(MapStateToProps,
 	{
-		getDepartures,
 		clearDepartures,
 		clearErrors,
+		favoriteCreate,
+		favoriteDelete,
 		favoriteLineToggle,
 		favoriteLineLocalAdd,
 		favoriteLineLocalRemove,
+		getDepartures,
 		incrementStopsOpened,
 		setSetting,
 	})(ShowDepartures);
