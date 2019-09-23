@@ -17,7 +17,24 @@ class FavoriteList extends PureComponent {
 
 	static navigationOptions = ({ navigation }) => ({
 		title: 'Mina Hållplatser',
-		headerRight: navigation.state.params && navigation.state.params.headerRight,
+		headerRight:
+			<TouchableWithoutFeedback
+				onPress={navigation.state.params && navigation.state.params.toggleMiniMenu}
+			>
+				<View style={{
+					width: 30,
+					height: 30,
+					alignItems: 'center',
+					justifyContent: 'center',
+					right: 5,
+				}}>
+					<Icon
+						name="more-horiz"
+						style={{ color: colors.alternative, fontSize: 24 }}
+					/>
+				</View>
+			</TouchableWithoutFeedback>
+		,
 		headerTitleStyle: {
 			width: '100%',
 			marginHorizontal: 'auto',
@@ -44,26 +61,7 @@ class FavoriteList extends PureComponent {
 
 	componentDidMount() {
 		firebase.analytics().setCurrentScreen('Dashboard', 'Dashboard');
-		this.props.navigation.setParams({
-			headerRight: (
-                <TouchableWithoutFeedback
-                    onPress={this.toggleMiniMenu}
-                >
-                    <View style={{
-						width: 30,
-						height: 30,
-						alignItems: 'center',
-						justifyContent: 'center',
-						right: 5,
-					}}>
-                        <Icon
-                            name="more-horiz"
-                            style={{ color: colors.alternative, fontSize: 24 }}
-                        />
-                    </View>
-                </TouchableWithoutFeedback>
-			)
-		});
+		this.props.navigation.setParams({ toggleMiniMenu: this.toggleMiniMenu });
 		Keyboard.dismiss();
 		if (this.props.allowedGPS) {
 			window.log('Refreshing nearby stops');

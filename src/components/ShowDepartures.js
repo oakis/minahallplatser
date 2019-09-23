@@ -23,12 +23,32 @@ class ShowDepartures extends PureComponent {
 
 	static navigationOptions = ({ navigation }) => ({
 			title: navigation.getParam('title'),
+			headerRight:
+				<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+					{navigation.state.params && navigation.state.params.reloading && <Spinner color={colors.alternative} style={{ marginRight: 5 }} />}
+					<TouchableWithoutFeedback
+						onPress={navigation.state.params && navigation.state.params.toggleMiniMenu}
+					>
+						<View style={{
+							width: 30,
+							height: 30,
+							alignItems: 'center',
+							justifyContent: 'center',
+							right: 5,
+						}}>
+							<Icon
+								name="more-horiz"
+								style={{ color: colors.alternative, fontSize: 24 }}
+							/>
+						</View>
+					</TouchableWithoutFeedback>
+				</View>
+			,
 			headerTitleStyle: {
 				width: 'auto',
 				fontSize: 14,
 				fontFamily: (isAndroid()) ? 'sans-serif' : 'System'
 			},
-			headerRight: navigation.state.params && navigation.state.params.headerRight,
 	});
 
 	constructor(props) {
@@ -43,7 +63,7 @@ class ShowDepartures extends PureComponent {
 
 	componentDidMount() {
 		firebase.analytics().setCurrentScreen('Departures', 'Departures');
-		this.props.navigation.setParams({ headerRight: this.renderMiniMenuButton() });
+		this.props.navigation.setParams({ toggleMiniMenu: this.toggleMiniMenu });
 		track('Page View', { Page: 'Departures', Stop: this.props.navigation.getParam('busStop'), Parent: this.props.navigation.getParam('parent')});
 		this.props.getDepartures({ id: this.props.navigation.getParam('id') });
 		updateStopsCount();
@@ -54,7 +74,7 @@ class ShowDepartures extends PureComponent {
 
 	componentWillReceiveProps({ favorites, departures, timestamp }) {
 		if (this.state.init) {
-			this.props.navigation.setParams({ headerRight: this.renderMiniMenuButton() });
+			this.props.navigation.setParams({ reloading: false });
 			this.setState({ init: false });
 		}
 		const favoritesUpdated = JSON.stringify(this.props.favorites) !== JSON.stringify(favorites);
@@ -66,7 +86,7 @@ class ShowDepartures extends PureComponent {
 			this.populateDepartures(departures);
 		}
 		if (this.props.timestamp !== timestamp) {
-			this.props.navigation.setParams({ headerRight: this.renderMiniMenuButton() });
+			this.props.navigation.setParams({ reloading: false });
 		}
 	}
 
@@ -90,27 +110,6 @@ class ShowDepartures extends PureComponent {
 			this.startRefresh();
 			track('Page View', { Page: 'Departures', Stop: this.props.navigation.getParam('busStop'), Parent: 'Background' });
 		}
-	}
-
-	renderMiniMenuButton = () => {
-		return (
-			<TouchableWithoutFeedback
-				onPress={this.toggleMiniMenu}
-			>
-				<View style={{
-					width: 30,
-					height: 30,
-					alignItems: 'center',
-					justifyContent: 'center',
-					right: 5,
-				}}>
-					<Icon
-						name="more-horiz"
-						style={{ color: colors.alternative, fontSize: 24 }}
-					/>
-				</View>
-			</TouchableWithoutFeedback>
-		);
 	}
 
 	renderMiniMenu = () => {
@@ -177,12 +176,7 @@ class ShowDepartures extends PureComponent {
 	}
 
 	refresh = () => {
-		this.props.navigation.setParams({ headerRight: (
-			<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-				<Spinner color={colors.alternative} style={{ marginRight: 5 }} />
-				{this.renderMiniMenuButton()}
-			</View>
-		)});
+		this.props.navigation.setParams({ reloading: true });
 		this.props.getDepartures({ id: this.props.navigation.getParam('id') });
 	}
 
