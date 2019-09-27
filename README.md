@@ -8,6 +8,8 @@ Now it is a project I am working with on my spare time.
 
 It is a mobile app used to check departures from the local public transit company (Västtrafik).
 
+![](minahallplatser.gif)
+
 ## Technologies used
 
 React Native, Redux, React Navigation and react-native-vector-icons.
