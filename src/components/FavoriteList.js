@@ -411,7 +411,7 @@ const mapStateToProps = state => {
 	const { favoriteOrder, allowedGPS } = state.settings;
 	const favorites = _.orderBy(state.fav.favorites, (o) => o[favoriteOrder] || 0, favoriteOrder === 'busStop' ? 'asc' : 'desc');
 	const { error } = state.errors;
-	const favoriteIds = _.map(favorites, 'id');
+	const favoriteIds = _.map(state.fav.favorites, 'id');
 	const { busStop, stops, gpsLoading } = state.search;
 	const stopsNearby = _.map(stops, (item) => {
 		return { ...item, icon: (_.includes(favoriteIds, item.id)) ? 'star' : 'star-border', parent: 'Stops Nearby' };

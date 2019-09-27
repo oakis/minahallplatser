@@ -34,15 +34,17 @@ export const handleJsonFetch = (response) => {
 export const handleVasttrafikStops = ({ LocationList }) => {
     window.log('handleVasttrafikStops()', LocationList);
     if (LocationList && LocationList.StopLocation && LocationList.StopLocation.length) {
-        return LocationList.StopLocation.map(({ id, name }) => ({
+        return LocationList.StopLocation.map(({ id, name, track }) => ({
             id,
-            name
+            name,
+            track,
         })).splice(0, 10);
     } else if (LocationList && isObject(LocationList.StopLocation)) {
-        const { id, name } = LocationList.StopLocation;
+        const { id, name, track } = LocationList.StopLocation;
         return [{
             id,
-            name
+            name,
+            track,
         }];
     }
     return [];
