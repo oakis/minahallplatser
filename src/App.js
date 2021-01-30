@@ -13,7 +13,7 @@ export const { store, persistor } = factory();
 const App = () => {
   useEffect(() => {
     track("App Start");
-  });
+  }, []);
 
   return (
     <Provider store={store}>
