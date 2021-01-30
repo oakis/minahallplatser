@@ -74,5 +74,8 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.4"
   }
 }
