@@ -28,7 +28,7 @@
     "lodash": "4.17.21",
     "moment": "2.29.2",
     "react": "16.8.3",
-    "react-native": "0.59.10",
+    "react-native": "0.62.3",
     "react-native-cancelable-fetch": "0.1.1",
     "react-native-device-info": "0.21.5",
     "react-native-firebase": "~5.1.1",
