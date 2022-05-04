@@ -6,6 +6,6 @@ export * from './firebase';
 export * from './analytics';
 export * from './image';
 
-export const isObject = (obj) => {
-    return Object.prototype.toString.call(obj) === '[object Object]';
+export const isObject = obj => {
+  return Object.prototype.toString.call(obj) === '[object Object]';
 };

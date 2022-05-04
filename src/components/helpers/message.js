@@ -1,16 +1,16 @@
-import { ToastAndroid } from 'react-native';
-import { isAndroid, isIOS } from './device';
+import {ToastAndroid} from 'react-native';
+import {isAndroid, isIOS} from '@helpers/device';
 
 export const showMessage = (length, message) => {
-    if (isAndroid()) {
-        ToastAndroid.showWithGravity(
-            message,
-            (length === 'long') ? ToastAndroid.LONG : ToastAndroid.SHORT,
-            ToastAndroid.CENTER
-        );
-    } else if (isIOS()) {
-        window.log(message);
-    } else {
-        window.log('Message ignored since device is not Android nor iOS');
-    }
+  if (isAndroid()) {
+    ToastAndroid.showWithGravity(
+      message,
+      length === 'long' ? ToastAndroid.LONG : ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  } else if (isIOS()) {
+    window.log(message);
+  } else {
+    window.log('Message ignored since device is not Android nor iOS');
+  }
 };
