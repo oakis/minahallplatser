@@ -1,4 +1,4 @@
-// import {LogBox} from 'react-native';
+import {LogBox} from 'react-native';
 
 const PerformanceNow = () =>
   global.nativePerformanceNow || global.performanceNow;
@@ -25,4 +25,9 @@ if (__DEV__) {
   window.timeEnd = () => {};
 }
 
-// LogBox.ignoreWarnings(['Setting a timer', 'Require cycle']);
+LogBox.ignoreLogs([
+  'Setting a timer',
+  'Require cycle',
+  'VirtualizedLists should never be nested',
+  'window.timeEnd()',
+]);

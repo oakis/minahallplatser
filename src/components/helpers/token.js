@@ -31,7 +31,7 @@ export const getToken = () => {
           reject(localToken);
         });
     } else {
-      reject(localToken);
+      resolve(localToken);
     }
   });
 };

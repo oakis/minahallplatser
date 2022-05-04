@@ -55,21 +55,20 @@ export const searchChanged = text => {
 export const searchStops = ({busStop}) => {
   return dispatch => {
     if (busStop === '') {
-      fetch.abort('searchStops');
+      // fetch.abort('searchStops');
       return dispatch({
         type: SEARCH_DEPARTURES,
         payload: [],
       });
     }
-    getToken().then(zup => {
-      console.log('gettoken zup', zup);
+    getToken().then(response => {
       window.timeStart('searchStops');
       const url = `https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=${busStop}&format=json`;
       const config = {
         method: 'get',
         headers: {
           Accept: 'application/json',
-          Authorization: `Bearer ${zup.access_token}`,
+          Authorization: `Bearer ${response.access_token}`,
         },
       };
       window.log(url, config);
