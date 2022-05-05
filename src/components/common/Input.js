@@ -56,7 +56,10 @@ export const Input = ({
           {loading ? (
             <Spinner
               color={colors.primary}
-              style={{padding: metrics.padding.sm}}
+              style={{
+                padding: metrics.padding.md,
+                paddingRight: metrics.padding.md + 4,
+              }}
             />
           ) : (
             <Icon

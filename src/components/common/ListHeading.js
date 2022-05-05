@@ -7,7 +7,7 @@ import {component, metrics, colors} from '@style';
 export const ListHeading = ({
   text,
   icon,
-  iconSize = 20,
+  iconSize = 24,
   onPress,
   loading = false,
   style = null,
@@ -34,13 +34,13 @@ export const ListHeading = ({
             justifyContent: 'center',
           }}>
           {loading ? (
-            <Spinner color={colors.primary} noFlex left />
+            <Spinner color={colors.primary} right />
           ) : (
             <Icon
               name={icon}
               onPress={onPress}
               size={iconSize}
-              style={{textAlign: 'left', padding: metrics.padding.md}}
+              style={{textAlign: 'right'}}
             />
           )}
         </View>

@@ -6,6 +6,8 @@ import {colors} from '@style/color';
 import {Text} from '@common';
 import {component} from '@style/component';
 
+const duration = 160;
+
 export const MiniMenu = props => {
   const [hidden, setHidden] = useState(true);
 
@@ -52,31 +54,31 @@ export const MiniMenu = props => {
       Animated.timing(animateValue, {
         toValue: 1,
         easing: EasingNode.elastic(),
-        duration: 250,
+        duration,
         useNativeDriver: true,
       }).start();
       Animated.timing(animateValue, {
         toValue: 1,
         easing: EasingNode.ease,
-        duration: 250,
+        duration,
         useNativeDriver: true,
       }).start();
     } else if (!props.isVisible) {
       Animated.timing(animateValue, {
         toValue: 0,
         easing: EasingNode.ease,
-        duration: 250,
+        duration,
         useNativeDriver: true,
       }).start();
       Animated.timing(animateValue, {
         toValue: 0,
         easing: EasingNode.ease,
-        duration: 250,
+        duration,
         useNativeDriver: true,
       });
       setTimeout(() => {
         setHidden(true);
-      }, 250);
+      }, duration);
     }
   }, [animateValue, props.isVisible]);
 

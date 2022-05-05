@@ -13,6 +13,7 @@ const headerOptions = {
     backgroundColor: colors.primary,
   },
   headerTintColor: colors.alternative,
+  headerTitleAlign: 'center',
   headerTitleStyle: {
     width: '100%',
     marginHorizontal: 'auto',

@@ -3,10 +3,9 @@ import {connect} from 'react-redux';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
-  FlatList,
+  SectionList,
   AppState,
   TouchableWithoutFeedback,
-  ScrollView,
 } from 'react-native';
 // import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -34,11 +33,14 @@ import {
 import {updateStopsCount, track, isAndroid} from '@helpers';
 import {colors, component} from '@style';
 
+const length =
+  component.listitem.view.height +
+  component.listitem.view.paddingHorizontal * 2;
+
 const ShowDepartures = props => {
   const {
     favorites,
     departures,
-    timestamp,
     route,
     navigation,
     favoriteStopIds,
@@ -47,9 +49,6 @@ const ShowDepartures = props => {
     timeFormat,
   } = props;
 
-  console.log(departures);
-
-  const [init, setInit] = useState(true);
   const [showHelp, setShowHelp] = useState(false);
   const [miniMenuOpen, setMiniMenuOpen] = useState(false);
   const [timeformatVisible, setTimeformatVisible] = useState(false);
@@ -59,7 +58,13 @@ const ShowDepartures = props => {
     navigation.setOptions({
       title: route.params.title,
       headerRight: () => (
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            width: 65,
+          }}>
           {reloading && (
             <Spinner color={colors.alternative} style={{marginRight: 5}} />
           )}
@@ -95,61 +100,35 @@ const ShowDepartures = props => {
       Stop: route.params.busStop,
       Parent: route.params.parent,
     });
-    props.getDepartures({id: route.params.id});
     updateStopsCount();
     props.incrementStopsOpened(route.params.id);
-    startRefresh();
-    AppState.addEventListener('change', handleAppStateChange);
+    refresh();
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+    const interval = setInterval(() => {
+      refresh();
+    }, 10000);
+    return () => {
+      clearInterval(interval);
+      props.clearDepartures();
+      props.clearErrors();
+      subscription.remove('change', handleAppStateChange);
+    };
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    window.log('Departure data updated.');
-    if (init) {
-      setReloading(false);
-      setInit(false);
-    }
-    // const favoritesUpdated =
-    //   JSON.stringify(favorites) !== JSON.stringify(favorites);
-    // const departuresUpdated =
-    //   JSON.stringify(departures) !== JSON.stringify(departures);
-    // if (favoritesUpdated) {
-    //   populateFavorites(favorites);
-    // }
-    // if (departuresUpdated) {
-    //   populateDepartures(departures);
-    // }
-    // if (timestamp !== timestamp) {
-    //   setReloading(false);
-    // }
-    () => {
-      // clearInterval(interval);
-      // interval = null;
-      props.clearDepartures();
-      props.clearErrors();
-      // fetch.abort('getDepartures');
-      AppState.removeEventListener('change', handleAppStateChange);
-    };
-  }, [
-    favorites,
-    departures,
-    timestamp,
-    navigation,
-    handleAppStateChange,
-    init,
-    props,
-  ]);
+    setReloading(false);
+  }, [favorites, departures]);
 
   const handleAppStateChange = useCallback(
     nextAppState => {
-      // clearInterval(interval);
-      // interval = null;
       props.clearDepartures();
       props.clearErrors();
-      // fetch.abort('getDepartures');
       if (nextAppState === 'active') {
-        props.getDepartures({id: route.params.id});
-        startRefresh();
+        refresh();
         track('Page View', {
           Page: 'Departures',
           Stop: route.params.busStop,
@@ -157,7 +136,7 @@ const ShowDepartures = props => {
         });
       }
     },
-    [route.params.id, route.params.busStop, props],
+    [route.params.busStop, props, refresh],
   );
 
   const saveAsFavorite = () => {
@@ -244,31 +223,10 @@ const ShowDepartures = props => {
     closeTimeFormat();
   };
 
-  const startRefresh = () => {
-    // const self = this;
-    // self.interval = setInterval(self.refresh.bind(self), 10000);
-  };
-
-  const refresh = () => {
+  const refresh = useCallback(() => {
     setReloading(true);
     props.getDepartures({id: route.params.id});
-  };
-
-  // const populateFavorites = favorites => {
-  //   window.log('Updated favorites:', favorites);
-  //   favorites = favorites;
-  // };
-
-  // const populateDepartures = departures => {
-  //   window.log('Updated departures:', departures);
-  //   departures = departures;
-  // };
-
-  const ListFooterComponent = () => {
-    return departures.length === 0 || favorites.length === 0 ? null : (
-      <View style={{height: 5, backgroundColor: colors.primary}} />
-    );
-  };
+  }, [route.params.id, props]);
 
   const openPopup = () => {
     track('Show Help', {Page: 'Departures'});
@@ -348,10 +306,14 @@ const ShowDepartures = props => {
   };
 
   const getItemLayout = (data, index) => ({
-    length: 51,
-    offset: 51 * index,
+    length,
+    offset: length * index,
     index,
   });
+
+  const SectionSeparatorComponent = () => (
+    <View style={{height: 5, backgroundColor: colors.primary}} />
+  );
 
   const renderContent = () => {
     if (loading) {
@@ -361,30 +323,16 @@ const ShowDepartures = props => {
     }
 
     return (
-      <ScrollView>
-        <FlatList
-          data={favorites}
-          renderItem={renderDepartures}
-          keyExtractor={item => item.journeyid}
-          ItemSeparatorComponent={ListItemSeparator}
-          ListFooterComponent={ListFooterComponent}
-          maxToRenderPerBatch={11}
-          initialNumToRender={11}
-          scrollEnabled={false}
-          // extraData={state}
-        />
-        <FlatList
-          data={departures}
-          renderItem={renderDepartures}
-          keyExtractor={item => item.journeyid}
-          ItemSeparatorComponent={ListItemSeparator}
-          getItemLayout={getItemLayout}
-          maxToRenderPerBatch={11}
-          initialNumToRender={11}
-          scrollEnabled={false}
-          // extraData={state}
-        />
-      </ScrollView>
+      <SectionList
+        sections={[{data: favorites}, {data: departures}]}
+        renderItem={renderDepartures}
+        keyExtractor={item => item.journeyid}
+        ItemSeparatorComponent={ListItemSeparator}
+        renderSectionFooter={SectionSeparatorComponent}
+        maxToRenderPerBatch={11}
+        initialNumToRender={11}
+        getItemLayout={getItemLayout}
+      />
     );
   };
 

@@ -42,7 +42,7 @@ export const Popup = props => {
       }).start();
       setTimeout(() => {
         setHidden(true);
-      }, 250);
+      }, duration);
     }
   }, [animateValue, props.isVisible]);
 

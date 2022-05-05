@@ -8,13 +8,7 @@ export const handleJsonFetch = response => {
     `handleJsonFetch() - Status: ${response.status} - ok: ${response.ok}`,
   );
   if (response.status === 200) {
-    return response
-      .json()
-      .then(data => {
-        window.log('handleJsonFetch(): OK', data);
-        return data;
-      })
-      .catch(err => err);
+    return response.json().catch(err => err);
   } else if (response.status === 400) {
     return response.json().then(data => {
       window.log('handleJsonFetch(): Error', data);
@@ -61,7 +55,7 @@ export const handleVasttrafikStops = ({LocationList}) => {
 };
 
 export const handleVasttrafikDepartures = ({DepartureBoard}) => {
-  window.log('handleVasttrafikDepartures()', DepartureBoard);
+  window.log('handleVasttrafikDepartures()');
   let departures = [];
   if (DepartureBoard && DepartureBoard.Departure) {
     const rawDepartureList = DepartureBoard.Departure.length

@@ -392,7 +392,7 @@ const FavoriteList = props => {
         <ListHeading
           text="Mina hållplatser"
           icon={props.favorites.length > 0 ? 'edit' : null}
-          iconSize={16}
+          iconSize={20}
           onPress={() => {
             track('Edit Stops Toggle', {On: !editing});
             setEditing(prev => !prev);
