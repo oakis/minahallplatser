@@ -1,12 +1,15 @@
 import React, {useEffect} from 'react';
 import {View, ImageBackground} from 'react-native';
-// import firebase from 'react-native-firebase';
+import analytics from '@react-native-firebase/analytics';
 import {Spinner, Text} from '@common';
 import {colors} from '@style';
 
 const SplashScreen = () => {
   useEffect(() => {
-    // firebase.analytics().setCurrentScreen('Splashscreen', 'Splashscreen');
+    analytics().logScreenView({
+      screen_class: 'Splashscreen',
+      screen_name: 'Splashscreen',
+    });
   }, []);
 
   return (

@@ -1,18 +1,17 @@
-// import firebase from 'react-native-firebase';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const defaultHandler = global.ErrorUtils.getGlobalHandler();
-// const crashlytics = firebase.crashlytics();
 
 global.ErrorUtils.setGlobalHandler((...args) => {
   const error = args[0] || 'Unknown';
   console.log('Crashlytics error sent', error);
 
   if (error instanceof Error) {
-    // crashlytics.setStringValue('stack', `${error.stack}`);
-    // crashlytics.recordError(0, `RN Fatal: ${error.message}`);
+    crashlytics().setAttribute('stack', `${error.stack}`);
+    crashlytics().recordError(error);
   } else {
     // Have never gotten this log so far. Might not be necessary.
-    // crashlytics.recordError(0, `RN Fatal: ${error}`);
+    crashlytics().recordError(error);
   }
 
   defaultHandler.apply(this, args);

@@ -1,4 +1,4 @@
-// import firebase from 'react-native-firebase';
+import crashlytics from '@react-native-firebase/crashlytics';
 import moment from 'moment';
 import _ from 'lodash';
 import {isObject} from '@helpers';
@@ -12,7 +12,7 @@ export const handleJsonFetch = response => {
   } else if (response.status === 400) {
     return response.json().then(data => {
       window.log('handleJsonFetch(): Error', data);
-      //   firebase.crashlytics().recordError(data.StackTraceString);
+      crashlytics().recordError(data.StackTraceString);
       throw data.Message;
     });
   } else if (response.status === 404) {

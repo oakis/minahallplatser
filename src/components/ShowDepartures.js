@@ -7,7 +7,7 @@ import {
   AppState,
   TouchableWithoutFeedback,
 } from 'react-native';
-// import firebase from 'react-native-firebase';
+import analytics from '@react-native-firebase/analytics';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   clearDepartures,
@@ -94,7 +94,10 @@ const ShowDepartures = props => {
   }, [navigation, reloading, route.params.title]);
 
   useEffect(() => {
-    // firebase.analytics().setCurrentScreen('Departures', 'Departures');
+    analytics().logScreenView({
+      screen_class: 'Departures',
+      screen_name: 'Departures',
+    });
     track('Page View', {
       Page: 'Departures',
       Stop: route.params.busStop,

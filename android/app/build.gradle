@@ -1,6 +1,9 @@
 apply plugin: "com.android.application"
+apply plugin: "com.google.gms.google-services"
+apply plugin: "com.google.firebase.crashlytics"
 
 import com.android.build.OutputFile
+import groovy.json.JsonSlurper
 import org.apache.tools.ant.taskdefs.condition.Os
 
 /**
@@ -130,6 +133,17 @@ def reactNativeArchitectures() {
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
+def getNpmVersion() {
+    def inputFile = new File("../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
+    return packageJson["version"]
+}
+def getNpmVersionCode() {
+    def inputFile = new File("../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
+    return packageJson["versionCode"].toInteger()
+}
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -139,8 +153,8 @@ android {
         applicationId "com.oakis.minahallplatser"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode getNpmVersionCode()
+        versionName getNpmVersion()
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {
@@ -234,6 +248,7 @@ android {
     }
     buildTypes {
         debug {
+            applicationIdSuffix ".dev"
             signingConfig signingConfigs.debug
         }
         release {

@@ -1,16 +1,14 @@
 import {LogBox} from 'react-native';
 
-const PerformanceNow = () =>
-  global.nativePerformanceNow || global.performanceNow;
 const startTimes = {};
 
 if (__DEV__) {
   window.log = console.log.bind(window.console);
   window.timeStart = label => {
-    startTimes[label] = PerformanceNow();
+    startTimes[label] = global.performance.now();
   };
   window.timeEnd = label => {
-    const endTime = PerformanceNow();
+    const endTime = global.performance.now();
     if (startTimes[label]) {
       const delta = endTime - startTimes[label];
       window.log(`${label}: ${delta.toFixed(3)}ms`);

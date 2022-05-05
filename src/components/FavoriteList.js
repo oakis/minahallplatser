@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
 } from 'react-native';
-// import firebase from 'react-native-firebase';
+import analytics from '@react-native-firebase/analytics';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {connect} from 'react-redux';
 import {
@@ -77,7 +77,10 @@ const FavoriteList = props => {
         fontFamily: isAndroid() ? 'sans-serif' : 'System',
       },
     });
-    // firebase.analytics().setCurrentScreen('Dashboard', 'Dashboard');
+    analytics().logScreenView({
+      screen_name: 'Dashboard',
+      screen_class: 'Dashboard',
+    });
     Keyboard.dismiss();
     if (props.allowedGPS) {
       window.log('Refreshing nearby stops');
