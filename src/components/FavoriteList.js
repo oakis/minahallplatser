@@ -36,7 +36,7 @@ import {colors, component, metrics} from '@style';
 import {CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL} from '@types';
 import {store} from '@src/App';
 import {track, isAndroid} from '@helpers';
-import {Feedback} from '@modals';
+// import {Feedback} from '@modals';
 
 const FavoriteList = props => {
   const {navigation} = props;
@@ -44,7 +44,7 @@ const FavoriteList = props => {
   const [editing, setEditing] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [miniMenuOpen, setMiniMenuOpen] = useState(false);
-  const [feedbackVisible, setFeedbackVisible] = useState(false);
+  // const [feedbackVisible, setFeedbackVisible] = useState(false);
   const [sortingVisible, setSortingVisible] = useState(false);
 
   useEffect(() => {
@@ -150,11 +150,11 @@ const FavoriteList = props => {
             content: 'Hjälp',
             onPress: openPopup,
           },
-          {
-            icon: 'feedback',
-            content: 'Lämna feedback',
-            onPress: openFeedback,
-          },
+          // {
+          //   icon: 'feedback',
+          //   content: 'Lämna feedback',
+          //   onPress: openFeedback,
+          // },
         ]}
       />
     );
@@ -172,15 +172,15 @@ const FavoriteList = props => {
     setSortingVisible(false);
   };
 
-  const openFeedback = () => {
-    track('Feedback Open');
-    setFeedbackVisible(true);
-    closeMiniMenu();
-  };
+  // const openFeedback = () => {
+  //   track('Feedback Open');
+  //   setFeedbackVisible(true);
+  //   closeMiniMenu();
+  // };
 
-  const closeFeedback = () => {
-    setFeedbackVisible(false);
-  };
+  // const closeFeedback = () => {
+  //   setFeedbackVisible(false);
+  // };
 
   const openPopup = () => {
     track('Show Help', {Page: 'Dashboard'});
@@ -420,7 +420,7 @@ const FavoriteList = props => {
 
   return (
     <View style={{flex: 1, backgroundColor: colors.background}}>
-      <Feedback visible={feedbackVisible} close={closeFeedback} />
+      {/* <Feedback visible={feedbackVisible} close={closeFeedback} /> */}
       {renderPopup()}
       {renderSorting()}
       {renderMiniMenu()}
