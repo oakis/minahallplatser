@@ -30,7 +30,8 @@ jest.mock('react-native-reanimated', () => ({
   unforkEvent: jest.fn(),
   Value: jest.fn(),
   View: 'Animated.View',
-  Easing: {
+  ScrollView: 'Animated.ScrollView',
+  EasingNode: {
     step0: jest.fn(),
     step1: jest.fn(),
     linear: jest.fn(),
@@ -55,37 +56,21 @@ jest.mock('react-native-geolocation-service', () => {});
 
 jest.mock('@react-native-async-storage/async-storage', () => {});
 
-// // jest.mock('react-navigation', () => ({
-// //   createAppContainer: jest.fn(),
-// //   createDrawerNavigator: jest.fn(),
-// //   createStackNavigator: jest.fn(),
-// //   navigate: jest.fn(),
-// // }));
-
-// // jest.mock('./components/helpers', () => ({
-// //   globals: {},
-// //   track: jest.fn(),
-// //   isAndroid: jest.fn(),
-// //   showMessage: jest.fn(),
-// //   updateStopsCount: jest.fn(),
-// //   getDeviceModel: jest.fn(),
-// //   getOsVersion: jest.fn(),
-// //   getAppVersion: jest.fn(),
-// //   getToken: jest.fn().mockImplementation(() => ({
-// //     finally: fn => {
-// //       fn({access_token: 123});
-// //     },
-// //   })),
-// // }));
-
-// // jest.mock('./actions', () => ({
-// //   auth: {
-// //     autoLogin: stub(),
-// //     loginAnonUser: stub(),
-// //   },
-// // }));
-
-// jest.mock('@react-native-firebase/app');
+jest.mock('./components/helpers', () => ({
+  globals: {},
+  track: jest.fn(),
+  isAndroid: jest.fn(),
+  showMessage: jest.fn(),
+  updateStopsCount: jest.fn(),
+  getDeviceModel: jest.fn(),
+  getOsVersion: jest.fn(),
+  getAppVersion: jest.fn(),
+  getToken: jest.fn().mockImplementation(() => ({
+    then: fn => {
+      fn({access_token: 123});
+    },
+  })),
+}));
 
 jest.mock('@react-native-firebase/crashlytics', () => {
   return () => {
@@ -117,12 +102,5 @@ jest.mock('@react-navigation/native-stack', () => {
   };
 });
 
-// if (typeof window !== 'object') {
-//   global.window = global;
-//   global.window.log = msg => console.log(msg);
-// }
-
-// console.error = () => {};
-
-// window.timeStart = jest.fn();
-// window.timeEnd = jest.fn();
+window.timeStart = jest.fn();
+window.timeEnd = jest.fn();

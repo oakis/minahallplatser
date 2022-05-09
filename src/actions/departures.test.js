@@ -2,6 +2,8 @@ import moment from 'moment';
 import {stub} from 'sinon';
 import {getDepartures} from './departures.js';
 
+global.fetch = jest.fn();
+
 const date = moment().format('YYYY-MM-DD');
 const time = moment().format('HH:mm');
 const accessToken = 123;
@@ -17,7 +19,7 @@ const config = {
 
 it('should fetch departures 24 hours in the future if no departure is found within 90 min', async () => {
   const dispatch = jest.fn();
-  fetch.mockImplementationOnce(() => ({
+  global.fetch.mockImplementationOnce(() => ({
     finally: stub().resolves({error: 'No journeys found'}),
     then: stub().resolves({error: 'No journeys found'}),
     catch: stub().rejects({error: 'No journeys found'}),

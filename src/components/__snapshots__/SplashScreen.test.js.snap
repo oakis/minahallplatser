@@ -1,7 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SplashScreen should match snapshot 1`] = `
-<div>
+<View
+  accessibilityIgnoresInvertColors={true}
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <Image
+    source={
+      Object {
+        "uri": "https://www.w3schools.com/css/img_fjords.jpg",
+      }
+    }
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
+        undefined,
+      ]
+    }
+  />
   <View
     style={
       Object {
@@ -13,23 +43,36 @@ exports[`SplashScreen should match snapshot 1`] = `
       }
     }
   >
-    <DefaultFont
+    <Text
       style={
-        Object {
-          "fontSize": 24,
-          "fontWeight": "bold",
-          "marginBottom": 10,
-          "opacity": 1,
-        }
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontSize": 24,
+            "fontWeight": "bold",
+            "marginBottom": 10,
+            "opacity": 1,
+          },
+        ]
       }
     >
       Mina Hållplatser
-    </DefaultFont>
-    <Spinner
+    </Text>
+    <ActivityIndicator
       color="#779ECB"
-      noFlex={true}
       size="large"
+      style={
+        Array [
+          undefined,
+          null,
+          null,
+          null,
+        ]
+      }
     />
   </View>
-</div>
+</View>
 `;

@@ -1,55 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should match snapshot on Android 1`] = `
-<TouchableNativeFeedback>
-  <View
-    style={
-      Array [
-        Object {
-          "alignItems": "center",
-          "alignSelf": "stretch",
-          "borderRadius": 3,
-          "elevation": 1,
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "marginBottom": 5,
-          "paddingBottom": 10,
-          "paddingTop": 10,
-          "shadowColor": "#282828",
-          "shadowOffset": Object {
-            "height": 0,
-            "width": 0,
-          },
-          "shadowOpacity": 0.5,
-          "shadowRadius": 1,
-        },
-        Object {
-          "backgroundColor": undefined,
-        },
-        Object {},
-      ]
-    }
-  >
-    <MaterialIcon
-      color="#fff"
-      size={24}
-    />
-    <DefaultFont
-      style={
-        Object {
-          "color": "#fff",
-          "fontFamily": "System",
-          "fontWeight": "bold",
-          "marginLeft": 0,
-        }
-      }
-    />
-  </View>
-</TouchableNativeFeedback>
-`;
-
-exports[`should match snapshot on iOS 1`] = `
-<TouchableOpacity
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
     Array [
       Object {
@@ -78,17 +39,81 @@ exports[`should match snapshot on iOS 1`] = `
   }
 >
   <MaterialIcon
+    color="#fff"
     size={24}
   />
-  <DefaultFont
+  <Text
     style={
-      Object {
-        "color": "#fff",
-        "fontFamily": "System",
-        "fontWeight": "bold",
-        "marginLeft": 0,
-      }
+      Array [
+        Object {
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        Object {
+          "color": "#fff",
+          "fontFamily": "System",
+          "fontWeight": "bold",
+          "marginLeft": 0,
+        },
+      ]
     }
   />
-</TouchableOpacity>
+</View>
+`;
+
+exports[`should match snapshot on iOS 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "alignSelf": "stretch",
+      "backgroundColor": undefined,
+      "borderRadius": 3,
+      "elevation": 1,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "marginBottom": 5,
+      "opacity": 1,
+      "paddingBottom": 10,
+      "paddingTop": 10,
+      "shadowColor": "#282828",
+      "shadowOffset": Object {
+        "height": 0,
+        "width": 0,
+      },
+      "shadowOpacity": 0.5,
+      "shadowRadius": 1,
+    }
+  }
+>
+  <MaterialIcon
+    size={24}
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        Object {
+          "color": "#fff",
+          "fontFamily": "System",
+          "fontWeight": "bold",
+          "marginLeft": 0,
+        },
+      ]
+    }
+  />
+</View>
 `;

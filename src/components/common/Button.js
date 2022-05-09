@@ -16,7 +16,7 @@ export const Button = ({
   loading,
   style = {},
 }) => {
-  function showSpinnerOrText() {
+  const showSpinnerOrText = () => {
     if (loading) {
       return <Spinner size="small" color={colors[fontColor]} />;
     }
@@ -31,9 +31,9 @@ export const Button = ({
         {uppercase ? label.toUpperCase() : label}
       </Text>
     );
-  }
+  };
 
-  function renderButton() {
+  const renderButton = () => {
     if (isAndroid()) {
       return (
         <TouchableNativeFeedback onPress={onPress}>
@@ -57,7 +57,7 @@ export const Button = ({
         {showSpinnerOrText()}
       </TouchableOpacity>
     );
-  }
+  };
 
   return renderButton();
 };

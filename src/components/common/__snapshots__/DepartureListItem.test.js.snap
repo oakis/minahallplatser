@@ -1,21 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should match snapshot 1`] = `
-<TouchableWithoutFeedback
-  delayLongPress={500}
-  onLongPress={[MockFunction]}
-  onPress={[MockFunction]}
+exports[`should match snapshot for boats 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#fff",
+      "flex": 1,
+      "flexDirection": "row",
+      "marginLeft": 0,
+      "paddingBottom": 5,
+      "paddingTop": 5,
+    }
+  }
 >
   <View
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#efefef",
-        "flex": 1,
-        "flexDirection": "row",
-        "marginLeft": 0,
-        "paddingBottom": 5,
-        "paddingTop": 5,
+        "height": 40,
+        "justifyContent": "center",
+        "paddingLeft": 7,
+        "width": 50,
       }
     }
   >
@@ -23,309 +38,175 @@ exports[`should match snapshot 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "height": 40,
-          "justifyContent": "center",
-          "paddingLeft": 7,
-          "width": 50,
-        }
-      }
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#eee",
-            "borderRadius": 3,
-            "borderWidth": 2,
-            "flex": 1,
-            "height": 40,
-            "justifyContent": "center",
-            "width": 40,
-          }
-        }
-      >
-        <DefaultFont
-          style={
-            Object {
-              "color": "#000",
-              "fontSize": 14,
-              "fontWeight": "bold",
-              "textAlign": "center",
-              "textAlignVertical": "center",
-            }
-          }
-        >
-          16X
-        </DefaultFont>
-        <MaterialIcon
-          color="#000"
-          name="directions-bus"
-          size={15}
-        />
-      </View>
-    </View>
-    <View
-      style={
-        Object {
+          "backgroundColor": "#eee",
+          "borderRadius": 3,
+          "borderWidth": 2,
           "flex": 1,
-          "justifyContent": "center",
-          "paddingLeft": 10,
-        }
-      }
-    >
-      <View
-        style={
-          Object {
-            "display": "flex",
-            "flexDirection": "row",
-          }
-        }
-      >
-        <DefaultFont
-          style={
-            Object {
-              "fontWeight": "bold",
-            }
-          }
-        >
-          Högsbo
-        </DefaultFont>
-        <MaterialIcon
-          name="public"
-          size={13}
-          style={
-            Object {
-              "alignSelf": "center",
-              "color": "#779ECB",
-              "marginLeft": 2,
-              "marginTop": 2,
-            }
-          }
-        />
-      </View>
-      <DefaultFont
-        style={
-          Object {
-            "fontSize": 12,
-            "marginTop": -5,
-          }
-        }
-      >
-        via Centralstationen
-      </DefaultFont>
-      <View
-        style={
-          Object {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <DefaultFont>
-          Läge 
-          A
-        </DefaultFont>
-        <MaterialIcon
-          name="accessible"
-          size={13}
-          style={
-            Object {
-              "alignSelf": "center",
-              "marginLeft": 5,
-            }
-          }
-        />
-      </View>
-    </View>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "height": 50,
-          "justifyContent": "center",
-          "marginRight": 5,
-          "width": 56,
-        }
-      }
-    >
-      <DefaultFont
-        style={
-          Object {
-            "color": "#000",
-            "fontSize": 18,
-          }
-        }
-      >
-        16:00
-      </DefaultFont>
-      <DefaultFont
-        style={
-          Object {
-            "fontSize": 12,
-          }
-        }
-      >
-        16:05
-      </DefaultFont>
-    </View>
-  </View>
-</TouchableWithoutFeedback>
-`;
-
-exports[`should match snapshot 2`] = `
-<TouchableWithoutFeedback
-  delayLongPress={500}
-  onLongPress={[MockFunction]}
-  onPress={[MockFunction]}
->
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#fff",
-        "flex": 1,
-        "flexDirection": "row",
-        "marginLeft": 0,
-        "paddingBottom": 5,
-        "paddingTop": 5,
-      }
-    }
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
           "height": 40,
           "justifyContent": "center",
-          "paddingLeft": 7,
-          "width": 50,
+          "width": 40,
         }
       }
     >
-      <View
+      <Text
         style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#eee",
-            "borderRadius": 3,
-            "borderWidth": 2,
-            "flex": 1,
-            "height": 40,
-            "justifyContent": "center",
-            "width": 40,
-          }
-        }
-      >
-        <DefaultFont
-          style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
             Object {
               "color": "#000",
               "fontSize": 10,
               "fontWeight": "bold",
               "textAlign": "center",
               "textAlignVertical": "center",
-            }
-          }
-        >
-          SVART
-        </DefaultFont>
-        <MaterialIcon
-          color="#000"
-          name="directions-boat"
-          size={15}
-        />
-      </View>
+            },
+          ]
+        }
+      >
+        SVART
+      </Text>
+      <MaterialIcon
+        color="#000"
+        name="directions-boat"
+        size={15}
+      />
     </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "justifyContent": "center",
+        "paddingLeft": 10,
+      }
+    }
+  >
     <View
       style={
         Object {
-          "flex": 1,
-          "justifyContent": "center",
-          "paddingLeft": 10,
+          "display": "flex",
+          "flexDirection": "row",
         }
       }
     >
-      <View
+      <Text
         style={
-          Object {
-            "display": "flex",
-            "flexDirection": "row",
-          }
-        }
-      >
-        <DefaultFont
-          style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
             Object {
               "fontWeight": "bold",
-            }
-          }
-        >
-          Högsbo
-        </DefaultFont>
-      </View>
-      <View
-        style={
-          Object {
-            "flexDirection": "row",
-          }
+            },
+          ]
         }
       >
-        <DefaultFont>
-          Läge 
-          A
-        </DefaultFont>
-      </View>
+        Högsbo
+      </Text>
     </View>
     <View
       style={
         Object {
-          "alignItems": "center",
-          "height": 50,
-          "justifyContent": "center",
-          "marginRight": 5,
-          "width": 56,
+          "flexDirection": "row",
         }
       }
     >
-      <DefaultFont
+      <Text
         style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
+            undefined,
+          ]
+        }
+      >
+        Läge 
+        A
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "height": 50,
+        "justifyContent": "center",
+        "marginRight": 5,
+        "width": 56,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "color": "#FF6961",
             "fontSize": 18,
-          }
-        }
-      >
-        16:00
-      </DefaultFont>
-      <DefaultFont
-        style={
+          },
+        ]
+      }
+    >
+      16:00
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "fontSize": 12,
-          }
-        }
-      >
-        16:05
-      </DefaultFont>
-    </View>
+          },
+        ]
+      }
+    >
+      16:05
+    </Text>
   </View>
-</TouchableWithoutFeedback>
+</View>
 `;
 
-exports[`should match snapshot 3`] = `
-<TouchableWithoutFeedback
-  delayLongPress={500}
-  onLongPress={[MockFunction]}
-  onPress={[MockFunction]}
+exports[`should match snapshot for extra lines 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#efefef",
+      "flex": 1,
+      "flexDirection": "row",
+      "marginLeft": 0,
+      "paddingBottom": 5,
+      "paddingTop": 5,
+    }
+  }
 >
   <View
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#efefef",
-        "flex": 1,
-        "flexDirection": "row",
-        "marginLeft": 0,
-        "paddingBottom": 5,
-        "paddingTop": 5,
+        "height": 40,
+        "justifyContent": "center",
+        "paddingLeft": 7,
+        "width": 50,
       }
     }
   >
@@ -333,130 +214,366 @@ exports[`should match snapshot 3`] = `
       style={
         Object {
           "alignItems": "center",
+          "backgroundColor": "#eee",
+          "borderRadius": 3,
+          "borderWidth": 2,
+          "flex": 1,
           "height": 40,
           "justifyContent": "center",
-          "paddingLeft": 7,
-          "width": 50,
+          "width": 40,
         }
       }
     >
-      <View
+      <Text
         style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#eee",
-            "borderRadius": 3,
-            "borderWidth": 2,
-            "flex": 1,
-            "height": 40,
-            "justifyContent": "center",
-            "width": 40,
-          }
-        }
-      >
-        <DefaultFont
-          style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
             Object {
               "color": "#000",
               "fontSize": 14,
               "fontWeight": "bold",
               "textAlign": "center",
               "textAlignVertical": "center",
-            }
-          }
-        >
-          1
-        </DefaultFont>
-        <MaterialIcon
-          color="#000"
-          name="train"
-          size={15}
-        />
-      </View>
+            },
+          ]
+        }
+      >
+        16X
+      </Text>
+      <MaterialIcon
+        color="#000"
+        name="directions-bus"
+        size={15}
+      />
     </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "justifyContent": "center",
+        "paddingLeft": 10,
+      }
+    }
+  >
     <View
       style={
         Object {
-          "flex": 1,
-          "justifyContent": "center",
-          "paddingLeft": 10,
+          "display": "flex",
+          "flexDirection": "row",
         }
       }
     >
-      <View
+      <Text
         style={
-          Object {
-            "display": "flex",
-            "flexDirection": "row",
-          }
-        }
-      >
-        <DefaultFont
-          style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
             Object {
               "fontWeight": "bold",
-            }
-          }
-        >
-          Centralstationen
-        </DefaultFont>
-        <MaterialIcon
-          name="public"
-          size={13}
-          style={
-            Object {
-              "alignSelf": "center",
-              "color": "#779ECB",
-              "marginLeft": 2,
-              "marginTop": 2,
-            }
-          }
-        />
-      </View>
-      <View
-        style={
-          Object {
-            "flexDirection": "row",
-          }
+            },
+          ]
         }
       >
-        <DefaultFont>
-          Läge 
-          A
-        </DefaultFont>
-      </View>
+        Högsbo
+      </Text>
+      <MaterialIcon
+        name="public"
+        size={13}
+        style={
+          Object {
+            "alignSelf": "center",
+            "color": "#779ECB",
+            "marginLeft": 2,
+            "marginTop": 2,
+          }
+        }
+      />
     </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontSize": 12,
+            "marginTop": -5,
+          },
+        ]
+      }
+    >
+      via Centralstationen
+    </Text>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
+            undefined,
+          ]
+        }
+      >
+        Läge 
+        A
+      </Text>
+      <MaterialIcon
+        name="accessible"
+        size={13}
+        style={
+          Object {
+            "alignSelf": "center",
+            "marginLeft": 5,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "height": 50,
+        "justifyContent": "center",
+        "marginRight": 5,
+        "width": 56,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#000",
+            "fontSize": 18,
+          },
+        ]
+      }
+    >
+      16:00
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {
+            "fontSize": 12,
+          },
+        ]
+      }
+    >
+      16:05
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`should match snapshot for trains 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#efefef",
+      "flex": 1,
+      "flexDirection": "row",
+      "marginLeft": 0,
+      "paddingBottom": 5,
+      "paddingTop": 5,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "height": 40,
+        "justifyContent": "center",
+        "paddingLeft": 7,
+        "width": 50,
+      }
+    }
+  >
     <View
       style={
         Object {
           "alignItems": "center",
-          "height": 50,
+          "backgroundColor": "#eee",
+          "borderRadius": 3,
+          "borderWidth": 2,
+          "flex": 1,
+          "height": 40,
           "justifyContent": "center",
-          "marginRight": 5,
-          "width": 56,
+          "width": 40,
         }
       }
     >
-      <DefaultFont
+      <Text
         style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#000",
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+              "textAlignVertical": "center",
+            },
+          ]
+        }
+      >
+        1
+      </Text>
+      <MaterialIcon
+        color="#000"
+        name="train"
+        size={15}
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "justifyContent": "center",
+        "paddingLeft": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "display": "flex",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
+            Object {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Centralstationen
+      </Text>
+      <MaterialIcon
+        name="public"
+        size={13}
+        style={
+          Object {
+            "alignSelf": "center",
+            "color": "#779ECB",
+            "marginLeft": 2,
+            "marginTop": 2,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
+            undefined,
+          ]
+        }
+      >
+        Läge 
+        A
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "height": 50,
+        "justifyContent": "center",
+        "marginRight": 5,
+        "width": 56,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "color": "#FFB347",
             "fontSize": 14,
-          }
-        }
-      >
-        0h 0m
-      </DefaultFont>
-      <DefaultFont
-        style={
+          },
+        ]
+      }
+    >
+      1h 0m
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "fontSize": 12,
-          }
-        }
-      >
-        8
-      </DefaultFont>
-    </View>
+          },
+        ]
+      }
+    >
+      8
+    </Text>
   </View>
-</TouchableWithoutFeedback>
+</View>
 `;

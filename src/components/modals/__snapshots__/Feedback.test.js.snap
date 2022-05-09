@@ -3,6 +3,8 @@
 exports[`should match snapshot 1`] = `
 <Modal
   animationType="slide"
+  hardwareAccelerated={false}
+  visible={true}
 >
   <View
     style={
@@ -12,7 +14,7 @@ exports[`should match snapshot 1`] = `
       }
     }
   >
-    <ScrollView
+    <RCTScrollView
       contentContainerStyle={
         Object {
           "flex": 0,
@@ -20,121 +22,412 @@ exports[`should match snapshot 1`] = `
       }
       keyboardShouldPersistTaps="always"
     >
-      <ListHeading
-        style={
-          Object {
-            "marginTop": 20,
-          }
-        }
-        text="Skicka feedback"
-      />
-      <View
-        style={
-          Object {
-            "padding": 10,
-            "width": "100%",
-          }
-        }
-      >
-        <DefaultFont>
-          Namn 
-          <DefaultFont
+      <View>
+        <View>
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "height": 29,
+                  "justifyContent": "center",
+                },
+                Object {
+                  "marginTop": 20,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "fontSize": 20,
+                    "fontWeight": "bold",
+                    "marginTop": 10,
+                    "paddingLeft": 10,
+                    "paddingRight": 5,
+                  },
+                  Object {
+                    "height": 29,
+                  },
+                ]
+              }
+            >
+              Skicka feedback
+            </Text>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                  "height": 29,
+                  "justifyContent": "center",
+                  "marginTop": 10,
+                  "paddingRight": 10,
+                }
+              }
+            >
+              <MaterialIcon
+                size={24}
+                style={
+                  Object {
+                    "textAlign": "right",
+                  }
+                }
+              />
+            </View>
+          </View>
+          <View
             style={
               Object {
-                "color": "#FF6961",
+                "backgroundColor": "#779ECB",
+                "height": 2,
+                "width": "100%",
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "padding": 10,
+              "width": "100%",
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "System",
+                  "fontSize": 16,
+                },
+                undefined,
+              ]
+            }
+          >
+            Namn 
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#FF6961",
+                  },
+                ]
+              }
+            >
+              *
+            </Text>
+          </Text>
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "marginBottom": 10,
+                  "shadowColor": "#282828",
+                  "shadowOffset": Object {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.2,
+                  "shadowRadius": 5,
+                },
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 15,
+                  "marginBottom": 10,
+                  "marginTop": 10,
+                  "paddingLeft": 5,
+                  "paddingRight": 5,
+                },
+              ]
+            }
+          >
+            <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              autoFocus={false}
+              multiline={false}
+              onChangeText={[Function]}
+              secureTextEntry={false}
+              style={
+                Object {
+                  "flex": 1,
+                  "marginTop": 0,
+                }
+              }
+              underlineColorAndroid="#fff"
+              value=""
+            />
+          </View>
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "System",
+                  "fontSize": 16,
+                },
+                undefined,
+              ]
+            }
+          >
+            E-mail 
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#FF6961",
+                  },
+                ]
+              }
+            >
+              *
+            </Text>
+          </Text>
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "marginBottom": 10,
+                  "shadowColor": "#282828",
+                  "shadowOffset": Object {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.2,
+                  "shadowRadius": 5,
+                },
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 15,
+                  "marginBottom": 10,
+                  "marginTop": 10,
+                  "paddingLeft": 5,
+                  "paddingRight": 5,
+                },
+              ]
+            }
+          >
+            <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              autoFocus={false}
+              multiline={false}
+              onChangeText={[Function]}
+              secureTextEntry={false}
+              style={
+                Object {
+                  "flex": 1,
+                  "marginTop": 0,
+                }
+              }
+              underlineColorAndroid="#fff"
+              value=""
+            />
+          </View>
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "System",
+                  "fontSize": 16,
+                },
+                undefined,
+              ]
+            }
+          >
+            Meddelande 
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#FF6961",
+                  },
+                ]
+              }
+            >
+              *
+            </Text>
+          </Text>
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "marginBottom": 10,
+                  "shadowColor": "#282828",
+                  "shadowOffset": Object {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.2,
+                  "shadowRadius": 5,
+                },
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderRadius": 15,
+                  "marginBottom": 10,
+                  "marginTop": 10,
+                  "paddingLeft": 5,
+                  "paddingRight": 5,
+                },
+              ]
+            }
+          >
+            <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              autoFocus={false}
+              multiline={true}
+              onChangeText={[Function]}
+              secureTextEntry={false}
+              style={
+                Object {
+                  "flex": 1,
+                  "marginTop": 0,
+                }
+              }
+              underlineColorAndroid="#fff"
+              value=""
+            />
+          </View>
+          <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "alignSelf": "stretch",
+                "backgroundColor": "#779ECB",
+                "borderRadius": 3,
+                "elevation": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginBottom": 5,
+                "opacity": 1,
+                "paddingBottom": 10,
+                "paddingTop": 10,
+                "shadowColor": "#282828",
+                "shadowOffset": Object {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.5,
+                "shadowRadius": 1,
               }
             }
           >
-            *
-          </DefaultFont>
-        </DefaultFont>
-        <Input
-          onChangeText={[Function]}
-          style={
-            Object {
-              "backgroundColor": "#fff",
-              "borderRadius": 15,
-              "marginBottom": 10,
-              "marginTop": 10,
-              "paddingLeft": 5,
-              "paddingRight": 5,
-            }
-          }
-          underlineColorAndroid="#fff"
-          value=""
-        />
-        <DefaultFont>
-          E-mail 
-          <DefaultFont
+            <MaterialIcon
+              size={24}
+            />
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#fff",
+                    "fontFamily": "System",
+                    "fontWeight": "bold",
+                    "marginLeft": 0,
+                  },
+                ]
+              }
+            >
+              SKICKA FEEDBACK
+            </Text>
+          </View>
+          <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "color": "#FF6961",
+                "alignItems": "center",
+                "alignSelf": "stretch",
+                "backgroundColor": "#FF6961",
+                "borderRadius": 3,
+                "elevation": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginBottom": 5,
+                "opacity": 1,
+                "paddingBottom": 10,
+                "paddingTop": 10,
+                "shadowColor": "#282828",
+                "shadowOffset": Object {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.5,
+                "shadowRadius": 1,
               }
             }
           >
-            *
-          </DefaultFont>
-        </DefaultFont>
-        <Input
-          onChangeText={[Function]}
-          style={
-            Object {
-              "backgroundColor": "#fff",
-              "borderRadius": 15,
-              "marginBottom": 10,
-              "marginTop": 10,
-              "paddingLeft": 5,
-              "paddingRight": 5,
-            }
-          }
-          underlineColorAndroid="#fff"
-          value=""
-        />
-        <DefaultFont>
-          Meddelande 
-          <DefaultFont
-            style={
-              Object {
-                "color": "#FF6961",
+            <MaterialIcon
+              size={24}
+            />
+            <Text
+              style={
+                Array [
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#fff",
+                    "fontFamily": "System",
+                    "fontWeight": "bold",
+                    "marginLeft": 0,
+                  },
+                ]
               }
-            }
-          >
-            *
-          </DefaultFont>
-        </DefaultFont>
-        <Input
-          multiline={true}
-          onChangeText={[Function]}
-          style={
-            Object {
-              "backgroundColor": "#fff",
-              "borderRadius": 15,
-              "marginBottom": 10,
-              "marginTop": 10,
-              "paddingLeft": 5,
-              "paddingRight": 5,
-            }
-          }
-          underlineColorAndroid="#fff"
-          value=""
-        />
-        <Button
-          color="primary"
-          fontColor="alternative"
-          label="Skicka feedback"
-          loading={false}
-          onPress={[Function]}
-          uppercase={true}
-        />
-        <Button
-          color="danger"
-          fontColor="alternative"
-          label="Avbryt"
-          onPress={[Function]}
-          uppercase={true}
-        />
+            >
+              AVBRYT
+            </Text>
+          </View>
+        </View>
       </View>
-    </ScrollView>
+    </RCTScrollView>
   </View>
 </Modal>
 `;

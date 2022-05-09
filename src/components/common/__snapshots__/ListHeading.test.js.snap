@@ -15,9 +15,13 @@ exports[`should match snapshot 1`] = `
       ]
     }
   >
-    <DefaultFont
+    <Text
       style={
         Array [
+          Object {
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
           Object {
             "fontSize": 20,
             "fontWeight": "bold",
@@ -43,11 +47,10 @@ exports[`should match snapshot 1`] = `
       }
     >
       <MaterialIcon
-        size={20}
+        size={24}
         style={
           Object {
-            "padding": 10,
-            "textAlign": "left",
+            "textAlign": "right",
           }
         }
       />
