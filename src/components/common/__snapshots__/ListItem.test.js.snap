@@ -1,27 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should match snapshot 1`] = `
-<TouchableOpacity
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "height": 50,
-        "justifyContent": "space-between",
-        "paddingHorizontal": 10,
-      },
-      null,
-    ]
+    Object {
+      "alignItems": "center",
+      "flexDirection": "row",
+      "height": 50,
+      "justifyContent": "space-between",
+      "opacity": 1,
+      "paddingHorizontal": 10,
+    }
   }
 >
-  <DefaultFont
+  <Text
     style={
-      Object {
-        "alignSelf": "center",
-        "fontSize": 18,
-        "justifyContent": "flex-start",
-      }
+      Array [
+        Object {
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        Object {
+          "alignSelf": "center",
+          "fontSize": 18,
+          "justifyContent": "flex-start",
+        },
+      ]
     }
   />
   <View
@@ -33,5 +47,5 @@ exports[`should match snapshot 1`] = `
       }
     }
   />
-</TouchableOpacity>
+</View>
 `;

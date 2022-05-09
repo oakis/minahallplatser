@@ -20,9 +20,19 @@ exports[`should match snapshot 1`] = `
     ]
   }
 >
-  <DefaultFont>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "System",
+          "fontSize": 16,
+        },
+        undefined,
+      ]
+    }
+  >
     text
-  </DefaultFont>
+  </Text>
   <MaterialIcon
     name="mail"
     size={24}

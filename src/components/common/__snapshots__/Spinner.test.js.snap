@@ -9,6 +9,7 @@ exports[`should match snapshot with flex 1`] = `
         "flex": 1,
       },
       null,
+      null,
     ]
   }
 />
@@ -23,6 +24,7 @@ exports[`should match snapshot with no flex 1`] = `
       Object {
         "alignSelf": "flex-start",
       },
+      null,
     ]
   }
 />

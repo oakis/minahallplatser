@@ -1,9 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
-import { ListHeading } from './ListHeading';
+import {render} from '@testing-library/react-native';
+import {ListHeading} from './ListHeading';
 
 it('should match snapshot', () => {
-    const wrapper = shallow(<ListHeading />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+  const {toJSON} = render(<ListHeading />);
+  expect(toJSON()).toMatchSnapshot();
 });

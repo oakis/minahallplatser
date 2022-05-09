@@ -1,25 +1,13 @@
 import React from 'react';
-import { Animated } from 'react-native';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
-import { Popup } from './Popup';
+import {render} from '@testing-library/react-native';
+import {Popup} from './Popup';
 
-Animated.Value = () => (0);
-
-it('should match snapshot', () => {
-    const wrapper = shallow(<Popup />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+it('should match snapshot when visible', () => {
+  const {toJSON} = render(<Popup />);
+  expect(toJSON()).toMatchSnapshot();
 });
 
-it('should match snapshot', () => {
-    const wrapper = shallow(<Popup />);
-    wrapper.setProps({ isVisible: true });
-    expect(toJson(wrapper)).toMatchSnapshot();
-});
-
-it('should match snapshot', () => {
-    const wrapper = shallow(<Popup />);
-    wrapper.setState({ isVisible: true });
-    wrapper.setProps({ isVisible: false });
-    expect(toJson(wrapper)).toMatchSnapshot();
+it('should match snapshot when not visible', () => {
+  const {toJSON} = render(<Popup isVisible={true} />);
+  expect(toJSON()).toMatchSnapshot();
 });

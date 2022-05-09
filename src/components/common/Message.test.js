@@ -1,27 +1,25 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
-import { store } from '../../App';
-import { Message } from './Message';
+import {render, fireEvent} from '@testing-library/react-native';
+import {store} from '../../App';
+import {Message} from './Message';
 
 const types = ['info', 'success', 'danger', 'warning', null];
 
 types.forEach(type => {
-    it(`should match snapshot with type ${type}`, () => {
-        const wrapper = shallow(<Message type={type} message="Message" />);
-        expect(toJson(wrapper)).toMatchSnapshot();
-    });
+  it(`should match snapshot with type ${type}`, () => {
+    const {toJSON} = render(<Message type={type} message="Message" />);
+    expect(toJSON()).toMatchSnapshot();
+  });
 });
 
 it('should match snapshot with no message or type', () => {
-    const wrapper = shallow(<Message />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+  const {toJSON} = render(<Message />);
+  expect(toJSON()).toMatchSnapshot();
 });
 
 it('should clear errors onPress', () => {
-    store.dispatch = jest.fn();
-    const wrapper = shallow(<Message message="Message" />);
-    const close = wrapper.find('DefaultFont').at(1);
-    close.props().onPress();
-    expect(store.dispatch).toBeCalledWith({ type: 'CLR_ERROR' });
+  store.dispatch = jest.fn();
+  const {getByText} = render(<Message message="Message" />);
+  fireEvent.press(getByText('Stäng'));
+  expect(store.dispatch).toBeCalledWith({type: 'CLR_ERROR'});
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should match snapshot 1`] = `
+exports[`should match snapshot when not visible 1`] = `
 <View
   style={
     Array [
@@ -15,19 +15,29 @@ exports[`should match snapshot 1`] = `
       },
       Object {
         "backgroundColor": "transparent",
-        "height": 0,
-        "width": 0,
+        "height": "100%",
+        "width": "100%",
       },
     ]
   }
 >
-  <TouchableOpacity
-    activeOpacity={1}
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "height": 0,
+        "height": "100%",
+        "opacity": 1,
         "position": "absolute",
-        "width": 0,
+        "width": "100%",
         "zIndex": 1,
       }
     }
@@ -50,8 +60,8 @@ exports[`should match snapshot 1`] = `
         ]
       }
     />
-  </TouchableOpacity>
-  <Component
+  </View>
+  <Animated.ScrollView
     keyboardShouldPersistTaps="always"
     scrollEnabled={true}
     style={
@@ -61,7 +71,7 @@ exports[`should match snapshot 1`] = `
           "borderRadius": 5,
           "borderWidth": 2,
           "elevation": 10,
-          "maxHeight": 1329.2307692307693,
+          "maxHeight": 923.5384615384617,
           "minHeight": 250,
           "padding": 10,
           "position": "absolute",
@@ -79,114 +89,67 @@ exports[`should match snapshot 1`] = `
       ]
     }
   >
-    <Button
-      color="primary"
-      label="Stäng"
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
+          "alignItems": "center",
+          "alignSelf": "stretch",
+          "backgroundColor": "#779ECB",
+          "borderRadius": 3,
+          "elevation": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
           "marginBottom": 30,
+          "opacity": 1,
+          "paddingBottom": 10,
+          "paddingTop": 10,
+          "shadowColor": "#282828",
+          "shadowOffset": Object {
+            "height": 0,
+            "width": 0,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 1,
         }
       }
-      uppercase={true}
-    />
-  </Component>
+    >
+      <MaterialIcon
+        size={24}
+      />
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#fff",
+              "fontFamily": "System",
+              "fontWeight": "bold",
+              "marginLeft": 0,
+            },
+          ]
+        }
+      >
+        STÄNG
+      </Text>
+    </View>
+  </Animated.ScrollView>
 </View>
 `;
 
-exports[`should match snapshot 2`] = `
-<View
-  style={
-    Array [
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "rgba(0, 0, 0, 0.4)",
-        "height": "100%",
-        "justifyContent": "center",
-        "position": "absolute",
-        "width": "100%",
-        "zIndex": 1,
-      },
-      Object {
-        "backgroundColor": "transparent",
-        "height": "100%",
-        "width": "100%",
-      },
-    ]
-  }
->
-  <TouchableOpacity
-    activeOpacity={1}
-    style={
-      Object {
-        "height": "100%",
-        "position": "absolute",
-        "width": "100%",
-        "zIndex": 1,
-      }
-    }
-  >
-    <Animated.View
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "rgba(0, 0, 0, 0.4)",
-            "height": "100%",
-            "justifyContent": "center",
-            "position": "absolute",
-            "width": "100%",
-            "zIndex": 1,
-          },
-          Object {
-            "opacity": mockConstructor {},
-          },
-        ]
-      }
-    />
-  </TouchableOpacity>
-  <Component
-    keyboardShouldPersistTaps="always"
-    scrollEnabled={true}
-    style={
-      Array [
-        Object {
-          "backgroundColor": "#fff",
-          "borderRadius": 5,
-          "borderWidth": 2,
-          "elevation": 10,
-          "maxHeight": 1329.2307692307693,
-          "minHeight": 250,
-          "padding": 10,
-          "position": "absolute",
-          "width": "85%",
-          "zIndex": 2,
-        },
-        Object {
-          "opacity": mockConstructor {},
-          "transform": Array [
-            Object {
-              "scale": mockConstructor {},
-            },
-          ],
-        },
-      ]
-    }
-  >
-    <Button
-      color="primary"
-      label="Stäng"
-      style={
-        Object {
-          "marginBottom": 30,
-        }
-      }
-      uppercase={true}
-    />
-  </Component>
-</View>
-`;
-
-exports[`should match snapshot 3`] = `
+exports[`should match snapshot when visible 1`] = `
 <View
   style={
     Array [
@@ -207,11 +170,21 @@ exports[`should match snapshot 3`] = `
     ]
   }
 >
-  <TouchableOpacity
-    activeOpacity={1}
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       Object {
         "height": 0,
+        "opacity": 1,
         "position": "absolute",
         "width": 0,
         "zIndex": 1,
@@ -236,8 +209,8 @@ exports[`should match snapshot 3`] = `
         ]
       }
     />
-  </TouchableOpacity>
-  <Component
+  </View>
+  <Animated.ScrollView
     keyboardShouldPersistTaps="always"
     scrollEnabled={true}
     style={
@@ -247,7 +220,7 @@ exports[`should match snapshot 3`] = `
           "borderRadius": 5,
           "borderWidth": 2,
           "elevation": 10,
-          "maxHeight": 1329.2307692307693,
+          "maxHeight": 923.5384615384617,
           "minHeight": 250,
           "padding": 10,
           "position": "absolute",
@@ -265,16 +238,62 @@ exports[`should match snapshot 3`] = `
       ]
     }
   >
-    <Button
-      color="primary"
-      label="Stäng"
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
+          "alignItems": "center",
+          "alignSelf": "stretch",
+          "backgroundColor": "#779ECB",
+          "borderRadius": 3,
+          "elevation": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
           "marginBottom": 30,
+          "opacity": 1,
+          "paddingBottom": 10,
+          "paddingTop": 10,
+          "shadowColor": "#282828",
+          "shadowOffset": Object {
+            "height": 0,
+            "width": 0,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 1,
         }
       }
-      uppercase={true}
-    />
-  </Component>
+    >
+      <MaterialIcon
+        size={24}
+      />
+      <Text
+        style={
+          Array [
+            Object {
+              "fontFamily": "System",
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#fff",
+              "fontFamily": "System",
+              "fontWeight": "bold",
+              "marginLeft": 0,
+            },
+          ]
+        }
+      >
+        STÄNG
+      </Text>
+    </View>
+  </Animated.ScrollView>
 </View>
 `;

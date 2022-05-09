@@ -1,14 +1,15 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
-import { Text } from './Text';
+import {render} from '@testing-library/react-native';
+import {Text} from './Text';
 
 it('should match snapshot without styles', () => {
-    const wrapper = shallow(<Text />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+  const {toJSON} = render(<Text />);
+  expect(toJSON()).toMatchSnapshot();
 });
 
 it('should match snapshot with array styles', () => {
-    const wrapper = shallow(<Text style={[{ color: '#abc' }, { backgroundColor: '#def' }]} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+  const {toJSON} = render(
+    <Text style={[{color: '#abc'}, {backgroundColor: '#def'}]} />,
+  );
+  expect(toJSON()).toMatchSnapshot();
 });

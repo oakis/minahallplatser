@@ -1,16 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import {render} from '@testing-library/react-native';
 import SplashScreen from './SplashScreen';
 
-const mockStore = configureMockStore([thunk]);
-
-global.window.log = () => {};
-
 describe('SplashScreen', () => {
-    it('should match snapshot', async () => {
-        const wrapper = await shallow(<SplashScreen store={mockStore()} />);
-        expect(wrapper.dive()).toMatchSnapshot();
-    });
+  it('should match snapshot', async () => {
+    const {toJSON} = render(<SplashScreen />);
+    expect(toJSON()).toMatchSnapshot();
+  });
 });
