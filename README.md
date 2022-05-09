@@ -1,5 +1,5 @@
 # Mina Hållplatser
-Master: [![Build Status](https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/node.js.yml/badge.svg)]
+Master: [![Build Status](https://github.com/oakis/minahallplatser/actions/workflows/node.js.yml/badge.svg)]
 
 This started out as a small school project for a frontend course.
 Now it is a project I am working with on my spare time.
