@@ -9,7 +9,6 @@ import {
   getAppVersion,
   handleJsonFetch,
 } from '../helpers';
-import {firebaseFunctionsUrl} from '@src/Server';
 
 const inputStyle = {
   borderRadius: 15,
@@ -61,7 +60,9 @@ export const Feedback = props => {
       window.log(
         `Send feedback: - Name: ${name} - E-mail: ${email} - Message: ${message} - Device: ${getDeviceModel()} - OS: ${getOsVersion()} - App Version: ${getAppVersion()}`,
       );
-      const url = `${firebaseFunctionsUrl}/sendFeedback?name=${name}&email=${email}&message=${message}&device=${getDeviceModel()}&os=${getOsVersion()}&appVersion=${getAppVersion()}`;
+      const url = `${
+        process.env.FIREBASE
+      }/sendFeedback?name=${name}&email=${email}&message=${message}&device=${getDeviceModel()}&os=${getOsVersion()}&appVersion=${getAppVersion()}`;
       fetch(url, {}, 'sendFeedback')
         .then(handleJsonFetch)
         .then(() => {
