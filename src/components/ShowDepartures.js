@@ -30,7 +30,7 @@ import {
   MiniMenu,
   Popup,
 } from '@common';
-import {updateStopsCount, track, isAndroid} from '@helpers';
+import {track, isAndroid} from '@helpers';
 import {colors, component} from '@style';
 
 const length =
@@ -103,7 +103,6 @@ const ShowDepartures = props => {
       Stop: route.params.busStop,
       Parent: route.params.parent,
     });
-    updateStopsCount();
     props.incrementStopsOpened(route.params.id);
     refresh();
     const subscription = AppState.addEventListener(

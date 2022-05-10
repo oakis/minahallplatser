@@ -6,12 +6,7 @@ import {
   ERROR,
   CLR_ERROR,
 } from '@types';
-import {
-  handleJsonFetch,
-  getToken,
-  updateDeparturesCount,
-  handleVasttrafikDepartures,
-} from '@helpers';
+import {handleJsonFetch, getToken, handleVasttrafikDepartures} from '@helpers';
 
 export const getDepartures = ({id}) => {
   return dispatch => {
@@ -46,7 +41,6 @@ export const fetchDepartures = (dispatch, accessToken, id, timeSpan = 90) => {
       }
     })
     .then(({departures, timestamp}) => {
-      updateDeparturesCount(departures.length);
       dispatch({type: CLR_ERROR});
       if (departures.length > 0) {
         dispatch({

@@ -2,7 +2,18 @@ import React from 'react';
 import {Text} from 'react-native';
 import {isAndroid} from '@helpers';
 
-const DefaultFont = ({style, heading = false, children, ...props}) => {
+type TextProps = {
+  style: object;
+  heading: boolean;
+  children: React.ReactNode;
+};
+
+const DefaultFont = ({
+  style,
+  heading = false,
+  children,
+  ...props
+}: TextProps): JSX.Element => {
   const textStyle = {
     fontFamily: isAndroid() ? 'sans-serif' : 'System',
     fontSize: heading ? 22 : 16,
