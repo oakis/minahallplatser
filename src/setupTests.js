@@ -90,6 +90,16 @@ jest.mock('@react-native-firebase/analytics', () => {
   };
 });
 
+jest.mock('@react-native-firebase/database', () => {
+  return () => {
+    return {
+      ref: jest.fn().mockImplementation(() => ({
+        push: jest.fn(),
+      })),
+    };
+  };
+});
+
 jest.mock('@react-navigation/native', () => {
   return {
     NavigationContainer: jest.fn(),
