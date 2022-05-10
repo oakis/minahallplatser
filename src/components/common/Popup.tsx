@@ -2,8 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import Animated, {EasingNode} from 'react-native-reanimated';
 import {Button} from '@common';
-import {component} from '@style/component';
-import {metrics} from '@style';
+import {metrics, component} from '@style';
 
 const duration = 160;
 

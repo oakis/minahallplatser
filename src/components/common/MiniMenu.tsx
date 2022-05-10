@@ -2,9 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {View, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
 import Animated, {EasingNode} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {colors} from '@style/color';
 import {Text} from '@common';
-import {component} from '@style/component';
+import {component, colors} from '@style';
 import {MiniMenuItem} from '@src/global';
 
 const duration = 160;
