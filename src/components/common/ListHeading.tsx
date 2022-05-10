@@ -4,14 +4,23 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Text, Spinner} from '@common';
 import {component, metrics, colors} from '@style';
 
+type ListHeadingProps = {
+  text: string;
+  icon: string;
+  iconSize: number;
+  onPress: () => void;
+  loading: boolean;
+  style: object;
+};
+
 export const ListHeading = ({
   text,
   icon,
   iconSize = 24,
   onPress,
   loading = false,
-  style = null,
-}) => {
+  style = {},
+}: ListHeadingProps): JSX.Element => {
   return (
     <View>
       <View

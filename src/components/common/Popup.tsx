@@ -7,7 +7,13 @@ import {metrics} from '@style';
 
 const duration = 160;
 
-export const Popup = props => {
+type PopupProps = {
+  isVisible: boolean;
+  onPress: () => void;
+  children: React.ReactNode;
+};
+
+export const Popup = (props: PopupProps): JSX.Element => {
   const [hidden, setHidden] = useState(true);
 
   const animateValue = useRef(new Animated.Value(0)).current;
@@ -19,26 +25,22 @@ export const Popup = props => {
         toValue: 1,
         easing: EasingNode.elastic(),
         duration,
-        useNativeDriver: true,
       }).start();
       Animated.timing(animateValue, {
         toValue: 1,
         easing: EasingNode.ease,
         duration,
-        useNativeDriver: true,
       }).start();
     } else if (!props.isVisible) {
       Animated.timing(animateValue, {
         toValue: 0,
         easing: EasingNode.ease,
         duration,
-        useNativeDriver: true,
       }).start();
       Animated.timing(animateValue, {
         toValue: 0,
         easing: EasingNode.ease,
         duration,
-        useNativeDriver: true,
       }).start();
       setTimeout(() => {
         setHidden(true);

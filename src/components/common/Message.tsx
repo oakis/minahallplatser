@@ -6,21 +6,27 @@ import {CLR_ERROR} from '@types';
 import {Text} from '@common';
 import {colors, component} from '@style';
 
-export const Message = ({type, message = ''}) => {
-  const getIcon = iconType => {
-    switch (iconType) {
-      case 'info':
-        return 'info';
-      case 'success':
-        return 'check-circle';
-      case 'danger':
-        return 'error';
-      case 'warning':
-        return 'warning';
-      default:
-        return;
-    }
-  };
+type MessageProps = {
+  type: string;
+  message: string;
+};
+
+const getIcon = (iconType: string) => {
+  switch (iconType) {
+    case 'info':
+      return 'info';
+    case 'success':
+      return 'check-circle';
+    case 'danger':
+      return 'error';
+    case 'warning':
+      return 'warning';
+    default:
+      return;
+  }
+};
+
+export const Message = ({type, message = ''}: MessageProps): JSX.Element => {
   if (message.length > 0) {
     return (
       <View style={[component.message.view, {backgroundColor: colors[type]}]}>

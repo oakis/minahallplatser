@@ -4,16 +4,27 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {component} from '@style';
 import {Text} from '@common';
 
+type ListItemProps = {
+  text: string;
+  icon: string | null;
+  pressItem: () => void;
+  pressIcon: () => void;
+  iconVisible: boolean;
+  iconColor: string;
+  style: object;
+  avatar: string | null;
+};
+
 export const ListItem = ({
   text,
   icon = null,
   pressItem,
-  pressIcon = null,
+  pressIcon = () => {},
   iconVisible = false,
   iconColor = '#000',
-  style = null,
+  style = {},
   avatar = null,
-}) => {
+}: ListItemProps): JSX.Element => {
   return (
     <TouchableOpacity
       onPress={pressItem}

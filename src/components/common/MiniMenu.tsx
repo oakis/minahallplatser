@@ -5,10 +5,18 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {colors} from '@style/color';
 import {Text} from '@common';
 import {component} from '@style/component';
+import {MiniMenuItem} from '@src/global';
 
 const duration = 160;
 
-export const MiniMenu = props => {
+type MiniMenuProps = {
+  onClose: () => void;
+  isVisible: boolean;
+  items: Array<MiniMenuItem>;
+  style: object;
+};
+
+export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
   const [hidden, setHidden] = useState(true);
 
   const animateValue = useRef(new Animated.Value(0)).current;
@@ -55,26 +63,22 @@ export const MiniMenu = props => {
         toValue: 1,
         easing: EasingNode.elastic(),
         duration,
-        useNativeDriver: true,
       }).start();
       Animated.timing(animateValue, {
         toValue: 1,
         easing: EasingNode.ease,
         duration,
-        useNativeDriver: true,
       }).start();
     } else if (!props.isVisible) {
       Animated.timing(animateValue, {
         toValue: 0,
         easing: EasingNode.ease,
         duration,
-        useNativeDriver: true,
       }).start();
       Animated.timing(animateValue, {
         toValue: 0,
         easing: EasingNode.ease,
         duration,
-        useNativeDriver: true,
       });
       setTimeout(() => {
         setHidden(true);
@@ -121,15 +125,15 @@ export const MiniMenu = props => {
         }}>
         {props.items.map(({icon, content, onPress}, index) => (
           <TouchableNativeFeedback
-            pointerEvents={'box-only'}
+            // pointerEvents="box-only"
             style={{flex: 1, alignSelf: 'stretch', elevation: 5}}
             key={index}
             onPress={onPress}>
             <View
-              style={{
-                ...style.child.wrapper,
-                borderBottomWidth: index === props.items.length - 1 ? 0 : 1,
-              }}>
+              style={[
+                style.child.wrapper,
+                {borderBottomWidth: index === props.items.length - 1 ? 0 : 1},
+              ]}>
               <Icon
                 name={icon}
                 style={{
