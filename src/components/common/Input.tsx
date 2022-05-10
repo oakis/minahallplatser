@@ -4,25 +4,41 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Text, Spinner} from '@common';
 import {colors, component, metrics} from '@style';
 
+type InputProps = {
+  style: object;
+  value: string;
+  label: string;
+  icon: string | null;
+  iconRight: string | null;
+  iconRightPress: () => void;
+  iconSize: number;
+  placeholder: string;
+  onChangeText: () => void;
+  autoFocus: boolean;
+  secureTextEntry: boolean;
+  loading: boolean;
+  underlineColorAndroid: string;
+  onFocus: () => void;
+  multiline: boolean;
+};
+
 export const Input = ({
   style,
   value,
   label,
-  icon,
+  icon = null,
   iconRight = null,
-  iconRightPress = null,
+  iconRightPress = () => {},
   iconSize = 24,
   placeholder,
   onChangeText,
   autoFocus = false,
-  returnKeyType,
-  keyboardType,
   secureTextEntry = false,
   loading = false,
   underlineColorAndroid = colors.primary,
   onFocus,
   multiline = false,
-}) => {
+}: InputProps): JSX.Element => {
   return (
     <View style={[component.input.container, style]}>
       {label ? <Text>{label}</Text> : null}
@@ -41,10 +57,8 @@ export const Input = ({
         placeholder={placeholder}
         onChangeText={onChangeText}
         autoFocus={autoFocus}
-        returnKeyType={returnKeyType}
         value={value}
         underlineColorAndroid={underlineColorAndroid}
-        keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
         autoCorrect={false}
         autoCapitalize="none"
