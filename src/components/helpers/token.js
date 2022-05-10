@@ -1,10 +1,10 @@
 import moment from 'moment';
 import base64 from 'base-64';
 import {handleJsonFetch} from '@helpers';
-import {key, secret, url} from '@src/Vasttrafik';
+import {KEY, SECRET, URL} from '@env';
 import {deviceId} from '@helpers/device';
 
-const encoded = base64.encode(`${key}:${secret}`);
+const encoded = base64.encode(`${KEY}:${SECRET}`);
 let localToken = {};
 let tokenExpires = moment();
 
@@ -14,7 +14,7 @@ export const getToken = () => {
   tokenWillExpireIn();
   return new Promise((resolve, reject) => {
     if (tokenNeedsRefresh()) {
-      fetch(url, {
+      fetch(URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -24,10 +24,12 @@ export const getToken = () => {
       })
         .then(handleJsonFetch)
         .then(token => {
+          window.log('getToken: OK', token);
           saveToken(token);
           resolve(token);
         })
-        .catch(() => {
+        .catch(e => {
+          window.log('getToken: FAILED', e);
           reject(localToken);
         });
     } else {
@@ -37,15 +39,11 @@ export const getToken = () => {
 };
 
 const tokenNeedsRefresh = () => {
-  window.log(
-    'tokenNeedsRefresh()',
+  const result =
     !Object.prototype.hasOwnProperty.call(localToken, 'access_token') ||
-      tokenExpires.diff(moment()) / 1000 <= 0,
-  );
-  return (
-    !Object.prototype.hasOwnProperty.call(localToken, 'access_token') ||
-    tokenExpires.diff(moment()) / 1000 <= 0
-  );
+    tokenExpires.diff(moment()) / 1000 <= 0;
+  window.log('tokenNeedsRefresh()', result);
+  return result;
 };
 
 const saveToken = token => {

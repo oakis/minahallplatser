@@ -43,8 +43,6 @@ buck-out/
 \.buckd/
 *.keystore
 
-src/Vasttrafik.js
-src/Server.js
 .env
 
 # fastlane
