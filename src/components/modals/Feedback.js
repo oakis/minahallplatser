@@ -1,14 +1,9 @@
 import React, {useState} from 'react';
 import {View, Modal, ScrollView, Alert} from 'react-native';
+import database from '@react-native-firebase/database';
 import {Button, ListHeading, Input, Text} from '@common';
 import {metrics, colors} from '@style';
-import {
-  track,
-  getDeviceModel,
-  getOsVersion,
-  getAppVersion,
-  handleJsonFetch,
-} from '../helpers';
+import {track, getDeviceModel, getOsVersion, getAppVersion} from '@helpers';
 
 const inputStyle = {
   borderRadius: 15,
@@ -25,6 +20,8 @@ export const Feedback = props => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [validated, setValidated] = useState(true);
+
+  const feedbackDB = database().ref('/feedback').push();
 
   const onChangeEmail = str => {
     setEmail(str);
@@ -60,11 +57,15 @@ export const Feedback = props => {
       window.log(
         `Send feedback: - Name: ${name} - E-mail: ${email} - Message: ${message} - Device: ${getDeviceModel()} - OS: ${getOsVersion()} - App Version: ${getAppVersion()}`,
       );
-      const url = `${
-        process.env.FIREBASE
-      }/sendFeedback?name=${name}&email=${email}&message=${message}&device=${getDeviceModel()}&os=${getOsVersion()}&appVersion=${getAppVersion()}`;
-      fetch(url, {}, 'sendFeedback')
-        .then(handleJsonFetch)
+      feedbackDB
+        .set({
+          name,
+          email,
+          message,
+          device: getDeviceModel(),
+          os: getOsVersion(),
+          appVersion: getAppVersion(),
+        })
         .then(() => {
           track('Feedback Send');
           window.log('sendFeedback(): OK');
@@ -72,7 +73,7 @@ export const Feedback = props => {
           reset();
         })
         .catch(err => {
-          track('Feedback Failed', {Error: err});
+          track('Feedback Failed', err);
           window.log('sendFeedback(): FAILED', err);
           Alert.alert('', 'Något gick snett, försök igen senare.');
           setLoading(false);

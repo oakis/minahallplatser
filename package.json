@@ -17,6 +17,7 @@
     "@react-native-firebase/analytics": "^14.9.1",
     "@react-native-firebase/app": "^14.9.1",
     "@react-native-firebase/crashlytics": "^14.9.1",
+    "@react-native-firebase/database": "^14.9.2",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
     "base-64": "1.0.0",

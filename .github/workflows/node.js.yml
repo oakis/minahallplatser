@@ -13,6 +13,7 @@ env:
   KEY: ''
   SECRET: ''
   URL: ''
+  FIREBASE: ''
 
 jobs:
   build:
