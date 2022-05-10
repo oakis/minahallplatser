@@ -10,7 +10,9 @@ on:
     branches: [ master ]
 
 env:
-  SERVER: ''
+  KEY: ''
+  SECRET: ''
+  URL: ''
   FIREBASE: ''
 
 jobs:

@@ -1,7 +1,7 @@
 module.exports = {
-  presets: ['module:metro-react-native-babel-preset', '@babel/preset-env'],
+  presets: ['module:metro-react-native-babel-preset'],
   plugins: [
-    'react-native-reanimated/plugin',
+    'module:react-native-dotenv',
     [
       'module-resolver',
       {
@@ -22,7 +22,6 @@ module.exports = {
       },
     ],
     ['@babel/plugin-proposal-private-property-in-object', {loose: true}],
-    ['@babel/plugin-proposal-private-methods', {loose: true}],
-    ['@babel/plugin-proposal-class-properties', {loose: true}],
+    'react-native-reanimated/plugin',
   ],
 };
