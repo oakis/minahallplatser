@@ -1,12 +1,30 @@
 import React from 'react';
-import {TouchableOpacity, TouchableNativeFeedback, View} from 'react-native';
+import {
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  View,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {isAndroid} from '@helpers';
 import {Text, Spinner} from '@common';
 import {colors, component} from '@style';
 
+type ButtonProps = {
+  icon?: string;
+  iconSize?: number;
+  label: string;
+  color: string;
+  fontColor?: string;
+  onPress: () => void;
+  uppercase?: boolean;
+  loading?: boolean;
+  style: Record<string, unknown>;
+};
+
 export const Button = ({
-  icon,
+  icon = '',
   iconSize = 24,
   label,
   color,
@@ -15,7 +33,7 @@ export const Button = ({
   uppercase = false,
   loading,
   style = {},
-}) => {
+}: ButtonProps): JSX.Element => {
   const showSpinnerOrText = () => {
     if (loading) {
       return <Spinner size="small" color={colors[fontColor]} />;
@@ -38,11 +56,13 @@ export const Button = ({
       return (
         <TouchableNativeFeedback onPress={onPress}>
           <View
-            style={[
-              component.button,
-              {backgroundColor: colors[color]},
-              {...style},
-            ]}>
+            style={
+              [
+                component.button,
+                {backgroundColor: colors[color]},
+                {...style},
+              ] as StyleProp<ViewStyle>
+            }>
             <Icon name={icon} size={iconSize} color={colors[fontColor]} />
             {showSpinnerOrText()}
           </View>
@@ -51,7 +71,13 @@ export const Button = ({
     }
     return (
       <TouchableOpacity
-        style={[component.button, {backgroundColor: colors[color]}, {...style}]}
+        style={
+          [
+            component.button,
+            {backgroundColor: colors[color]},
+            {...style},
+          ] as StyleProp<ViewStyle>
+        }
         onPress={onPress}>
         <Icon name={icon} size={iconSize} />
         {showSpinnerOrText()}

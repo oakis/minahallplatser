@@ -5,7 +5,7 @@ import {Text, Spinner} from '@common';
 import {colors, component, metrics} from '@style';
 
 type InputProps = {
-  style: object;
+  style: Record<string, unknown>;
   value: string;
   label: string;
   icon: string | null;
@@ -28,7 +28,7 @@ export const Input = ({
   label,
   icon = null,
   iconRight = null,
-  iconRightPress = () => {},
+  iconRightPress,
   iconSize = 24,
   placeholder,
   onChangeText,

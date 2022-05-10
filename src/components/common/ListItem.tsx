@@ -11,7 +11,7 @@ type ListItemProps = {
   pressIcon: () => void;
   iconVisible: boolean;
   iconColor: string;
-  style: object;
+  style: Record<string, unknown>;
   avatar: string | null;
 };
 
@@ -19,7 +19,7 @@ export const ListItem = ({
   text,
   icon = null,
   pressItem,
-  pressIcon = () => {},
+  pressIcon,
   iconVisible = false,
   iconColor = '#000',
   style = {},

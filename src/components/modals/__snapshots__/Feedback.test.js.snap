@@ -348,6 +348,7 @@ exports[`should match snapshot 1`] = `
             }
           >
             <MaterialIcon
+              name=""
               size={24}
             />
             <Text
@@ -404,6 +405,7 @@ exports[`should match snapshot 1`] = `
             }
           >
             <MaterialIcon
+              name=""
               size={24}
             />
             <Text

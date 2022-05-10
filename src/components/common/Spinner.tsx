@@ -2,12 +2,12 @@ import React from 'react';
 import {ActivityIndicator} from 'react-native';
 
 type SpinnerProps = {
-  style: object;
-  size: number;
-  color: string;
-  noFlex: boolean;
-  left: boolean;
-  right: boolean;
+  style?: Record<string, unknown>;
+  size?: 'small' | 'large' | undefined;
+  color?: string;
+  noFlex?: boolean;
+  left?: boolean;
+  right?: boolean;
 };
 
 export const Spinner = ({

@@ -12,7 +12,7 @@ type MiniMenuProps = {
   onClose: () => void;
   isVisible: boolean;
   items: Array<MiniMenuItem>;
-  style: object;
+  style: Record<string, unknown>;
 };
 
 export const MiniMenu = (props: MiniMenuProps): JSX.Element => {

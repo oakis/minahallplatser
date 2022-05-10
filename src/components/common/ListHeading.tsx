@@ -10,7 +10,7 @@ type ListHeadingProps = {
   iconSize: number;
   onPress: () => void;
   loading: boolean;
-  style: object;
+  style: Record<string, unknown>;
 };
 
 export const ListHeading = ({

@@ -5,7 +5,44 @@ import moment from 'moment';
 import {Text} from '@common';
 import {colors} from '@style';
 
-const getDepartureType = type => {
+enum IconType {
+  BOAT = 'BOAT',
+  BUS = 'BUS',
+  TAXI = 'TAXI',
+  TRAM = 'TRAM',
+  VAS = 'VAS',
+  REG = 'REG',
+}
+
+type DurationType = number | 'Nu' | string;
+
+type DepartureType = {
+  timeFormat: 'minutes' | 'clock';
+  clockLeft: DurationType;
+  clockNext: DurationType;
+  timeLeft: DurationType;
+  timeNext: DurationType;
+  index: number;
+  fgColor: string;
+  bgColor: string;
+  sname: string;
+  isLive: boolean;
+  direction: string;
+  type: IconType;
+  global: boolean;
+  local: boolean;
+  via: string;
+  track: string;
+  accessibility: string;
+};
+
+type DepartureListItemProps = {
+  item: DepartureType;
+  onPress: () => void;
+  onLongPress: () => void;
+};
+
+const getDepartureType = (type: IconType) => {
   switch (type) {
     case 'BOAT':
       return 'directions-boat';
@@ -23,7 +60,7 @@ const getDepartureType = type => {
   }
 };
 
-const getSnameFontsize = sname => {
+const getSnameFontsize = (sname: string) => {
   if (sname.length > 4) {
     return 10;
   }
@@ -33,7 +70,7 @@ const getSnameFontsize = sname => {
   return 14;
 };
 
-const getFontColor = (isLive, timeLeft) => {
+const getFontColor = (isLive: boolean, timeLeft: DurationType) => {
   if (!isLive) {
     return colors.warning;
   } else if (timeLeft === 'Nu') {
@@ -42,7 +79,7 @@ const getFontColor = (isLive, timeLeft) => {
   return colors.default;
 };
 
-const getFontSize = (shouldShowMin, timeLeft) => {
+const getFontSize = (shouldShowMin: boolean, timeLeft: DurationType) => {
   if (!shouldShowMin) {
     return 18;
   } else if (timeLeft > 59) {
@@ -51,14 +88,16 @@ const getFontSize = (shouldShowMin, timeLeft) => {
   return 24;
 };
 
-const formatTime = minutes => {
+const formatTime = (minutes: DurationType) => {
   const duration = moment.duration(minutes, 'minutes');
   return minutes > 59 ? `${duration.hours()}h ${duration.minutes()}m` : minutes;
 };
 
 const height = 50;
 
-export const DepartureListItem = props => {
+export const DepartureListItem = (
+  props: DepartureListItemProps,
+): JSX.Element => {
   const {item, onPress, onLongPress} = props;
 
   const shouldShowMin = item.timeFormat === 'minutes';

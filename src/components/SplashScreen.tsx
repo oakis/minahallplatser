@@ -4,7 +4,7 @@ import analytics from '@react-native-firebase/analytics';
 import {Spinner, Text} from '@common';
 import {colors} from '@style';
 
-const SplashScreen = () => {
+const SplashScreen = (): JSX.Element => {
   useEffect(() => {
     analytics().logScreenView({
       screen_class: 'Splashscreen',
