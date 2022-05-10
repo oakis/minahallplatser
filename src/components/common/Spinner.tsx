@@ -1,6 +1,15 @@
 import React from 'react';
 import {ActivityIndicator} from 'react-native';
 
+type SpinnerProps = {
+  style: object;
+  size: number;
+  color: string;
+  noFlex: boolean;
+  left: boolean;
+  right: boolean;
+};
+
 export const Spinner = ({
   style,
   size,
@@ -8,7 +17,7 @@ export const Spinner = ({
   noFlex = false,
   left = false,
   right = false,
-}) => {
+}: SpinnerProps): JSX.Element => {
   return (
     <ActivityIndicator
       size={size}
