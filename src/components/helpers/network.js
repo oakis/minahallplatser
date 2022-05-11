@@ -66,7 +66,9 @@ export const handleVasttrafikDepartures = ({DepartureBoard}) => {
     const now = moment(`${date} ${time}`);
     let mapdDepartures = [];
     rawDepartureList.forEach(item => {
-      const [direction, via] = item.direction.split('via');
+      const [direction, via] = item.direction
+        .replace(', Påstigning fram', '')
+        .split('via');
       const findIndex = _.findIndex(mapdDepartures, {
         name: item.name,
         direction: direction.trim(),
