@@ -1,5 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
+import {
+  View,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import Animated, {EasingNode} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Text} from '@common';
@@ -8,12 +14,12 @@ import {MiniMenuItem} from '@src/global';
 
 const duration = 160;
 
-type MiniMenuProps = {
+interface MiniMenuProps {
   onClose: () => void;
   isVisible: boolean;
   items: Array<MiniMenuItem>;
   style: Record<string, unknown>;
-};
+}
 
 export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
   const [hidden, setHidden] = useState(true);
@@ -92,14 +98,16 @@ export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
 
   return (
     <View
-      style={[
-        component.popup.container,
-        {
-          height: hidden ? 0 : '100%',
-          width: hidden ? 0 : '100%',
-          backgroundColor: 'transparent',
-        },
-      ]}>
+      style={
+        [
+          component.popup.container,
+          {
+            height: hidden ? 0 : '100%',
+            width: hidden ? 0 : '100%',
+            backgroundColor: 'transparent',
+          },
+        ] as StyleProp<ViewStyle>
+      }>
       <TouchableOpacity
         activeOpacity={1}
         onPress={props.onClose}
@@ -110,7 +118,12 @@ export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
           width: hidden ? 0 : '100%',
         }}>
         <Animated.View
-          style={[component.popup.container, {opacity: animateValue}]}
+          style={
+            [
+              component.popup.container,
+              {opacity: animateValue},
+            ] as StyleProp<ViewStyle>
+          }
         />
       </TouchableOpacity>
       <Animated.View
@@ -124,15 +137,16 @@ export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
         }}>
         {props.items.map(({icon, content, onPress}, index) => (
           <TouchableNativeFeedback
-            // pointerEvents="box-only"
             style={{flex: 1, alignSelf: 'stretch', elevation: 5}}
             key={index}
             onPress={onPress}>
             <View
-              style={[
-                style.child.wrapper,
-                {borderBottomWidth: index === props.items.length - 1 ? 0 : 1},
-              ]}>
+              style={
+                [
+                  style.child.wrapper,
+                  {borderBottomWidth: index === props.items.length - 1 ? 0 : 1},
+                ] as StyleProp<ViewStyle>
+              }>
               <Icon
                 name={icon}
                 style={{

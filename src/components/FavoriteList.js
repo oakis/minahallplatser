@@ -451,7 +451,13 @@ const FavoriteList = props => {
               : null,
           ]}
         />
-        {props.error ? <Message type="warning" message={props.error} /> : null}
+        {props.error ? (
+          <Message
+            type="warning"
+            message={props.error}
+            backgroundColor={colors.warning}
+          />
+        ) : null}
         {renderSectionList()}
         {props.favorites.length === 0 ? (
           <View
@@ -467,7 +473,7 @@ const FavoriteList = props => {
               onPress={openPopup}
               label="Hjälp"
               icon="live-help"
-              color="primary"
+              color={colors.primary}
             />
           </View>
         ) : null}

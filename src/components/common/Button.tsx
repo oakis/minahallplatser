@@ -9,9 +9,9 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {isAndroid} from '@helpers';
 import {Text, Spinner} from '@common';
-import {colors, component} from '@style';
+import {component, colors} from '@style';
 
-type ButtonProps = {
+interface ButtonProps {
   icon?: string;
   iconSize?: number;
   label: string;
@@ -20,15 +20,15 @@ type ButtonProps = {
   onPress: () => void;
   uppercase?: boolean;
   loading?: boolean;
-  style: Record<string, unknown>;
-};
+  style?: Record<string, unknown>;
+}
 
 export const Button = ({
   icon = '',
   iconSize = 24,
   label,
   color,
-  fontColor = 'alternative',
+  fontColor = colors.alternative,
   onPress,
   uppercase = false,
   loading,
@@ -36,7 +36,7 @@ export const Button = ({
 }: ButtonProps): JSX.Element => {
   const showSpinnerOrText = () => {
     if (loading) {
-      return <Spinner size="small" color={colors[fontColor]} />;
+      return <Spinner size="small" color={fontColor} />;
     }
     return (
       <Text
@@ -44,7 +44,7 @@ export const Button = ({
           marginLeft: icon ? 5 : 0,
           fontWeight: 'bold',
           fontFamily: isAndroid() ? 'sans-serif-thin' : 'System',
-          color: colors[fontColor],
+          color: fontColor,
         }}>
         {uppercase ? label.toUpperCase() : label}
       </Text>
@@ -59,11 +59,11 @@ export const Button = ({
             style={
               [
                 component.button,
-                {backgroundColor: colors[color]},
+                {backgroundColor: color},
                 {...style},
               ] as StyleProp<ViewStyle>
             }>
-            <Icon name={icon} size={iconSize} color={colors[fontColor]} />
+            <Icon name={icon} size={iconSize} color={fontColor} />
             {showSpinnerOrText()}
           </View>
         </TouchableNativeFeedback>
@@ -74,7 +74,7 @@ export const Button = ({
         style={
           [
             component.button,
-            {backgroundColor: colors[color]},
+            {backgroundColor: color},
             {...style},
           ] as StyleProp<ViewStyle>
         }

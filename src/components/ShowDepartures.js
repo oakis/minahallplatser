@@ -321,7 +321,13 @@ const ShowDepartures = props => {
     if (loading) {
       return <Spinner size="large" color={colors.primary} />;
     } else if (error) {
-      return <Message type="warning" message={error} />;
+      return (
+        <Message
+          type="warning"
+          message={error}
+          backgroundColor={colors.warning}
+        />
+      );
     }
 
     return (

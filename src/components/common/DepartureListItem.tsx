@@ -1,22 +1,21 @@
 import React from 'react';
-import {View, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  TouchableWithoutFeedback,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
 import {Text} from '@common';
 import {colors} from '@style';
 
-enum IconType {
-  BOAT = 'BOAT',
-  BUS = 'BUS',
-  TAXI = 'TAXI',
-  TRAM = 'TRAM',
-  VAS = 'VAS',
-  REG = 'REG',
-}
+type IconType = 'BOAT' | 'BUS' | 'TAXI' | 'TRAM' | 'VAS' | 'REG';
 
 type DurationType = number | 'Nu' | string;
 
-type DepartureType = {
+interface DepartureType {
   timeFormat: 'minutes' | 'clock';
   clockLeft: DurationType;
   clockNext: DurationType;
@@ -34,15 +33,15 @@ type DepartureType = {
   via: string;
   track: string;
   accessibility: string;
-};
+}
 
-type DepartureListItemProps = {
+interface DepartureListItemProps {
   item: DepartureType;
   onPress: () => void;
   onLongPress: () => void;
-};
+}
 
-const getDepartureType = (type: IconType) => {
+const getIconName = (type: IconType) => {
   switch (type) {
     case 'BOAT':
       return 'directions-boat';
@@ -190,36 +189,40 @@ export const DepartureListItem = (
     iconStyle,
   } = styles;
 
+  const iconName = getIconName(item.type);
+
   return (
     <TouchableWithoutFeedback
       onPress={onPress}
       onLongPress={onLongPress}
       delayLongPress={500}>
-      <View style={listStyle}>
-        <View style={col1Style}>
-          <View style={stopNumStyle}>
-            <Text style={stopNumText}>{item.sname}</Text>
-            <Icon
-              name={getDepartureType(item.type)}
-              size={15}
-              color={item.bgColor}
-            />
+      <View style={listStyle as StyleProp<ViewStyle>}>
+        <View style={col1Style as StyleProp<ViewStyle>}>
+          <View style={stopNumStyle as StyleProp<ViewStyle>}>
+            <Text style={stopNumText as StyleProp<TextStyle>}>
+              {item.sname}
+            </Text>
+            <Icon name={iconName as string} size={15} color={item.bgColor} />
           </View>
         </View>
 
-        <View style={col2Style}>
+        <View style={col2Style as StyleProp<ViewStyle>}>
           <View style={{display: 'flex', flexDirection: 'row'}}>
-            <Text style={directionStyle}>{item.direction}</Text>
+            <Text style={directionStyle as StyleProp<TextStyle>}>
+              {item.direction}
+            </Text>
             {item.global && (
               <Icon
                 name="public"
                 size={13}
-                style={{
-                  ...iconStyle,
-                  marginTop: 2,
-                  marginLeft: 2,
-                  color: colors.primary,
-                }}
+                style={
+                  {
+                    ...iconStyle,
+                    marginTop: 2,
+                    marginLeft: 2,
+                    color: colors.primary,
+                  } as StyleProp<TextStyle>
+                }
               />
             )}
           </View>
@@ -228,12 +231,16 @@ export const DepartureListItem = (
             <Text>Läge {item.track || 'A'}</Text>
             {Object.prototype.hasOwnProperty.call(item, 'accessibility') &&
             item.accessibility === 'wheelChair' ? (
-              <Icon name="accessible" size={13} style={iconStyle} />
+              <Icon
+                name="accessible"
+                size={13}
+                style={iconStyle as StyleProp<TextStyle>}
+              />
             ) : null}
           </View>
         </View>
 
-        <View style={col3Style}>
+        <View style={col3Style as StyleProp<ViewStyle>}>
           <Text style={departureStyle}>{left}</Text>
           <Text style={nextDepStyle}>{next}</Text>
         </View>

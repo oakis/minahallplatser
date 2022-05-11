@@ -1,9 +1,9 @@
 import {Dimensions} from 'react-native';
 
-type ImageType = {
+interface ImageType {
   imageHeight: number;
   imageWidth: number;
-};
+}
 
 export const calcImageSize = (percent: number, margin: number): ImageType => {
   const dimensions = Dimensions.get('window');

@@ -2,12 +2,12 @@ import React from 'react';
 import {StyleProp, Text, TextStyle} from 'react-native';
 import {isAndroid} from '@helpers';
 
-type TextProps = {
+interface TextProps {
   style?: StyleProp<TextStyle>;
   heading?: boolean;
   children: React.ReactNode;
   onPress?: () => void;
-};
+}
 
 const DefaultFont = ({
   style,

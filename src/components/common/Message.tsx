@@ -1,17 +1,18 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {store} from '@src/App';
 import {CLR_ERROR} from '@types';
 import {Text} from '@common';
-import {colors, component} from '@style';
+import {component} from '@style';
 
-type MessageProps = {
-  type: string;
+interface MessageProps {
+  type: 'info' | 'success' | 'danger' | 'warning';
   message: string;
-};
+  backgroundColor: string;
+}
 
-const getIcon = (iconType: string) => {
+const getIcon = (iconType: string): string => {
   switch (iconType) {
     case 'info':
       return 'info';
@@ -21,19 +22,31 @@ const getIcon = (iconType: string) => {
       return 'error';
     case 'warning':
       return 'warning';
-    default:
-      return;
   }
+  return '';
 };
 
-export const Message = ({type, message = ''}: MessageProps): JSX.Element => {
+export const Message = ({
+  type,
+  message = '',
+  backgroundColor,
+}: MessageProps): JSX.Element => {
   if (message.length > 0) {
     return (
-      <View style={[component.message.view, {backgroundColor: colors[type]}]}>
+      <View
+        style={
+          [component.message.view, {backgroundColor}] as StyleProp<ViewStyle>
+        }>
         {type ? (
-          <Icon name={getIcon(type)} size={20} style={component.message.icon} />
+          <Icon
+            name={getIcon(type)}
+            size={20}
+            style={component.message.icon as StyleProp<TextStyle>}
+          />
         ) : null}
-        <Text style={component.message.text}>{message}</Text>
+        <Text style={component.message.text as StyleProp<TextStyle>}>
+          {message}
+        </Text>
         <Text
           style={{fontSize: 10, fontWeight: 'bold'}}
           onPress={() => store.dispatch({type: CLR_ERROR})}>

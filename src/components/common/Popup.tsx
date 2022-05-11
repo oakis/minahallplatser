@@ -1,16 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, StyleProp, ViewStyle} from 'react-native';
 import Animated, {EasingNode} from 'react-native-reanimated';
 import {Button} from '@common';
-import {metrics, component} from '@style';
+import {metrics, component, colors} from '@style';
 
 const duration = 160;
 
-type PopupProps = {
+interface PopupProps {
   isVisible: boolean;
   onPress: () => void;
   children: React.ReactNode;
-};
+}
 
 export const Popup = (props: PopupProps): JSX.Element => {
   const [hidden, setHidden] = useState(true);
@@ -49,14 +49,16 @@ export const Popup = (props: PopupProps): JSX.Element => {
 
   return (
     <View
-      style={[
-        component.popup.container,
-        {
-          height: hidden ? 0 : '100%',
-          width: hidden ? 0 : '100%',
-          backgroundColor: 'transparent',
-        },
-      ]}>
+      style={
+        [
+          component.popup.container,
+          {
+            height: hidden ? 0 : '100%',
+            width: hidden ? 0 : '100%',
+            backgroundColor: 'transparent',
+          },
+        ] as StyleProp<ViewStyle>
+      }>
       <TouchableOpacity
         activeOpacity={1}
         onPress={props.onPress}
@@ -81,7 +83,7 @@ export const Popup = (props: PopupProps): JSX.Element => {
         <Button
           label="Stäng"
           uppercase
-          color="primary"
+          color={colors.primary}
           onPress={props.onPress}
           style={{marginBottom: metrics.margin.xl}}
         />

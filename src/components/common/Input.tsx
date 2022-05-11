@@ -4,23 +4,23 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Text, Spinner} from '@common';
 import {colors, component, metrics} from '@style';
 
-type InputProps = {
-  style: Record<string, unknown>;
+interface InputProps {
+  style?: Record<string, unknown>;
   value: string;
-  label: string;
-  icon: string | null;
-  iconRight: string | null;
-  iconRightPress: () => void;
-  iconSize: number;
-  placeholder: string;
-  onChangeText: () => void;
-  autoFocus: boolean;
-  secureTextEntry: boolean;
-  loading: boolean;
-  underlineColorAndroid: string;
-  onFocus: () => void;
-  multiline: boolean;
-};
+  label?: string;
+  icon?: string | null;
+  iconRight?: string | null;
+  iconRightPress?: () => void;
+  iconSize?: number;
+  placeholder?: string;
+  onChangeText: (value: string) => void;
+  autoFocus?: boolean;
+  secureTextEntry?: boolean;
+  loading?: boolean;
+  underlineColorAndroid?: string;
+  onFocus?: () => void;
+  multiline?: boolean;
+}
 
 export const Input = ({
   style,

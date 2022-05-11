@@ -1,10 +1,17 @@
 import React from 'react';
-import {TouchableOpacity, Image, View} from 'react-native';
+import {
+  TouchableOpacity,
+  Image,
+  View,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {component} from '@style';
 import {Text} from '@common';
 
-type ListItemProps = {
+interface ListItemProps {
   text: string;
   icon: string | null;
   pressItem: () => void;
@@ -13,7 +20,7 @@ type ListItemProps = {
   iconColor: string;
   style: Record<string, unknown>;
   avatar: string | null;
-};
+}
 
 export const ListItem = ({
   text,
@@ -29,12 +36,14 @@ export const ListItem = ({
     <TouchableOpacity
       onPress={pressItem}
       style={[component.listitem.view, style]}>
-      <Text style={component.listitem.text}>{text}</Text>
-      <View style={component.listitem.icon}>
+      <Text style={component.listitem.text as StyleProp<TextStyle>}>
+        {text}
+      </Text>
+      <View style={component.listitem.icon as StyleProp<ViewStyle>}>
         {!iconVisible || avatar !== null ? null : (
           <Icon
             style={{color: iconColor}}
-            name={icon}
+            name={icon as string}
             size={24}
             onPress={pressIcon}
           />

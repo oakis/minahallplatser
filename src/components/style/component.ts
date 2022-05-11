@@ -1,4 +1,4 @@
-import {Dimensions, StyleProp, TextStyle, ViewStyle} from 'react-native';
+import {Dimensions} from 'react-native';
 import {colors, metrics} from './';
 
 export const component = {

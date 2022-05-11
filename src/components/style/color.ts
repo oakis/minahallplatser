@@ -1,4 +1,24 @@
-export const colors = {
+type ColorType =
+  | 'default'
+  | 'alternative'
+  | 'primary'
+  | 'primaryRGBA'
+  | 'info'
+  | 'success'
+  | 'danger'
+  | 'warning'
+  | 'lightgrey'
+  | 'darkgrey'
+  | 'darkergrey'
+  | 'smoothBlack'
+  | 'overlay'
+  | 'background';
+
+type Color = {
+  [key in ColorType]: string;
+};
+
+export const colors: Color = {
   default: '#000',
   alternative: '#fff',
   primary: '#779ECB',

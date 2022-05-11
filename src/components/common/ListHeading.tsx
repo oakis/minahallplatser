@@ -1,17 +1,21 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, StyleProp, TextStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Text, Spinner} from '@common';
 import {component, metrics, colors} from '@style';
 
-type ListHeadingProps = {
+interface ListHeadingProps {
   text: string;
-  icon: string;
-  iconSize: number;
-  onPress: () => void;
-  loading: boolean;
-  style: Record<string, unknown>;
-};
+  icon?: string;
+  iconSize?: number;
+  onPress?: () => void;
+  loading?: boolean;
+  style?: Record<string, unknown>;
+}
+
+/**
+ * <Spinner måste ha en riktig färg nu
+ */
 
 export const ListHeading = ({
   text,
@@ -33,7 +37,12 @@ export const ListHeading = ({
           },
           style,
         ]}>
-        <Text style={[component.text.heading, {height: 29}]}>{text}</Text>
+        <Text
+          style={
+            [component.text.heading, {height: 29}] as StyleProp<TextStyle>
+          }>
+          {text}
+        </Text>
         <View
           style={{
             flex: 1,
@@ -46,7 +55,7 @@ export const ListHeading = ({
             <Spinner color={colors.primary} right />
           ) : (
             <Icon
-              name={icon}
+              name={icon as string}
               onPress={onPress}
               size={iconSize}
               style={{textAlign: 'right'}}
