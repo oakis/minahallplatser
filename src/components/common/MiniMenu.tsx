@@ -127,14 +127,18 @@ export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
         />
       </TouchableOpacity>
       <Animated.View
-        style={{
-          ...style.menu,
-          ...props.style,
-          height: hidden ? 0 : props.items.length * 51,
-          width: hidden ? 0 : getLongestContentLength() * 8 + 50,
-          transform: [{scale: animateValue}],
-          opacity: animateValue,
-        }}>
+        style={
+          [
+            style.menu,
+            props.style,
+            {
+              height: hidden ? 0 : props.items.length * 51,
+              width: hidden ? 0 : getLongestContentLength() * 8 + 50,
+              transform: [{scale: animateValue}],
+              opacity: animateValue,
+            },
+          ] as StyleProp<ViewStyle>
+        }>
         {props.items.map(({icon, content, onPress}, index) => (
           <TouchableNativeFeedback
             style={{flex: 1, alignSelf: 'stretch', elevation: 5}}

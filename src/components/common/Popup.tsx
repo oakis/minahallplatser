@@ -69,14 +69,21 @@ export const Popup = (props: PopupProps): JSX.Element => {
           width: hidden ? 0 : '100%',
         }}>
         <Animated.View
-          style={[component.popup.container, {opacity: animateValue}]}
+          style={
+            [
+              component.popup.container,
+              {opacity: animateValue},
+            ] as StyleProp<ViewStyle>
+          }
         />
       </TouchableOpacity>
       <Animated.ScrollView
-        style={[
-          component.popup.content,
-          {opacity: animateValue, transform: [{scale: animateValue}]},
-        ]}
+        style={
+          [
+            component.popup.content,
+            {opacity: animateValue, transform: [{scale: animateValue}]},
+          ] as StyleProp<ViewStyle>
+        }
         scrollEnabled
         keyboardShouldPersistTaps="always">
         {props.children}
