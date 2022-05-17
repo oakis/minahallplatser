@@ -51,7 +51,6 @@ const ShowDepartures = props => {
 
   const [showHelp, setShowHelp] = useState(false);
   const [miniMenuOpen, setMiniMenuOpen] = useState(false);
-  const [timeformatVisible, setTimeformatVisible] = useState(false);
   const [reloading, setReloading] = useState(false);
 
   useEffect(() => {
@@ -156,6 +155,14 @@ const ShowDepartures = props => {
 
   const closeMiniMenu = () => setMiniMenuOpen(false);
 
+  const toggleTimeFormat = () => {
+    if (timeFormat === 'minutes') {
+      onTimeValueChange('clock');
+    } else {
+      onTimeValueChange('minutes');
+    }
+  };
+
   const renderMiniMenu = () => {
     return (
       <MiniMenu
@@ -165,7 +172,7 @@ const ShowDepartures = props => {
           {
             icon: 'access-time',
             content: 'Ändra tidsformat',
-            onPress: openTimeformat,
+            onPress: toggleTimeFormat,
           },
           {
             icon: 'star',
@@ -186,43 +193,13 @@ const ShowDepartures = props => {
     );
   };
 
-  const closeTimeFormat = () => {
-    setTimeformatVisible(false);
-  };
-
-  const renderTimeformat = () => {
-    return (
-      <MiniMenu
-        isVisible={timeformatVisible}
-        onClose={closeTimeFormat}
-        items={[
-          {
-            content: 'Minuter',
-            onPress: () => onTimeValueChange('minutes'),
-          },
-          {
-            content: 'Klockslag',
-            onPress: () => onTimeValueChange('clock'),
-          },
-        ]}
-      />
-    );
-  };
-
-  const openTimeformat = () => {
-    closeMiniMenu();
-    setTimeout(() => {
-      setTimeformatVisible(true);
-    }, 1);
-  };
-
   const toggleMiniMenu = () => {
     setMiniMenuOpen(prev => !prev);
   };
 
   const onTimeValueChange = itemValue => {
     props.setSetting('timeFormat', itemValue);
-    closeTimeFormat();
+    closeMiniMenu();
   };
 
   const refresh = useCallback(() => {
@@ -346,7 +323,6 @@ const ShowDepartures = props => {
 
   return (
     <View style={{flex: 1}}>
-      {renderTimeformat()}
       {renderMiniMenu()}
       {renderPopup()}
       {renderContent()}
