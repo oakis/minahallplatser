@@ -63,7 +63,9 @@ export const Button = ({
                 {...style},
               ] as StyleProp<ViewStyle>
             }>
-            <Icon name={icon} size={iconSize} color={fontColor} />
+            {icon ? (
+              <Icon name={icon} size={iconSize} color={fontColor} />
+            ) : null}
             {showSpinnerOrText()}
           </View>
         </TouchableNativeFeedback>

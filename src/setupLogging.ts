@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {LogBox} from 'react-native';
 
-const startTimes = {};
+type StartTimesType = Record<string, unknown>;
+
+const startTimes: StartTimesType = {};
 
 if (__DEV__) {
-  window.log = console.log.bind(window.console);
-  window.timeStart = label => {
+  window.log = console.log.bind(console);
+  window.timeStart = (label: string): void => {
     startTimes[label] = global.performance.now();
   };
   window.timeEnd = label => {

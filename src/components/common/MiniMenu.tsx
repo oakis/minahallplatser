@@ -151,14 +151,16 @@ export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
                   {borderBottomWidth: index === props.items.length - 1 ? 0 : 1},
                 ] as StyleProp<ViewStyle>
               }>
-              <Icon
-                name={icon}
-                style={{
-                  ...style.child.icon,
-                  color: colors.smoothBlack,
-                  fontSize: 14,
-                }}
-              />
+              {icon && (
+                <Icon
+                  name={icon}
+                  style={{
+                    ...style.child.icon,
+                    color: colors.smoothBlack,
+                    fontSize: 14,
+                  }}
+                />
+              )}
               {typeof content === 'string' ? (
                 <Text style={style.child.content}>{content}</Text>
               ) : (

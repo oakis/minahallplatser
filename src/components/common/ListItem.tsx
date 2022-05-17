@@ -40,7 +40,7 @@ export const ListItem = ({
         {text}
       </Text>
       <View style={component.listitem.icon as StyleProp<ViewStyle>}>
-        {!iconVisible || avatar !== null ? null : (
+        {!iconVisible || avatar !== null || !icon ? null : (
           <Icon
             style={{color: iconColor}}
             name={icon as string}

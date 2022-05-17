@@ -202,7 +202,9 @@ export const DepartureListItem = (
             <Text style={stopNumText as StyleProp<TextStyle>}>
               {item.sname}
             </Text>
-            <Icon name={iconName as string} size={15} color={item.bgColor} />
+            {iconName && (
+              <Icon name={iconName as string} size={15} color={item.bgColor} />
+            )}
           </View>
         </View>
 

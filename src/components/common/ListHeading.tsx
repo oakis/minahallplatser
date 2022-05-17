@@ -53,14 +53,14 @@ export const ListHeading = ({
           }}>
           {loading ? (
             <Spinner color={colors.primary} right />
-          ) : (
+          ) : icon ? (
             <Icon
               name={icon as string}
               onPress={onPress}
               size={iconSize}
               style={{textAlign: 'right'}}
             />
-          )}
+          ) : null}
         </View>
       </View>
       <View

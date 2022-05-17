@@ -75,14 +75,14 @@ export const Input = ({
                 paddingRight: metrics.padding.md + 4,
               }}
             />
-          ) : (
+          ) : iconRight ? (
             <Icon
               onPress={iconRightPress}
               name={iconRight}
               size={iconSize}
               style={{padding: metrics.padding.md}}
             />
-          )}
+          ) : null}
         </View>
       ) : null}
     </View>

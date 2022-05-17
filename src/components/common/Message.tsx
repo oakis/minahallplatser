@@ -31,15 +31,16 @@ export const Message = ({
   message = '',
   backgroundColor,
 }: MessageProps): JSX.Element => {
+  const icon = getIcon(type);
   if (message.length > 0) {
     return (
       <View
         style={
           [component.message.view, {backgroundColor}] as StyleProp<ViewStyle>
         }>
-        {type ? (
+        {type && icon ? (
           <Icon
-            name={getIcon(type)}
+            name={icon}
             size={20}
             style={component.message.icon as StyleProp<TextStyle>}
           />
