@@ -1,18 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import {LogBox} from 'react-native';
 
-interface CustomWindow extends Window {
-  timeStart: (value: string) => void;
-  timeEnd: (value: string) => void;
-  log: (...messages: string[]) => void;
-}
-declare let window: CustomWindow;
-
-interface CustomGlobal extends Global {
-  performance: Record<string, () => number>;
-}
-declare let global: CustomGlobal;
-
 const startTimes: Record<string, number> = {};
 
 if (__DEV__) {
