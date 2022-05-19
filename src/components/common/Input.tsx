@@ -1,11 +1,11 @@
 import React from 'react';
-import {TextInput, View} from 'react-native';
+import {StyleProp, TextInput, View, ViewProps, ViewStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Text, Spinner} from '@common';
 import {colors, component, metrics} from '@style';
 
 interface InputProps {
-  style?: Record<string, unknown>;
+  style?: StyleProp<ViewStyle>;
   value: string;
   label?: string;
   icon?: string | null;

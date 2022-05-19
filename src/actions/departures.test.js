@@ -1,6 +1,6 @@
 import moment from 'moment';
 import {stub} from 'sinon';
-import {getDepartures} from './departures.js';
+import {getDepartures} from './departures.ts';
 
 global.fetch = jest.fn();
 

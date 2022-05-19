@@ -18,8 +18,8 @@ interface ListItemProps {
   pressIcon: () => void;
   iconVisible: boolean;
   iconColor: string;
-  style: Record<string, unknown>;
-  avatar: string | null;
+  style?: Record<string, unknown>;
+  avatar?: string | null;
 }
 
 export const ListItem = ({

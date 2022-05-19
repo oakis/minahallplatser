@@ -6,7 +6,7 @@ import {component, metrics, colors} from '@style';
 
 interface ListHeadingProps {
   text: string;
-  icon?: string;
+  icon?: string | null;
   iconSize?: number;
   onPress?: () => void;
   loading?: boolean;
