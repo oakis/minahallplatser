@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  View,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import {TouchableOpacity, TouchableNativeFeedback, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {isAndroid} from '@helpers';
 import {Text, Spinner} from '@common';
@@ -56,13 +50,7 @@ export const Button = ({
       return (
         <TouchableNativeFeedback onPress={onPress}>
           <View
-            style={
-              [
-                component.button,
-                {backgroundColor: color},
-                {...style},
-              ] as StyleProp<ViewStyle>
-            }>
+            style={[component.button, {backgroundColor: color}, {...style}]}>
             {icon ? (
               <Icon name={icon} size={iconSize} color={fontColor} />
             ) : null}
@@ -73,13 +61,7 @@ export const Button = ({
     }
     return (
       <TouchableOpacity
-        style={
-          [
-            component.button,
-            {backgroundColor: color},
-            {...style},
-          ] as StyleProp<ViewStyle>
-        }
+        style={[component.button, {backgroundColor: color}, {...style}]}
         onPress={onPress}>
         <Icon name={icon} size={iconSize} />
         {showSpinnerOrText()}

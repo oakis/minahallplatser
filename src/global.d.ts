@@ -51,7 +51,7 @@ declare global {
   }
   interface ISettingsProps {
     timeFormat: string;
-    favoriteOrder: 'nothing' | 'busStop' | 'opened';
+    favoriteOrder: undefined | 'busStop' | 'opened';
     allowedGPS: boolean;
   }
   interface IFavoritesProps {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleProp, TextStyle, ViewStyle} from 'react-native';
+import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {store} from '@src/App';
 import {CLR_ERROR} from '@types';
@@ -34,20 +34,11 @@ export const Message = ({
   const icon = getIcon(type);
   if (message.length > 0) {
     return (
-      <View
-        style={
-          [component.message.view, {backgroundColor}] as StyleProp<ViewStyle>
-        }>
+      <View style={[component.message.view, {backgroundColor}]}>
         {type && icon ? (
-          <Icon
-            name={icon}
-            size={20}
-            style={component.message.icon as StyleProp<TextStyle>}
-          />
+          <Icon name={icon} size={20} style={component.message.icon} />
         ) : null}
-        <Text style={component.message.text as StyleProp<TextStyle>}>
-          {message}
-        </Text>
+        <Text style={component.message.text}>{message}</Text>
         <Text
           style={{fontSize: 10, fontWeight: 'bold'}}
           onPress={() => store.dispatch({type: CLR_ERROR})}>

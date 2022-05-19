@@ -3,13 +3,14 @@ import {
   View,
   TouchableNativeFeedback,
   TouchableOpacity,
-  StyleProp,
   ViewStyle,
+  TextStyle,
 } from 'react-native';
 import Animated, {EasingNode} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Text} from '@common';
 import {component, colors} from '@style';
+import {StyleProp} from 'react-native';
 
 const duration = 160;
 
@@ -37,7 +38,7 @@ export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
       elevation: 5,
       borderRadius: 5,
       transformOrigin: 'top right',
-    },
+    } as StyleProp<ViewStyle>,
     child: {
       wrapper: {
         display: 'flex',
@@ -48,15 +49,17 @@ export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
         paddingVertical: 15,
         justifyContent: 'center',
         alignItems: 'flex-start',
-      },
+      } as StyleProp<ViewStyle>,
       content: {
         flex: 1,
         fontSize: 14,
-      },
+      } as StyleProp<ViewStyle>,
       icon: {
         marginTop: 3,
         marginHorizontal: 15,
-      },
+        color: colors.smoothBlack,
+        fontSize: 14,
+      } as StyleProp<TextStyle>,
     },
   };
 
@@ -97,16 +100,14 @@ export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
 
   return (
     <View
-      style={
-        [
-          component.popup.container,
-          {
-            height: hidden ? 0 : '100%',
-            width: hidden ? 0 : '100%',
-            backgroundColor: 'transparent',
-          },
-        ] as StyleProp<ViewStyle>
-      }>
+      style={[
+        component.popup.container,
+        {
+          height: hidden ? 0 : '100%',
+          width: hidden ? 0 : '100%',
+          backgroundColor: 'transparent',
+        },
+      ]}>
       <TouchableOpacity
         activeOpacity={1}
         onPress={props.onClose}
@@ -117,49 +118,31 @@ export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
           width: hidden ? 0 : '100%',
         }}>
         <Animated.View
-          style={
-            [
-              component.popup.container,
-              {opacity: animateValue},
-            ] as StyleProp<ViewStyle>
-          }
+          style={[component.popup.container, {opacity: animateValue}]}
         />
       </TouchableOpacity>
       <Animated.View
-        style={
-          [
-            style.menu,
-            props.style,
-            {
-              height: hidden ? 0 : props.items.length * 51,
-              width: hidden ? 0 : getLongestContentLength() * 8 + 50,
-              transform: [{scale: animateValue}],
-              opacity: animateValue,
-            },
-          ] as StyleProp<ViewStyle>
-        }>
+        style={[
+          style.menu,
+          props.style,
+          {
+            height: hidden ? 0 : props.items.length * 51,
+            width: hidden ? 0 : getLongestContentLength() * 8 + 50,
+            transform: [{scale: animateValue}],
+            opacity: animateValue,
+          },
+        ]}>
         {props.items.map(({icon, content, onPress}, index) => (
           <TouchableNativeFeedback
             style={{flex: 1, alignSelf: 'stretch', elevation: 5}}
             key={index}
             onPress={onPress}>
             <View
-              style={
-                [
-                  style.child.wrapper,
-                  {borderBottomWidth: index === props.items.length - 1 ? 0 : 1},
-                ] as StyleProp<ViewStyle>
-              }>
-              {icon && (
-                <Icon
-                  name={icon}
-                  style={{
-                    ...style.child.icon,
-                    color: colors.smoothBlack,
-                    fontSize: 14,
-                  }}
-                />
-              )}
+              style={[
+                style.child.wrapper,
+                {borderBottomWidth: index === props.items.length - 1 ? 0 : 1},
+              ]}>
+              {icon && <Icon name={icon} style={style.child.icon} />}
               {typeof content === 'string' ? (
                 <Text style={style.child.content}>{content}</Text>
               ) : (

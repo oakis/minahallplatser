@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  Image,
-  View,
-  StyleProp,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import {TouchableOpacity, Image, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {component} from '@style';
 import {Text} from '@common';
@@ -36,10 +29,8 @@ export const ListItem = ({
     <TouchableOpacity
       onPress={pressItem}
       style={[component.listitem.view, style]}>
-      <Text style={component.listitem.text as StyleProp<TextStyle>}>
-        {text}
-      </Text>
-      <View style={component.listitem.icon as StyleProp<ViewStyle>}>
+      <Text style={component.listitem.text}>{text}</Text>
+      <View style={component.listitem.icon}>
         {!iconVisible || avatar !== null || !icon ? null : (
           <Icon
             style={{color: iconColor}}

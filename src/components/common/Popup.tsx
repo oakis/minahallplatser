@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, TouchableOpacity, StyleProp, ViewStyle} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import Animated, {EasingNode} from 'react-native-reanimated';
 import {Button} from '@common';
 import {metrics, component, colors} from '@style';
@@ -49,16 +49,14 @@ export const Popup = (props: PopupProps): JSX.Element => {
 
   return (
     <View
-      style={
-        [
-          component.popup.container,
-          {
-            height: hidden ? 0 : '100%',
-            width: hidden ? 0 : '100%',
-            backgroundColor: 'transparent',
-          },
-        ] as StyleProp<ViewStyle>
-      }>
+      style={[
+        component.popup.container,
+        {
+          height: hidden ? 0 : '100%',
+          width: hidden ? 0 : '100%',
+          backgroundColor: 'transparent',
+        },
+      ]}>
       <TouchableOpacity
         activeOpacity={1}
         onPress={props.onPress}
@@ -69,21 +67,14 @@ export const Popup = (props: PopupProps): JSX.Element => {
           width: hidden ? 0 : '100%',
         }}>
         <Animated.View
-          style={
-            [
-              component.popup.container,
-              {opacity: animateValue},
-            ] as StyleProp<ViewStyle>
-          }
+          style={[component.popup.container, {opacity: animateValue}]}
         />
       </TouchableOpacity>
       <Animated.ScrollView
-        style={
-          [
-            component.popup.content,
-            {opacity: animateValue, transform: [{scale: animateValue}]},
-          ] as StyleProp<ViewStyle>
-        }
+        style={[
+          component.popup.content,
+          {opacity: animateValue, transform: [{scale: animateValue}]},
+        ]}
         scrollEnabled
         keyboardShouldPersistTaps="always">
         {props.children}

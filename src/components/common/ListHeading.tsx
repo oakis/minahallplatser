@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleProp, TextStyle} from 'react-native';
+import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Text, Spinner} from '@common';
 import {component, metrics, colors} from '@style';
@@ -37,12 +37,7 @@ export const ListHeading = ({
           },
           style,
         ]}>
-        <Text
-          style={
-            [component.text.heading, {height: 29}] as StyleProp<TextStyle>
-          }>
-          {text}
-        </Text>
+        <Text style={[component.text.heading, {height: 29}]}>{text}</Text>
         <View
           style={{
             flex: 1,

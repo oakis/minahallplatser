@@ -3,8 +3,8 @@ import {
   View,
   TouchableWithoutFeedback,
   StyleProp,
-  ViewStyle,
   TextStyle,
+  ViewStyle,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
@@ -118,26 +118,26 @@ export const DepartureListItem = (
       paddingBottom: 5,
       flexDirection: 'row',
       alignItems: 'center',
-    },
+    } as StyleProp<ViewStyle>,
     col1Style: {
       height: 40,
       width: 50,
       alignItems: 'center',
       justifyContent: 'center',
       paddingLeft: 7,
-    },
+    } as StyleProp<ViewStyle>,
     col2Style: {
       flex: 1,
       paddingLeft: 10,
       justifyContent: 'center',
-    },
+    } as StyleProp<ViewStyle>,
     col3Style: {
       height,
       width: 56,
       alignItems: 'center',
       justifyContent: 'center',
       marginRight: 5,
-    },
+    } as StyleProp<ViewStyle>,
     stopNumStyle: {
       flex: 1,
       height: 40,
@@ -147,32 +147,32 @@ export const DepartureListItem = (
       borderRadius: 3,
       alignItems: 'center',
       justifyContent: 'center',
-    },
+    } as StyleProp<ViewStyle>,
     stopNumText: {
       color: item.bgColor,
       textAlign: 'center',
       textAlignVertical: 'center',
       fontWeight: 'bold',
       fontSize: getSnameFontsize(item.sname),
-    },
+    } as StyleProp<TextStyle>,
     departureStyle: {
       fontSize: getFontSize(shouldShowMin, item.timeLeft),
       color: getFontColor(item.isLive, timeLeft),
     },
     nextDepStyle: {
       fontSize: 12,
-    },
+    } as StyleProp<TextStyle>,
     directionStyle: {
       fontWeight: 'bold',
-    },
+    } as StyleProp<TextStyle>,
     viaStyle: {
       marginTop: -5,
       fontSize: 12,
-    },
+    } as StyleProp<TextStyle>,
     iconStyle: {
       marginLeft: 5,
       alignSelf: 'center',
-    },
+    } as StyleProp<TextStyle>,
   };
 
   const {
@@ -196,35 +196,29 @@ export const DepartureListItem = (
       onPress={onPress}
       onLongPress={onLongPress}
       delayLongPress={500}>
-      <View style={listStyle as StyleProp<ViewStyle>}>
-        <View style={col1Style as StyleProp<ViewStyle>}>
-          <View style={stopNumStyle as StyleProp<ViewStyle>}>
-            <Text style={stopNumText as StyleProp<TextStyle>}>
-              {item.sname}
-            </Text>
+      <View style={listStyle}>
+        <View style={col1Style}>
+          <View style={stopNumStyle}>
+            <Text style={stopNumText}>{item.sname}</Text>
             {iconName && (
               <Icon name={iconName as string} size={15} color={item.bgColor} />
             )}
           </View>
         </View>
 
-        <View style={col2Style as StyleProp<ViewStyle>}>
+        <View style={col2Style}>
           <View style={{display: 'flex', flexDirection: 'row'}}>
-            <Text style={directionStyle as StyleProp<TextStyle>}>
-              {item.direction}
-            </Text>
+            <Text style={directionStyle}>{item.direction}</Text>
             {item.global && (
               <Icon
                 name="public"
                 size={13}
-                style={
-                  {
-                    ...iconStyle,
-                    marginTop: 2,
-                    marginLeft: 2,
-                    color: colors.primary,
-                  } as StyleProp<TextStyle>
-                }
+                style={{
+                  alignSelf: 'center',
+                  marginTop: 2,
+                  marginLeft: 2,
+                  color: colors.primary,
+                }}
               />
             )}
           </View>
@@ -233,16 +227,12 @@ export const DepartureListItem = (
             <Text>Läge {item.track || 'A'}</Text>
             {Object.prototype.hasOwnProperty.call(item, 'accessibility') &&
             item.accessibility === 'wheelChair' ? (
-              <Icon
-                name="accessible"
-                size={13}
-                style={iconStyle as StyleProp<TextStyle>}
-              />
+              <Icon name="accessible" size={13} style={iconStyle} />
             ) : null}
           </View>
         </View>
 
-        <View style={col3Style as StyleProp<ViewStyle>}>
+        <View style={col3Style}>
           <Text style={departureStyle}>{left}</Text>
           <Text style={nextDepStyle}>{next}</Text>
         </View>
