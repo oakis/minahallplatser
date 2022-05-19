@@ -50,7 +50,7 @@ export const fetchDepartures = (dispatch, accessToken, id, timeSpan = 90) => {
       }
     })
     .catch(error => {
-      window.log('Get departures failed', error);
+      console.log('Get departures failed', error);
       dispatch({
         type: GET_DEPARTURES_FAIL,
       });

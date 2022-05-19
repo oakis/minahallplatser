@@ -197,7 +197,7 @@ const getCoordsSuccess = ({dispatch, longitude, latitude}) => {
       })
       .catch(error => {
         window.timeEnd('getNearbyStops');
-        window.log(error);
+        console.log(error);
         dispatch({type: SEARCH_BY_GPS_FAIL});
       });
   });

@@ -79,7 +79,7 @@ export const Feedback = (props: IProps): JSX.Element => {
         })
         .catch(err => {
           track('Feedback Failed', err);
-          window.log('sendFeedback(): FAILED', err);
+          console.log('sendFeedback(): FAILED', err);
           Alert.alert('', 'Något gick snett, försök igen senare.');
           setLoading(false);
         })

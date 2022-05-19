@@ -11,7 +11,7 @@ export const handleJsonFetch = response => {
     return response.json().catch(err => err);
   } else if (response.status === 400) {
     return response.json().then(data => {
-      window.log('handleJsonFetch(): Error', data);
+      console.log('handleJsonFetch(): Error', data);
       crashlytics().recordError(data.StackTraceString);
       throw data.Message;
     });
