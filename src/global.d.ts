@@ -2,7 +2,8 @@ declare global {
   interface Window {
     timeStart: (value: string) => void;
     timeEnd: (value: string) => void;
-    log: (...messages: string[]) => void;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    log: (...messages: any[]) => void;
   }
   interface Global {
     performance: Record<string, () => number>;
