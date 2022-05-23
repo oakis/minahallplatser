@@ -61,7 +61,6 @@ jest.mock('./components/helpers', () => ({
   track: jest.fn(),
   isAndroid: jest.fn(),
   showMessage: jest.fn(),
-  updateStopsCount: jest.fn(),
   getDeviceModel: jest.fn(),
   getOsVersion: jest.fn(),
   getAppVersion: jest.fn(),

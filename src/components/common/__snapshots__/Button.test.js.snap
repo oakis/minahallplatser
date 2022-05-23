@@ -38,10 +38,6 @@ exports[`should match snapshot on Android 1`] = `
     ]
   }
 >
-  <MaterialIcon
-    color="#fff"
-    size={24}
-  />
   <Text
     style={
       Array [
@@ -97,6 +93,7 @@ exports[`should match snapshot on iOS 1`] = `
   }
 >
   <MaterialIcon
+    name=""
     size={24}
   />
   <Text

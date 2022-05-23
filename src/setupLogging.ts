@@ -1,19 +1,20 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {LogBox} from 'react-native';
 
-const startTimes = {};
+const startTimes: Record<string, number> = {};
 
 if (__DEV__) {
-  window.log = console.log.bind(window.console);
-  window.timeStart = label => {
+  window.log = console.log.bind(console);
+  window.timeStart = (label: string): void => {
     startTimes[label] = global.performance.now();
   };
-  window.timeEnd = label => {
+  window.timeEnd = (label: string): void => {
     const endTime = global.performance.now();
     if (startTimes[label]) {
       const delta = endTime - startTimes[label];
       window.log(`${label}: ${delta.toFixed(3)}ms`);
       delete startTimes[label];
-      return delta;
+      return;
     }
     console.warn(`Warning: No such label '${label}' for window.timeEnd()`);
   };

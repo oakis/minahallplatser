@@ -1,14 +1,27 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
+import {
+  View,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 import Animated, {EasingNode} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {colors} from '@style/color';
 import {Text} from '@common';
-import {component} from '@style/component';
+import {component, colors} from '@style';
+import {StyleProp} from 'react-native';
 
 const duration = 160;
 
-export const MiniMenu = props => {
+interface MiniMenuProps {
+  onClose: () => void;
+  isVisible: boolean;
+  items: Array<MiniMenuItem>;
+  style?: Record<string, unknown>;
+}
+
+export const MiniMenu = (props: MiniMenuProps): JSX.Element => {
   const [hidden, setHidden] = useState(true);
 
   const animateValue = useRef(new Animated.Value(0)).current;
@@ -25,7 +38,7 @@ export const MiniMenu = props => {
       elevation: 5,
       borderRadius: 5,
       transformOrigin: 'top right',
-    },
+    } as StyleProp<ViewStyle>,
     child: {
       wrapper: {
         display: 'flex',
@@ -36,15 +49,17 @@ export const MiniMenu = props => {
         paddingVertical: 15,
         justifyContent: 'center',
         alignItems: 'flex-start',
-      },
+      } as StyleProp<ViewStyle>,
       content: {
         flex: 1,
         fontSize: 14,
-      },
+      } as StyleProp<ViewStyle>,
       icon: {
         marginTop: 3,
         marginHorizontal: 15,
-      },
+        color: colors.smoothBlack,
+        fontSize: 14,
+      } as StyleProp<TextStyle>,
     },
   };
 
@@ -55,26 +70,22 @@ export const MiniMenu = props => {
         toValue: 1,
         easing: EasingNode.elastic(),
         duration,
-        useNativeDriver: true,
       }).start();
       Animated.timing(animateValue, {
         toValue: 1,
         easing: EasingNode.ease,
         duration,
-        useNativeDriver: true,
       }).start();
     } else if (!props.isVisible) {
       Animated.timing(animateValue, {
         toValue: 0,
         easing: EasingNode.ease,
         duration,
-        useNativeDriver: true,
       }).start();
       Animated.timing(animateValue, {
         toValue: 0,
         easing: EasingNode.ease,
         duration,
-        useNativeDriver: true,
       });
       setTimeout(() => {
         setHidden(true);
@@ -111,33 +122,27 @@ export const MiniMenu = props => {
         />
       </TouchableOpacity>
       <Animated.View
-        style={{
-          ...style.menu,
-          ...props.style,
-          height: hidden ? 0 : props.items.length * 51,
-          width: hidden ? 0 : getLongestContentLength() * 8 + 50,
-          transform: [{scale: animateValue}],
-          opacity: animateValue,
-        }}>
+        style={[
+          style.menu,
+          props.style,
+          {
+            height: hidden ? 0 : props.items.length * 51,
+            width: hidden ? 0 : getLongestContentLength() * 8 + 50,
+            transform: [{scale: animateValue}],
+            opacity: animateValue,
+          },
+        ]}>
         {props.items.map(({icon, content, onPress}, index) => (
           <TouchableNativeFeedback
-            pointerEvents={'box-only'}
             style={{flex: 1, alignSelf: 'stretch', elevation: 5}}
             key={index}
             onPress={onPress}>
             <View
-              style={{
-                ...style.child.wrapper,
-                borderBottomWidth: index === props.items.length - 1 ? 0 : 1,
-              }}>
-              <Icon
-                name={icon}
-                style={{
-                  ...style.child.icon,
-                  color: colors.smoothBlack,
-                  fontSize: 14,
-                }}
-              />
+              style={[
+                style.child.wrapper,
+                {borderBottomWidth: index === props.items.length - 1 ? 0 : 1},
+              ]}>
+              {icon && <Icon name={icon} style={style.child.icon} />}
               {typeof content === 'string' ? (
                 <Text style={style.child.content}>{content}</Text>
               ) : (

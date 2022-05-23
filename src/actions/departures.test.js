@@ -1,6 +1,6 @@
 import moment from 'moment';
 import {stub} from 'sinon';
-import {getDepartures} from './departures.js';
+import {getDepartures} from './departures.ts';
 
 global.fetch = jest.fn();
 
@@ -27,7 +27,7 @@ it('should fetch departures 24 hours in the future if no departure is found with
   await getDepartures({id: 1})(dispatch);
   process.nextTick(() => {
     expect(fetch).toHaveBeenCalledTimes(2);
-    expect(fetch).toHaveBeenCalledWith(url, config, 'getDepartures');
-    expect(fetch).toHaveBeenCalledWith(url2, config, 'getDepartures');
+    expect(fetch).toHaveBeenCalledWith(url, config);
+    expect(fetch).toHaveBeenCalledWith(url2, config);
   });
 });

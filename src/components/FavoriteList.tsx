@@ -8,6 +8,8 @@ import {
   AppState,
   TouchableWithoutFeedback,
   ScrollView,
+  StyleProp,
+  TextProps,
 } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -37,9 +39,28 @@ import {CLR_SEARCH, CLR_ERROR, SEARCH_BY_GPS_FAIL} from '@types';
 import {store} from '@src/App';
 import {track, isAndroid} from '@helpers';
 import {Feedback} from '@modals';
+import {useNavigation} from '@react-navigation/native';
 
-const FavoriteList = props => {
-  const {navigation} = props;
+interface IProps {
+  allowedGPS: boolean;
+  gpsLoading: boolean;
+  searchLoading: boolean;
+  clearErrors: () => void;
+  searchChanged: (busStop: string) => void;
+  searchStops: (busStop: Record<string, string>) => void;
+  getNearbyStops: () => void;
+  setSetting: (setting: string, value: string | undefined) => void;
+  favoriteDelete: (id: string) => void;
+  favoriteCreate: (item: Record<string, string>) => void;
+  favorites: IStop[];
+  stopsNearby: IStop[];
+  departureList: IStop[];
+  busStop: string;
+  error: string;
+}
+
+const FavoriteList = (props: IProps): JSX.Element => {
+  const navigation = useNavigation();
 
   const [editing, setEditing] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
@@ -96,7 +117,7 @@ const FavoriteList = props => {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onInputChange = busStop => {
+  const onInputChange = (busStop: string) => {
     // fetch.abort('searchStops');
     // clearTimeout(searchTimeout);
     props.searchChanged(busStop);
@@ -105,7 +126,7 @@ const FavoriteList = props => {
     // }, 500);
   };
 
-  const handleAppStateChange = nextAppState => {
+  const handleAppStateChange = (nextAppState: string) => {
     if (nextAppState === 'active') {
       if (props.allowedGPS) {
         props.getNearbyStops();
@@ -167,7 +188,7 @@ const FavoriteList = props => {
     }, 1);
   };
 
-  const onOrderValueChange = itemValue => {
+  const onOrderValueChange = (itemValue: string | undefined) => {
     props.setSetting('favoriteOrder', itemValue);
     setSortingVisible(false);
   };
@@ -202,7 +223,7 @@ const FavoriteList = props => {
         items={[
           {
             content: 'Ingen sortering',
-            onPress: () => onOrderValueChange('nothing'),
+            onPress: () => onOrderValueChange(undefined),
           },
           {
             content: 'Mina mest använda',
@@ -224,14 +245,18 @@ const FavoriteList = props => {
   const renderPopup = () => {
     return (
       <Popup onPress={closeHelp} isVisible={showHelp}>
-        <Text style={component.popup.header}>Söka efter hållplats</Text>
+        <Text style={component.popup.header as StyleProp<TextProps>}>
+          Söka efter hållplats
+        </Text>
         <Text style={component.popup.text}>
           För att söka på en hållplats klickar du på sökfältet ({' '}
           <Icon name="search" /> ) högst upp på startsidan och fyller i ett
           eller flera sökord.
         </Text>
 
-        <Text style={component.popup.header}>Hållplatser nära dig</Text>
+        <Text style={component.popup.header as StyleProp<TextProps>}>
+          Hållplatser nära dig
+        </Text>
         <Text style={component.popup.text}>
           Hållplatser som är i din närhet kommer automatiskt att visas sålänge
           du har godkänt att appen får använda din{' '}
@@ -241,7 +266,9 @@ const FavoriteList = props => {
           platstjänster.
         </Text>
 
-        <Text style={component.popup.header}>Spara hållplats som favorit</Text>
+        <Text style={component.popup.header as StyleProp<TextProps>}>
+          Spara hållplats som favorit
+        </Text>
         <Text style={component.popup.text}>
           Längst till höger på hållplatser nära dig eller i sökresultaten finns
           det en stjärna ( <Icon name="star-border" color={colors.warning} /> ),
@@ -251,7 +278,7 @@ const FavoriteList = props => {
           hållplatsen sparas i listan &quot;Mina Hållplatser&quot;.
         </Text>
 
-        <Text style={component.popup.header}>
+        <Text style={component.popup.header as StyleProp<TextProps>}>
           Ta bort hållplats från favoriter
         </Text>
         <Text style={component.popup.text}>
@@ -263,7 +290,9 @@ const FavoriteList = props => {
           den hållplatsen du vill ta bort.
         </Text>
 
-        <Text style={component.popup.header}>Sortera favoriter</Text>
+        <Text style={component.popup.header as StyleProp<TextProps>}>
+          Sortera favoriter
+        </Text>
         <Text style={component.popup.text}>
           I <Text style={{fontWeight: 'bold'}}>menyn</Text> ({' '}
           <Icon name="menu" /> ) kan du hitta olika sorteringsalternativ, t.ex
@@ -273,7 +302,7 @@ const FavoriteList = props => {
     );
   };
 
-  const renderFavoriteItem = ({item}) => {
+  const renderFavoriteItem = ({item}: {item: IStop}) => {
     return (
       <ListItem
         text={item.busStop}
@@ -314,7 +343,7 @@ const FavoriteList = props => {
     );
   };
 
-  const renderSearchItem = ({item}, parent) => {
+  const renderSearchItem = ({item}: {item: IStop}, parent: string) => {
     return (
       <ListItem
         text={item.name}
@@ -451,7 +480,13 @@ const FavoriteList = props => {
               : null,
           ]}
         />
-        {props.error ? <Message type="warning" message={props.error} /> : null}
+        {props.error ? (
+          <Message
+            type="warning"
+            message={props.error}
+            backgroundColor={colors.warning}
+          />
+        ) : null}
         {renderSectionList()}
         {props.favorites.length === 0 ? (
           <View
@@ -467,7 +502,7 @@ const FavoriteList = props => {
               onPress={openPopup}
               label="Hjälp"
               icon="live-help"
-              color="primary"
+              color={colors.primary}
             />
           </View>
         ) : null}
@@ -476,7 +511,7 @@ const FavoriteList = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IStateProps) => {
   const {favoriteOrder, allowedGPS} = state.settings;
   const favorites = _.orderBy(
     state.fav.favorites,

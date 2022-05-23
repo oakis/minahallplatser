@@ -2,7 +2,7 @@ import {SET_SETTING, ALLOWED_GPS} from '@types';
 
 const INIT_STATE = {
   timeFormat: 'minutes',
-  favoriteOrder: 'nothing',
+  favoriteOrder: undefined,
   allowedGPS: false,
 };
 

@@ -1,3 +1,4 @@
+import {Dispatch} from 'redux';
 import moment from 'moment';
 import {
   GET_DEPARTURES,
@@ -6,22 +7,22 @@ import {
   ERROR,
   CLR_ERROR,
 } from '@types';
-import {
-  handleJsonFetch,
-  getToken,
-  updateDeparturesCount,
-  handleVasttrafikDepartures,
-} from '@helpers';
+import {handleJsonFetch, getToken, handleVasttrafikDepartures} from '@helpers';
 
-export const getDepartures = ({id}) => {
-  return dispatch => {
+export const getDepartures = ({id}: {id: string}) => {
+  return (dispatch: Dispatch) => {
     getToken().then(({access_token: accessToken}) => {
       fetchDepartures(dispatch, accessToken, id);
     });
   };
 };
 
-export const fetchDepartures = (dispatch, accessToken, id, timeSpan = 90) => {
+export const fetchDepartures = (
+  dispatch: Dispatch,
+  accessToken: string,
+  id: string,
+  timeSpan = 90,
+) => {
   window.timeStart('getDepartures()');
   const date = moment().format('YYYY-MM-DD');
   const time = moment().format('HH:mm');
@@ -33,7 +34,7 @@ export const fetchDepartures = (dispatch, accessToken, id, timeSpan = 90) => {
       Authorization: `Bearer ${accessToken}`,
     },
   };
-  fetch(url, config, 'getDepartures')
+  fetch(url, config)
     .then(handleJsonFetch)
     .then(handleVasttrafikDepartures)
     .then(data => {
@@ -46,7 +47,6 @@ export const fetchDepartures = (dispatch, accessToken, id, timeSpan = 90) => {
       }
     })
     .then(({departures, timestamp}) => {
-      updateDeparturesCount(departures.length);
       dispatch({type: CLR_ERROR});
       if (departures.length > 0) {
         dispatch({
@@ -56,7 +56,7 @@ export const fetchDepartures = (dispatch, accessToken, id, timeSpan = 90) => {
       }
     })
     .catch(error => {
-      window.log('Get departures failed', error);
+      console.log('Get departures failed', error);
       dispatch({
         type: GET_DEPARTURES_FAIL,
       });
@@ -66,7 +66,7 @@ export const fetchDepartures = (dispatch, accessToken, id, timeSpan = 90) => {
 
 export const clearDepartures = () => {
   window.timeStart('clearDepartures');
-  return dispatch => {
+  return (dispatch: Dispatch) => {
     dispatch({type: CLR_DEPARTURES, payload: []});
     window.timeEnd('clearDepartures');
   };

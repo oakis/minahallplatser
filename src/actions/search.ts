@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {Dispatch} from 'redux';
 import {PermissionsAndroid} from 'react-native';
 import geolocation from 'react-native-geolocation-service';
 import {
@@ -45,15 +46,15 @@ async function requestLocationPermission() {
   }
 }
 
-export const searchChanged = text => {
+export const searchChanged = (text: string) => {
   return {
     type: SEARCH_CHANGED,
     payload: text,
   };
 };
 
-export const searchStops = ({busStop}) => {
-  return dispatch => {
+export const searchStops = ({busStop}: {busStop: string}) => {
+  return (dispatch: Dispatch) => {
     if (busStop === '') {
       // fetch.abort('searchStops');
       return dispatch({
@@ -72,7 +73,7 @@ export const searchStops = ({busStop}) => {
         },
       };
       window.log(url, config);
-      fetch(url, config, 'searchStops')
+      fetch(url, config)
         .then(handleJsonFetch)
         .then(handleVasttrafikStops)
         .then(data => {
@@ -97,7 +98,7 @@ export const searchStops = ({busStop}) => {
 };
 
 export const getNearbyStops = () => {
-  return dispatch => {
+  return (dispatch: Dispatch) => {
     try {
       dispatch({type: CLR_ERROR});
       if (isAndroid()) {
@@ -134,7 +135,7 @@ export const getNearbyStops = () => {
 };
 
 let gpsCount = 0;
-const returnCoords = dispatch => {
+const returnCoords = (dispatch: Dispatch) => {
   dispatch({type: SEARCH_BY_GPS});
   geolocation.getCurrentPosition(
     position => {
@@ -169,7 +170,15 @@ const returnCoords = dispatch => {
   );
 };
 
-const getCoordsSuccess = ({dispatch, longitude, latitude}) => {
+const getCoordsSuccess = ({
+  dispatch,
+  longitude,
+  latitude,
+}: {
+  dispatch: Dispatch;
+  longitude: number;
+  latitude: number;
+}) => {
   getToken().then(({access_token}) => {
     window.timeStart('getNearbyStops');
     const url = `https://api.vasttrafik.se/bin/rest.exe/v2/location.nearbystops?originCoordLat=${latitude}&originCoordLong=${longitude}&format=json`;
@@ -180,7 +189,7 @@ const getCoordsSuccess = ({dispatch, longitude, latitude}) => {
         Authorization: `Bearer ${access_token}`,
       },
     };
-    fetch(url, config, 'getNearbyStops')
+    fetch(url, config)
       .then(handleJsonFetch)
       .then(handleVasttrafikStops)
       .then(data => {
@@ -197,7 +206,7 @@ const getCoordsSuccess = ({dispatch, longitude, latitude}) => {
       })
       .catch(error => {
         window.timeEnd('getNearbyStops');
-        window.log(error);
+        console.log(error);
         dispatch({type: SEARCH_BY_GPS_FAIL});
       });
   });

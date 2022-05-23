@@ -1,11 +1,18 @@
 import _ from 'lodash';
 import {connect} from 'react-redux';
+import {
+  useRoute,
+  useNavigation,
+  RouteProp,
+  ParamListBase,
+} from '@react-navigation/native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   SectionList,
   AppState,
   TouchableWithoutFeedback,
+  AppStateStatus,
 } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -30,29 +37,48 @@ import {
   MiniMenu,
   Popup,
 } from '@common';
-import {updateStopsCount, track, isAndroid} from '@helpers';
+import {track, isAndroid} from '@helpers';
 import {colors, component} from '@style';
 
 const length =
-  component.listitem.view.height +
-  component.listitem.view.paddingHorizontal * 2;
+  component?.listitem?.view?.height +
+  component?.listitem?.view?.paddingHorizontal * 2;
 
-const ShowDepartures = props => {
-  const {
-    favorites,
-    departures,
-    route,
-    navigation,
-    favoriteStopIds,
-    loading,
-    error,
-    timeFormat,
-  } = props;
+interface IProps {
+  favorites: IDeparture[];
+  departures: IDeparture[];
+  favoriteStopIds: string[];
+  loading: boolean;
+  error: string;
+  timeFormat: string;
+  route: RouteProp<ParamListBase, string>;
+  clearErrors: () => void;
+  clearDepartures: () => void;
+  incrementStopsOpened: (busStop: string) => void;
+  favoriteDelete: (id: string) => void;
+  favoriteCreate: (item: Record<string, string>) => void;
+  getDepartures: (item: Record<string, string>) => void;
+  setSetting: (setting: string, value: string | undefined) => void;
+  favoriteLineToggle: (line: IDeparture) => void;
+  favoriteLineLocalRemove: (line: IDeparture, id: string) => void;
+  favoriteLineLocalAdd: (line: IDeparture, id: string) => void;
+}
+
+const ShowDepartures = (props: IProps): JSX.Element => {
+  const {favorites, departures, favoriteStopIds, loading, error, timeFormat} =
+    props;
 
   const [showHelp, setShowHelp] = useState(false);
   const [miniMenuOpen, setMiniMenuOpen] = useState(false);
-  const [timeformatVisible, setTimeformatVisible] = useState(false);
   const [reloading, setReloading] = useState(false);
+
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  const refresh = useCallback(() => {
+    setReloading(true);
+    props.getDepartures({id: route.params.id});
+  }, [route.params.id, props]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -103,7 +129,6 @@ const ShowDepartures = props => {
       Stop: route.params.busStop,
       Parent: route.params.parent,
     });
-    updateStopsCount();
     props.incrementStopsOpened(route.params.id);
     refresh();
     const subscription = AppState.addEventListener(
@@ -117,7 +142,7 @@ const ShowDepartures = props => {
       clearInterval(interval);
       props.clearDepartures();
       props.clearErrors();
-      subscription.remove('change', handleAppStateChange);
+      subscription.remove();
     };
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -127,7 +152,7 @@ const ShowDepartures = props => {
   }, [favorites, departures]);
 
   const handleAppStateChange = useCallback(
-    nextAppState => {
+    (nextAppState: AppStateStatus) => {
       props.clearDepartures();
       props.clearErrors();
       if (nextAppState === 'active') {
@@ -157,6 +182,14 @@ const ShowDepartures = props => {
 
   const closeMiniMenu = () => setMiniMenuOpen(false);
 
+  const toggleTimeFormat = () => {
+    if (timeFormat === 'minutes') {
+      onTimeValueChange('clock');
+    } else {
+      onTimeValueChange('minutes');
+    }
+  };
+
   const renderMiniMenu = () => {
     return (
       <MiniMenu
@@ -166,7 +199,7 @@ const ShowDepartures = props => {
           {
             icon: 'access-time',
             content: 'Ändra tidsformat',
-            onPress: openTimeformat,
+            onPress: toggleTimeFormat,
           },
           {
             icon: 'star',
@@ -187,49 +220,14 @@ const ShowDepartures = props => {
     );
   };
 
-  const closeTimeFormat = () => {
-    setTimeformatVisible(false);
-  };
-
-  const renderTimeformat = () => {
-    return (
-      <MiniMenu
-        isVisible={timeformatVisible}
-        onClose={closeTimeFormat}
-        items={[
-          {
-            content: 'Minuter',
-            onPress: () => onTimeValueChange('minutes'),
-          },
-          {
-            content: 'Klockslag',
-            onPress: () => onTimeValueChange('clock'),
-          },
-        ]}
-      />
-    );
-  };
-
-  const openTimeformat = () => {
-    closeMiniMenu();
-    setTimeout(() => {
-      setTimeformatVisible(true);
-    }, 1);
-  };
-
   const toggleMiniMenu = () => {
     setMiniMenuOpen(prev => !prev);
   };
 
-  const onTimeValueChange = itemValue => {
+  const onTimeValueChange = (itemValue: string) => {
     props.setSetting('timeFormat', itemValue);
-    closeTimeFormat();
+    closeMiniMenu();
   };
-
-  const refresh = useCallback(() => {
-    setReloading(true);
-    props.getDepartures({id: route.params.id});
-  }, [route.params.id, props]);
 
   const openPopup = () => {
     track('Show Help', {Page: 'Departures'});
@@ -308,7 +306,7 @@ const ShowDepartures = props => {
     );
   };
 
-  const getItemLayout = (data, index) => ({
+  const getItemLayout = (data, index: number) => ({
     length,
     offset: length * index,
     index,
@@ -322,7 +320,13 @@ const ShowDepartures = props => {
     if (loading) {
       return <Spinner size="large" color={colors.primary} />;
     } else if (error) {
-      return <Message type="warning" message={error} />;
+      return (
+        <Message
+          type="warning"
+          message={error}
+          backgroundColor={colors.warning}
+        />
+      );
     }
 
     return (
@@ -341,7 +345,6 @@ const ShowDepartures = props => {
 
   return (
     <View style={{flex: 1}}>
-      {renderTimeformat()}
       {renderMiniMenu()}
       {renderPopup()}
       {renderContent()}
@@ -349,7 +352,7 @@ const ShowDepartures = props => {
   );
 };
 
-const MapStateToProps = (state, ownProps) => {
+const MapStateToProps = (state: IStateProps, ownProps) => {
   const lines = _.map(state.fav.lines, line => line.replace('X', ''));
   const linesLocal = _.filter(
     state.fav.linesLocal,
