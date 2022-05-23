@@ -1,11 +1,18 @@
 import _ from 'lodash';
 import {connect} from 'react-redux';
+import {
+  useRoute,
+  useNavigation,
+  RouteProp,
+  ParamListBase,
+} from '@react-navigation/native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   SectionList,
   AppState,
   TouchableWithoutFeedback,
+  AppStateStatus,
 } from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -34,24 +41,44 @@ import {track, isAndroid} from '@helpers';
 import {colors, component} from '@style';
 
 const length =
-  component.listitem.view.height +
-  component.listitem.view.paddingHorizontal * 2;
+  component?.listitem?.view?.height +
+  component?.listitem?.view?.paddingHorizontal * 2;
 
-const ShowDepartures = props => {
-  const {
-    favorites,
-    departures,
-    route,
-    navigation,
-    favoriteStopIds,
-    loading,
-    error,
-    timeFormat,
-  } = props;
+interface IProps {
+  favorites: IDeparture[];
+  departures: IDeparture[];
+  favoriteStopIds: string[];
+  loading: boolean;
+  error: string;
+  timeFormat: string;
+  route: RouteProp<ParamListBase, string>;
+  clearErrors: () => void;
+  clearDepartures: () => void;
+  incrementStopsOpened: (busStop: string) => void;
+  favoriteDelete: (id: string) => void;
+  favoriteCreate: (item: Record<string, string>) => void;
+  getDepartures: (item: Record<string, string>) => void;
+  setSetting: (setting: string, value: string | undefined) => void;
+  favoriteLineToggle: (line: IDeparture) => void;
+  favoriteLineLocalRemove: (line: IDeparture, id: string) => void;
+  favoriteLineLocalAdd: (line: IDeparture, id: string) => void;
+}
+
+const ShowDepartures = (props: IProps): JSX.Element => {
+  const {favorites, departures, favoriteStopIds, loading, error, timeFormat} =
+    props;
 
   const [showHelp, setShowHelp] = useState(false);
   const [miniMenuOpen, setMiniMenuOpen] = useState(false);
   const [reloading, setReloading] = useState(false);
+
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  const refresh = useCallback(() => {
+    setReloading(true);
+    props.getDepartures({id: route.params.id});
+  }, [route.params.id, props]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -115,7 +142,7 @@ const ShowDepartures = props => {
       clearInterval(interval);
       props.clearDepartures();
       props.clearErrors();
-      subscription.remove('change', handleAppStateChange);
+      subscription.remove();
     };
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -125,7 +152,7 @@ const ShowDepartures = props => {
   }, [favorites, departures]);
 
   const handleAppStateChange = useCallback(
-    nextAppState => {
+    (nextAppState: AppStateStatus) => {
       props.clearDepartures();
       props.clearErrors();
       if (nextAppState === 'active') {
@@ -197,15 +224,10 @@ const ShowDepartures = props => {
     setMiniMenuOpen(prev => !prev);
   };
 
-  const onTimeValueChange = itemValue => {
+  const onTimeValueChange = (itemValue: string) => {
     props.setSetting('timeFormat', itemValue);
     closeMiniMenu();
   };
-
-  const refresh = useCallback(() => {
-    setReloading(true);
-    props.getDepartures({id: route.params.id});
-  }, [route.params.id, props]);
 
   const openPopup = () => {
     track('Show Help', {Page: 'Departures'});
@@ -284,7 +306,7 @@ const ShowDepartures = props => {
     );
   };
 
-  const getItemLayout = (data, index) => ({
+  const getItemLayout = (data, index: number) => ({
     length,
     offset: length * index,
     index,
@@ -330,7 +352,7 @@ const ShowDepartures = props => {
   );
 };
 
-const MapStateToProps = (state, ownProps) => {
+const MapStateToProps = (state: IStateProps, ownProps) => {
   const lines = _.map(state.fav.lines, line => line.replace('X', ''));
   const linesLocal = _.filter(
     state.fav.linesLocal,

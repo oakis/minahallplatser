@@ -9,7 +9,21 @@ import ShowDepartures from './components/ShowDepartures';
 import {colors} from '@style';
 import {isAndroid} from '@helpers';
 
-const Stack = createNativeStackNavigator();
+type RootStackParamList = {
+  Dashboard: undefined;
+  Departures: {
+    route: {
+      params: {
+        id: string;
+        title: string;
+        parent: string;
+        busStop: string;
+      };
+    };
+  };
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const headerOptions: NativeStackNavigationOptions = {
   headerStyle: {
