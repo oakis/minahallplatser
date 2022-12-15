@@ -1,3 +1,6 @@
+![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) This is now deprecated and has moved to a private repo ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png)
+
+
 # Mina Hållplatser
 ![Build Status](https://github.com/oakis/minahallplatser/actions/workflows/node.js.yml/badge.svg)
 
