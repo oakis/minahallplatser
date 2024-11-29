@@ -11,7 +11,7 @@ export const handleJsonFetch = response => {
     return response.json().catch(err => err);
   } else if (response.status === 400) {
     return response.json().then(data => {
-      window.log('handleJsonFetch(): Error', data);
+      console.log('handleJsonFetch(): Error', data);
       crashlytics().recordError(data.StackTraceString);
       throw data.Message;
     });
@@ -66,7 +66,9 @@ export const handleVasttrafikDepartures = ({DepartureBoard}) => {
     const now = moment(`${date} ${time}`);
     let mapdDepartures = [];
     rawDepartureList.forEach(item => {
-      const [direction, via] = item.direction.split('via');
+      const [direction, via] = item.direction
+        .replace(', Påstigning fram', '')
+        .split('via');
       const findIndex = _.findIndex(mapdDepartures, {
         name: item.name,
         direction: direction.trim(),

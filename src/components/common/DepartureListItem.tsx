@@ -1,11 +1,47 @@
 import React from 'react';
-import {View, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  TouchableWithoutFeedback,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
 import {Text} from '@common';
 import {colors} from '@style';
 
-const getDepartureType = type => {
+type IconType = 'BOAT' | 'BUS' | 'TAXI' | 'TRAM' | 'VAS' | 'REG';
+
+type DurationType = number | 'Nu' | string;
+
+interface DepartureType {
+  timeFormat: 'minutes' | 'clock';
+  clockLeft: DurationType;
+  clockNext: DurationType;
+  timeLeft: DurationType;
+  timeNext: DurationType;
+  index: number;
+  fgColor: string;
+  bgColor: string;
+  sname: string;
+  isLive: boolean;
+  direction: string;
+  type: IconType;
+  global: boolean;
+  local: boolean;
+  via: string;
+  track: string;
+  accessibility: string;
+}
+
+interface DepartureListItemProps {
+  item: DepartureType;
+  onPress: () => void;
+  onLongPress: () => void;
+}
+
+const getIconName = (type: IconType) => {
   switch (type) {
     case 'BOAT':
       return 'directions-boat';
@@ -23,7 +59,7 @@ const getDepartureType = type => {
   }
 };
 
-const getSnameFontsize = sname => {
+const getSnameFontsize = (sname: string) => {
   if (sname.length > 4) {
     return 10;
   }
@@ -33,7 +69,7 @@ const getSnameFontsize = sname => {
   return 14;
 };
 
-const getFontColor = (isLive, timeLeft) => {
+const getFontColor = (isLive: boolean, timeLeft: DurationType) => {
   if (!isLive) {
     return colors.warning;
   } else if (timeLeft === 'Nu') {
@@ -42,7 +78,7 @@ const getFontColor = (isLive, timeLeft) => {
   return colors.default;
 };
 
-const getFontSize = (shouldShowMin, timeLeft) => {
+const getFontSize = (shouldShowMin: boolean, timeLeft: DurationType) => {
   if (!shouldShowMin) {
     return 18;
   } else if (timeLeft > 59) {
@@ -51,14 +87,16 @@ const getFontSize = (shouldShowMin, timeLeft) => {
   return 24;
 };
 
-const formatTime = minutes => {
+const formatTime = (minutes: DurationType) => {
   const duration = moment.duration(minutes, 'minutes');
   return minutes > 59 ? `${duration.hours()}h ${duration.minutes()}m` : minutes;
 };
 
 const height = 50;
 
-export const DepartureListItem = props => {
+export const DepartureListItem = (
+  props: DepartureListItemProps,
+): JSX.Element => {
   const {item, onPress, onLongPress} = props;
 
   const shouldShowMin = item.timeFormat === 'minutes';
@@ -80,26 +118,26 @@ export const DepartureListItem = props => {
       paddingBottom: 5,
       flexDirection: 'row',
       alignItems: 'center',
-    },
+    } as StyleProp<ViewStyle>,
     col1Style: {
       height: 40,
       width: 50,
       alignItems: 'center',
       justifyContent: 'center',
       paddingLeft: 7,
-    },
+    } as StyleProp<ViewStyle>,
     col2Style: {
       flex: 1,
       paddingLeft: 10,
       justifyContent: 'center',
-    },
+    } as StyleProp<ViewStyle>,
     col3Style: {
       height,
       width: 56,
       alignItems: 'center',
       justifyContent: 'center',
       marginRight: 5,
-    },
+    } as StyleProp<ViewStyle>,
     stopNumStyle: {
       flex: 1,
       height: 40,
@@ -109,32 +147,32 @@ export const DepartureListItem = props => {
       borderRadius: 3,
       alignItems: 'center',
       justifyContent: 'center',
-    },
+    } as StyleProp<ViewStyle>,
     stopNumText: {
       color: item.bgColor,
       textAlign: 'center',
       textAlignVertical: 'center',
       fontWeight: 'bold',
       fontSize: getSnameFontsize(item.sname),
-    },
+    } as StyleProp<TextStyle>,
     departureStyle: {
       fontSize: getFontSize(shouldShowMin, item.timeLeft),
       color: getFontColor(item.isLive, timeLeft),
     },
     nextDepStyle: {
       fontSize: 12,
-    },
+    } as StyleProp<TextStyle>,
     directionStyle: {
       fontWeight: 'bold',
-    },
+    } as StyleProp<TextStyle>,
     viaStyle: {
       marginTop: -5,
       fontSize: 12,
-    },
+    } as StyleProp<TextStyle>,
     iconStyle: {
       marginLeft: 5,
       alignSelf: 'center',
-    },
+    } as StyleProp<TextStyle>,
   };
 
   const {
@@ -151,6 +189,8 @@ export const DepartureListItem = props => {
     iconStyle,
   } = styles;
 
+  const iconName = getIconName(item.type);
+
   return (
     <TouchableWithoutFeedback
       onPress={onPress}
@@ -160,11 +200,9 @@ export const DepartureListItem = props => {
         <View style={col1Style}>
           <View style={stopNumStyle}>
             <Text style={stopNumText}>{item.sname}</Text>
-            <Icon
-              name={getDepartureType(item.type)}
-              size={15}
-              color={item.bgColor}
-            />
+            {iconName && (
+              <Icon name={iconName as string} size={15} color={item.bgColor} />
+            )}
           </View>
         </View>
 
@@ -176,7 +214,7 @@ export const DepartureListItem = props => {
                 name="public"
                 size={13}
                 style={{
-                  ...iconStyle,
+                  alignSelf: 'center',
                   marginTop: 2,
                   marginLeft: 2,
                   color: colors.primary,

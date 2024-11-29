@@ -14,7 +14,12 @@ const inputStyle = {
   backgroundColor: '#fff',
 };
 
-export const Feedback = props => {
+interface IProps {
+  close: () => void;
+  visible: boolean;
+}
+
+export const Feedback = (props: IProps): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -23,22 +28,22 @@ export const Feedback = props => {
 
   const feedbackDB = database().ref('/feedback').push();
 
-  const onChangeEmail = str => {
-    setEmail(str);
+  const onChangeEmail = (value: string): void => {
+    setEmail(value);
     setValidated(true);
   };
 
-  const onChangeName = str => {
-    setName(str);
+  const onChangeName = (value: string): void => {
+    setName(value);
     setValidated(true);
   };
 
-  const onChangeMessage = str => {
-    setMessage(str);
+  const onChangeMessage = (value: string): void => {
+    setMessage(value);
     setValidated(true);
   };
 
-  const cancel = () => {
+  const cancel = (): void => {
     track('Feedback Cancel');
     props.close();
   };
@@ -74,7 +79,7 @@ export const Feedback = props => {
         })
         .catch(err => {
           track('Feedback Failed', err);
-          window.log('sendFeedback(): FAILED', err);
+          console.log('sendFeedback(): FAILED', err);
           Alert.alert('', 'Något gick snett, försök igen senare.');
           setLoading(false);
         })
@@ -144,15 +149,15 @@ export const Feedback = props => {
               onPress={sendFeedback}
               uppercase
               loading={loading}
-              color="primary"
-              fontColor="alternative"
+              color={colors.primary}
+              fontColor={colors.alternative}
             />
             <Button
               label="Avbryt"
               onPress={cancel}
               uppercase
-              color="danger"
-              fontColor="alternative"
+              color={colors.danger}
+              fontColor={colors.alternative}
             />
           </View>
         </ScrollView>

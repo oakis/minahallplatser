@@ -29,7 +29,7 @@ export const getToken = () => {
           resolve(token);
         })
         .catch(e => {
-          window.log('getToken: FAILED', e);
+          console.log('getToken: FAILED', e);
           reject(localToken);
         });
     } else {

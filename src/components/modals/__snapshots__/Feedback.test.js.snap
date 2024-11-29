@@ -71,16 +71,7 @@ exports[`should match snapshot 1`] = `
                   "paddingRight": 10,
                 }
               }
-            >
-              <MaterialIcon
-                size={24}
-                style={
-                  Object {
-                    "textAlign": "right",
-                  }
-                }
-              />
-            </View>
+            />
           </View>
           <View
             style={
@@ -348,6 +339,7 @@ exports[`should match snapshot 1`] = `
             }
           >
             <MaterialIcon
+              name=""
               size={24}
             />
             <Text
@@ -404,6 +396,7 @@ exports[`should match snapshot 1`] = `
             }
           >
             <MaterialIcon
+              name=""
               size={24}
             />
             <Text

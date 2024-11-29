@@ -2,6 +2,7 @@
 
 exports[`should match snapshot with flex 1`] = `
 <ActivityIndicator
+  color="#fff"
   style={
     Array [
       undefined,
@@ -17,6 +18,7 @@ exports[`should match snapshot with flex 1`] = `
 
 exports[`should match snapshot with no flex 1`] = `
 <ActivityIndicator
+  color="#fff"
   style={
     Array [
       undefined,

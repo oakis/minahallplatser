@@ -3,14 +3,14 @@ import {StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import Router from '@src/Router';
-import SplashScreen from '@components/SplashScreen';
+import SplashScreen from './components/SplashScreen';
 import factory from '@src/setupStore';
 import {track} from '@helpers';
 import {colors} from '@style';
 
 export const {store, persistor} = factory();
 
-const App = () => {
+const App = (): JSX.Element => {
   useEffect(() => {
     track('App Start');
   }, []);
